@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[MadHackAdemy] - Centre de Formation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(32px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+         @keyframes bounce {
+            0%, 100% { transform: scale(1) translateY(0); animation-timing-function: ease-out; }
+            30%       { transform: scale(1.15, 0.9) translateY(0); }
+            50%       { transform: scale(0.95, 1.05) translateY(-30px); }
+            70%       { transform: scale(1.05, 0.95) translateY(0); }
+            85%       { transform: scale(0.98, 1.02) translateY(-8px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { filter: drop-shadow(0 0 6px rgba(100,140,200,0.6)); }
+            50%       { filter: drop-shadow(0 0 18px rgba(100,180,255,0.9)); }
+        }
+
+        .minipoulpe {
+            width: 120px;
+            animation: bounce 1.8s infinite, glow 2.5s ease-in-out infinite;
+            cursor: pointer;
+            transform-origin: bottom center;
+        }
+
+        .minipoulpe:hover {
+            animation-duration: 0.6s, 1s;
+        }
+        .float-anim  { animation: float 3s ease-in-out infinite; }
+        .pulse-anim  { animation: pulse-slow 2s ease-in-out infinite; }
+        .fade-up     { opacity: 0; transform: translateY(32px); transition: opacity .6s ease, transform .6s ease; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        .nintendo-red    { background: #E60012; }
+        .nintendo-yellow { background: #FBDD08; }
+        .nintendo-green  { background: #05C31C; }
+        .nintendo-blue   { background: #1B8CE4; }
+
+        .nintendo-red:hover    { background: #E60012; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; }
+        .nintendo-yellow:hover { background: rgba(251,221,8,.8); }
+        .nintendo-green:hover  { background: rgba(5,195,28,.6); }
+        .nintendo-blue:hover   { background: #1B8CE4; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; }
+
+        .text-nintendo-red    { color: #E60012; }
+        .text-nintendo-yellow { color: #FBDD08; }
+        .text-nintendo-green  { color: #05C31C; }
+        .text-nintendo-blue   { color: #1B8CE4; }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #E60012, #FBDD08, #05C31C, #1B8CE4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .pixel-border {
+            box-shadow: 0 -4px 0 0 currentColor, 4px 0 0 0 currentColor,
+                        0 4px 0 0 currentColor, -4px 0 0 0 currentColor;
+        }
+
+        /* Scanlines */
+        body::before {
+            content: '';
+            position: fixed; inset: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,.04) 3px, rgba(0,0,0,.04) 4px);
+            pointer-events: none;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body class="bg-black text-white font-mono">
+
+    <!-- NAV -->
+    <nav class="sticky top-0 z-50 bg-black border-b-2 border-gray-800 px-6 h-16">
+    <div class="flex items-center justify-between h-full">
+        
+        <!-- Logo cliquable vers FlashDev -->
+        <a href="/" class="text-xl font-bold gradient-text hover:scale-105 transition-transform">
+            [MadHackAdemy / LOGO]
+        </a>
+        
+        <!-- Navigation sur UNE seule ligne -->
+        <div class="flex gap-4 md:gap-6 text-sm font-bold whitespace-nowrap">
+            <a href="/" class="text-gray-400 hover:text-red-500 transition-colors">← FLASHDEV</a>
+            <a href="#intro" class="text-gray-400 hover:text-yellow-400 transition-colors">INTRO</a>
+            <a href="#methode" class="text-gray-400 hover:text-green-500 transition-colors">MÉTHODE</a>
+            <a href="#roadmap" class="text-gray-400 hover:text-blue-500 transition-colors">ROADMAP</a>
+            <a href="#boutique" class="text-gray-400 hover:text-red-500 transition-colors">BOUTIQUE</a>
+        </div>
+        
+    </div>
+</nav>
+
+    <!-- ══════════════════════════════════════════
+         HERO
+    ══════════════════════════════════════════ -->
+    <section class="min-h-screen flex items-center justify-center relative overflow-hidden px-4">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-20 left-10 w-32 h-32 nintendo-red rounded-full blur-3xl"></div>
+            <div class="absolute bottom-20 right-10 w-40 h-40 nintendo-blue rounded-full blur-3xl"></div>
+            <div class="absolute top-1/2 left-1/3 w-36 h-36 nintendo-yellow rounded-full blur-3xl"></div>
+        </div>
+
+        <div class="text-center z-10 max-w-4xl">
+            <div class="float-anim mb-8">
+                <h1 class="text-6xl md:text-8xl font-bold mb-4 gradient-text">[MadHackAdemy]</h1>
+                <div class="flex justify-center gap-2 mb-6">
+                    <span class="w-16 h-2 nintendo-red"></span>
+                    <span class="w-16 h-2 nintendo-yellow"></span>
+                    <span class="w-16 h-2 nintendo-green"></span>
+                    <span class="w-16 h-2 nintendo-blue"></span>
+                </div>
+            </div>
+
+            <p class="text-2xl md:text-3xl mb-4 text-gray-300">
+                Centre de Formation <span class="text-nintendo-red">GameDev && Coding</span>
+            </p>
+            <p class="text-lg md:text-xl mb-12 text-gray-400 max-w-2xl mx-auto">
+                [Accroche courte et percutante — 1 ou 2 phrases qui résument ce que tu apportes et à qui tu t'adresses]
+            </p>
+
+            <div class="flex flex-wrap gap-4 justify-center">
+                <a href="#methode" class="px-8 py-4 bg-transparent border-2 border-yellow-600 nintendo-red text-nintendo-yellow font-bold rounded transition-all">
+                    DÉCOUVRIR LA MÉTHODE
+                </a>
+                <a href="#boutique" class="px-8 py-4 bg-transparent border-2 border-green-600 nintendo-blue text-nintendo-green font-bold rounded transition-all">
+                    VOIR LES OFFRES
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         INTRO
+    ══════════════════════════════════════════ -->
+    <section id="intro" class="py-20 px-4 bg-gradient-to-b from-black to-gray-900">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 fade-up">
+                <span class="gradient-text">Qui suis-je ?</span>
+            </h2>
+
+            <div class="grid md:grid-cols-2 gap-10 items-center fade-up">
+                <!-- Texte -->
+                <div>
+                    <p class="text-gray-300 text-lg leading-relaxed mb-6">
+                        Cela fait maintenant plus d'une décénie que j'ai commancé à me former à la programmation. Je partage avec vous à présent une partie
+                        des fruits de mon travail. Je fais partie du commun des mortels, mais je partage votre soif de connaissance. Mon domaine est celui du
+                        jeu vidéo l'un des moins permissif mais le plus fun. J'ai un certains nombres de prototypes à mon actif ainsi que plusieurs 
+                        certifications (udemy,unity,harvard). Mais sans importance pour ce domaine très chambouler par l'émergence des IA ces dernières années.
+                        [Présente-toi ici. Qui tu es, ton parcours, pourquoi tu as créé cette formation.
+                        Parle de ta légitimité, de ton expérience terrain. Sois authentique et direct.]
+                    </p>
+                    <p class="text-gray-400 text-lg leading-relaxed">
+                        [2ème paragraphe optionnel : ce qui t'a amené à créer cette méthode,
+                        le problème que tu as résolu pour toi-même et que tu veux transmettre.]
+                    </p>
+                </div>
+                <!-- Photo placeholder -->
+                <div class="bg-gray-800 border-2 border-gray-600 rounded-lg flex items-center justify-center aspect-video text-gray-500 text-sm font-bold tracking-widest">
+                    <!-- voir pour créer le style css et mettre un 125% ou 150 % ou réexporter l'image en plus grand ?
+                     chemin D:\Asset\asset2D\Affinity Designer\Creation Asset\Enemie\Shooter -->
+                    <img 
+                        src="Image\MiniPoulpeDicord.png" 
+                        class="minipoulpe" 
+                        alt="MiniPoulpe"
+                    />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         MÉTHODE
+    ══════════════════════════════════════════ -->
+    <section id="methode" class="py-20 px-4 bg-black">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-4 fade-up">
+                 <span class="gradient-text">La Méthode</span>
+            </h2>
+            <p class="text-center text-gray-400 mb-10 fade-up">
+                [Sous-titre de la méthode — ce qui la rend unique en une phrase]
+            </p>
+
+            <!-- Description méthode -->
+            <div class="bg-gray-800 p-8 rounded-lg border-2 border-blue-500 mb-16 fade-up">
+                <p class="text-gray-300 text-lg leading-relaxed">
+                    [Décris ici ta méthode pédagogique. Qu'est-ce qui la rend unique ?
+                    Quelle philosophie se cache derrière ? Comment elle est structurée, et pourquoi elle fonctionne.
+                    Mets en avant ce qui différencie ton approche des formations classiques.]
+                </p>
+            </div>
+
+            <!-- Tableau 2 colonnes : SITE / SOFT -->
+            <h3 class="text-2xl font-bold text-center mb-8 fade-up">
+                Les 2 piliers <span class="text-nintendo-yellow">core</span> de la méthode
+            </h3>
+
+            <div class="fade-up overflow-x-auto">
+                <table class="w-full border-collapse">
+                    <thead>
+                        <tr>
+                            <th class="bg-red-900 border-2 border-red-600 px-6 py-4 text-left text-nintendo-red text-lg w-1/2">
+                                🌐 PILIER 1 — LE SITE
+                            </th>
+                            <th class="bg-blue-900 border-2 border-blue-600 px-6 py-4 text-left text-nintendo-blue text-lg w-1/2">
+                                💻 PILIER 2 — LE SOFT
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Ligne 1 -->
+                        <tr class="hover:bg-gray-800 transition-all">
+                            <td class="bg-gray-900 border-2 border-red-900 px-6 py-5 align-top">
+                                <span class="inline-block px-2 py-1 bg-red-900 text-red-400 text-xs font-bold mb-2">MODULE A</span><br/>
+                                <strong class="text-white">[Titre élément côté SITE]</strong>
+                                <p class="text-gray-400 text-sm mt-1">[Description : ce que l'apprenant crée ou maîtrise côté site web — architecture, pages, SEO...]</p>
+                            </td>
+                            <td class="bg-gray-900 border-2 border-blue-900 px-6 py-5 align-top">
+                                <span class="inline-block px-2 py-1 bg-blue-900 text-blue-400 text-xs font-bold mb-2">MODULE A</span><br/>
+                                <strong class="text-white">[Titre élément côté SOFT]</strong>
+                                <p class="text-gray-400 text-sm mt-1">[Description : outil, logiciel ou compétence maîtrisée — CRM, automation, outil de gestion...]</p>
+                            </td>
+                        </tr>
+                        <!-- Ligne 2 -->
+                        <tr class="hover:bg-gray-800 transition-all">
+                            <td class="bg-gray-900 border-2 border-red-900 px-6 py-5 align-top">
+                                <span class="inline-block px-2 py-1 bg-red-900 text-red-400 text-xs font-bold mb-2">MODULE B</span><br/>
+                                <strong class="text-white">[Titre élément côté SITE]</strong>
+                                <p class="text-gray-400 text-sm mt-1">[Deuxième point clé côté site. Qu'est-ce que l'apprenant maîtrise à la fin de ce module ?]</p>
+                            </td>
+                            <td class="bg-gray-900 border-2 border-blue-900 px-6 py-5 align-top">
+                                <span class="inline-block px-2 py-1 bg-blue-900 text-blue-400 text-xs font-bold mb-2">MODULE B</span><br/>
+                                <strong class="text-white">[Titre élément côté SOFT]</strong>
+                                <p class="text-gray-400 text-sm mt-1">[Deuxième point clé côté soft. Quel outil, quelle compétence, quel résultat concret ?]</p>
+                            </td>
+                        </tr>
+                        <!-- Ligne 3 -->
+                        <tr class="hover:bg-gray-800 transition-all">
+                            <td class="bg-gray-900 border-2 border-red-900 px-6 py-5 align-top">
+                                <span class="inline-block px-2 py-1 bg-red-900 text-red-400 text-xs font-bold mb-2">MODULE C</span><br/>
+                                <strong class="text-white">[Titre élément côté SITE]</strong>
+                                <p class="text-gray-400 text-sm mt-1">[Troisième compétence ou livrable côté site — optionnel, ajoute autant de lignes que nécessaire]</p>
+                            </td>
+                            <td class="bg-gray-900 border-2 border-blue-900 px-6 py-5 align-top">
+                                <span class="inline-block px-2 py-1 bg-blue-900 text-blue-400 text-xs font-bold mb-2">MODULE C</span><br/>
+                                <strong class="text-white">[Titre élément côté SOFT]</strong>
+                                <p class="text-gray-400 text-sm mt-1">[Troisième compétence ou livrable côté soft — optionnel]</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         ROADMAP
+    ══════════════════════════════════════════ -->
+    <section id="roadmap" class="py-20 px-4 bg-gradient-to-b from-black to-gray-900">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-4 fade-up">
+                <span class="gradient-text">[GameDevReady] Roadmap</span>
+            </h2>
+            <p class="text-center text-gray-400 mb-16 fade-up">
+                [Sous-titre — décris brièvement le fil conducteur du parcours]
+            </p>
+
+            <div class="space-y-8">
+                <!-- Étape 1 -->
+                <div class="bg-gray-900 p-6 rounded-lg border-l-4 border-red-600 hover:bg-gray-800 transition-all fade-up">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 nintendo-red rounded flex items-center justify-center flex-shrink-0 font-bold text-xl">1</div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2 text-nintendo-red">[ÉTAPE 1 — NOM DE LA PHASE]</h3>
+                            <p class="text-gray-300 mb-3">[Décris ce que l'apprenant fait et comprend durant cette première phase. Livrable ou compétence acquise.]</p>
+                            <span class="text-sm text-gray-500">⏱ [Durée ex : Semaine 1-2]</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Étape 2 -->
+                <div class="bg-gray-900 p-6 rounded-lg border-l-4 border-yellow-500 hover:bg-gray-800 transition-all fade-up">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 nintendo-yellow rounded flex items-center justify-center flex-shrink-0 font-bold text-xl text-black">2</div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2 text-nintendo-yellow">[ÉTAPE 2 — NOM DE LA PHASE]</h3>
+                            <p class="text-gray-300 mb-3">[Décris la montée en compétences. Qu'est-ce que l'apprenant construit ? Quel problème résout-il à ce stade ?]</p>
+                            <span class="text-sm text-gray-500">⏱ [Durée ex : Semaine 3-4]</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Étape 3 -->
+                <div class="bg-gray-900 p-6 rounded-lg border-l-4 border-green-500 hover:bg-gray-800 transition-all fade-up">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 nintendo-green rounded flex items-center justify-center flex-shrink-0 font-bold text-xl">3</div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2 text-nintendo-green">[ÉTAPE 3 — NOM DE LA PHASE]</h3>
+                            <p class="text-gray-300 mb-3">[Phase de mise en pratique ou projet complet. L'apprenant produit un livrable réel ou lance quelque chose de concret.]</p>
+                            <span class="text-sm text-gray-500">⏱ [Durée ex : Semaine 5-6]</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Étape 4 -->
+                <div class="bg-gray-900 p-6 rounded-lg border-l-4 border-blue-500 hover:bg-gray-800 transition-all fade-up">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 nintendo-blue rounded flex items-center justify-center flex-shrink-0 font-bold text-xl">4</div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2 text-nintendo-blue">[ÉTAPE 4 — RÉSULTAT FINAL]</h3>
+                            <p class="text-gray-300 mb-3">[Quel est l'état de l'apprenant à la sortie ? Ce qu'il a accompli, ce qu'il peut faire, où il va ensuite.]</p>
+                            <span class="text-sm text-gray-500">🏁 [Objectif atteint]</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         BOUTIQUE
+    ══════════════════════════════════════════ -->
+    <section id="boutique" class="py-20 px-4 bg-black">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-4 fade-up">
+                <span class="gradient-text">La Boutique</span>
+            </h2>
+            <p class="text-center text-gray-400 mb-16 fade-up">
+                [Présente brièvement la boutique. Pour qui ? Quel type de produits ou offres ?]
+            </p>
+
+            <div class="grid md:grid-cols-3 gap-8 fade-up">
+                <!-- Offre 1 -->
+                <div class="bg-gray-800 p-8 rounded-lg border-2 border-red-600 hover:bg-gray-700 transition-all">
+                    <div class="text-red-500 text-4xl mb-4">🎮</div>
+                    <h3 class="text-xl font-bold mb-2 text-nintendo-red">[NOM DE L'OFFRE 1]</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed mb-6">
+                        [Décris ce que contient cette offre. À qui elle s'adresse. Quel résultat elle apporte. Format : vidéo, live, PDF, coaching...]
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-2xl font-bold text-nintendo-yellow">[PRIX] €</span>
+                        <a href="#" class="px-4 py-2 nintendo-red text-white font-bold rounded text-sm transition-all">
+                            ACHETER →
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Offre 2 — principale -->
+                <div class="bg-gray-800 p-8 rounded-lg border-2 border-yellow-500 hover:bg-gray-700 transition-all relative">
+                    <div class="absolute -top-3 left-1/2 -translate-x-1/2">
+                        <span class="px-4 py-1 nintendo-yellow text-black text-xs font-bold rounded">⭐ OFFRE PHARE</span>
+                    </div>
+                    <div class="text-yellow-500 text-4xl mb-4 mt-3">🚀</div>
+                    <h3 class="text-xl font-bold mb-2 text-nintendo-yellow">[NOM DE L'OFFRE PRINCIPALE]</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed mb-6">
+                        [Ton offre phare. Ce qui transforme vraiment les gens. Mets en avant la valeur, pas juste le contenu. Pourquoi c'est LA formation à prendre.]
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-2xl font-bold text-nintendo-yellow">[PRIX] €</span>
+                        <a href="#" class="px-4 py-2 nintendo-yellow text-black font-bold rounded text-sm transition-all">
+                            ACHETER →
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Offre 3 -->
+                <div class="bg-gray-800 p-8 rounded-lg border-2 border-blue-500 hover:bg-gray-700 transition-all">
+                    <div class="text-blue-400 text-4xl mb-4">💎</div>
+                    <h3 class="text-xl font-bold mb-2 text-nintendo-blue">[NOM DE L'OFFRE PREMIUM]</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed mb-6">
+                        [Option accompagnement, coaching ou suivi personnalisé. Pour ceux qui veulent aller plus vite avec ton aide directe.]
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-2xl font-bold text-nintendo-yellow">[PRIX] €</span>
+                        <a href="#" class="px-4 py-2 nintendo-blue text-white font-bold rounded text-sm transition-all">
+                            ACHETER →
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA global -->
+            <div class="mt-16 bg-gray-800 p-8 rounded-lg border-2 border-green-500 text-center fade-up">
+                <h3 class="text-2xl font-bold mb-4 text-nintendo-green">Pas encore décidé ?</h3>
+                <p class="text-gray-300 mb-6">
+                    [Texte incitatif — une garantie, un bonus, ou une raison de passer à l'action maintenant]
+                </p>
+                <a href="#" class="inline-block px-8 py-4 nintendo-green text-white font-bold rounded transition-all">
+                    VOIR TOUTES LES OFFRES →
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-8 px-4 bg-gray-950 border-t border-gray-800">
+        <div class="max-w-6xl mx-auto text-center text-gray-500">
+            <div class="flex justify-center gap-2 mb-4">
+                <span class="w-8 h-1 nintendo-red"></span>
+                <span class="w-8 h-1 nintendo-yellow"></span>
+                <span class="w-8 h-1 nintendo-green"></span>
+                <span class="w-8 h-1 nintendo-blue"></span>
+            </div>
+            <p>[TON NOM / CENTRE DE FORMATION] © 2026</p>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
