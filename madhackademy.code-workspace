@@ -1,0 +1,24 @@
+{
+	"folders": [
+		{
+			"name": "Site — madhackademyWebSite",
+			"path": "."
+		},
+		{
+			"name": "Soft — FlashRevisionSoft",
+			"path": "../FlashRevisionSoft"
+		}
+	],
+	"settings": {
+		"files.exclude": {
+			"**/.git": true
+		}
+	},
+	"extensions": {
+		"recommendations": [
+			"sumneko.lua",
+			"ms-vscode.cpptools",
+			"bmewburn.vscode-intelephense-client"
+		]
+	}
+}
