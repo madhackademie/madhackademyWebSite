@@ -1,6 +1,6 @@
 # TODO — madhackademyWebSite
 
-> Dernière mise à jour : 21 juin 2026  
+> Dernière mise à jour : 23 juin 2026  
 > Projet : site vitrine FlashDev + MadHackAdemy
 
 ## Site en production
@@ -68,6 +68,54 @@ Tâches utiles mais non bloquantes — à traiter après les priorités.
 - [ ] Ajouter des tests de régression visuelle ou lint HTML (optionnel)
 
 ### Évolutions produit
+
+#### Gamification — duels pixel art (FlashDev)
+
+> Backlog fonctionnel pour le soft FlashRevisionSoft. Chaque révision de carte devient un combat ; la progression RPG motive la répétition espacée.
+
+**Référence visuelle — David vs Goliath**
+
+Maquette d’écran cible (beat’em up arcade type *Golden Axe* / *Cadillacs and Dinosaurs*) :
+
+![Référence duel David vs Goliath](docs/gamification/references/david-vs-goliath-duel-reference.png)
+
+| Élément à l’écran | Rôle dans FlashDev |
+|-------------------|-------------------|
+| **David** (1P, petit avatar) | L’élève — avatar joueur personnalisable |
+| **Goliath** (boss, barre rouge) | Ennemi de la carte — difficulté élevée, plusieurs « attaques » (révisions) pour le vaincre |
+| **Barre jaune 1P** | HP de l’élève (streak / survie entre sessions) |
+| **Score `0024500`** | XP cumulée |
+| **Barre rouge boss** | HP restant du boss — diminue à chaque révision réussie |
+| **TIME** | Optionnel — pression douce ou limite par session |
+
+*David contre Goliath* = métaphore produit : une carte difficile n’est pas un mur, c’est un duel gagnable coup par coup (révision par révision).
+
+**Concept général**
+
+- [ ] Avatar joueur personnalisable (sprite pixel art) affiché pendant les sessions de révision
+- [ ] À chaque révision de carte : déclencher un **duel pixel art** contre l’ennemi associé à la carte
+- [ ] Chaque carte porte un **type d’ennemi** (sprite dédié) et un **niveau de difficulté**
+- [ ] Hiérarchie d’ennemis : **mob** (carte standard) → **mini-boss** (cartes clés / modules) → **boss** (fin de chapitre / deck)
+- [ ] Victoire au duel → récompenses : **XP** (progression globale) + **HP** (ressource de survie / streak)
+- [ ] Boss : **plusieurs attaques** (plusieurs révisions réussies de cartes liées) nécessaires pour le vaincre — barre de vie multi-étapes
+
+**À spécifier / découper**
+
+- [ ] Modèle de données carte ↔ ennemi (type, difficulté, HP ennemi, XP/HP gagnés)
+- [ ] Règles de défaite (mauvaise réponse = dégâts subis par l’avatar ? perte de HP ?)
+- [ ] Écran de duel (animations attaque joueur / ennemi, feedback victoire-défaite)
+- [ ] Banque de sprites pixel art (avatar, mobs, mini-boss, boss par thème deck)
+- [ ] Persistance locale : XP, HP courants, boss en cours (HP restant entre sessions)
+- [ ] Sync optionnelle vers le site (voir `NOTE_ARCHITECTURE_SOFT-SITE.md`) pour afficher progression RPG en ligne
+
+**Références produit**
+
+- Révision = attaque (fronde / coup) ; boss = objectif long terme nécessitant N révisions réussies
+- Métaphore **David vs Goliath** : l’élève (petit mais équipé) affronte des ennemis bien plus imposants
+- Direction artistique : pixel art arcade 16-bit, HUD avec barres HP/XP — voir image ci-dessus
+- Cohérent avec l’identité GameDev / pixel art du projet MadHackAdemy
+
+---
 
 - [ ] Intégrer un système de paiement pour les decks premium (Stripe, Gumroad…)
 - [ ] Page dédiée par offre boutique avec landing optimisée conversion
