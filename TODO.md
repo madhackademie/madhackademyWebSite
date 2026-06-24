@@ -43,6 +43,14 @@ Ces tâches débloquent la mise en ligne ou corrigent des problèmes visibles po
 
 Tâches utiles mais non bloquantes — à traiter après les priorités.
 
+### Guides de formation HTML (FlashDev / deck GameDevReady)
+
+> Thème **Frogger** (charte du deck), distinct des pages vitrine Nintendo. Hébergés dans ce repo ; le soft FlashDev les charge via `URLNet`.
+
+- [ ] **P1** — Importer les fichiers sources des guides HTML (fournis hors repo) dans `madhackademyWebSite` — ex. dossier `WebSite/guides/` ou `WebSite/formation/`
+- [ ] **P1** — Déposer le template Frogger réutilisable + premier guide `0x_Struct_Methodes`
+- [ ] **P2** — Publier les URLs sur gameopenmoney.com et les renseigner côté `FlashRevisionSoft` (`URLNet` dans `data.json`)
+
 ### Contenu & éditorial
 
 - [ ] Ajouter une page ou section FAQ (méthode, prérequis, durée des formations)
@@ -66,6 +74,10 @@ Tâches utiles mais non bloquantes — à traiter après les priorités.
 - [ ] Configurer analytics (Plausible, GA4…) si souhaité
 - [ ] Mettre en place un workflow de preview (PR previews Netlify/Vercel)
 - [ ] Ajouter des tests de régression visuelle ou lint HTML (optionnel)
+
+### Deck GameDevReady (coordination avec FlashRevisionSoft)
+
+- [ ] **P2** — Mettre à jour la roadmap site : Premier Challenge → David & Goliath (combat tour par tour) une fois le projet créé côté soft
 
 ### Évolutions produit
 
