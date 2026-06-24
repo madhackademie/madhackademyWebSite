@@ -59,6 +59,11 @@ Tâches utiles mais non bloquantes — à traiter après les priorités.
 
 - [x] Importer les guides HTML sources dans ce repo (`FicheFormationHtlm/`)
 - [x] Créer le module `07_Struct_Methodes` (carte + guide Frogger — brouillon à relire/simplifier)
+- [ ] **P1** — **Relire la carte Struct & Méthodes** (`FicheFormationHtlm/07_Struct_Methodes/`) : rythme trop rapide / enchaînement à simplifier — clarifier le lien progressif entre struct simple → méthodes → combat
+- [ ] **P1** — Ajouter des **visuels code** (captures) struct + méthodes dans `ClaudeHtml/Image/` — comme les autres cartes du deck
+- [ ] **P1** — Réécrire l'exemple **sans pointeur ni référence** (`Fighter&` à éviter) — méthodes qui modifient `this` uniquement, ou logique de dégâts dans `main`
+- [ ] **P1** — Étudier si le **code du combat peut rester dans `main`** (appels `david.Attack()` sans passer la cible par référence — ex. retourner les dégâts, ou deux méthodes `TakeDamage(int)` + `GetAttackPower()`)
+- [ ] **P2** — Aligner guide HTML, `Struct&Methodes.txt`, `Source/` et `Correction/` après la simplification pédagogique
 - [ ] **P1** — Exposer les HTML en production sous `gameopenmoney.com` (copie ou lien depuis `WebSite/`) — chemins images relatifs à vérifier
 - [ ] **P2** — Renseigner `URLNet` dans `FlashRevisionSoft/data.json` pour chaque carte du deck
 
