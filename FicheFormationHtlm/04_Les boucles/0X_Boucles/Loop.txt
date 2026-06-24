@@ -1,0 +1,18 @@
+🖼️ Card:  Objective
+In this card, your task is to 
+(you have to create the variables you need at this point)
+1. use both while loop and do while loop to count from 1 to 5. 
+2. use a for loop to fill an int array[10]={} from 1 to 10. (at this time you will create the array yourself)
+3. printf this array with a for loop.
+
+💡 Tips...
+
+Dont forgot what is the first index in C++. Cuz you could have one unit offset. Or you could make a mess with some of your computer mémory.
+And for Draw this outpout there will be two way to get on a new line. And you have see them both.
+
+👉 Challenge:
+1.Try to print it with Raylib on the Game windows with the for loop
+2.Try to change the i value to 1 (int i =1, condition, itération) and make it working (will need a few change in the code)
+3.Big challenge do it with the Foreach loop printf will be enought (will be see in the next module)
+
+

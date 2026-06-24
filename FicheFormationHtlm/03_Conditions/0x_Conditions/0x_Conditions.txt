@@ -1,0 +1,31 @@
+🖼️ Card: Conditions & Color Logic
+In this card, your task is to create an age control system using conditional statements 
+and color feedback in Raylib.
+
+💡 Tips...
+This exercise helps you combine logic with visuals — conditions (if, else if, else) and color management.
+You’ll also explore one of the first useful variables inside Raylib: colors.
+
+👉 Challenge:
+
+Create an int variable (for age control) with a value of 10.
+
+Display on screen:
+
+In red: "Please enter a valid age!" if the value is 0 or less.
+
+In green: "Great, you’re alive!" otherwise.
+
+
+Super Challenge 🔥
+
+Store the color in a variable instead of hardcoding it.
+
+Add a blue message:
+
+"Oh, you are exactly X years old — you win the first mystery prize!"
+when the age is exactly equal to a target value.
+
+At my level, I have two pieces of code to solve this problem using the knowledge provided so far.
+
+Play with the integer value to ensure all conditions trigger correctly.

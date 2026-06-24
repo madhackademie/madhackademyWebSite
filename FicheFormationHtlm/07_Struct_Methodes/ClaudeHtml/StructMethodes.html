@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Struct & Methodes C++ - GameDevReady</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;600;700;800&family=Courier+Prime:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(180deg, #87CEEB 0%, #98D8C8 50%, #6B8E23 100%);
+            color: #2d5016;
+            line-height: 1.7;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(255,255,255,0.03) 50px, rgba(255,255,255,0.03) 100px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 50px 30px;
+            background: linear-gradient(135deg, rgba(34, 139, 34, 0.9), rgba(107, 142, 35, 0.9));
+            border: 4px solid #8B4513;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3), inset 0 2px 10px rgba(255,255,255,0.2);
+            position: relative;
+        }
+        
+        header::before {
+            content: '🐸';
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 4em;
+            animation: hop 2s ease-in-out infinite;
+        }
+        
+        @keyframes hop {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-15px); }
+        }
+
+        .property-banner {
+            background: linear-gradient(135deg, #DAA520, #FFD700);
+            color: #2d5016;
+            padding: 12px 20px;
+            text-align: center;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.75em;
+            border-bottom: 4px solid #8B4513;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .property-icon {
+            font-size: 1.5em;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+        
+        h1 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 2.5em;
+            color: #FFD700;
+            text-shadow: 3px 3px 0 #8B4513, 5px 5px 10px rgba(0,0,0,0.5);
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+        
+        .subtitle {
+            font-size: 2.3em;
+            color: #FFFACD;
+            font-weight: 700;
+            text-transform: none;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        section {
+            background: rgba(255, 255, 255, 0.95);
+            border: 3px solid #6B8E23;
+            border-radius: 15px;
+            padding: 35px;
+            margin-bottom: 35px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            position: relative;
+            page-break-inside: avoid;
+        }
+        
+        section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 8px;
+            height: 100%;
+            background: linear-gradient(180deg, #228B22, #6B8E23, #8B4513);
+            border-radius: 15px 0 0 15px;
+        }
+        
+        h2 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.6em;
+            color: #228B22;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #90EE90;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            line-height: 1.6;
+        }
+        
+        h2::before {
+            content: '🌿';
+            font-size: 1.3em;
+        }
+        
+        h3 {
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.5em;
+            color: #6B8E23;
+            margin: 30px 0 15px 0;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        h3::before {
+            content: '🍃';
+            font-size: 1em;
+        }
+        
+        .separator {
+            height: 50px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50"><path d="M0,25 Q25,5 50,25 T100,25" fill="none" stroke="%236B8E23" stroke-width="3"/></svg>') repeat-x center;
+            margin: 40px 0;
+            position: relative;
+            page-break-after: avoid;
+        }
+        
+        .separator::after {
+            content: '🐸';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2em;
+            background: rgba(255,255,255,0.9);
+            padding: 0 15px;
+            border-radius: 50%;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { 
+                box-shadow: 0 0 5px rgba(255,215,0,0.5);
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% { 
+                box-shadow: 0 0 20px rgba(255,215,0,1), 0 0 30px rgba(255,215,0,0.7);
+                transform: translate(-50%, -50%) scale(1.25);
+            }
+        }
+        
+        ul, ol {
+            margin: 20px 0 20px 35px;
+        }
+        
+        li {
+            margin: 12px 0;
+            padding-left: 10px;
+            position: relative;
+        }
+        
+        ul li::before {
+            content: '🌱';
+            position: absolute;
+            left: -30px;
+            font-size: 1em;
+        }
+        
+        ol li {
+            font-weight: 600;
+        }
+
+        .bullet-list {
+            list-style-type: disc;
+            margin: 20px 0 20px 50px;  /* ← Plus d'espace */
+            padding-left: 30px;
+        }
+
+        .bullet-list li {
+            margin: 12px 0;
+            padding-left: 20px;
+        }
+        
+        code {
+            font-family: 'Courier Prime', monospace;
+            background: rgba(107, 142, 35, 0.15);
+            color: #2d5016;
+            padding: 3px 10px;
+            border-radius: 6px;
+            border: 2px solid rgba(107, 142, 35, 0.3);
+            font-weight: 700;
+            font-size: 1.05em;
+        }
+
+        pre {
+            background: rgba(45, 80, 22, 0.05);
+            border: 2px solid #6B8E23;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            overflow-x: auto;
+            page-break-inside: avoid;
+        }
+
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+            display: block;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+        
+        .info-box {
+            background: linear-gradient(135deg, rgba(152, 216, 200, 0.4), rgba(144, 238, 144, 0.4));
+            border-left: 6px solid #228B22;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            page-break-inside: avoid;
+        }
+        
+        .warning-box {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(255, 165, 0, 0.3));
+            border-left: 6px solid #FF8C00;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            position: relative;
+            page-break-inside: avoid;
+        }
+        
+        .warning-box::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2em;
+        }
+
+        .danger-box {
+            background: linear-gradient(135deg, rgba(255, 69, 0, 0.2), rgba(220, 20, 60, 0.2));
+            border-left: 6px solid #DC143C;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(220, 20, 60, 0.3);
+            position: relative;
+            page-break-inside: avoid;
+        }
+
+        .danger-box::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2em;
+            animation: blink 1.5s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        
+        .key-points {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(218, 165, 32, 0.2));
+            border: 3px solid #DAA520;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 5px 15px rgba(218, 165, 32, 0.3);
+            page-break-inside: avoid;
+        }
+        
+        .key-points h3 {
+            color: #B8860B;
+            margin-top: 0;
+        }
+        
+        .key-points h3::before {
+            content: '⭐';
+        }
+        
+        .objective-box {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.25), rgba(255, 248, 220, 0.25));
+            border: 3px solid #FFD700;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            box-shadow: 0 4px 12px rgba(218, 165, 32, 0.3);
+            page-break-inside: avoid;
+        }
+        
+        .objective-box h3 {
+            color: #DAA520;
+        }
+        
+        .objective-box h3::before {
+            content: '🎯';
+        }
+
+        .exercise-box {
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.15), rgba(75, 0, 130, 0.15));
+            border: 3px solid #8A2BE2;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.3);
+            page-break-inside: avoid;
+        }
+
+        .exercise-box h3 {
+            color: #8A2BE2;
+            margin-top: 0;
+        }
+
+        .exercise-box h3::before {
+            content: '✏️';
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+            background: linear-gradient(135deg, rgba(34, 139, 34, 0.8), rgba(107, 142, 35, 0.8));
+            border-radius: 15px;
+            color: #FFD700;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.8em;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            page-break-before: avoid;
+        }
+        
+        footer::before {
+            content: '🐸 🪵 🚗 🪵 🐸';
+            display: block;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+        
+        strong {
+            color: #228B22;
+            font-weight: 800;
+        }
+
+        .strong-no-color{
+            font-weight: 800;
+            color: inherit;
+        }
+        
+        p {
+            margin: 12px 0;
+            font-size: 1.05em;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: rgba(255, 248, 220, 0.9);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #228B22, #6B8E23);
+            color: #FFD700;
+            padding: 18px;
+            text-align: left;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7em;
+            border-bottom: 3px solid #8B4513;
+        }
+
+        .comparison-table td {
+            padding: 15px 18px;
+            border-bottom: 2px solid rgba(107, 142, 35, 0.2);
+            font-weight: 600;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: rgba(144, 238, 144, 0.1);
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(152, 216, 200, 0.3);
+            transform: scale(1.01);
+            transition: all 0.2s;
+        }
+
+        .link-web {
+            color: #2d5016;
+            font-weight: 800;
+            text-decoration: none;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+
+        .link-web::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #08ddf0, #228B22);
+            transition: width 0.3s ease;
+        }
+
+        .link-web:hover::after {
+            width: 100%;
+        }
+
+        .link-web:hover {
+            color: #12c2d2;
+            background: rgba(89, 255, 0, 0.411);
+            transform: translateY(-1px);
+        }
+
+        .link-web::before {
+            content: '🔗';
+            font-size: 0.8em;
+            opacity: 1;
+            margin-right: 3px;
+            transition: opacity 0.3s ease;
+        }
+
+        .link-web:hover::before {
+            transform: scale(1.2);
+        }
+
+        @media print {
+            .separator {
+                page-break-after: avoid;
+            }
+            section, .info-box, .warning-box, .danger-box, .key-points, .objective-box, .exercise-box, pre {
+                page-break-inside: avoid;
+            }
+        }
+
+        .image-placeholder-100 {
+            background: linear-gradient(135deg, rgba(152, 216, 200, 0.3), rgba(144, 238, 144, 0.3));
+            border: 3px dashed #6B8E23;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 25px auto;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-placeholder-100 img {
+        /* Règle essentielle du responsive */
+        width: 100%;    /* L'image prend 100% de la largeur du conteneur parent (800px maximum dans cet exemple) */
+        height: auto;   /* GARANTIT que l'image ne sera pas déformée */
+        display: block; /* Évite les espaces blancs sous l'image */
+        
+        /* Optionnel : Rendre l'image elle-même légèrement arrondie pour épouser le cadre */
+        border-radius: 8px; 
+        }
+        .image-placeholder-75 {
+            background: linear-gradient(135deg, rgba(152, 216, 200, 0.3), rgba(144, 238, 144, 0.3));
+            border: 3px dashed #6B8E23;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 25px auto;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-placeholder-75 img {
+        /* Règle essentielle du responsive */
+        width: 75%;    /* L'image prend 100% de la largeur du conteneur parent (800px maximum dans cet exemple) */
+        height: auto;   /* GARANTIT que l'image ne sera pas déformée */
+        display: inline-block; /* Évite les espaces blancs sous l'image */
+        
+        /* Optionnel : Rendre l'image elle-même légèrement arrondie pour épouser le cadre */
+        border-radius: 8px; 
+        }
+
+        .image-placeholder-50 {
+            background: linear-gradient(135deg, rgba(152, 216, 200, 0.3), rgba(144, 238, 144, 0.3));
+            border: 3px dashed #6B8E23;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 25px auto;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-placeholder-50 img {
+        /* Règle essentielle du responsive */
+        width: 50%;    /* L'image prend 100% de la largeur du conteneur parent (800px maximum dans cet exemple) */
+        height: auto;   /* GARANTIT que l'image ne sera pas déformée */
+        display: inline-block; /* Évite les espaces blancs sous l'image */
+        
+        /* Optionnel : Rendre l'image elle-même légèrement arrondie pour épouser le cadre */
+        border-radius: 8px; 
+        }
+
+        .image-placeholder-25 {
+            background: linear-gradient(135deg, rgba(152, 216, 200, 0.3), rgba(144, 238, 144, 0.3));
+            border: 3px dashed #6B8E23;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 25px auto;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-placeholder-25 img {
+            /* Règle essentielle du responsive */
+            width: 25%;    /* L'image prend 100% de la largeur du conteneur parent (800px maximum dans cet exemple) */
+            height: auto;   /* GARANTIT que l'image ne sera pas déformée */
+            display: inline-block; /* Évite les espaces blancs sous l'image */
+            
+            /* Optionnel : Rendre l'image elle-même légèrement arrondie pour épouser le cadre */
+            border-radius: 8px; 
+        }
+
+        .image-placeholder-icon {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
+        }
+        
+        .image-placeholder-text {
+            color: #2d5016;
+            font-family: 'Courier Prime', monospace;
+            font-size: 1em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+               .image-inline {
+            display: inline-block;
+            vertical-align: middle; 
+            max-width: 250px;       
+            margin: 0 1px;
+            /*mise en commentaire pour eviter le call du css du cadre vert pointillés*/
+            /*border: 3px dashed #6B8E23;
+            border-radius: 12px;*/
+            padding: 1px;
+            text-align: center;
+        }
+
+        /* Pour cibler les images à l'intérieur */
+        .image-inline img {
+            width: 100%;        /* L'image prend toute la largeur du conteneur */
+            height: auto;       /* Garde les proportions */
+            display: block;     /* Évite les espaces blancs sous l'image */
+            margin: 0 auto;     /* ← Cette ligne ne causera plus d'erreur */
+        }
+
+        /* Classe à appliquer sur le <span> qui entoure l'emoji */
+        .icon-blink {
+            display: inline-block;       /* Nécessaire pour que la transformation (scale) fonctionne */
+            font-size: 1.3em;            /* Taille de base déjà un peu plus grande que le texte */
+            vertical-align: text-bottom; /* Aligne mieux l'emoji par rapport à la ligne de texte */
+            margin: 0 3px;               /* Un tout petit peu d'espace autour */
+            
+            /* L'animation : rapide (0.6s), fluide (ease-in-out), infinie et en aller-retour */
+            animation: icon-pulse 1s ease-in-out infinite alternate;
+            
+            /* Sécurité : on s'assure qu'il n'y a pas de bordure ou de fond hérités */
+            background: none !important;
+            border: none !important;
+            padding: 0 !important;
+        }
+
+        /* Définition de l'animation de pulsation */
+        @keyframes icon-pulse {
+            0% {
+                transform: scale(1); /* Taille normale au début */
+                /* Pas de halo au départ */
+                filter: drop-shadow(0 0 0px rgba(255, 215, 0, 0)); 
+            }
+            100% {
+                transform: scale(1.25); /* Grandit jusqu'à 1.5x la taille */
+                /* Double halo lumineux : Jaune Or (#FFD700) + Orange (#FF4500) */
+                /* filter: drop-shadow est meilleur que text-shadow pour les emojis */
+                filter: drop-shadow(0 0 5px #FFD700) drop-shadow(0 0 8px #FF4500);
+            }
+        }
+        /* Style pour les mots du glossaire */
+        .glossary-term {
+            font-family: 'Courier Prime', monospace;
+            background: linear-gradient(135deg, rgba(0, 123, 255, 0.15), rgba(58, 183, 255, 0.15));
+            color: #006bb3;
+            padding: 2px 8px;
+            border-radius: 6px;
+            border: 2px solid rgba(0, 123, 255, 0.4);
+            font-weight: 700;
+            font-size: 1.05em;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        /* Effet au survol */
+        .glossary-term:hover {
+            background: linear-gradient(135deg, rgba(0, 123, 255, 0.25), rgba(58, 183, 255, 0.25));
+            border-color: rgba(0, 123, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.4), 0 0 20px rgba(58, 183, 255, 0.3);
+        }
+
+        /* Petit indicateur de lien */
+        .glossary-term::after {
+            content: '📖';
+            font-size: 0.8em;
+            margin-left: 3px;
+            opacity: 0.7;
+        }
+
+        /* Animation douce de glow (pas agressive) */
+        @keyframes soft-glow {
+            0%, 100% { 
+                box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+            }
+            50% { 
+                box-shadow: 0 0 8px rgba(0, 123, 255, 0.4), 0 0 12px rgba(58, 183, 255, 0.3);
+            }
+        }
+
+        .glossary-term:hover {
+            animation: soft-glow 2s ease-in-out infinite;
+        }
+
+        .definition-item {
+            scroll-margin-top: 100px; /* Espace pour la bannière sticky */
+            transition: background 0.3s ease;
+        }
+
+        .orangeColor {
+            color: orange;
+        }
+
+        .variable {
+            color: #9CDCFE; /* Bleu clair - noms de variables */
+        }
+    </style>
+</head>
+<body>
+    <div class="property-banner">
+        <span class="property-icon">🛡️</span>
+        <span class="property-text">© 2025 MadHackAdemy | Formation Propriétaire | Tous droits réservés</span>
+        <span class="property-icon">🛡️</span>
+    </div>
+    <div class="container">
+        <header>
+            <h1>Struct &amp; Methodes C++</h1>
+            <p class="subtitle">GameDevReady</p>
+        </header>
+        <section>
+            <h2>Objectif du Module</h2>
+            <p>Jusqu'ici, une <code>struct</code> regroupe des données (HP, nom, puissance d'attaque…). Dans ce module, on y ajoute des
+                <strong>méthodes</strong> : des fonctions déclarées à l'intérieur de la struct, qui agissent sur ses membres.</p>
+            <p>C'est le pont entre « j'ai des variables groupées » et le futur challenge <strong>David &amp; Goliath</strong> : deux combattants,
+                chacun avec sa struct, qui s'attaquent tour par tour — d'abord en console, puis affichés dans Raylib.</p>
+
+            <div class="objective-box">
+                <h3>Ce que l'élève saura faire à la fin</h3>
+                <ul class="bullet-list">
+                    <li>Déclarer une struct avec des champs <em>et</em> des méthodes membres</li>
+                    <li>Appeler une méthode sur une instance : <code>david.Attack(goliath)</code></li>
+                    <li>Afficher l'état du duel en console et dans la fenêtre Raylib</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <strong>Prérequis :</strong> Print, Variables (struct simple), Conditions, Boucles, STD_Fonctions (fonction + retour struct).
+            </div>
+        </section>
+
+        <div class="separator"></div>
+
+        <section>
+            <h2>Théorie</h2>
+
+            <h3>Struct + données</h3>
+            <p>On regroupe ce qui décrit un combattant :</p>
+            <pre><code>struct Fighter
+{
+    std::string name;
+    int hp;
+    int attackPower;
+};</code></pre>
+
+            <h3>Méthode membre : <code>Attack</code></h3>
+            <p>La méthode lit les données de <em>cette</em> instance (l'attaquant) et modifie la cible passée en référence :</p>
+            <pre><code>void Attack(Fighter&amp; target)
+{
+    target.hp -= attackPower;
+    if (target.hp &lt; 0) target.hp = 0;
+    printf("%s attaque %s pour %d degats !\n",
+           name.c_str(), target.name.c_str(), attackPower);
+}</code></pre>
+
+            <h3>Autres méthodes utiles</h3>
+            <pre><code>bool IsAlive() const { return hp &gt; 0; }
+
+void PrintStatus() const
+{
+    printf("%s — HP: %d | ATK: %d\n", name.c_str(), hp, attackPower);
+}</code></pre>
+
+            <div class="warning-box">
+                <strong><span class="icon-blink">⚠️</span> Pas encore de la POO classique :</strong>
+                pas de <code>class</code>, pas d'héritage. On reste sur une struct C++ enrichie — suffisant pour le duel David &amp; Goliath.
+            </div>
+        </section>
+
+        <div class="separator"></div>
+
+        <section>
+            <h2>Exercices FlashDev</h2>
+
+            <div class="exercise-box">
+                <h3>Exercice 1 — Deux combattants</h3>
+                <ol>
+                    <li>Créez <code>struct Fighter</code> avec <code>name</code>, <code>hp</code>, <code>attackPower</code></li>
+                    <li>Instanciez <code>david</code> et <code>goliath</code> avec des valeurs cohérentes</li>
+                    <li>Affichez leurs stats dans la console</li>
+                </ol>
+            </div>
+
+            <div class="exercise-box">
+                <h3>Exercice 2 — Méthodes et échange</h3>
+                <ol>
+                    <li>Ajoutez <code>Attack</code>, <code>IsAlive</code>, <code>PrintStatus</code></li>
+                    <li>Depuis <code>main()</code> : <code>david.Attack(goliath)</code> puis <code>goliath.Attack(david)</code></li>
+                    <li>Vérifiez <code>IsAlive()</code> pour chacun</li>
+                </ol>
+            </div>
+
+            <div class="key-points">
+                <h3>Challenge</h3>
+                <ul class="bullet-list">
+                    <li>Afficher les HP restants dans Raylib avec <code>DrawText</code> + <code>TextFormat</code></li>
+                    <li>Préparer une boucle <code>while (david.IsAlive() &amp;&amp; goliath.IsAlive())</code> — un tour par combattant</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <strong>Super challenge (aperçu David &amp; Goliath) :</strong> enchaîner un mini combat complet en console,
+                puis refléter l'état du duel à l'écran à chaque tour.
+            </div>
+        </section>
+
+        <div class="separator"></div>
+
+        <section>
+            <h2>Résumé</h2>
+            <div class="key-points">
+                <h3>À retenir</h3>
+                <ul class="bullet-list">
+                    <li><code>instance.Methode(autreInstance)</code> — l'appel se fait sur l'objet courant</li>
+                    <li><code>Fighter&amp; target</code> — la cible est modifiée par référence</li>
+                    <li>Console + Raylib : même logique, deux sorties</li>
+                    <li>Prochaine étape : challenge David &amp; Goliath (combat tour par tour)</li>
+                </ul>
+            </div>
+        </section>
+
+        <footer>
+            <p>Struct &amp; Méthodes — GameDevReady</p>
+            <p>© MadHackAdemy</p>
+        </footer>
+    </div>
+</body>
+</html>

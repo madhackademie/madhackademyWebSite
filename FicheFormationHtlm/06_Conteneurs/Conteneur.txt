@@ -1,0 +1,41 @@
+🖼️ Carte : Conteneurs & Structs
+
+Objectif : S'entraîner à manipuler des conteneurs dynamiques (std::vector) pour lire et modifier des données.
+Exercice 1 : Manipulation de Vector
+1.Initialisation : Créez un vector de type int.
+2.Remplissage : Utilisez une boucle pour l'agrandir et le remplir tel un compteur (1, 2, 3, 4, 5).
+3.Affichage : Affichez les données pour valider le remplissage (printf) de la manière la plus performante possible.
+4.Optimisation : Dans une boucle distincte, multipliez chaque valeur par 2 
+5.et vérifier le print dans une boucle séparé.
+
+💡 Astuces La difficulté réside dans le choix entre le passage par valeur (copie) et le passage par référence dans une
+boucle foreach (range-based for loop) pour optimiser les performances.
+
+👉 Défi : Le Garage
+1.Créez un vector de structures Voiture {int longueur;, int poids;, float zero_to_100;}.
+2.Ajoutez 3 voitures avec les valeurs de votre choix.
+3.Action : Une amélioration technique réduit le poids de votre parc de 10 %. 
+4.Modifiez le poids de toutes les voitures via une boucle optimisée.
+
+
+ANG 
+
+🖼️ Card: Containers & Structs
+
+Objective: Practice manipulating dynamic containers (std::vector) to read and modify data.
+Exercise 1: Vector Manipulation
+1.Initialization: Create a vector of type int.
+2.Filling: Use a loop to expand and fill it like a counter (1, 2, 3, 4, 5).
+3.Display: Display the data to validate the filling (printf).
+4.Optimization: In a separate loop, multiply each value by 2 in the most efficient way possible.
+5.check the print value in separate loop.
+
+💡 Tips The difficulty lies in choosing between passing by value (copy) and 
+passing by reference in a foreach loop (range-based for loop) to optimize performance.
+
+👉 Challenge: The Garage
+1.Create a vector of Voiture structures {int longueur;, int poids; float zero_to_100;}.
+2.Add 3 cars with the values of your choice.
+3.Action: A technical improvement reduces the weight of your fleet by 10%. 
+4.Modify the weight of all cars via an optimized loop.
+

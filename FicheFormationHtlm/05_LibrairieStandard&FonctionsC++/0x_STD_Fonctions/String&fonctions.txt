@@ -1,0 +1,37 @@
+🖼️ Carte : Librairies standard et fonction
+
+Objectif : utiliser les outils de la librairie standard et les fonctions
+Exercice 1 : Utilisation des Strings
+1.Initialisation : Créez une variable de type string = "hello la std"
+2.Print : la variable à l'aide de fprint() Raylib (en challenge à l'aide de fprint)
+3.Print : la variable à l'aide de cout
+4.Print directement dans la fenetre Raylib
+
+
+👉 Défi : Fonction gestion data joueur 
+1.Création d'une fonction qui intialise les données du jouer en demandant à ce dernier de renseigner
+son nom et son age. Cette fonction devra donc retourne les données du joueur (essayer d'être cohérent sur la manière de 
+gerer une telle entité dans votre code). 
+💡 Tips : il faudra réfléchire au type de variables nécéssaire et à la structuration de votre code et il y a que peu de
+manière de retourner plusieurs valeurs différentes avec une fonction.
+3.Effectuer un "Hello [nomJoueur]" dans la console et avec raylib.
+
+
+ANG 
+
+🖼️ Card: Standard Libraries and Functions
+Objective: Use Standard Library tools and functions.
+Exercise 1: Using Strings
+1.Initialization: Create a string variable = "hello la std".
+2.Print: Display the variable using Raylib's TraceLog() (Challenge: use fprintf).
+3.Print: Display the variable using std::cout.
+4.Print: Render the text directly in the Raylib window.
+
+👉 Challenge: Player Data Management Function
+1.Function Creation: Create a function that initializes player data by asking the user for their name and age.
+ This function must return the player's data (try to be consistent in how you manage such an entity in your code).
+💡 Tip: Think about the necessary variable types and code structure. Note that there are only a few ways to return multiple
+  different values from a single function [5].
+Output: Display "Hello [playerName]" in the console and within the Raylib window.
+
+

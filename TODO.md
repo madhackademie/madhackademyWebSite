@@ -45,11 +45,22 @@ Tâches utiles mais non bloquantes — à traiter après les priorités.
 
 ### Guides de formation HTML (FlashDev / deck GameDevReady)
 
-> Thème **Frogger** (charte du deck), distinct des pages vitrine Nintendo. Hébergés dans ce repo ; le soft FlashDev les charge via `URLNet`.
+> Thème **Frogger** (charte du deck). Sources dans **`FicheFormationHtlm/`** — chaque module a un dossier `ClaudeHtml*`, `ClaudePdf` ou `ClaudeVariableHtml` avec le support HTML de la carte (squelette de base réutilisable).
 
-- [ ] **P1** — Importer les fichiers sources des guides HTML (fournis hors repo) dans `madhackademyWebSite` — ex. dossier `WebSite/guides/` ou `WebSite/formation/`
-- [ ] **P1** — Déposer le template Frogger réutilisable + premier guide `0x_Struct_Methodes`
-- [ ] **P2** — Publier les URLs sur gameopenmoney.com et les renseigner côté `FlashRevisionSoft` (`URLNet` dans `data.json`)
+| Dossier module | Support HTML (URLNet cible) | Carte FlashSoft |
+|----------------|----------------------------|-----------------|
+| `01_PrintC++` | `ClaudePdf/PrintF/printfC++FrogTheme.html` | `0x_Print` |
+| `02_Variable` | `ClaudeVariableHtml/VariableC++FroggerTheme.html` | `0X_Variable` |
+| `03_Conditions` | `ClaudeHtmlConditions/Conditions.html` | `0x_Conditions` |
+| `04_Les boucles` | `ClaudeHtml/LoopModule.html` | `0X_Boucles` |
+| `05_LibrairieStandard&FonctionsC++` | `ClaudePdf/stdLib&Fonction.html` | `0x_STD_Fonctions` |
+| `06_Conteneurs` | `ClaudePdf/Conteneurs.html` | `0X_Conteneurs` |
+| `0x_Struct_Methodes` | `FicheFormationHtlm/07_Struct_Methodes/ClaudeHtml/StructMethodes.html` |
+
+- [x] Importer les guides HTML sources dans ce repo (`FicheFormationHtlm/`)
+- [x] Créer le module `07_Struct_Methodes` (carte + guide Frogger — brouillon à relire/simplifier)
+- [ ] **P1** — Exposer les HTML en production sous `gameopenmoney.com` (copie ou lien depuis `WebSite/`) — chemins images relatifs à vérifier
+- [ ] **P2** — Renseigner `URLNet` dans `FlashRevisionSoft/data.json` pour chaque carte du deck
 
 ### Contenu & éditorial
 

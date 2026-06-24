@@ -1,0 +1,26 @@
+🖼️ Card: Variables & Structure
+In this card, your task is to practice correcting variable types and assigned values so they match 
+properly.You will create a variable userAge asigne it the value of 20
+(use the commun sens to determine the type who should be associated
+and Keep It Simple & Stupide KISS).
+Then you will add 10 to this value and render the result on the screen.
+
+💡 Tips...
+Watch for type mismatches — for example, assigning a floating-point value to an integer or vice versa.
+
+👉 Challenge:
+
+Create an array for 5 integers
+
+Create a structure named Car with the following members:
+
+    * SizeMetre → float
+    * WeightKilo → int
+    * MaxSpeed → int
+
+💪 Super Challenge:
+
+Please create a null pointer of any type you choose, and then make it point to a variable of the same type (maybe the userAge if match). try to change
+ the value with the pointer.
+Oh girls & boys you dont realise it (and you will never) but ou are almost 50% done on your programing journey
+

@@ -1,0 +1,25 @@
+🖼️ Carte : Struct & Méthodes
+
+Objectif : déclarer une struct avec des méthodes membres, les appeler sur une instance, faire interagir deux combattants.
+Prérequis : Variables, STD_Fonctions, Boucles, Print.
+
+Exercice 1 — Struct combattant
+1. Créez une struct `Fighter` : `name` (string), `hp` (int), `attackPower` (int).
+2. Instanciez David et Goliath.
+3. Affichez leurs stats en console.
+
+Exercice 2 — Méthodes
+1. `void Attack(Fighter& target)` — retire des HP (minimum 0).
+2. `bool IsAlive()` — vrai si hp > 0.
+3. `void PrintStatus()` — affiche nom, HP, attaque.
+4. Appelez `Attack` dans les deux sens depuis `main()`.
+
+💡 Tips
+`david.Attack(goliath)` : la méthode utilise les données de david et modifie goliath.
+
+👉 Challenge
+1. Afficher les HP restants dans Raylib (`DrawText` + `TextFormat`).
+2. Préparer `while (david.IsAlive() && goliath.IsAlive())` — un tour par combattant.
+
+💪 Super Challenge
+Mini combat complet en console + état du duel à l'écran chaque tour.

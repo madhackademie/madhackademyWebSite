@@ -1,0 +1,21 @@
+🖼️ Carte : Affichage & Variables
+Dans cette carte, ta tâche est de t’entraîner à afficher les valeurs des deux variables présentes dans le code (un int et un float)
+en utilisant printf et éventuellement Raylib.
+
+💡 Astuces…
+La principale difficulté est de se souvenir du bon format à utiliser dans l’appel d’affichage.
+
+👉 Défi :
+Utilise les deux variables (int et float) et affiche-les avec un seul appel à printf ou à DrawText(),
+en t’assurant que chaque valeur apparaisse sur sa propre ligne.
+
+🖼️ Card: Print & Variables
+In this card, your task is to practice printing values of the two variable present in code (an int and a float )
+using printf and optionally Raylib.
+
+💡 Tips...
+The key difficulty is recalling the correct format in the print call.
+
+👉 Challenge:
+Use the two variables (int and float) and print them with a single call to either printf or DrawText(), 
+making sure each value appears on its own line.

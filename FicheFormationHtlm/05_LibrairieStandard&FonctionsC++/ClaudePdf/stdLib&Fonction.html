@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Librairie Standard & Fonctions C++ - GameDevReady</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;600;700;800&family=Courier+Prime:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(180deg, #87CEEB 0%, #98D8C8 50%, #6B8E23 100%);
+            color: #2d5016;
+            line-height: 1.7;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(255,255,255,0.03) 50px, rgba(255,255,255,0.03) 100px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 50px 30px;
+            background: linear-gradient(135deg, rgba(34, 139, 34, 0.9), rgba(107, 142, 35, 0.9));
+            border: 4px solid #8B4513;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3), inset 0 2px 10px rgba(255,255,255,0.2);
+            position: relative;
+        }
+        
+        header::before {
+            content: '🐸';
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 4em;
+            animation: hop 2s ease-in-out infinite;
+        }
+        
+        @keyframes hop {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-15px); }
+        }
+
+        .property-banner {
+            background: linear-gradient(135deg, #DAA520, #FFD700);
+            color: #2d5016;
+            padding: 12px 20px;
+            text-align: center;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.75em;
+            border-bottom: 4px solid #8B4513;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .property-icon {
+            font-size: 1.5em;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+        
+        h1 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 2.5em;
+            color: #FFD700;
+            text-shadow: 3px 3px 0 #8B4513, 5px 5px 10px rgba(0,0,0,0.5);
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+        
+        .subtitle {
+            font-size: 2.3em;
+            color: #FFFACD;
+            font-weight: 700;
+            text-transform: none;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        section {
+            background: rgba(255, 255, 255, 0.95);
+            border: 3px solid #6B8E23;
+            border-radius: 15px;
+            padding: 35px;
+            margin-bottom: 35px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            position: relative;
+            page-break-inside: avoid;
+        }
+        
+        section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 8px;
+            height: 100%;
+            background: linear-gradient(180deg, #228B22, #6B8E23, #8B4513);
+            border-radius: 15px 0 0 15px;
+        }
+        
+        h2 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.6em;
+            color: #228B22;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #90EE90;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            line-height: 1.6;
+        }
+        
+        h2::before {
+            content: '🌿';
+            font-size: 1.3em;
+        }
+        
+        h3 {
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.5em;
+            color: #6B8E23;
+            margin: 30px 0 15px 0;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        h3::before {
+            content: '🍃';
+            font-size: 1em;
+        }
+        
+        .separator {
+            height: 50px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50"><path d="M0,25 Q25,5 50,25 T100,25" fill="none" stroke="%236B8E23" stroke-width="3"/></svg>') repeat-x center;
+            margin: 40px 0;
+            position: relative;
+            page-break-after: avoid;
+        }
+        
+        .separator::after {
+            content: '🐸';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2em;
+            background: rgba(255,255,255,0.9);
+            padding: 0 15px;
+            border-radius: 50%;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { 
+                box-shadow: 0 0 5px rgba(255,215,0,0.5);
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% { 
+                box-shadow: 0 0 20px rgba(255,215,0,1), 0 0 30px rgba(255,215,0,0.7);
+                transform: translate(-50%, -50%) scale(1.25);
+            }
+        }
+
+        .image-placeholder {
+            background: linear-gradient(135deg, rgba(152, 216, 200, 0.3), rgba(144, 238, 144, 0.3));
+            border: 3px dashed #6B8E23;
+            border-radius: 12px;
+            padding: 40px 20px;
+            margin: 25px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .image-placeholder-icon {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+        }
+        
+        .image-placeholder-text {
+            color: #2d5016;
+            font-family: 'Courier Prime', monospace;
+            font-size: 1em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .image-placeholder-100 {
+            background: linear-gradient(135deg, rgba(152, 216, 200, 0.3), rgba(144, 238, 144, 0.3));
+            border: 3px dashed #6B8E23;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 25px auto;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-placeholder-100 img {
+        /* Règle essentielle du responsive */
+        width: 100%;    /* L'image prend 100% de la largeur du conteneur parent (800px maximum dans cet exemple) */
+        height: auto;   /* GARANTIT que l'image ne sera pas déformée */
+        display: block; /* Évite les espaces blancs sous l'image */
+        
+        /* Optionnel : Rendre l'image elle-même légèrement arrondie pour épouser le cadre */
+        border-radius: 8px; 
+        }
+        .image-placeholder-75 {
+            background: linear-gradient(135deg, rgba(152, 216, 200, 0.3), rgba(144, 238, 144, 0.3));
+            border: 3px dashed #6B8E23;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 25px auto;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-placeholder-75 img {
+        /* Règle essentielle du responsive */
+        width: 75%;    /* L'image prend 100% de la largeur du conteneur parent (800px maximum dans cet exemple) */
+        height: auto;   /* GARANTIT que l'image ne sera pas déformée */
+        display: inline-block; /* Évite les espaces blancs sous l'image */
+        
+        /* Optionnel : Rendre l'image elle-même légèrement arrondie pour épouser le cadre */
+        border-radius: 8px; 
+        }
+
+        .image-placeholder-50 {
+            background: linear-gradient(135deg, rgba(152, 216, 200, 0.3), rgba(144, 238, 144, 0.3));
+            border: 3px dashed #6B8E23;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 25px auto;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-placeholder-50 img {
+        /* Règle essentielle du responsive */
+        width: 50%;    /* L'image prend 100% de la largeur du conteneur parent (800px maximum dans cet exemple) */
+        height: auto;   /* GARANTIT que l'image ne sera pas déformée */
+        display: inline-block; /* Évite les espaces blancs sous l'image */
+        
+        /* Optionnel : Rendre l'image elle-même légèrement arrondie pour épouser le cadre */
+        border-radius: 8px; 
+        }
+
+        .image-placeholder-25 {
+            background: linear-gradient(135deg, rgba(152, 216, 200, 0.3), rgba(144, 238, 144, 0.3));
+            border: 3px dashed #6B8E23;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 25px auto;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-placeholder-25 img {
+            /* Règle essentielle du responsive */
+            width: 25%;    /* L'image prend 100% de la largeur du conteneur parent (800px maximum dans cet exemple) */
+            height: auto;   /* GARANTIT que l'image ne sera pas déformée */
+            display: inline-block; /* Évite les espaces blancs sous l'image */
+            
+            /* Optionnel : Rendre l'image elle-même légèrement arrondie pour épouser le cadre */
+            border-radius: 8px; 
+        }
+        
+        ul, ol {
+            margin: 20px 0 20px 35px;
+        }
+        
+        li {
+            margin: 12px 0;
+            padding-left: 10px;
+            position: relative;
+        }
+        
+        ul li::before {
+            content: '🌱';
+            position: absolute;
+            left: -30px;
+            font-size: 1em;
+        }
+        
+        ol li {
+            font-weight: 600;
+        }
+
+        .bullet-list {
+            list-style-type: disc;
+            margin: 20px 0 20px 50px;
+            padding-left: 30px;
+        }
+
+        .bullet-list li {
+            margin: 12px 0;
+            padding-left: 20px;
+        }
+        
+        code {
+            font-family: 'Courier Prime', monospace;
+            background: rgba(107, 142, 35, 0.15);
+            color: #2d5016;
+            padding: 3px 10px;
+            border-radius: 6px;
+            border: 2px solid rgba(107, 142, 35, 0.3);
+            font-weight: 700;
+            font-size: 1.05em;
+        }
+
+        pre {
+            background: rgba(45, 80, 22, 0.05);
+            border: 2px solid #6B8E23;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            overflow-x: auto;
+            page-break-inside: avoid;
+        }
+
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+            display: block;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+        
+        .info-box {
+            background: linear-gradient(135deg, rgba(152, 216, 200, 0.4), rgba(144, 238, 144, 0.4));
+            border-left: 6px solid #228B22;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .warning-box {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(255, 165, 0, 0.3));
+            border-left: 6px solid #FF8C00;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            position: relative;
+            page-break-inside: avoid;
+        }
+        
+        .warning-box::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2em;
+        }
+        
+        .key-points {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(218, 165, 32, 0.2));
+            border: 3px solid #DAA520;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 5px 15px rgba(218, 165, 32, 0.3);
+            page-break-inside: avoid;
+        }
+        
+        .key-points h3 {
+            color: #B8860B;
+            margin-top: 0;
+        }
+        
+        .key-points h3::before {
+            content: '⭐';
+        }
+        
+        .objective-box {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.25), rgba(255, 248, 220, 0.25));
+            border: 3px solid #FFD700;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            box-shadow: 0 4px 12px rgba(218, 165, 32, 0.3);
+            page-break-inside: avoid;
+        }
+        
+        .objective-box h3 {
+            color: #DAA520;
+        }
+        
+        .objective-box h3::before {
+            content: '🎯';
+        }
+
+        .exercise-box {
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.15), rgba(75, 0, 130, 0.15));
+            border: 3px solid #8A2BE2;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 5px 15px rgba(138, 43, 226, 0.3);
+            page-break-inside: avoid;
+        }
+
+        .exercise-box h3 {
+            color: #8A2BE2;
+            margin-top: 0;
+        }
+
+        .exercise-box h3::before {
+            content: '✏️';
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+            background: linear-gradient(135deg, rgba(34, 139, 34, 0.8), rgba(107, 142, 35, 0.8));
+            border-radius: 15px;
+            color: #FFD700;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.8em;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            page-break-before: avoid;
+        }
+        
+        footer::before {
+            content: '🐸 🪵 🚗 🪵 🐸';
+            display: block;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+        
+        strong {
+            color: #228B22;
+            font-weight: 800;
+        }
+
+        .strong-no-color{
+            font-weight: 800;
+            color: inherit;
+        }
+        
+        p {
+            margin: 12px 0;
+            font-size: 1.05em;
+        }
+
+        .link-web {
+            color: #2d5016;
+            font-weight: 800;
+            text-decoration: none;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+
+        .link-web::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #08ddf0, #228B22);
+            transition: width 0.3s ease;
+        }
+
+        .link-web:hover::after {
+            width: 100%;
+        }
+
+        .link-web:hover {
+            color: #12c2d2;
+            background: rgba(89, 255, 0, 0.411);
+            transform: translateY(-1px);
+        }
+
+        .link-web::before {
+            content: '🔗';
+            font-size: 0.8em;
+            opacity: 1;
+            margin-right: 3px;
+            transition: opacity 0.3s ease;
+        }
+
+        .link-web:hover::before {
+            transform: scale(1.2);
+        }
+
+        .icon-blink {
+            display: inline-block;
+            font-size: 1.3em;
+            vertical-align: text-bottom;
+            margin: 0 3px;
+            animation: icon-pulse 1s ease-in-out infinite alternate;
+            background: none !important;
+            border: none !important;
+            padding: 0 !important;
+        }
+
+        @keyframes icon-pulse {
+            0% {
+                transform: scale(1);
+                filter: drop-shadow(0 0 0px rgba(255, 215, 0, 0)); 
+            }
+            100% {
+                transform: scale(1.25);
+                filter: drop-shadow(0 0 5px #FFD700) drop-shadow(0 0 8px #FF4500);
+            }
+        }
+
+        .glossary-term {
+            font-family: 'Courier Prime', monospace;
+            background: linear-gradient(135deg, rgba(0, 123, 255, 0.15), rgba(58, 183, 255, 0.15));
+            color: #006bb3;
+            padding: 2px 8px;
+            border-radius: 6px;
+            border: 2px solid rgba(0, 123, 255, 0.4);
+            font-weight: 700;
+            font-size: 1.05em;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .glossary-term:hover {
+            background: linear-gradient(135deg, rgba(0, 123, 255, 0.25), rgba(58, 183, 255, 0.25));
+            border-color: rgba(0, 123, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.4), 0 0 20px rgba(58, 183, 255, 0.3);
+        }
+
+        .glossary-term::after {
+            content: '📖';
+            font-size: 0.8em;
+            margin-left: 3px;
+            opacity: 0.7;
+        }
+
+        @keyframes soft-glow {
+            0%, 100% { 
+                box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+            }
+            50% { 
+                box-shadow: 0 0 8px rgba(0, 123, 255, 0.4), 0 0 12px rgba(58, 183, 255, 0.3);
+            }
+        }
+
+        .glossary-term:hover {
+            animation: soft-glow 2s ease-in-out infinite;
+        }
+
+        .definition-item {
+            scroll-margin-top: 100px;
+            transition: background 0.3s ease;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: rgba(255, 248, 220, 0.9);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        
+        th {
+            background: linear-gradient(135deg, #228B22, #6B8E23);
+            color: #FFD700;
+            padding: 18px;
+            text-align: left;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7em;
+            border-bottom: 3px solid #8B4513;
+        }
+        
+        td {
+            padding: 15px 18px;
+            border-bottom: 2px solid rgba(107, 142, 35, 0.2);
+            font-weight: 600;
+        }
+        
+        tr:nth-child(even) {
+            background: rgba(144, 238, 144, 0.1);
+        }
+        
+        tr:hover {
+            background: rgba(152, 216, 200, 0.3);
+            transform: scale(1.01);
+            transition: all 0.2s;
+        }
+
+        @media print {
+            .separator {
+                page-break-after: avoid;
+            }
+            section, .info-box, .warning-box, .key-points, .objective-box, .exercise-box, pre {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="property-banner">
+        <span class="property-icon">🛡️</span>
+        <span class="property-text">© 2025 MadHackAdemy | Formation Propriétaire | Tous droits réservés</span>
+        <span class="property-icon">🛡️</span>
+    </div>
+    <div class="container">
+        <header>
+            <h1>Librairie Standard & Fonctions C++</h1>
+            <p class="subtitle">GameDevReady</p>
+        </header>
+
+        <section>
+            <h2>Objectif du Module</h2>
+            <p>Avant de plonger dans les détails, prenons un moment pour parler de la STL (Standard Template Library).
+                Couramment appeler "STD" et vous comprendrez vite pourquoi.
+                Nous avons déjà utilisé un outil de la <a href="#def-STD" class="glossary-term">std</a> avec <code>printf</code> 
+                qui vient de la bibliothèque <code>cstdio</code>.</p>
+            
+            <p>La <strong>std correspond à "librairie standard"</strong>. Et elle contient plein d'outils pratiques pour 
+                nous simplifier la vie et nous éviter de coder tout par nous-mêmes. Vous serez amenés à l'utiliser tout 
+                au long de votre carrière de programmeur C++.</p>
+            
+            <p>Dans ce module, nous allons découvrir trois concepts fondamentaux qui vont révolutionner votre façon de coder :</p>
+            <ul>
+                <li><strong>La bibliothèque string</strong> : pour manipuler du texte facilement</li>
+                <li><strong>La bibliothèque iostream</strong> : pour communiquer avec l'utilisateur (entrées/sorties)</li>
+                <li><strong>Les fonctions</strong> : pour organiser et réutiliser votre code</li>
+            </ul>
+            
+            <div class="objective-box">
+                <h3>Ce que l'élève saura faire à la fin</h3>
+                <p>Créer et utiliser des <a href="#def-Fonction" class="glossary-term">fonctions</a> simples et avec 
+                    <a href="#def-Parametre" class="glossary-term">paramètres</a> / <a href="#def-Return" class="glossary-term">retour</a>, 
+                    manipuler des chaînes de caractères avec <code>string</code>,
+                    et interagir avec l'utilisateur via <code>cin</code> et <code>cout</code>.</p>
+            </div>
+            
+            <div class="info-box">
+                <strong>Notions techniques abordées :</strong> Fonctions (déclaration, paramètres, retour), 
+                std::string, std::cout, std::cin, flux d'entrée/sortie.
+            </div>
+        </section>
+
+        <div class="separator"></div>
+
+        <section>
+            <h2>La Bibliothèque String : Manipuler du Texte</h2>
+            
+            <h3>Pourquoi utiliser std::string ?</h3>
+            
+            <p>Jusqu'à présent, nous avons utilisé que les options de texte présentes dans les fonctions 
+                <code>fprint</code> et <code>DrawText(textformat())</code>, mais si vous voulez créer une variable de 
+                type text en C++, vous devrez utiliser la bibliothèque <code>string</code>.
+                Car l'ancienne méthode héritée du <strong>C</strong> <code>char*</code> est limitée et compliquée. <br> 
+                Voire inutilisable pour les dictionnaires (tableaux clés/valeurs vus ultérieurement). <br>
+                La bibliothèque <code>string</code> de la STL nous offre un type moderne et facile à utiliser : 
+                <code>std::string</code>.</p>
+            
+            <div class="info-box">
+                <p><strong>Avantages de std::string :</strong></p>
+                <ul>
+                    <li>✅ Taille dynamique (pas besoin de spécifier la longueur)</li>
+                    <li>✅ Facile à modifier (ajouter, supprimer, remplacer du texte)</li>
+                    <li>✅ Gestion automatique de la mémoire</li>
+                    <li>✅ Nombreuses fonctions utiles intégrées</li>
+                </ul>
+            </div>
+
+            <p>Pour utiliser <code>string</code>, il faut inclure la bibliothèque :</p>
+
+            <pre><code>#include &lt;string&gt;</code></pre>
+
+            <h3>Création et utilisation basique</h3>
+
+            <pre><code>#include &lt;cstdio&gt;
+#include &lt;string&gt;
+
+int main() 
+{
+    // Créer une string
+    std::string nomHeros = "Grenouille";
+    std::string message = "Bienvenue dans le jeu !";
+    
+    // Afficher avec printf (conversion nécessaire)
+    printf("Héros : %s\n", nomHeros.c_str());
+    printf("Message : %s\n", message.c_str());
+    
+    return 0;
+}</code></pre>
+
+            <div class="warning-box">
+                <p><strong><span class="icon-blink">⚠️</span> Note importante :</strong></p>
+                <p><code>printf</code> ne peut pas afficher directement une <code>std::string</code>. 
+                    Il faut utiliser <code>.c_str()</code> pour la convertir en <code>const char*</code>.</p>
+                <p>C'est pour ça que nous allons bientôt découvrir <code>cout</code>, 
+                    qui fonctionne parfaitement avec <code>std::string</code> !</p>
+            </div>
+
+            <h3>Opérations courantes avec string</h3>
+
+            <pre><code>#include &lt;string&gt;
+#include &lt;cstdio&gt;
+
+int main() 
+{
+    std::string prenom = "Mario";
+    std::string nom = "Bros";
+    
+    // Concaténation (assemblage de textes)
+    std::string nomComplet = prenom + " " + nom;
+    printf("Nom complet : %s\n", nomComplet.c_str());
+    
+    // Ajouter du texte à la fin
+    std::string message = "Bonjour";
+    message += " le monde";
+    message += "!";
+    printf("%s\n", message.c_str());  // Affiche : Bonjour le monde!
+    
+    // Longueur du texte
+    std::string texte = "Frogger";
+    int longueur = texte.length();  // ou texte.size()
+    printf("Le mot '%s' contient %d lettres\n", texte.c_str(), longueur);
+    
+    // Accéder à un caractère spécifique
+    char premiereLettre = texte[0];  // 'F'
+    char derniereLettre = texte[longueur - 1];  // 'r'
+    printf("Première lettre : %c\n", premiereLettre);
+    printf("Dernière lettre : %c\n", derniereLettre);
+    
+    // Vérifier si la string est vide
+    std::string vide = "";
+    if (vide.empty()) {
+        printf("La chaîne est vide\n");
+    }
+    
+    return 0;
+}</code></pre>
+
+            <h3>Fonctions utiles de string</h3>
+
+            <table>
+                <tr>
+                    <th>Fonction</th>
+                    <th>Description</th>
+                    <th>Exemple</th>
+                </tr>
+                <tr>
+                    <td><code>.length()</code></td>
+                    <td>Taille du texte</td>
+                    <td><code>texte.length()</code></td>
+                </tr>
+                <tr>
+                    <td><code>.empty()</code></td>
+                    <td>Vérifie si vide</td>
+                    <td><code>if (texte.empty())</code></td>
+                </tr>
+                <tr>
+                    <td><code>.clear()</code></td>
+                    <td>Vide la string</td>
+                    <td><code>texte.clear()</code></td>
+                </tr>
+                <tr>
+                    <td><code>.c_str()</code></td>
+                    <td>Conversion en char*</td>
+                    <td><code>printf("%s", texte.c_str())</code></td>
+                </tr>
+                <tr>
+                    <td><code>.append()</code></td>
+                    <td>Ajouter du texte</td>
+                    <td><code>texte.append(" fin")</code></td>
+                </tr>
+                <tr>
+                    <td><code>.substr()</code></td>
+                    <td>Extraire une partie</td>
+                    <td><code>texte.substr(0, 5)</code></td>
+                </tr>
+            </table>
+
+            <div class="info-box">
+                <p><strong>Exemple pratique : Gestion d'un nom de joueur</strong></p>
+                <pre><code>std::string nomJoueur = "Grenouille_Verte_123";
+
+// Extraire seulement le prénom (jusqu'au premier _)
+int position = nomJoueur.find('_');  // Trouve la position du _
+std::string prenom = nomJoueur.substr(0, position);  // "Grenouille"
+
+printf("Prénom : %s\n", prenom.c_str());</code></pre>
+            </div>
+        </section>
+
+        <div class="separator"></div>
+
+        <section>
+            <h2>La Bibliothèque Iostream : Communiquer avec l'Utilisateur</h2>
+            
+            <h3>Comprendre les flux d'entrée/sortie</h3>
+            
+            <p>En programmation, il existe deux grands flux de données :</p>
+            
+            <div class="info-box">
+                <ul>
+                    <li><strong>Output (sortie)</strong> : Les données qui sortent de votre programme vers l'utilisateur
+                        <br>→ Exemple : Afficher du texte à l'écran</li>
+                    <li><strong>Input (entrée)</strong> : Les données qui entrent dans votre programme depuis l'utilisateur
+                        <br>→ Exemple : L'utilisateur tape son nom au clavier</li>
+                </ul>
+            </div>
+
+            <p>Jusqu'à présent, nous avons utilisé <code>printf()</code> pour les sorties. 
+                Maintenant, découvrons <code>iostream</code>, une bibliothèque moderne C++ qui gère 
+                les entrées ET les sorties de manière élégante.</p>
+
+            <pre><code>#include &lt;iostream&gt;</code></pre>
+
+            <h3>cout : Afficher du texte (Output)</h3>
+            
+            <p><code>std::cout</code> (console output) est l'équivalent moderne de <code>printf</code>.</p>
+
+            <pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+int main() 
+{
+    std::string nom = "Grenouille";
+    int age = 5;
+    float taille = 1.25f;
+    
+    // Afficher du texte avec cout
+    std::cout << "Bienvenue dans le jeu !\n";
+    
+    // Afficher des variables (pas besoin de %s, %d, %f !)
+    std::cout << "Nom : " << nom << "\n";
+    std::cout << "Age : " << age << " ans\n";
+    std::cout << "Taille : " << taille << " mètres\n";
+    
+    // Tout sur une ligne
+    std::cout << "Joueur " << nom << " (" << age << " ans)\n";
+    
+    return 0;
+}</code></pre>
+
+            <div class="info-box">
+                <p><strong>Avantages de cout sur printf :</strong></p>
+                <ul>
+                    <li>✅ Pas besoin de se souvenir des spécificateurs (<code>%d</code>, <code>%f</code>, etc.)</li>
+                    <li>✅ Fonctionne nativement avec <code>std::string</code></li>
+                    <li>✅ Syntaxe plus simple et moins d'erreurs possibles</li>
+                    <li>✅ Utilise l'opérateur <code>&lt;&lt;</code> pour "envoyer" des données vers la sortie</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <p><strong>Note sur <code>\n</code> vs <code>std::endl</code> :</strong></p>
+                <ul>
+                    <li><code>\n</code> : retour à la ligne simple (rapide)</li>
+                    <li><code>std::endl</code> : retour à la ligne + flush du <a href="#def-Buffer" class="glossary-term">buffer</a> 
+                        (plus lent mais garantit l'affichage immédiat)</li>
+                </ul>
+                <p>Pour la plupart des cas, <code>\n</code> suffit amplement.</p>
+            </div>
+
+            <h3>cin : Récupérer les entrées utilisateur (Input)</h3>
+            
+            <p>Voici la grande nouveauté : <code>std::cin</code> (console input) nous permet de demander 
+                des informations à l'utilisateur !</p>
+
+            <pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+int main() 
+{
+    std::string nomJoueur;
+    int ageJoueur;
+    
+    // Demander le nom
+    std::cout << "Quel est votre nom ? ";
+    std::cin >> nomJoueur;  // L'utilisateur tape son nom
+    
+    // Demander l'âge
+    std::cout << "Quel est votre âge ? ";
+    std::cin >> ageJoueur;  // L'utilisateur tape son âge
+    
+    // Afficher un message personnalisé
+    std::cout << "\nBienvenue " << nomJoueur << " !\n";
+    std::cout << "Vous avez " << ageJoueur << " ans.\n";
+    
+    return 0;
+}</code></pre>
+
+            <div class="info-box">
+                <p><strong>Comment ça fonctionne ?</strong></p>
+                <p>L'opérateur <code>&gt;&gt;</code> extrait les données de l'entrée (clavier) et les stocke dans la variable.</p>
+                <p>Le programme <strong>attend</strong> que l'utilisateur tape quelque chose et appuie sur Entrée.</p>
+            </div>
+
+            <div class="warning-box">
+                <p><span class="icon-blink">⚠️</span>L'IDE se comporte de manière un peu différente car il attends quelque chose de vous.
+                    Mais comme moi, il n'est pas très fort en communication. Il faut voir dans la console, car elle vous pose une 
+                    question (c'est d'ailleurs le comportement que nous attendions). Il faut avec la souris cliquer sur l'espace vide en-dessous 
+                    de la question afin d'avoir le curseur de saisie. Puis donner votre réponse.
+                </p>
+                <div class="image-placeholder-50">
+                        <img src="image\ConsolCin.jpg" alt="cin consol">
+                        <div class="image-placeholder-text">IMAGE : La console en attente de vos informations.</div>
+                </div>
+                <p>Et si pour une raison ou une autre vous vouliez arreter le debug ou programme sans répondre.</p>
+                <div class="image-placeholder-75">
+                    <img src="image\KillTerminal.jpg" alt="Arret du debug console en mode cin">
+                    <div class="image-placeholder-text">IMAGE : Comment arreter le programme manuellement.</div>
+                </div>
+            </div>
+
+            <h3>Exemple complet : Création de personnage</h3>
+
+            <pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+int main() 
+{
+    std::string nomHeros;
+    std::string classe;
+    int niveau;
+    
+    std::cout << "=== CREATION DE PERSONNAGE ===\n\n";
+    
+    std::cout << "Nom de votre héros : ";
+    std::cin >> nomHeros;
+    
+    std::cout << "Classe (Guerrier/Mage/Voleur) : ";
+    std::cin >> classe;
+    
+    std::cout << "Niveau de départ (1-10) : ";
+    std::cin >> niveau;
+    
+    std::cout << "\n=== RECAPITULATIF ===\n";
+    std::cout << "Nom : " << nomHeros << "\n";
+    std::cout << "Classe : " << classe << "\n";
+    std::cout << "Niveau : " << niveau << "\n";
+    std::cout << "========================\n";
+    std::cout << "\nBonne aventure, " << nomHeros << " !\n";
+    
+    return 0;
+}</code></pre>
+
+            <h3>Lire une ligne complète avec getline()</h3>
+
+            <p>Par défaut, <code>cin</code> s'arrête au premier espace. Pour lire une phrase complète :</p>
+
+            <pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+int main() 
+{
+    std::string phraseComplete;
+    
+    std::cout << "Entrez une phrase : ";
+    std::getline(std::cin, phraseComplete);  // Lit toute la ligne
+    
+    std::cout << "Vous avez dit : " << phraseComplete << "\n";
+    
+    return 0;
+}</code></pre>
+
+            <div class="warning-box">
+                <p><strong><span class="icon-blink">⚠️</span> Piège courant avec getline :</strong></p>
+                <p>Si vous utilisez <code>cin</code> avant <code>getline</code>, il faut vider le buffer :
+                    Il s'agit d'une histoire de gestion de mémoire résiduelle et de mémoire tempon.
+                    Je vous laisse effectuer vos propre recherche pour attiser votre curiosité si nécessaire.
+                    Mais n'oubliez pas " La vérité est une chose belle et terrible, et doit donc être traitée 
+                    avec une grande précaution"
+                </p>
+                <pre><code>int age;
+std::string nom;
+
+std::cin >> age;
+std::cin.ignore();  // ⬅️ Important !
+std::getline(std::cin, nom);</code></pre>
+            </div>
+
+            <h3>Tableau comparatif : printf/scanf vs cout/cin</h3>
+
+            <table>
+                <tr>
+                    <th>Opération</th>
+                    <th>C (printf/scanf)</th>
+                    <th>C++ (cout/cin)</th>
+                </tr>
+                <tr>
+                    <td>Afficher un entier</td>
+                    <td><code>printf("%d", x);</code></td>
+                    <td><code>cout &lt;&lt; x;</code></td>
+                </tr>
+                <tr>
+                    <td>Afficher un float</td>
+                    <td><code>printf("%.2f", y);</code></td>
+                    <td><code>cout &lt;&lt; y;</code></td>
+                </tr>
+                <tr>
+                    <td>Afficher une string</td>
+                    <td><code>printf("%s", s.c_str());</code></td>
+                    <td><code>cout &lt;&lt; s;</code></td>
+                </tr>
+                <tr>
+                    <td>Lire un entier</td>
+                    <td><code>scanf("%d", &x);</code></td>
+                    <td><code>cin &gt;&gt; x;</code></td>
+                </tr>
+                <tr>
+                    <td>Lire une string</td>
+                    <td><code>scanf("%s", buffer);</code></td>
+                    <td><code>cin &gt;&gt; s;</code></td>
+                </tr>
+            </table>
+        </section>
+
+        <div class="separator"></div>
+
+        <section>
+            <h2>Les Fonctions : Réutiliser son Code</h2>
+            
+            <h3>Qu'est-ce qu'une fonction ?</h3>
+            
+            <p>Imaginez que vous devez faire sauter notre grenouille plusieurs fois dans votre jeu. Sans fonction, 
+                vous devriez copier-coller le même code encore et encore. Avec une fonction, vous écrivez le code 
+                une seule fois et vous l'appelez autant de fois que nécessaire !</p>
+            
+            <p>Une <a href="#def-Fonction" class="glossary-term">fonction</a> est un bloc de code réutilisable qui 
+                effectue une tâche spécifique. C'est comme une recette de cuisine : vous l'écrivez une fois, 
+                et vous pouvez la suivre autant de fois que vous voulez.</p>
+            
+            <div class="info-box">
+                <p><strong>Vous connaissez déjà des fonctions !</strong></p>
+                <ul>
+                    <li><code>printf()</code> : affiche du texte dans la console</li>
+                    <li><code>DrawText()</code> : affiche du texte dans Raylib</li>
+                    <li><code>InitWindow()</code> : initialise une fenêtre Raylib</li>
+                </ul>
+                <p>Toutes ces fonctions ont été créées par quelqu'un d'autre, et vous les utilisez simplement 
+                    en les appelant avec leurs noms et leurs paramètres.</p>
+            </div>
+        
+            <h3>La fonction de base (sans paramètre, sans retour)</h3>
+            
+            <p>Commençons par le plus simple : une fonction qui ne prend rien et ne renvoie rien. 
+                Elle fait juste une action.</p>
+        
+            <pre><code>// Déclaration de la fonction (avant le main)
+        void DireBonjour() 
+        {
+        printf("Bonjour, apprenti développeur !\n");
+        printf("Prêt à coder aujourd'hui ?\n");
+        }
+        
+        int main() 
+        {
+        // Appel de la fonction
+        DireBonjour();
+        DireBonjour();  // On peut l'appeler autant de fois qu'on veut !
+        
+        return 0;
+        }</code></pre>
+        
+            <div class="info-box">
+                <p><strong>Décortiquons cette fonction :</strong></p>
+                <ul>
+                    <li><code>void</code> : signifie que la fonction ne renvoie aucune valeur</li>
+                    <li><code>DireBonjour</code> : le nom de la fonction (commence par une majuscule par convention)</li>
+                    <li><code>()</code> : les parenthèses vides indiquent qu'elle ne prend aucun paramètre</li>
+                    <li><code>{ ... }</code> : le corps de la fonction, ce qu'elle fait réellement</li>
+                </ul>
+            </div>
+        
+            <h3>La fonction avec paramètres</h3>
+            
+            <p>Maintenant, rendons notre fonction plus flexible en lui permettant de recevoir des informations.</p>
+        
+            <pre><code>
+                #include &lt;iostream&gt;
+                #include &lt;string&gt;
+                // Fonction qui salue une personne spécifique
+                void SaluerJoueur(std::string nomJoueur, int niveau) 
+                {
+                std::cout <<"Salut "<< nomJoueur <<"\n";
+                std::cout <<"Niveau actuel : "<< niveau << "\n";
+                std::cout <<"Continue comme ça !\n\n";
+                }
+                
+                int main() 
+                {
+                SaluerJoueur("Mario", 5);
+                SaluerJoueur("Luigi", 3);
+                SaluerJoueur("Grenouille", 42);
+                
+                return 0;
+                }</code></pre>
+        
+            <div class="info-box">
+                <p><strong>Les paramètres :</strong></p>
+                <p>Les paramètres sont comme des <strong>variables temporaires</strong> qui n'existent que dans la fonction. 
+                    Ici, <code>nomJoueur</code> et <code>niveau</code> reçoivent les valeurs passées lors de l'appel.</p>
+                <ul>
+                    <li><code>const char* nomJoueur</code> : une chaîne de caractères (texte)</li>
+                    <li><code>int niveau</code> : un nombre entier</li>
+                </ul>
+            </div>
+        
+            <h3>La fonction avec retour de données</h3>
+            
+            <p>Parfois, on veut que notre fonction nous <strong>renvoie un résultat</strong>. 
+                C'est comme demander à quelqu'un de faire un calcul et de vous donner la réponse.</p>
+        
+            <pre><code>// Fonction qui calcule la puissance d'un saut
+        float CalculerPuissanceSaut(float vitesse, float angle) 
+        {
+        float puissance = vitesse * angle * 0.5f;
+        return puissance;  // On renvoie le résultat
+        }
+        
+        int main() 
+        {
+        float resultat1 = CalculerPuissanceSaut(10.0f, 45.0f);
+        printf("Puissance du saut : %.2f\n", resultat1);
+        
+        // On peut aussi utiliser le résultat directement
+        if (CalculerPuissanceSaut(5.0f, 30.0f) > 50.0f) {
+        printf("Super saut !\n");
+        }
+        
+        return 0;
+        }</code></pre>
+        
+            <div class="warning-box">
+                <p><strong><span class="icon-blink">⚠️</span> Important sur le return :</strong></p>
+                <ul>
+                    <li>Le type de retour (<code>float</code> ici) doit correspondre au type de la valeur renvoyée</li>
+                    <li><code>return</code> termine immédiatement l'exécution de la fonction</li>
+                    <li>Si le type de retour est <code>void</code>, pas besoin de <code>return</code> 
+                        (ou juste <code>return;</code> sans valeur)</li>
+                </ul>
+            </div>
+        
+            <h3>Exemple complet : Fonction de jeu</h3>
+        
+            <pre><code>
+            #include &lt;iostream&gt;
+            #include &lt;string&gt;
+        
+            // Fonction qui vérifie si le joueur a gagné
+            bool VerifierVictoire(int score, int scoreRequis) 
+            {
+                if (score >= scoreRequis) {
+                return true;  // Victoire !
+                } else {
+                return false; // Pas encore...
+                }
+            }
+            
+            // Fonction qui affiche le statut du joueur
+            void AfficherStatut(std::string nom, int score, int vies) 
+            {
+                std::cout <<"=== STATUT JOUEUR ===\n";
+                std::cout <<"Nom : " << nom << "\n";
+                std::cout <<"Score : " << score << "\n";
+                std::cout <<"Vies : " << vies << "\n";
+                std::cout <<"=====================\n\n";
+            }
+            
+            int main() 
+            {
+                std::string nomJoueur = "Grenouille";
+                int scoreJoueur = 450;
+                int viesJoueur = 3;
+                int scoreVictoire = 500;
+                
+                AfficherStatut(nomJoueur, scoreJoueur, viesJoueur);
+                
+                if (VerifierVictoire(scoreJoueur, scoreVictoire)) {
+                printf("Bravo ! Vous avez gagné !\n");
+                } else {
+                std::cout <<"Contine, encore "<< scoreVictoire - scoreJoueur << " points ! \n";
+                printf("Continue, encore %d points !\n", scoreVictoire - scoreJoueur);
+                }
+                
+                return 0;
+            }</code></pre>
+        
+            <div class="key-points">
+                <h3>Résumé sur les fonctions</h3>
+                <ul>
+                    <li><strong>Sans paramètre, sans retour</strong> : <code>void MaFonction() { ... }</code></li>
+                    <li><strong>Avec paramètres</strong> : <code>void MaFonction(int x, float y) { ... }</code></li>
+                    <li><strong>Avec retour</strong> : <code>int MaFonction() { return 42; }</code></li>
+                    <li><strong>Complet</strong> : <code>float Calculer(int a, int b) { return a * b * 1.5f; }</code></li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="separator"></div>
+    
+        <section>
+            <h2>Résumé</h2>
+            
+            <div class="key-points">
+                <h3>Points Clés</h3>
+                <ul>
+                    <li><strong>Point clé 1 :</strong> Les fonctions permettent de réutiliser du code et d'organiser votre programme</li>
+                    <li><strong>Point clé 2 :</strong> <code>std::string</code> simplifie la manipulation de texte</li>
+                    <li><strong>Point clé 3 :</strong> <code>cout</code> et <code>cin</code> sont plus modernes et simples que printf/scanf</li>
+                </ul>
+            </div>
+            
+            <div class="key-points">
+                <h3>À retenir</h3>
+                <ul>
+                    <li><strong>Fonctions :</strong> <code>typeRetour NomFonction(paramètres) { ... return valeur; }</code></li>
+                    <li><strong>String :</strong> <code>std::string texte = "Hello";</code></li>
+                    <li><strong>Output :</strong> <code>std::cout &lt;&lt; "Texte" &lt;&lt; variable &lt;&lt; "\n";</code></li>
+                    <li><strong>Input :</strong> <code>std::cin &gt;&gt; variable;</code></li>
+                    <li><strong>Ligne complète :</strong> <code>std::getline(std::cin, maString);</code></li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="separator"></div>
+
+        <section>
+            <h2>Définitions</h2>
+            
+            <div class="info-box">
+                <div id="def-STD" class="definition-item">
+                    <p><strong>
+                        <a href="https://perso.esiee.fr/~buzerl/sphinx_CPP/12%20Chap_STD/STD.html" 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        class="link-web">STD (Standard Library) :</a></strong>
+                        La bibliothèque standard du C++ qui contient de nombreux outils prêts à l'emploi : 
+                        conteneurs (vector, array, etc.), algorithmes, gestion de texte, entrées/sorties, et bien plus.
+                        Tout ce qui commence par <code>std::</code> provient de cette bibliothèque.
+                    </p>
+                </div>
+                
+                <div id="def-Fonction" class="definition-item">
+                    <p><strong>
+                        <a href="https://learn.microsoft.com/fr-fr/cpp/cpp/functions-cpp?view=msvc-170" 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        class="link-web">Fonction :</a></strong>
+                        Un bloc de code réutilisable qui effectue une tâche spécifique. Elle peut recevoir des 
+                        paramètres (données en entrée) et renvoyer une valeur (résultat). Les fonctions permettent 
+                        d'organiser le code et d'éviter les répétitions.
+                    </p>
+                </div>
+                
+                <div id="def-Parametre" class="definition-item">
+                    <p><strong>Paramètre :</strong>
+                        Variable locale à une fonction qui reçoit une valeur lors de l'appel de cette fonction. 
+                        Les paramètres permettent de passer des informations à une fonction pour qu'elle puisse 
+                        travailler avec.
+                    </p>
+                </div>
+                
+                <div id="def-Return" class="definition-item">
+                    <p><strong>Return (retour) :</strong>
+                        Instruction qui termine l'exécution d'une fonction et renvoie une valeur au code appelant. 
+                        Le type de la valeur renvoyée doit correspondre au type de retour déclaré dans la signature 
+                        de la fonction.
+                    </p>
+                </div>
+                
+                <div id="def-Buffer" class="definition-item">
+                    <p><strong>
+                        <a href="https://fr.wikipedia.org/wiki/M%C3%A9moire_tampon" 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        class="link-web">Buffer (tampon) :</a></strong>
+                        Zone de mémoire temporaire utilisée pour stocker des données avant leur traitement. 
+                        Dans le contexte de <code>cin</code>, c'est l'endroit où les caractères tapés au clavier 
+                        sont stockés en attendant d'être lus par le programme.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <div class="separator"></div>
+
+        <section>
+            <h2>Validation des Compétences</h2>
+            
+            <div class="key-points">
+                <h3>L'élève doit savoir</h3>
+                <ul>
+                    <li>Créer une fonction simple sans paramètre ni retour</li>
+                    <li>Créer une fonction avec paramètres</li>
+                    <li>Créer une fonction qui renvoie une valeur</li>
+                    <li>Utiliser <code>std::string</code> pour stocker et manipuler du texte</li>
+                    <li>Utiliser <code>std::cout</code> pour afficher des informations</li>
+                    <li>Utiliser <code>std::cin</code> pour récupérer des entrées utilisateur</li>
+                    <li>Combiner ces trois concepts dans un programme cohérent</li>
+                </ul>
+            </div>
+            
+            <div class="info-box">
+                <p><strong>Checklist des notions maîtrisées :</strong></p>
+                <ul>
+                    <li>☑️ Comprendre le rôle de la STL</li>
+                    <li>☑️ Déclarer et appeler une fonction</li>
+                    <li>☑️ Passer des paramètres à une fonction</li>
+                    <li>☑️ Renvoyer une valeur depuis une fonction</li>
+                    <li>☑️ Créer et manipuler des <code>std::string</code></li>
+                    <li>☑️ Afficher avec <code>cout</code></li>
+                    <li>☑️ Lire avec <code>cin</code></li>
+                    <li>☑️ Utiliser <code>getline</code> pour lire une ligne complète</li>
+                </ul>
+            </div>
+        </section>
+
+        <footer>
+            <p>MODULE DE FORMATION C++</p>
+            <p style="font-size: 0.85em; margin-top: 12px; opacity: 0.9;">Programmation • GameDev • Raylib</p>
+        </footer>
+    </div>
+</body>
+</html>

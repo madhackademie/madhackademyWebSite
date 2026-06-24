@@ -1,0 +1,1846 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les Conteneurs C++ - GameDevReady</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;600;700;800&family=Courier+Prime:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(180deg, #87CEEB 0%, #98D8C8 50%, #6B8E23 100%);
+            color: #2d5016;
+            line-height: 1.7;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(255,255,255,0.03) 50px, rgba(255,255,255,0.03) 100px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 50px 30px;
+            background: linear-gradient(135deg, rgba(34, 139, 34, 0.9), rgba(107, 142, 35, 0.9));
+            border: 4px solid #8B4513;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3), inset 0 2px 10px rgba(255,255,255,0.2);
+            position: relative;
+        }
+        
+        header::before {
+            content: '🐸';
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 4em;
+            animation: hop 2s ease-in-out infinite;
+        }
+        
+        @keyframes hop {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-15px); }
+        }
+
+        .property-banner {
+            background: linear-gradient(135deg, #DAA520, #FFD700);
+            color: #2d5016;
+            padding: 12px 20px;
+            text-align: center;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.75em;
+            border-bottom: 4px solid #8B4513;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .property-icon {
+            font-size: 1.5em;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+        
+        h1 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 2.5em;
+            color: #FFD700;
+            text-shadow: 3px 3px 0 #8B4513, 5px 5px 10px rgba(0,0,0,0.5);
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+        
+        .subtitle {
+            font-size: 2.3em;
+            color: #FFFACD;
+            font-weight: 700;
+            text-transform: none;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        section {
+            background: rgba(255, 255, 255, 0.95);
+            border: 3px solid #6B8E23;
+            border-radius: 15px;
+            padding: 35px;
+            margin-bottom: 35px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            position: relative;
+            page-break-inside: avoid;
+        }
+        
+        section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 8px;
+            height: 100%;
+            background: linear-gradient(180deg, #228B22, #6B8E23, #8B4513);
+            border-radius: 15px 0 0 15px;
+        }
+        
+        h2 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.6em;
+            color: #228B22;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #90EE90;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            line-height: 1.6;
+        }
+        
+        h2::before {
+            content: '🌿';
+            font-size: 1.3em;
+        }
+        
+        h3 {
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.5em;
+            color: #6B8E23;
+            margin: 30px 0 15px 0;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        h3::before {
+            content: '🍃';
+            font-size: 1em;
+        }
+        
+        .separator {
+            height: 50px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50"><path d="M0,25 Q25,5 50,25 T100,25" fill="none" stroke="%236B8E23" stroke-width="3"/></svg>') repeat-x center;
+            margin: 40px 0;
+            position: relative;
+            page-break-after: avoid;
+        }
+        
+        .separator::after {
+            content: '🐸';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2em;
+            background: rgba(255,255,255,0.9);
+            padding: 0 15px;
+            border-radius: 50%;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { 
+                box-shadow: 0 0 5px rgba(255,215,0,0.5);
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% { 
+                box-shadow: 0 0 20px rgba(255,215,0,1), 0 0 30px rgba(255,215,0,0.7);
+                transform: translate(-50%, -50%) scale(1.25);
+            }
+        }
+
+        .image-placeholder-100 {
+            background: linear-gradient(135deg, rgba(152, 216, 200, 0.3), rgba(144, 238, 144, 0.3));
+            border: 3px dashed #6B8E23;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 25px auto;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-placeholder-100 img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+        }
+
+        .image-placeholder-75 {
+            background: linear-gradient(135deg, rgba(152, 216, 200, 0.3), rgba(144, 238, 144, 0.3));
+            border: 3px dashed #6B8E23;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 25px auto;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-placeholder-75 img {
+            width: 75%;
+            height: auto;
+            display: inline-block;
+            border-radius: 8px;
+        }
+
+        .image-placeholder-50 {
+            background: linear-gradient(135deg, rgba(152, 216, 200, 0.3), rgba(144, 238, 144, 0.3));
+            border: 3px dashed #6B8E23;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 25px auto;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-placeholder-50 img {
+            width: 50%;
+            height: auto;
+            display: inline-block;
+            border-radius: 8px;
+        }
+
+        .image-placeholder-text {
+            color: #2d5016;
+            font-family: 'Courier Prime', monospace;
+            font-size: 1em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+        
+        ul, ol {
+            margin: 20px 0 20px 35px;
+        }
+        
+        li {
+            margin: 12px 0;
+            padding-left: 10px;
+            position: relative;
+        }
+        
+        ul li::before {
+            content: '🌱';
+            position: absolute;
+            left: -30px;
+            font-size: 1em;
+        }
+        
+        ol li {
+            font-weight: 600;
+        }
+
+        .bullet-list {
+            list-style-type: disc;
+            margin: 20px 0 20px 50px;
+            padding-left: 30px;
+        }
+
+        .bullet-list li {
+            margin: 12px 0;
+            padding-left: 10px;
+        }
+
+        .bullet-list li::before {
+            content: none;
+        }
+        
+        code {
+            font-family: 'Courier Prime', monospace;
+            background: rgba(107, 142, 35, 0.15);
+            color: #2d5016;
+            padding: 3px 10px;
+            border-radius: 6px;
+            border: 2px solid rgba(107, 142, 35, 0.3);
+            font-weight: 700;
+            font-size: 1.05em;
+        }
+
+        pre {
+            background: rgba(45, 80, 22, 0.05);
+            border: 2px solid #6B8E23;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            overflow-x: auto;
+            page-break-inside: avoid;
+        }
+
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+            display: block;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+        
+        .info-box {
+            background: linear-gradient(135deg, rgba(152, 216, 200, 0.4), rgba(144, 238, 144, 0.4));
+            border-left: 6px solid #228B22;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            page-break-inside: avoid;
+        }
+        
+        .warning-box {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(255, 165, 0, 0.3));
+            border-left: 6px solid #FF8C00;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            position: relative;
+            page-break-inside: avoid;
+        }
+        
+        .warning-box::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2em;
+        }
+
+        /* Classe à appliquer sur le <span> qui entoure l'emoji */
+        .icon-blink {
+            display: inline-block;       /* Nécessaire pour que la transformation (scale) fonctionne */
+            font-size: 1.3em;            /* Taille de base déjà un peu plus grande que le texte */
+            vertical-align: text-bottom; /* Aligne mieux l'emoji par rapport à la ligne de texte */
+            margin: 0 3px;               /* Un tout petit peu d'espace autour */
+            
+            /* L'animation : rapide (0.6s), fluide (ease-in-out), infinie et en aller-retour */
+            animation: icon-pulse 0.6s ease-in-out infinite alternate;
+            
+            /* Sécurité : on s'assure qu'il n'y a pas de bordure ou de fond hérités */
+            background: none !important;
+            border: none !important;
+            padding: 0 !important;
+        }
+        
+        @keyframes icon-pulse {
+            0% {
+                transform: scale(1); /* Taille normale au début */
+                /* Pas de halo au départ */
+                filter: drop-shadow(0 0 0px rgba(255, 215, 0, 0)); 
+            }
+            100% {
+                transform: scale(1.5); /* Grandit jusqu'à 1.5x la taille */
+                /* Double halo lumineux : Jaune Or (#FFD700) + Orange (#FF4500) */
+                /* filter: drop-shadow est meilleur que text-shadow pour les emojis */
+                filter: drop-shadow(0 0 5px #FFD700) drop-shadow(0 0 8px #FF4500);
+            }
+        }
+
+         /* Style pour les mots du glossaire */
+        .glossary-term {
+            font-family: 'Courier Prime', monospace;
+            background: linear-gradient(135deg, rgba(0, 123, 255, 0.15), rgba(58, 183, 255, 0.15));
+            color: #006bb3;
+            padding: 2px 8px;
+            border-radius: 6px;
+            border: 2px solid rgba(0, 123, 255, 0.4);
+            font-weight: 700;
+            font-size: 1.05em;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        /* Effet au survol */
+        .glossary-term:hover {
+            background: linear-gradient(135deg, rgba(0, 123, 255, 0.25), rgba(58, 183, 255, 0.25));
+            border-color: rgba(0, 123, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.4), 0 0 20px rgba(58, 183, 255, 0.3);
+        }
+
+        /* Petit indicateur de lien */
+        .glossary-term::after {
+            content: '📖';
+            font-size: 0.8em;
+            margin-left: 3px;
+            opacity: 0.7;
+        }
+
+        /* Animation douce de glow (pas agressive) */
+        @keyframes soft-glow {
+            0%, 100% { 
+                box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+            }
+            50% { 
+                box-shadow: 0 0 8px rgba(0, 123, 255, 0.4), 0 0 12px rgba(58, 183, 255, 0.3);
+            }
+        }
+
+        .glossary-term:hover {
+            animation: soft-glow 2s ease-in-out infinite;
+        }
+
+        .definition-item {
+            scroll-margin-top: 100px; /* Espace pour la bannière sticky */
+            transition: background 0.3s ease;
+        }
+
+        .key-points {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(218, 165, 32, 0.2));
+            border: 3px solid #DAA520;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 5px 15px rgba(218, 165, 32, 0.3);
+            page-break-inside: avoid;
+        }
+        
+        .key-points h3 {
+            color: #B8860B;
+            margin-top: 0;
+        }
+        
+        .key-points h3::before {
+            content: '⭐';
+        }
+        
+        .objective-box {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.25), rgba(255, 248, 220, 0.25));
+            border: 3px solid #FFD700;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            box-shadow: 0 4px 12px rgba(218, 165, 32, 0.3);
+            page-break-inside: avoid;
+        }
+        
+        .objective-box h3 {
+            color: #DAA520;
+        }
+        
+        .objective-box h3::before {
+            content: '🎯';
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: rgba(255, 248, 220, 0.9);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        
+        th {
+            background: linear-gradient(135deg, #228B22, #6B8E23);
+            color: #FFD700;
+            padding: 18px;
+            text-align: left;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7em;
+            border-bottom: 3px solid #8B4513;
+        }
+        
+        td {
+            padding: 15px 18px;
+            border-bottom: 2px solid rgba(107, 142, 35, 0.2);
+            font-weight: 600;
+        }
+        
+        tr:nth-child(even) {
+            background: rgba(144, 238, 144, 0.1);
+        }
+        
+        tr:hover {
+            background: rgba(152, 216, 200, 0.3);
+            transform: scale(1.01);
+            transition: all 0.2s;
+        }
+
+        .link-web {
+            color: #2d5016;
+            font-weight: 800;
+            text-decoration: none;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+
+        .link-web::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #08ddf0, #228B22);
+            transition: width 0.3s ease;
+        }
+
+        .link-web:hover::after {
+            width: 100%;
+        }
+
+        .link-web:hover {
+            color: #12c2d2;
+            background: rgba(89, 255, 0, 0.411);
+            transform: translateY(-1px);
+        }
+
+        .link-web::before {
+            content: '🔗';
+            font-size: 0.8em;
+            opacity: 1;
+            margin-right: 3px;
+            transition: opacity 0.3s ease;
+        }
+
+        .link-web:hover::before {
+            transform: scale(1.2);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+            background: linear-gradient(135deg, rgba(34, 139, 34, 0.8), rgba(107, 142, 35, 0.8));
+            border-radius: 15px;
+            color: #FFD700;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.8em;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            page-break-before: avoid;
+        }
+        
+        footer::before {
+            content: '🐸 🪵 🚗 🪵 🐸';
+            display: block;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+        
+        strong {
+            color: #228B22;
+            font-weight: 800;
+        }
+        
+        p {
+            margin: 12px 0;
+            font-size: 1.05em;
+        }
+
+        @media print {
+            .separator {
+                page-break-after: avoid;
+            }
+            section, .info-box, .warning-box, .key-points, .objective-box, pre {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="property-banner">
+        <span class="property-icon">🛡️</span>
+        <span class="property-text">© 2025 MadHackAdemy | Formation Propriétaire | Tous droits réservés</span>
+        <span class="property-icon">🛡️</span>
+    </div>
+    <div class="container">
+        <header>
+            <h1>Les Conteneurs C++</h1>
+            <p class="subtitle">GameDevReady</p>
+        </header>
+
+        <section>
+            <h2>Objectif du Module</h2>
+            <p>Imaginez notre grenouille qui doit traverser une route avec plusieurs voitures. Comment stocker toutes ces voitures en
+                mémoire ? Comment gérer leurs positions, vitesses et couleurs ? C'est exactement à cela que servent les conteneurs !
+            </p>
+            
+            <p>Les conteneurs (ou collections) sont des structures de données qui permettent de stocker 
+                plusieurs éléments du même type. Au lieu de créer <code>voiture1</code>, <code>voiture2</code>,
+                <code>voiture3</code>... nous pouvons créer un tableau <code>voitures[]</code> qui contient toutes nos voitures.
+            </p>
+            
+            <p>Dans ce module, nous allons découvrir deux types de conteneurs essentiels en C++ : les <strong>tableaux classiques (array)</strong>
+                et les <strong>vectors (std::vector)</strong>. Il y aura une présentation des tableaux dit <strong>clés/valeurs</strong>
+                (dictionnaire ou map). Nous verrons également comment organiser nos données avec les <strong>structures (struct)</strong> et 
+                comment combiner tout cela ensemble.
+            </p>
+            
+            <div class="objective-box">
+                <h3>Ce que l'élève saura faire à la fin</h3>
+                <p>Créer et manipuler des tableaux et des vectors, comprendre le concept d'index, accéder aux éléments,
+                    parcourir des conteneurs, créer des structures, et accéder aux éléments d'une structure stockée dans un tableau.
+                </p>
+            </div>
+            
+            <div class="info-box">
+                <strong>Notions techniques abordées :</strong> Tableaux (array), vectors (std::vector), index, structures (struct), accès aux éléments,
+                 méthodes push_back(), pop_back(), size(), et parcours de conteneurs.
+            </div>
+        </section>
+
+<div class="separator"></div>
+
+        <section>
+            <h2>Les <span id="def-structure" class="definition-item">Structures</span> (struct) 📋</h2>
+
+            <p>Nous abordons ici les <strong>Structures</strong> car pour moi elles représentent aussi une forme de tableau et
+                permettent de regrouper plusieurs données de types différents sous un même nom. <br>
+                C'est parfait pour représenter des entités complexes comme une voiture, un personnage, ou notre grenouille !. <br>
+                Et pour la suite du module il est bon de voir comment une <strong>struct</strong> fonctionne. <br> Elle sera encore une fois revue
+                lors de la dissection de la grenouille du projet Frogger. Et n'aura plus de secret pour vous. <br> Vous accordant
+                la puissance créatrice de <strong>Dieu</strong> ou du <strong>Grand Architect</strong> de votre Univers. <br>
+                Oui vous avez bien entendu un <strong>Dieu</strong>, rien de moins. 
+                (mais de loin d'être exempt de commettre des erreurs hein!! et pas omniprésent pas même au sein de votre propre code)
+            </p>
+
+            <h3>Déclaration d'une structure</h3>
+
+            <pre><code>struct Car {
+    int x;         // Position X
+    int y;         // Position Y
+    int speed;     // Vitesse
+    Color color;   // Couleur (type Raylib)
+};</code></pre>
+
+            <h3>Créer et utiliser une structure</h3>
+
+            <pre><code>
+#include &lt;cstdio&gt;
+
+struct Frog {
+    int x;
+    int y;
+    int lives;
+};
+
+int main() {
+    // Créer une grenouille
+    Frog player;
+    
+    // Accéder aux membres avec le point (.)
+    player.x = 400;
+    player.y = 500;
+    player.lives = 3;
+    
+    printf("Grenouille en position (%d, %d) avec %d vies\n", 
+           player.x, player.y, player.lives);
+    
+    // Modifier un membre
+    player.x += 50;  // La grenouille saute de 50 pixels
+    player.lives--;  // Perd une vie
+    
+    printf("Nouvelle position : %d, Vies restantes : %d\n", 
+           player.x, player.lives);
+    
+    return 0;
+}</code></pre>
+
+            <div class="info-box">
+                <p><strong>Accès aux membres d'une structure :</strong></p>
+                <p>On utilise l'opérateur point <code>.</code> pour accéder aux membres :</p>
+                <pre><code>nomStruct.nomMembre</code></pre>
+            </div>
+
+            <h3>Initialisation directe d'une structure</h3>
+
+            <pre><code>// Méthode 1 : Avec accolades
+Frog player = {400, 500, 3};
+
+// Méthode 2 : Avec désignation (C++20)
+Frog player = {
+    .x = 400,
+    .y = 500,
+    .lives = 3
+};</code></pre>
+        </section>
+
+        <div class="separator"></div>
+
+        <section>
+            <h2>Théorie</h2>
+            
+            <h3>Qu'est-ce qu'un index ? 📍</h3>
+            
+            <p>L'<strong>index</strong> (ou indice) est la position d'un élément dans un conteneur. C'est comme les numéros de places dans un train.
+                Déjà vu dans le module précédent sur les boucles. <br> Mais une petite piqûre de rappel ne fait pas de mal. <br>
+                C'est à force de répétition qu'il y a assimilation, n'oubliez pas notre devise (ou motto) et notre méthodologie.  
+            </p>
+            
+            <div class="info-box">
+                <p><strong>⚠️ IMPORTANT :</strong> En programmation, l'index commence TOUJOURS à <code>0</code>, pas à 1 !</p>
+                <ul class="bullet-list">
+                    <li>Premier élément : index <code>0</code></li>
+                    <li>Deuxième élément : index <code>1</code></li>
+                    <li>Troisième élément : index <code>2</code></li>
+                    <li>Et ainsi de suite...</li>
+                </ul>
+            </div>
+
+            <p>Visualisation avec notre grenouille et des rondins :</p>
+
+            <pre><code>// Rondins sur la rivière
+//  Index:     0        1        2        3        4
+//            [🪵]      [🪵]      [🪵]      [🪵]      [🪵]
+// Position:  100      200      300      400      500</code></pre>
+
+            <h3>Les Tableaux Classiques (Array) 📦</h3>
+
+            <p>Un tableau classique est une collection de taille <strong>fixe</strong>. Une fois créé, vous ne pouvez ni ajouter ni retirer
+                d'éléments. 
+            </p>
+
+            <div class="info-box">
+                <p><strong>Syntaxe de déclaration :</strong></p>
+                <pre><code>type nomTableau[taille];</code></pre>
+            </div>
+
+            <p>Exemple concret avec des positions de voitures :</p>
+
+            <pre><code>
+#include &lt;cstdio&gt; 
+
+int main() {
+    // Déclaration d'un tableau de 5 positions de voitures
+    int carPositions[5];
+    
+    // Initialisation (remplissage) des éléments
+    carPositions[0] = 100;
+    carPositions[1] = 250;
+    carPositions[2] = 400;
+    carPositions[3] = 550;
+    carPositions[4] = 700;
+    
+    // Affichage d'un élément spécifique
+    printf("La voiture à l'index 2 est en position : %d\n", carPositions[2]);
+    
+    return 0;
+}</code></pre>
+
+            <div class="info-box">
+                <p><strong>Déclaration avec initialisation directe :</strong></p>
+<pre><code>// Plus rapide et lisible !
+int carPositions[5] = {100, 250, 400, 550, 700};</code></pre>
+        </div>
+
+        <h3>Accéder à un élément du tableau 🎯</h3>
+
+        <p>Pour accéder (lire ou modifier) un élément, on utilise la syntaxe suivante :</p>
+
+<pre><code>nomTableau[index]</code></pre>
+
+        <p>Exemples pratiques :</p>
+
+<pre><code>int positions[3] = {100, 200, 300};
+
+// Lire un élément
+int premierElement = positions[0];  // Vaut 100
+int deuxiemeElement = positions[1]; // Vaut 200
+
+// Modifier un élément
+positions[0] = 150;  // Change 100 en 150
+positions[2] = 350;  // Change 300 en 350
+
+printf("Nouvelle position : %d\n", positions[0]); // Affiche 150</code></pre>
+
+            <div class="warning-box">
+                <span class="icon-blink">⚠️</span><strong>Attention aux dépassements d'index !</strong>
+                <p>Si votre tableau a 5 éléments (index 0 à 4) et que vous essayez d'accéder à <code>tableau[5]</code> ou <code>tableau[10]</code>,
+                    vous accédez à une zone mémoire invalide ! Cela peut causer des bugs imprévisibles ou faire planter votre programme.
+                </p>
+                <pre><code>int tableau[5];  // Index valides : 0, 1, 2, 3, 4
+tableau[5] = 10; // ❌ ERREUR ! Index hors limites
+tableau[0] = 10; // ✅ OK</code></pre>
+            </div>
+
+            <h3>Parcourir un tableau avec une boucle 🔄</h3>
+
+            <p>Pour accéder à tous les éléments d'un tableau, on utilise généralement une boucle <code>for</code> :</p>
+
+            <pre><code>
+#include &lt;cstdio&gt;
+
+int main() {
+    int carPositions[5] = {100, 250, 400, 550, 700};
+    
+    // Parcours avec for classique
+    for (int i = 0; i < 5; i++) {
+        printf("Voiture %d en position : %d\n", i, carPositions[i]);
+    }
+    
+    return 0;
+}</code></pre>
+
+            <p>Avec la boucle range-based for (plus moderne) :</p>
+
+            <pre><code>int carPositions[5] = {100, 250, 400, 550, 700};
+
+// Parcours moderne (foreach)
+for (int position : carPositions) {
+    printf("Position : %d\n", position);
+}</code></pre>
+        </section>
+    <div class="separator"></div>
+        <section>
+            <h2>La Boucle Foreach (Range-Based For) 🔄</h2>
+            
+            <p>Maintenant que nous abordons les conteneurs, nous pouvons introduire la boucle <strong>foreach</strong> (appelée 
+                <code>range-based for</code> en C++). Cette boucle permet de parcourir facilement tous les éléments d'une collection 
+            </p>
+
+            <h3>Syntaxe originale avec type explicite</h3>
+
+            <pre><code>
+#include &lt;vector&gt;
+#include &lt;cstdio&gt;
+
+int main() {
+    int scores[4] = {100, 250, 180, 320};
+    
+    // Syntaxe : type item : collection
+    for (int score : scores) {
+        printf("Score : %d\n", score);
+    }
+    
+    return 0;
+}</code></pre>
+
+            <div class="info-box">
+                <p><strong>Décomposition :</strong></p>
+                <ul class="bullet-list">
+                    <li><code>int</code> : Type des éléments du conteneur</li>
+                    <li><code>score</code> : Variable temporaire qui prend la valeur de chaque élément</li>
+                    <li><code>scores</code> : Le conteneur à parcourir</li>
+                </ul>
+            </div>
+
+            <h3>Version moderne avec auto (recommandé) 🚀</h3>
+
+            <p>Le mot-clé <code>auto</code> permet au compilateur de déduire automatiquement le type, rendant le code plus flexible et lisible.
+                Si vous êtes amené à changer le type de la collection, vous ne devez pas changer toutes les boucles <strong>foreach</strong> qui
+                parcourent le tableau. Cela évite des conversions implicites risquées et coûteuses en ressources au runtime. <br> 
+                (en clair le compilateur gère ceci avant le lancement du code et non pas pendant de l'exécution du code)
+            </p>
+
+            <pre><code>int scores[4] = {100, 250, 180, 320};
+
+// ✅ Version moderne avec auto
+for (auto score : scores) {
+    printf("Score : %d\n", score);
+}</code></pre>
+
+            <h3>Modification des éléments avec la référence (&)</h3>
+
+    <pre><code>int scores[3] = {100, 250, 180};
+
+// Doubler tous les scores
+for (auto& score : scores) {
+    score *= 2;  // Modification de l'élément original
+}
+
+// Affichage
+for (auto score : scores) {
+    printf("Nouveau score : %d\n", score);
+}
+// Affiche : 200, 500, 360</code></pre>
+
+            <div class="warning-box">
+                <strong>Différence importante :</strong>
+                <ul class="bullet-list">
+                    <li><code>auto</code> : Copie de l'élément (lecture seule, pas de modification)</li>
+                    <li><code>auto&</code> : Référence à l'élément (permet la modification)</li>
+                    <li><code>const auto&</code> : Référence constante (lecture seule, mais pas de copie = plus performant)</li>
+                </ul>
+            </div>
+
+            <h3>Exemple avec structures</h3>
+
+    <pre><code>
+#include &lt;cstdio&gt;
+
+struct Car {
+    int x;
+    int speed;
+};
+
+int main() {
+    Car carsArray[] = {
+        {100, 5},
+        {300, 3},
+        {500, 7}
+    };
+    
+    // Lecture seule avec const auto&
+    for (const auto& car : carsArray) {
+        printf("Voiture en x=%d, vitesse=%d\n", car.x, car.speed);
+    }
+    
+    // Modification avec auto&
+    for (auto& car : carsArray) {
+        car.x += car.speed;  // Déplacer la voiture
+    }
+    
+    return 0;
+}</code></pre>
+
+            <h3>Comparaison For classique vs Foreach</h3>
+
+            <table>
+                <tr>
+                    <th>Critère</th>
+                    <th>For classique</th>
+                    <th>Foreach (auto)</th>
+                </tr>
+                <tr>
+                    <td><strong>Lisibilité</strong></td>
+                    <td>Moins claire</td>
+                    <td>✅ Plus simple</td>
+                </tr>
+                <tr>
+                    <td><strong>Accès index</strong></td>
+                    <td>✅ Oui</td>
+                    <td>❌ Non</td>
+                </tr>
+                <tr>
+                    <td><strong>Risque erreur</strong></td>
+                    <td>Possible (dépassement)</td>
+                    <td>✅ Très faible</td>
+                </tr>
+                <tr>
+                    <td><strong>Performance</strong></td>
+                    <td>Équivalente</td>
+                    <td>Équivalente</td>
+                </tr>
+                <tr>
+                    <td><strong>Cas d'usage</strong></td>
+                    <td>Besoin de l'index</td>
+                    <td>Parcours simple</td>
+                </tr>
+            </table>
+
+            <div class="key-points">
+                <h3>Quand utiliser quoi ?</h3>
+                <ul class="bullet-list">
+                    <li>🎯 <strong>Foreach (auto)</strong> : Pour parcourir tous les éléments simplement</li>
+                    <li>🔢 <strong>For classique</strong> : Quand vous avez besoin de l'index ou d'un parcours complexe</li>
+                    <li>⚡ <strong>const auto&</strong> : Pour les structures volumineuses (évite la copie)</li>
+                    <li>✏️ <strong>auto&</strong> : Quand vous devez modifier les éléments</li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="separator"></div>
+        <section>
+            <h2>Les Références et Constantes 🔗</h2>
+    
+            <p>Maintenant que vous manipulez des conteneurs, il est temps de comprendre deux concepts essentiels : 
+                les <strong>références</strong> et les <strong>constantes</strong>. Ces notions sont particulièrement utiles avec
+                les boucles foreach !
+            </p>
+
+            <h3>Les Constantes (const) 🔒</h3>
+            
+            <p>Une <strong>constante</strong> est une variable dont la valeur <strong>ne peut pas être modifiée
+                </strong> après son initialisation. C'est comme un coffre-fort verrouillé !. La pratique voudrait que l'on définisse toutes les
+                variables qui ne changent pas comme constante. Le principe d'immuabilité offre une sécurité et robustesse 
+                au code et évite les modifications accidentelles. Le nom de cette pratique est la<a href="#def-Const-correctness" class="glossary-term"
+                >Const-correctness</a>.
+            </p>
+
+    <pre><code>
+#include &lt;cstdio&gt;
+
+int main() {
+    const int MAX_LIVES = 3;
+    
+    printf("Vies maximum : %d\n", MAX_LIVES);
+    
+    // MAX_LIVES = 5;  // Ne compilera pas
+    // ❌ ERREUR : impossible de modifier une constante !
+    
+    return 0;
+}</code></pre>
+
+    <div class="info-box">
+        <p><strong>Avantages des constantes :</strong></p>
+        <ul class="bullet-list">
+            <li>🛡️ Protection contre les modifications accidentelles</li>
+            <li>📖 Rend le code plus lisible (on sait que la valeur ne changera pas)</li>
+            <li>⚡ Optimisations possibles par le compilateur</li>
+            <li>🐛 Détection d'erreurs à la compilation plutôt qu'à l'exécution</li>
+        </ul>
+    </div>
+
+    <h3>Les Références (&) 🔗</h3>
+    
+    <p>Une <strong>référence</strong> est un <strong>alias</strong> (un autre nom) pour une variable existante.
+        C'est comme donner un surnom à quelqu'un : la personne reste la même, mais on peut l'appeler différemment.
+    </p>
+
+    <pre><code>
+#include &lt;cstdio&gt;
+
+int main() {
+    int frogX = 100;
+    
+    // Créer une référence vers frogX
+    int& positionX = frogX;
+    
+    // Modifier via la référence modifie aussi l'original !
+    positionX = 200;
+    
+    printf("frogX = %d\n", frogX);        // Affiche : 200
+    printf("positionX = %d\n", positionX); // Affiche : 200
+    
+    // Les deux variables pointent vers la MÊME case mémoire
+    
+    return 0;
+}</code></pre>
+
+    <div class="info-box">
+        <p><strong>Différence référence vs copie :</strong></p>
+        <pre><code>int original = 10;
+
+// COPIE : crée une nouvelle variable indépendante
+int copie = original;
+copie = 20;
+// original vaut toujours 10, copie vaut 20
+
+// RÉFÉRENCE : crée un alias vers la même variable
+int& reference = original;
+reference = 30;
+// original vaut 30, reference vaut 30 (même variable !)</code></pre>
+    </div>
+
+    <h3>Combinaison : const + référence (const &) 🔒🔗</h3>
+    
+    <p>On peut combiner les deux pour créer une <strong>référence constante</strong> : un alias qu'on ne peut pas modifier.
+        C'est très utile pour éviter les copies tout en garantissant qu'on ne modifiera pas l'original.Et surtout très performant dès qu'on 
+        manipule de grosses données. Imaginer copier un gros atlas à chaque fois pour lire un élément/article en boucle. 
+        Il s'agirait d'un énorme gaspillage de ressources mémoire et un donc un gros ralentissement du programme devant attendre la fin de la copie. <br>
+        Je suppose que sur une machine lambda subirait un crash du type "le programme ne répond plus ? attendre : annuler".
+    </p>
+
+    <pre><code>struct Car {
+    int x;
+    int y;
+    int speed;
+};
+
+int main() {
+    Car myCar = {100, 200, 5};
+    
+    // Référence constante : pas de copie, mais lecture seule
+    const Car& carRef = myCar;
+    
+    printf("Position : %d\n", carRef.x);  // ✅ OK : lecture
+    
+    // ❌ ERREUR : impossible de modifier via une référence constante
+    // carRef.x = 150;  // Ne compilera pas
+    
+    return 0;
+}</code></pre>
+
+    <h3>Utilisation dans les boucles foreach</h3>
+    
+    <p>C'est ici que tout prend son sens ! Voici les différentes façons d'utiliser foreach avec références et constantes :</p>
+
+    <pre><code>Car cars[] = {
+    {100, 150, 5},
+    {300, 150, 3},
+    {500, 150, 7}
+};
+
+// ❌ COPIE : chaque car est une copie (lent pour les grosses structures)
+for (Car car : cars) {
+    printf("x = %d\n", car.x);
+}
+
+// ✅ RÉFÉRENCE : pas de copie, on peut modifier
+for (Car& car : cars) {
+    car.x += 10;  // Modifie l'original dans le vector
+}
+
+// ✅✅ RÉFÉRENCE CONSTANTE : pas de copie, lecture seule (IDÉAL)
+for (const Car& car : cars) {
+    printf("x = %d\n", car.x);  // Lecture OK
+    // car.x = 100;  // ❌ Erreur : modification interdite
+}</code></pre>
+
+    <div class="key-points">
+        <h3>Règle d'or pour les boucles foreach</h3>
+        <ul class="bullet-list">
+            <li>🐌 <code>auto car</code> : Copie l'élément (lent pour les structures volumineuses)</li>
+            <li>✏️ <code>auto& car</code> : Référence, permet la modification</li>
+            <li>⚡ <code>const auto& car</code> : Référence constante, lecture seule (MEILLEUR CHOIX par défaut)</li>
+        </ul>
+    </div>
+
+    <h3>Comparaison Performance</h3>
+
+    <table>
+        <tr>
+            <th>Syntaxe</th>
+            <th>Copie ?</th>
+            <th>Modification ?</th>
+            <th>Performance</th>
+            <th>Cas d'usage</th>
+        </tr>
+        <tr>
+            <td><code>auto item</code></td>
+            <td>✅ Oui</td>
+            <td>❌ Non (copie locale)</td>
+            <td>🐌 Lent</td>
+            <td>Rarement utilisé</td>
+        </tr>
+        <tr>
+            <td><code>auto& item</code></td>
+            <td>❌ Non</td>
+            <td>✅ Oui</td>
+            <td>⚡ Rapide</td>
+            <td>Modification nécessaire</td>
+        </tr>
+        <tr>
+            <td><code>const auto& item</code></td>
+            <td>❌ Non</td>
+            <td>❌ Non</td>
+            <td>⚡ Rapide</td>
+            <td>✅ Par défaut !</td>
+        </tr>
+    </table>
+
+    <h3>Exemple pratique complet</h3>
+
+    <pre><code>
+#include &lt;cstdio&gt;
+
+<a href="#def-structure" class="glossary-term">struct</a> Enemy {
+    int health;
+    int damage;
+    bool isAlive;
+};
+
+int main() {
+    Enemy enemies[] = {
+        {100, 10, true},
+        {150, 15, true},
+        {80, 8, true}
+    };
+    
+    // 1. Afficher les ennemis (const auto& = pas de copie, lecture seule)
+    printf("=== ÉTAT INITIAL ===\n");
+    for (const auto& enemy : enemies) {
+        printf("HP: %d, Damage: %d\n", enemy.health, enemy.damage);
+    }
+    
+    // 2. Infliger des dégâts (auto& = modification autorisée)
+    printf("\n=== ATTAQUE ! ===\n");
+    for (auto& enemy : enemies) {
+        //Imaginer une attaque de zone sur tous les enemy.<a href="https://youtu.be/XYcgQHEUm7I"> holy grenade</a>
+        enemy.health -= 50;
+        if (enemy.health <= 0) {
+            enemy.isAlive = false;
+        }
+    }
+    
+    // 3. Compter les survivants (const auto& = lecture optimisée)
+    int aliveCount = 0;
+    for (const auto& enemy : enemies) {
+        if (enemy.isAlive) {
+            aliveCount++;
+        }
+    }
+    
+    printf("Ennemis vivants : %d\n", aliveCount);
+    
+    return 0;
+}</code></pre>
+
+    <div class="warning-box">
+        <strong>Pièges à éviter :</strong>
+        <ul class="bullet-list">
+            <li>❌ Oublier le <code>&</code> avec de grosses structures = copies inutiles et lentes</li>
+            <li>❌ Modifier via <code>auto&</code> alors qu'on voulait juste lire = bugs potentiels</li>
+            <li>✅ Toujours privilégier <code>const auto&</code> sauf si modification nécessaire</li>
+        </ul>
+    </div>
+
+        </section>
+
+        <div class="separator"></div>
+
+        <section>
+            <h2>Les Vectors : Tableaux Dynamiques 🚀</h2>
+
+            <p>Un <code>std::vector</code> est un tableau <strong>dynamique</strong> : sa taille peut changer pendant l'exécution du 
+                programme. Vous pouvez ajouter ou retirer des éléments à volonté ! Il sera l'un de vos principaux outil avec l'array.
+            </p>
+
+            <div class="info-box">
+                <p><strong>Pour utiliser les vectors, il faut inclure :</strong></p>
+                <pre><code>#include &lt;vector&gt;</code></pre>
+            </div>
+
+            <h3>Déclaration et initialisation d'un vector</h3>
+
+            <pre><code>
+#include &lt;vector&gt; 
+#include &lt;cstdio&gt; 
+
+int main() {
+    // Déclaration d'un vector vide
+    std::vector&lt;int&gt; carPositions;
+    
+    // Déclaration avec initialisation
+    std::vector&lt;int&gt; frogJumps = {10, 20, 30, 40, 50};
+    
+    return 0;
+}</code></pre>
+
+            <h3>Méthodes essentielles des vectors 🛠️</h3>
+
+            <table>
+                <tr>
+                    <th>Méthode</th>
+                    <th>Description</th>
+                    <th>Exemple</th>
+                </tr>
+                <tr>
+                    <td><code>push_back()</code></td>
+                    <td>Ajouter un élément à la fin</td>
+                    <td><code>vec.push_back(100);</code></td>
+                </tr>
+                <tr>
+                    <td><code>pop_back()</code></td>
+                    <td>Retirer le dernier élément</td>
+                    <td><code>vec.pop_back();</code></td>
+                </tr>
+                <tr>
+                    <td><code>size()</code></td>
+                    <td>Obtenir le nombre d'éléments</td>
+                    <td><code>int n = vec.size();</code></td>
+                </tr>
+                <tr>
+                    <td><code>empty()</code></td>
+                    <td>Vérifier si le vector est vide</td>
+                    <td><code>if (vec.empty())</code></td>
+                </tr>
+                <tr>
+                    <td><code>clear()</code></td>
+                    <td>Vider complètement le vector</td>
+                    <td><code>vec.clear();</code></td>
+                </tr>
+            </table>
+
+            <h3>Exemple complet avec ajout/suppression</h3>
+
+            <pre><code>
+#include &lt;vector&gt;
+#include &lt;cstdio&gt;
+
+int main() {
+    std::vector&lt;int&gt; carPositions;
+    
+    // Ajout d'éléments
+    carPositions.push_back(100);
+    carPositions.push_back(250);
+    carPositions.push_back(400);
+    
+    printf("Nombre de voitures : %zu\n", carPositions.size());
+    // Affiche : 3
+    
+    // Accès à un élément (comme avec les tableaux)
+    printf("Première voiture : %d\n", carPositions[0]);
+    // Affiche : 100
+    
+    // Modification d'un élément
+    carPositions[1] = 300;
+    
+    // Suppression du dernier élément
+    carPositions.pop_back();
+    
+    printf("Nouvelles positions :\n");
+    for (int i = 0; i < carPositions.size(); i++) {
+        printf("Voiture %d : position %d\n", i, carPositions[i]);
+    }
+    
+    return 0;
+}</code></pre>
+
+    <div class="info-box">
+        <p><strong>Pourquoi <code>%zu</code> pour size() ?</strong></p>
+        <p>La méthode <code>size()</code> retourne un type spécial (<code>size_t</code>) qui nécessite le format <code>%zu</code>
+            avec printf. Vous pouvez aussi caster en int : <code>(int)vec.size()</code> et utiliser <code>%d</code>.
+            Le <strong>cast</strong> et <code>size_t</code> seront vue ultérieurement dans la formation, lors de cas pratique avec Raylib
+            et la création du projet de jeu.
+        </p>
+    </div>
+
+    <h3>Parcourir un vector 🔄</h3>
+
+    <pre><code>std::vector&lt;int&gt;  positions = {100, 200, 300};
+
+// Avec for classique
+for (int i = 0; i < positions.size(); i++) {
+    printf("Position %d : %d\n", i, positions[i]);
+}
+
+// Avec range-based for (recommandé)
+for (int pos : positions) {
+    printf("Position : %d\n", pos);
+}</code></pre>
+        </section>
+
+        <div class="separator"></div>
+
+        <section>
+            <h2>Structures dans des Tableaux 🎯</h2>
+
+            <p>Voici la partie la plus puissante : combiner structures et conteneurs ! Imaginons qu'on veuille stocker plusieurs voitures,
+                chacune avec sa position, vitesse et couleur. <br> Cela combiner aux loop (boucles) vous avez la votre boucle de jeu. <br>
+                Et pouvez faire vivre->bouger/interagir puis finalement mourrir ce petit monde. (bientôt le votre 😉)
+            </p>
+
+            <h3>Tableau de structures (array)</h3>
+
+            <pre><code>#include <cstdio>
+
+struct Car {
+    int x;
+    int speed;
+};
+
+int main() {
+    // Tableau de 3 voitures
+    Car cars[3] = {
+        {100, 5},   // Voiture 0
+        {300, 3},   // Voiture 1
+        {500, 7}    // Voiture 2
+    };
+    
+    // Accéder à la position X de la deuxième voiture (index 1)
+    printf("Voiture 1 en position : %d\n", cars[1].x);
+    
+    // Modifier la vitesse de la première voiture (index 0)
+    cars[0].speed = 10;
+    
+    // Parcourir toutes les voitures
+    for (int i = 0; i < 3; i++) {
+        printf("Voiture %d : position %d, vitesse %d\n", 
+               i, cars[i].x, cars[i].speed);
+    }
+    
+    return 0;
+}</code></pre>
+
+            <div class="info-box">
+                <p><strong>Syntaxe pour accéder à un membre d'une structure dans un tableau :</strong></p>
+                <pre><code>nomTableau[index].nomMembre</code></pre>
+                <p>Exemple : <code>cars[1].x</code> accède au membre <code>x</code> de la structure à l'index 1</p>
+            </div>
+
+            <h3>Vector de structures (std::vector)</h3>
+
+            <pre><code>#include <vector>
+#include <cstdio>
+
+struct Car {
+    int x;
+    int speed;
+};
+
+int main() {
+    // Vector de voitures (vide au départ)
+    std::vector<Car> cars;
+    
+    // Ajouter des voitures dynamiquement
+    cars.push_back({100, 5});
+    cars.push_back({300, 3});
+    cars.push_back({500, 7});
+    
+    printf("Nombre de voitures : %zu\n", cars.size());
+    
+    // Accéder à un élément spécifique
+    printf("Voiture 0 en position : %d\n", cars[0].x);
+    
+    // Modifier un membre
+    cars[1].speed = 8;
+    
+    // Parcourir avec range-based for
+    int index = 0;
+    for (const Car& car : cars) {
+        printf("Voiture %d : x=%d, speed=%d\n", 
+               index++, car.x, car.speed);
+    }
+    
+    // Supprimer la dernière voiture
+    cars.pop_back();
+    
+    printf("Voitures restantes : %zu\n", cars.size());
+    
+    return 0;
+}</code></pre>
+
+            <div class="warning-box">
+                <strong>Pourquoi <code>const Car&</code> dans la boucle ?</strong>
+                <ul class="bullet-list">
+                    <li><code>&</code> : Évite de copier la structure (plus performant)</li>
+                    <li><code>const</code> : Indique qu'on ne va pas modifier l'élément</li>
+                    <li>Si vous voulez modifier : utilisez juste <code>Car&</code> (sans const)</li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="separator"></div>
+
+        <section>
+            <h2>Les Maps : Tableaux Clé-Valeur 🗺️</h2>
+
+            <p>Une <code>std::map</code> est un conteneur qui stocke des <strong>paires clé-valeur</strong>. Au lieu d'utiliser un index numérique (0, 1, 2...), vous utilisez une clé personnalisée (un nom, un ID, etc.) pour accéder à une valeur.</p>
+
+            <div class="info-box">
+                <p><strong>Analogie :</strong> C'est comme un dictionnaire ! Vous cherchez un mot (la clé) pour obtenir sa définition (la valeur).</p>
+            </div>
+
+            <h3>std::map - Version triée 📚</h3>
+
+            <p>La <code>std::map</code> garde les clés <strong>triées automatiquement</strong> grâce à une structure d'arbre binaire équilibré. <br>
+                (syteme de gestion assez poussé mais pas impossible à comprendre si vous voulez faire vos recherche.)
+            </p>
+
+            <pre><code>#include &lt;map&gt;
+#include &lt;cstdio&gt;
+#include &lt;string&gt;//il s'agit de la lib standard pour les chaines de caractère très utile.
+
+int main() {
+    // Map qui associe un nom de joueur à son score
+    std::map&lt;std::string, int&gt; playerScores;
+    
+    // Ajouter des paires clé-valeur
+    playerScores["Alice"] = 1500;
+    playerScores["Bob"] = 2300;
+    playerScores["Charlie"] = 1800;
+    
+    // Accéder à une valeur via sa clé
+    printf("Score d'Alice : %d\n", playerScores["Alice"]);
+    
+    // Modifier une valeur
+    playerScores["Bob"] = 2500;
+    
+    // Vérifier si une clé existe
+    if (playerScores.find("David") != playerScores.end()) {
+        printf("David trouvé !\n");
+    } else {
+        printf("David n'existe pas\n");
+    }
+    
+    // Parcourir toutes les paires
+    for (const auto& pair : playerScores) {
+        printf("%s : %d points\n", pair.first.c_str(), pair.second);
+    }
+    
+    return 0;
+}</code></pre>
+
+            <div class="info-box">
+                <p><strong>Structure d'une paire :</strong></p>
+                <ul class="bullet-list">
+                    <li><code>pair.first</code> : La clé</li>
+                    <li><code>pair.second</code> : La valeur</li>
+                </ul>
+            </div>
+
+            <h3>std::unordered_map - Version non triée ⚡</h3>
+
+            <p>La <code>std::unordered_map</code> fonctionne exactement comme <code>std::map</code>, mais <strong>ne trie pas les clés</strong>. En échange, elle est généralement <strong>plus rapide</strong> pour l'accès et l'insertion.</p>
+
+            <pre><code>#include &lt;unordered_map&gt; 
+#include &lt;string&gt; 
+#include &lt;cstdio&gt; 
+
+int main() {
+    // Unordered_map pour stocker les vies par niveau
+    std::unordered_map&lt;int, int &gt;  livesPerLevel;
+    
+    // Ajouter des données
+    livesPerLevel[1] = 3;
+    livesPerLevel[2] = 5;
+    livesPerLevel[3] = 2;
+    
+    // Accès rapide
+    printf("Vies au niveau 2 : %d\n", livesPerLevel[2]);
+    
+    // Parcours (ordre non garanti !)
+    for (const auto& pair : livesPerLevel) {
+        printf("Niveau %d : %d vies\n", pair.first, pair.second);
+    }
+    
+    return 0;
+}</code></pre>
+
+            <h3>Méthodes essentielles des Maps 🛠️</h3>
+
+            <table>
+                <tr>
+                    <th>Méthode</th>
+                    <th>Description</th>
+                    <th>Exemple</th>
+                </tr>
+                <tr>
+                    <td><code>[clé]</code></td>
+                    <td>Accéder ou créer une valeur</td>
+                    <td><code>map["key"] = 10;</code></td>
+                </tr>
+                <tr>
+                    <td><code>find(clé)</code></td>
+                    <td>Chercher une clé</td>
+                    <td><code>map.find("key")</code></td>
+                </tr>
+                <tr>
+                    <td><code>size()</code></td>
+                    <td>Nombre de paires</td>
+                    <td><code>int n = map.size();</code></td>
+                </tr>
+                <tr>
+                    <td><code>erase(clé)</code></td>
+                    <td>Supprimer une paire</td>
+                    <td><code>map.erase("key");</code></td>
+                </tr>
+                <tr>
+                    <td><code>clear()</code></td>
+                    <td>Vider la map</td>
+                    <td><code>map.clear();</code></td>
+                </tr>
+            </table>
+
+            <h3>Comparaison Map vs Unordered_map</h3>
+
+            <table>
+                <tr>
+                    <th>Critère</th>
+                    <th>std::map</th>
+                    <th>std::unordered_map</th>
+                </tr>
+                <tr>
+                    <td><strong>Ordre</strong></td>
+                    <td>✅ Clés triées</td>
+                    <td>❌ Pas d'ordre garanti</td>
+                </tr>
+                <tr>
+                    <td><strong>Performance accès</strong></td>
+                    <td>O(log n)</td>
+                    <td>⚡ O(1) en moyenne</td>
+                </tr>
+                <tr>
+                    <td><strong>Utilisation mémoire</strong></td>
+                    <td>Modérée</td>
+                    <td>Plus élevée</td>
+                </tr>
+                <tr>
+                    <td><strong>Cas d'usage</strong></td>
+                    <td>Besoin d'ordre trié</td>
+                    <td>Performance maximale</td>
+                </tr>
+            </table>
+
+            <div class="info-box">
+                <p><strong>Quand utiliser quoi ?</strong></p>
+                <ul class="bullet-list">
+                    <li>🗂️ <code>std::map</code> : Quand l'ordre des clés est important (leaderboard, données chronologiques)</li>
+                    <li>⚡ <code>std::unordered_map</code> : Quand seul l'accès rapide compte (cache, tables de hachage)</li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="separator"></div>
+
+        <section>
+            <h2>Partie Pratique</h2>
+
+            <h3>Exemple 1 : Système de score avec Map</h3>
+
+            <pre><code>#include &lt;map&gt; 
+#include &lt;string&gt; 
+#include &lt;cstdio&gt; 
+
+int main() {
+    std::map&lt;std::string, int&gt;  highScores;
+    
+    // Ajouter des scores
+    highScores["Alice"] = 1500;
+    highScores["Bob"] = 2300;
+    highScores["Charlie"] = 1800;
+    
+    // Afficher le classement (automatiquement trié par nom)
+    printf("=== CLASSEMENT ===\n");
+    for (const auto& player : highScores) {
+        printf("%s : %d points\n", 
+               player.first.c_str(), player.second);
+    }
+    
+    // Mettre à jour un score
+    printf("\nBob améliore son score !\n");
+    highScores["Bob"] += 500;
+    
+    printf("Nouveau score de Bob : %d\n", highScores["Bob"]);
+    
+    return 0;
+}</code></pre>
+
+            <h3>Exemple 2 : Inventaire de jeu avec Unordered_map</h3>
+
+            <pre><code>#include &lt;unordered_map&gt;
+#include &lt;string&gt;
+#include &lt;cstdio&gt;
+
+int main() {
+    // Inventaire : nom d'objet → quantité
+    std::unordered_map&lt;std::string, int&gt; inventory;
+    
+    // Ajouter des objets
+    inventory["Potion"] = 5;
+    inventory["Épée"] = 1;
+    inventory["Bouclier"] = 1;
+    
+    // Utiliser une potion
+    printf("Utilisation d'une potion...\n");
+    inventory["Potion"]--;
+    
+    // Afficher l'inventaire
+    printf("\n=== INVENTAIRE ===\n");
+    for (const auto& item : inventory) {
+        printf("%s x%d\n", item.first.c_str(), item.second);
+    }
+    
+    // Vérifier si un objet existe
+    if (inventory.find("Arc") != inventory.end()) {
+        printf("\nVous avez un arc !\n");
+    } else {
+        printf("\nVous n'avez pas d'arc.\n");
+    }
+    
+    return 0;
+}</code></pre>
+        </section>
+
+        <div class="separator"></div>
+
+        <section>
+            <h2>Conclusion : Choisir le bon conteneur 🎯</h2>
+
+            <p>Le C++ offre une grande variété de conteneurs, chacun optimisé pour des situations spécifiques. Il n'existe pas de conteneur "parfait" qui convient à tous les cas !</p>
+
+            <div class="key-points">
+                <h3>Guide de sélection rapide</h3>
+                <ul class="bullet-list">
+                    <li>📦 <strong>Array</strong> : Taille fixe connue, performance maximale</li>
+                    <li>🚀 <strong>Vector</strong> : Taille variable, ajout/suppression en fin de liste</li>
+                    <li>🗂️ <strong>Map</strong> : Accès par clé, besoin d'ordre trié</li>
+                    <li>⚡ <strong>Unordered_map</strong> : Accès par clé, performance maximale</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <p><strong>Autres conteneurs C++ (vus ultérieurement) :</strong></p>
+                <ul class="bullet-list">
+                    <li><code>std::list</code> : Insertion/suppression rapide n'importe où</li>
+                    <li><code>std::set</code> : Collection d'éléments uniques triés</li>
+                    <li><code>std::queue</code> : File d'attente (FIFO)</li>
+                    <li><code>std::stack</code> : Pile (LIFO)</li>
+                    <li><code>std::deque</code> : Insertion/suppression rapide aux deux extrémités</li>
+                </ul>
+            </div>
+
+            <h3>Compromis Performance vs Flexibilité ⚖️</h3>
+
+            <p>Le choix d'un conteneur implique souvent des compromis :</p>
+
+            <div class="warning-box">
+                <strong>Trade-offs classiques :</strong>
+                <ul class="bullet-list">
+                    <li><strong>Vitesse vs Mémoire :</strong> Les conteneurs rapides (unordered_map) consomment plus de mémoire</li>
+                    <li><strong>Flexibilité vs Performance :</strong> Les tableaux statiques sont plus rapides mais moins flexibles que les vectors</li>
+                    <li><strong>Ordre vs Vitesse :</strong> Map maintient l'ordre mais est plus lent qu'unordered_map</li>
+                    <li><strong>Simplicité vs Optimisation :</strong> Parfois, un conteneur simple suffit même s'il n'est pas "optimal"</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <p><strong>Règle d'or :</strong> Commencez avec le conteneur le plus simple qui résout votre problème (<code>vector</code> dans la plupart des cas). Optimisez seulement si vous rencontrez des problèmes de performance mesurables !</p>
+            </div>
+        </section>
+
+        <div class="separator"></div>
+
+        <section>
+            <h2>Résumé</h2>
+            
+            <div class="key-points">
+                <h3>À retenir</h3>
+                <ul class="bullet-list">
+                    <li><strong>Index :</strong> Position d'un élément, commence TOUJOURS à 0</li>
+                    <li><strong>Array :</strong> Tableau de taille fixe, rapide, simple</li>
+                    <li><strong>Vector :</strong> Tableau dynamique, taille variable, plus flexible</li>
+                    <li><strong>Struct :</strong> Regroupe plusieurs données de types différents</li>
+                    <li><strong>Map :</strong> Conteneur clé-valeur trié</li>
+                    <li><strong>Unordered_map :</strong> Conteneur clé-valeur non trié</li>
+                    <li><strong>Accès tableau :</strong> <code>tableau[index]</code></li>
+                    <li><strong>Accès struct :</strong> <code>structure.membre</code></li>
+                    <li><strong>Struct dans tableau :</strong> <code>tableau[index].membre</code></li>
+                    <li><strong>Accès map :</strong> <code>map[clé]</code> ou <code>map.find(clé)</code></li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="separator"></div>
+
+        <section>
+            <h2>Validation des Compétences</h2>
+            
+            <div class="key-points">
+                <h3>L'élève doit savoir</h3>
+                <ul class="bullet-list">
+                    <li>✅ Comprendre le concept d'index (commence à 0)</li>
+                    <li>✅ Déclarer et initialiser un tableau classique</li>
+                    <li>✅ Déclarer et utiliser un std::vector</li>
+                    <li>✅ Accéder à un élément avec <code>[index]</code></li>
+                    <li>✅ Parcourir un conteneur avec for et range-based for</li>
+                    <li>✅ Utiliser push_back(), pop_back(), size(), clear()</li>
+                    <li>✅ Créer une structure avec plusieurs membres</li>
+                    <li>✅ Accéder aux membres d'une structure avec <code>.</code></li>
+                    <li>✅ Créer un tableau/vector de structures</li>
+                    <li>✅ Accéder aux membres d'une structure dans un tableau</li>
+                    <li>✅ Comprendre les paires clé-valeur (pair.first, pair.second)</li>
+                    <li>✅ Choisir le conteneur approprié selon le besoin</li>
+                </ul>
+            </div>
+            
+            <div class="warning-box">
+                <p><strong>Points de vigilance :</strong></p>
+                <ul class="bullet-list">
+                    <li>Ne jamais dépasser la taille du tableau (index < taille)</li>
+                    <li>L'index du dernier élément = taille - 1</li>
+                    <li>Utiliser size() avec les vectors et maps, pas avec les arrays</li>
+                    <li>Toujours initialiser les structures avant utilisation</li>
+                    <li>Vérifier l'existence d'une clé avec find() avant d'y accéder</li>
+                    <li>Utiliser const& dans les boucles pour éviter les copies inutiles</li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="separator"></div>
+
+        <section>
+            <h2>Définitions</h2>
+            
+            <div class="info-box">
+                <div id="def-Const-correctness" class="definition-item">
+                    <p><strong><code>
+                        <a href="https://fr.belaycpp.com/2021/10/19/est-ce-que-toutes-les-variables-devraient-etre-const-par-defaut/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="link-web">Const-correctness :</a></code></strong>
+                        Le concept de code de qualité et de bonne pratique. Pas toujours évident à mettre en place, mais peut être peut on l'automatisé
+                        avec les IA de nos jours. Quoi qu'il en soit si on est en mesure de définir <strong>const</strong> toutes les variables qui le sont 
+                        dans notre code montre une certaine maitrise du projet et du code en générale. Il est donc bon de s'exercer à cette pratique.
+                        Pour ma part, j'ai largement echouer jusqu'a maintenant. Mais il n'est jamais trop tard.
+                    </p>
+                </div>
+                <p><strong><code>Conteneur (Container) :</code></strong> Structure de données qui stocke plusieurs éléments. Les tableaux, vectors et maps sont des conteneurs.</p>
+
+                <p><strong><code>Index (Indice) :</code></strong> Position d'un élément dans un conteneur. Commence toujours à 0 en C++.</p>
+
+                <p><strong><code>Array (Tableau) :</code></strong> Conteneur de taille fixe définie à la compilation. Rapide mais inflexible.</p>
+
+                <p><strong><code>Vector :</code></strong> Conteneur de taille dynamique qui peut grandir ou rétrécir pendant l'exécution. Plus flexible mais légèrement plus lent.</p>
+
+                <p><strong><code>Structure (struct) :</code></strong> Type de données personnalisé qui regroupe plusieurs membres de types différents sous un même nom.</p>
+
+                <p><strong><code>Membre (Member) :</code></strong> Variable à l'intérieur d'une structure. On y accède avec l'opérateur point <code>.</code></p>
+
+                <p><strong><code>Map :</code></strong> Conteneur associatif qui stocke des paires clé-valeur triées. Utilise un arbre binaire équilibré.</p>
+
+                <p><strong><code>Unordered_map :</code></strong> Conteneur associatif qui stocke des paires clé-valeur non triées. Utilise une table de hachage pour un accès rapide.</p>
+
+                <p><strong><code>Paire (Pair) :</code></strong> Structure de deux éléments : <code>first</code> (la clé) et <code>second</code> (la valeur).</p>
+
+                <p><strong><code>Clé (Key) :</code></strong> Identifiant unique utilisé pour accéder à une valeur dans une map.</p>
+
+                <p><strong><code>Valeur (Value) :</code></strong> Donnée associée à une clé dans une map.</p>
+            </div>
+        </section>
+
+        <footer>
+            <p>MODULE DE FORMATION C++</p>
+            <p style="font-size: 0.85em; margin-top: 12px; opacity: 0.9;">Programmation • GameDev • Raylib</p>
+        </footer>
+    </div>
+</body>
+</html>
