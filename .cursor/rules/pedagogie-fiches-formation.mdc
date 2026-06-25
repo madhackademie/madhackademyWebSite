@@ -1,0 +1,45 @@
+---
+description: Méthode pédagogique MadHackAdemy — fiches HTML et corrections progressives
+globs: FicheFormationHtlm/**/*.html
+alwaysApply: false
+---
+
+# Pédagogie MadHackAdemy — exposer les solutions
+
+**Référence modèle :** `FicheFormationHtlm/07_Struct_Methodes/ClaudeHtml/StructMethodes.html`
+
+## Principe directeur
+
+Ne jamais livrer une solution « brute ». Exposer **progressivement**, avec des **explications** et des **dissections** (morceau par morceau). La répétition des notions transversales (`const`, passage par référence `&`, etc.) **d'un module à l'autre est voulue** — c'est par la répétition que l'élève assimile.
+
+## Structure d'une fiche
+
+1. **Objectif du module** — contexte, prérequis, ce que l'élève saura faire
+2. **Théorie** — étapes numérotées (`Étape 1`, `Étape 2`…), du simple au complet
+3. **Exercices FlashDev** — exercices guidés puis challenge
+4. **Correction complète** — code final aligné sur `Correction/main.cpp`
+5. **Résumé** — points clés à retenir
+
+## Dissection du code (obligatoire)
+
+Pour chaque bloc significatif :
+
+- **Schéma ou analogie d'abord** (avant/après, schéma visuel du flux)
+- **Code annoté** avec numéros (`cn` / badges) sur les lignes clés
+- **Liste d'annotations** sous le bloc : une ligne par numéro, en langage clair
+- **Struct complète** seulement après avoir expliqué chaque morceau
+- **Tableau récap** quand plusieurs méthodes ou concepts coexistent
+
+## Répétition assumée
+
+À chaque module où `const`, `&`, initialisation `{}`, etc. réapparaissent : **réexpliquer brièvement**, même si déjà vu. Ne pas renvoyer à un module précédent sans rappel inline.
+
+## Boîtes contextuelles
+
+- `info-box` : rappels, prérequis, nuances techniques
+- `warning-box` : pièges, limites du scope (ex. « pas encore de POO classique »)
+- `key-points` : synthèse et challenge
+
+## Corrections C++
+
+La correction HTML doit rester **alignée** sur le `main.cpp` du dossier `Correction/` correspondant dans FlashRevisionSoft.

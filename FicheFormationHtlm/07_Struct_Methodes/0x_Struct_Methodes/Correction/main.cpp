@@ -10,15 +10,15 @@ struct Fighter
 
     void Attack(Fighter& target)
     {
-        target.hp -= attackPower;
+        target.hp -= attackPower;//decrease the hp of the target by the attackPower
         if (target.hp < 0)
-            target.hp = 0;
+            target.hp = 0;//clamp the value of hp to 0
         printf("%s attaque %s pour %d degats !\n", name.c_str(), target.name.c_str(), attackPower);
     }
 
     bool IsAlive() const
     {
-        return hp > 0;
+        return hp > 0;//return the condition as a bool (alive if hp > 0)
     }
 
     void PrintStatus() const
@@ -29,16 +29,20 @@ struct Fighter
 
 int main(void)
 {
+    //instanciate david and goliath
     Fighter david{"David", 30, 8};
     Fighter goliath{"Goliath", 50, 12};
 
+    //print the initial status of david and goliath
     printf("--- Etat initial ---\n");
     david.PrintStatus();
     goliath.PrintStatus();
 
+    //make david and goliath attack each other
     david.Attack(goliath);
     goliath.Attack(david);
 
+    //print the status of david and goliath after the attack
     printf("--- Apres un echange ---\n");
     david.PrintStatus();
     goliath.PrintStatus();
@@ -48,8 +52,10 @@ int main(void)
     {
         BeginDrawing();
         ClearBackground(RAYWHITE);
+        //draw the status of david and goliath  
         DrawText(TextFormat("%s  HP: %d", david.name.c_str(), david.hp), 50, 80, 28, BLUE);
         DrawText(TextFormat("%s  HP: %d", goliath.name.c_str(), goliath.hp), 50, 130, 28, MAROON);
+        //draw the alive status of david and goliath
         DrawText(TextFormat("David vivant: %s", david.IsAlive() ? "oui" : "non"), 50, 200, 22, DARKGRAY);
         DrawText(TextFormat("Goliath vivant: %s", goliath.IsAlive() ? "oui" : "non"), 50, 230, 22, DARKGRAY);
         EndDrawing();
