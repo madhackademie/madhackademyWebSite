@@ -107,7 +107,7 @@ Maquette d’écran cible (beat’em up arcade type *Golden Axe* / *Cadillacs an
 
 ![Référence duel David vs Goliath](docs/gamification/references/david-vs-goliath-duel-reference.png)
 
-- [ ] **P2** — Retravailler l’image `david-vs-goliath-duel-reference.png` pour un format **filigrane carte Frogger** (ratio portrait ~300×380) : David et Goliath entièrement visibles, moins de HUD arcade, cadrage pensé pour `FicheFormationHtlm/07_Struct_Methodes/ClaudeHtml/Frogger_theme_StrucAndMehtode.html` (opacité ~50 % en fond)
+- [ ] **P2** — Retravailler l’image `david-vs-goliath-duel-reference.png` pour un format **filigrane carte Frogger** (ratio portrait ~300×380) : David et Goliath entièrement visibles, moins de HUD arcade, cadrage pensé pour `FicheFormationHtlm/07_Struct_Methodes/ClaudeHtml/Frogger_theme_StrucAndMehtode.html` (opacité ~50 % en fond). **À ajuster aussi** : remonter un peu le filigrane dans la carte (`background-position` verticale — actuellement trop bas, David/Goliath coupés en bas ou mal centrés).
 
 | Élément à l’écran | Rôle dans FlashDev |
 |-------------------|-------------------|
