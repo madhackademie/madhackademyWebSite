@@ -1,6 +1,6 @@
-# TODO — madhackademyWebSite
+﻿# TODO — madhackademyWebSite
 
-> Dernière mise à jour : 23 juin 2026  
+> Dernière mise à jour : 26 juin 2026  
 > Projet : site vitrine FlashDev + MadHackAdemy
 
 ## Site en production
@@ -58,12 +58,7 @@ Tâches utiles mais non bloquantes — à traiter après les priorités.
 | `0x_Struct_Methodes` | `FicheFormationHtlm/07_Struct_Methodes/ClaudeHtml/StructMethodes.html` |
 
 - [x] Importer les guides HTML sources dans ce repo (`FicheFormationHtlm/`)
-- [x] Créer le module `07_Struct_Methodes` (carte + guide Frogger — brouillon à relire/simplifier)
-- [ ] **P1** — **Relire la carte Struct & Méthodes** (`FicheFormationHtlm/07_Struct_Methodes/`) : rythme trop rapide / enchaînement à simplifier — clarifier le lien progressif entre struct simple → méthodes → combat
-- [ ] **P1** — Ajouter des **visuels code** (captures) struct + méthodes dans `ClaudeHtml/Image/` — comme les autres cartes du deck
-- [ ] **P1** — Réécrire l'exemple **sans pointeur ni référence** (`Fighter&` à éviter) — méthodes qui modifient `this` uniquement, ou logique de dégâts dans `main`
-- [ ] **P1** — Étudier si le **code du combat peut rester dans `main`** (appels `david.Attack()` sans passer la cible par référence — ex. retourner les dégâts, ou deux méthodes `TakeDamage(int)` + `GetAttackPower()`)
-- [ ] **P2** — Aligner guide HTML, `Struct&Methodes.txt`, `Source/` et `Correction/` après la simplification pédagogique
+- [x] Carte `07_Struct_Methodes` validée (guide Frogger `Frogger_theme_StrucAndMehtodeCard.html`) — juin 2026
 - [ ] **P1** — Exposer les HTML en production sous `gameopenmoney.com` (copie ou lien depuis `WebSite/`) — chemins images relatifs à vérifier
 - [ ] **P2** — Renseigner `URLNet` dans `FlashRevisionSoft/data.json` pour chaque carte du deck
 
@@ -107,7 +102,6 @@ Maquette d’écran cible (beat’em up arcade type *Golden Axe* / *Cadillacs an
 
 ![Référence duel David vs Goliath](docs/gamification/references/david-vs-goliath-duel-reference.png)
 
-- [ ] **P2** — Retravailler l’image `david-vs-goliath-duel-reference.png` pour un format **filigrane carte Frogger** (ratio portrait ~300×380) : David et Goliath entièrement visibles, moins de HUD arcade, cadrage pensé pour `FicheFormationHtlm/07_Struct_Methodes/ClaudeHtml/Frogger_theme_StrucAndMehtode.html` (opacité ~50 % en fond). **À ajuster aussi** : remonter un peu le filigrane dans la carte (`background-position` verticale — actuellement trop bas, David/Goliath coupés en bas ou mal centrés).
 
 | Élément à l’écran | Rôle dans FlashDev |
 |-------------------|-------------------|
