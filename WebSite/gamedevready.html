@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameDevReady — Formation Game Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .nintendo-red { background: #E60012; }
+        .nintendo-yellow { background: #FBDD08; }
+        .nintendo-green { background: #05C31C; }
+        .nintendo-blue { background: #1B8CE4; }
+        .text-nintendo-red { color: #E60012; }
+        .text-nintendo-yellow { color: #FBDD08; }
+        .text-nintendo-green { color: #05C31C; }
+        .text-nintendo-blue { color: #1B8CE4; }
+        .gradient-text {
+            background: linear-gradient(90deg, #E60012, #FBDD08, #05C31C, #1B8CE4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .phase-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .phase-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+        }
+        .phase-card--active:hover {
+            box-shadow: 0 12px 40px rgba(230, 0, 18, 0.25);
+        }
+    </style>
+</head>
+<body class="bg-black text-white font-mono">
+
+    <nav class="fixed top-0 w-full bg-black bg-opacity-95 backdrop-blur-sm z-50 border-b-2 border-gray-800">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="/" class="text-2xl md:text-3xl font-bold gradient-text hover:scale-105 transition-transform">
+                FLASHDEV
+            </a>
+            <div class="flex gap-4 md:gap-6 text-sm md:text-base">
+                <a href="/" class="text-gray-300 hover:text-red-500 transition font-bold">Accueil</a>
+                <a href="/gamedevready.html" class="text-green-400 font-bold">GameDevReady</a>
+                <a href="/centre-formation.html" class="text-gray-300 hover:text-yellow-400 transition font-bold">Centre-Formation</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="pt-24">
+        <header class="py-16 px-4 text-center border-b border-gray-800">
+            <p class="text-sm text-gray-500 mb-4 uppercase tracking-widest">Deck premium FlashDev</p>
+            <h1 class="text-5xl md:text-7xl font-bold mb-4 gradient-text">GameDevReady</h1>
+            <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto">
+                La formation complète pour devenir Game Developer — du C++ console au jeu Frogger en Raylib.
+            </p>
+            <div class="flex justify-center gap-2 mt-8">
+                <span class="w-12 h-2 nintendo-red"></span>
+                <span class="w-12 h-2 nintendo-yellow"></span>
+                <span class="w-12 h-2 nintendo-green"></span>
+                <span class="w-12 h-2 nintendo-blue"></span>
+            </div>
+        </header>
+
+        <section class="py-20 px-4">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-3xl font-bold text-center mb-4">Parcours en 3 phases</h2>
+                <p class="text-center text-gray-400 mb-12">Chaque phase regroupe plusieurs modules de la roadmap</p>
+
+                <div class="grid md:grid-cols-3 gap-8">
+
+                    <!-- Phase 1 -->
+                    <a href="/gamedevready-bases-cpp.html"
+                       class="phase-card phase-card--active block bg-gray-900 rounded-xl border-2 border-red-600 overflow-hidden">
+                        <div class="h-2 nintendo-red"></div>
+                        <div class="p-8">
+                            <span class="inline-block px-3 py-1 bg-red-900 text-red-300 rounded text-xs font-bold mb-4">PHASE 1 — DISPONIBLE</span>
+                            <div class="w-14 h-14 nintendo-red rounded flex items-center justify-center text-2xl font-bold mb-6">1</div>
+                            <h3 class="text-2xl font-bold text-nintendo-red mb-3">Bases C++</h3>
+                            <p class="text-gray-300 mb-4 text-sm leading-relaxed">
+                                Bootcamp console : Printf, variables, conditions, boucles, fonctions, conteneurs, structs &amp; méthodes.
+                            </p>
+                            <ul class="text-xs text-gray-500 space-y-1 mb-6">
+                                <li>• 7 cartes flash + guides HTML</li>
+                                <li>• Bootcamp 1–2 semaines</li>
+                                <li>• Thème Frogger</li>
+                            </ul>
+                            <span class="text-red-400 font-bold text-sm">Voir le deck →</span>
+                        </div>
+                    </a>
+
+                    <!-- Phase 2 -->
+                    <div class="phase-card block bg-gray-900 rounded-xl border-2 border-gray-700 overflow-hidden opacity-75">
+                        <div class="h-2 nintendo-yellow"></div>
+                        <div class="p-8">
+                            <span class="inline-block px-3 py-1 bg-gray-800 text-gray-400 rounded text-xs font-bold mb-4">PHASE 2 — À VENIR</span>
+                            <div class="w-14 h-14 nintendo-yellow rounded flex items-center justify-center text-2xl font-bold text-black mb-6">2</div>
+                            <h3 class="text-2xl font-bold text-nintendo-yellow mb-3">Raylib &amp; Challenges</h3>
+                            <p class="text-gray-300 mb-4 text-sm leading-relaxed">
+                                Premier challenge David &amp; Goliath, puis le framework Raylib : graphics, input, audio, collisions.
+                            </p>
+                            <ul class="text-xs text-gray-500 space-y-1 mb-6">
+                                <li>• Combat tour par tour console</li>
+                                <li>• Hello Raylib, RenderTexture…</li>
+                                <li>• Bootcamp 2–3 semaines</li>
+                            </ul>
+                            <span class="text-gray-600 font-bold text-sm">Bientôt disponible</span>
+                        </div>
+                    </div>
+
+                    <!-- Phase 3 -->
+                    <div class="phase-card block bg-gray-900 rounded-xl border-2 border-gray-700 overflow-hidden opacity-75">
+                        <div class="h-2 bg-gradient-to-r from-blue-500 to-purple-600"></div>
+                        <div class="p-8">
+                            <span class="inline-block px-3 py-1 bg-gray-800 text-gray-400 rounded text-xs font-bold mb-4">PHASE 3 — À VENIR</span>
+                            <div class="w-14 h-14 nintendo-blue rounded flex items-center justify-center text-2xl font-bold mb-6">3</div>
+                            <h3 class="text-2xl font-bold text-nintendo-blue mb-3">Projets &amp; Paradigmes</h3>
+                            <p class="text-gray-300 mb-4 text-sm leading-relaxed">
+                                Remake Frogger complet, puis choix de voie : programmation orientée objet ou ECS.
+                            </p>
+                            <ul class="text-xs text-gray-500 space-y-1 mb-6">
+                                <li>• Projet Frogger ~ 2–3 semaines</li>
+                                <li>• Path POO ou Path ECS</li>
+                                <li>• Architecture jeu avancée</li>
+                            </ul>
+                            <span class="text-gray-600 font-bold text-sm">Bientôt disponible</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="py-12 px-4 bg-gray-950 border-t border-gray-800">
+            <div class="max-w-4xl mx-auto text-center">
+                <p class="text-gray-400 mb-6">Ce parcours est synchronisé avec le deck premium dans FlashDev.</p>
+                <a href="/#roadmap" class="inline-block px-6 py-3 border-2 border-gray-600 hover:border-green-500 text-gray-300 hover:text-green-400 rounded transition-all font-bold">
+                    ← Roadmap sur l'accueil
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <footer class="py-8 px-4 bg-black border-t border-gray-800">
+        <div class="max-w-6xl mx-auto text-center text-gray-500 text-sm">
+            <p>GameDevReady — FlashDev © 2026</p>
+        </div>
+    </footer>
+
+</body>
+</html>

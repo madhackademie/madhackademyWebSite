@@ -1,6 +1,6 @@
 ﻿# TODO — madhackademyWebSite
 
-> Dernière mise à jour : 26 juin 2026  
+> Dernière mise à jour : 27 juin 2026  
 > Projet : site vitrine FlashDev + MadHackAdemy
 
 ## Site en production
@@ -9,6 +9,8 @@
 |------|-----|
 | Accueil FlashDev | [https://gameopenmoney.com/](https://gameopenmoney.com/) |
 | Centre de formation | [https://gameopenmoney.com/centre-formation.html](https://gameopenmoney.com/centre-formation.html) |
+| GameDevReady (hub) | [https://gameopenmoney.com/gamedevready.html](https://gameopenmoney.com/gamedevready.html) *(à déployer)* |
+| Bases C++ (deck) | [https://gameopenmoney.com/gamedevready-bases-cpp.html](https://gameopenmoney.com/gamedevready-bases-cpp.html) *(à déployer)* |
 
 ---
 
@@ -31,9 +33,18 @@ Ces tâches débloquent la mise en ligne ou corrigent des problèmes visibles po
 - [x] **P1** — Configurer l'hébergement statique → [gameopenmoney.com](https://gameopenmoney.com/)
 - [x] **P2** — Vérifier que la navigation inter-pages fonctionne en production (`/` ↔ `/centre-formation.html`)
 
+### Déploiement GameDevReady (provider / FTP)
+
+> Procédure détaillée : **`scripts/NOTE_DEPLOIEMENT-FTP-GAMEDEVREADY.md`** (arborescence FTP, URLs publiques, `URLNet` FlashDev)
+
+- [ ] **P1** — **Mettre à jour chez le provider** : uploader via FTP le contenu de `WebSite/` (pages `gamedevready*.html` + dossier `guides/cards/`)
+- [ ] **P1** — Vérifier en production les 7 URLs cartes (`https://gameopenmoney.com/guides/cards/01-printf.html` … `07-struct-methodes.html`)
+- [ ] **P1** — Tester le parcours : accueil → Bases C++ → cartes Frogger (iframes + liens plein écran)
+- [ ] **P2** — Renseigner `URLNet` dans `FlashRevisionSoft/data.json` avec les URLs HTTPS ci-dessus
+
 ### Corrections techniques urgentes
 
-- [ ] **P1** — Fermer la balise `<div class="pt-24">` manquante sur `index.html`
+- [x] **P1** — Fermer la balise `<div class="pt-24">` manquante sur `index.html`
 - [ ] **P2** — Normaliser le chemin image MiniPoulpe : `/Image/MiniPoulpeDicord.png` (au lieu de `\`)
 - [ ] **P2** — Harmoniser le discours Lua vs C++ sur `index.html` (roadmap = C++/Raylib)
 
@@ -49,7 +60,7 @@ Tâches utiles mais non bloquantes — à traiter après les priorités.
 
 | Dossier module | Support HTML (URLNet cible) | Carte FlashSoft |
 |----------------|----------------------------|-----------------|
-| `01_PrintC++` | `ClaudePdf/PrintF/printfC++FrogTheme.html` | `0x_Print` |
+| `01_PrintC++` | `ClaudePdf/printfC++FrogTheme.html` | `0x_Print` |
 | `02_Variable` | `ClaudeVariableHtml/VariableC++FroggerTheme.html` | `0X_Variable` |
 | `03_Conditions` | `ClaudeHtmlConditions/Conditions.html` | `0x_Conditions` |
 | `04_Les boucles` | `ClaudeHtml/LoopModule.html` | `0X_Boucles` |
@@ -59,7 +70,9 @@ Tâches utiles mais non bloquantes — à traiter après les priorités.
 
 - [x] Importer les guides HTML sources dans ce repo (`FicheFormationHtlm/`)
 - [x] Carte `07_Struct_Methodes` validée (guide Frogger `Frogger_theme_StrucAndMehtodeCard.html`) — juin 2026
-- [ ] **P1** — Exposer les HTML en production sous `gameopenmoney.com` (copie ou lien depuis `WebSite/`) — chemins images relatifs à vérifier
+- [x] Cartes Frogger HTML intégrées localement (`WebSite/guides/cards/`, page `gamedevready-bases-cpp.html`) — juin 2026
+- [ ] **P1** — Exposer les cartes + pages GameDevReady en production (FTP provider — voir `scripts/NOTE_DEPLOIEMENT-FTP-GAMEDEVREADY.md`)
+- [ ] **P1** — Exposer les **guides complets** HTML sous `gameopenmoney.com` (à venir : `printfC++FrogTheme.html`, etc.) — chemins images relatifs à vérifier
 - [ ] **P2** — Renseigner `URLNet` dans `FlashRevisionSoft/data.json` pour chaque carte du deck
 
 ### Contenu & éditorial
@@ -89,6 +102,7 @@ Tâches utiles mais non bloquantes — à traiter après les priorités.
 ### Deck GameDevReady (coordination avec FlashRevisionSoft)
 
 - [ ] **P2** — Mettre à jour la roadmap site : Premier Challenge → David & Goliath (combat tour par tour) une fois le projet créé côté soft
+- [ ] **polish** — *(repo FlashRevisionSoft)* Branche `polish/cards-webm` : rendu hybride image/vidéo via `mediaType` optionnel (`"image"` par défaut, WebM pour cartes animées officielles) — détail dans `FlashRevisionSoft/TODO.md` — pas urgent
 
 ### Évolutions produit
 
@@ -154,6 +168,7 @@ Maquette d’écran cible (beat’em up arcade type *Golden Axe* / *Cadillacs an
 |-----|---------------|
 | **P1** | Critique — à faire en premier |
 | **P2** | Important — rapidement après P1 |
+| **polish** | Amélioration visuelle / UX — non bloquant |
 | *(backlog)* | Amélioration — quand le site est en ligne et le contenu rempli |
 
 ---
@@ -164,3 +179,4 @@ Maquette d’écran cible (beat’em up arcade type *Golden Axe* / *Cadillacs an
 |------|---------------------|
 | `index.html` (FlashDev) | ~80 % — contenu OK, liens et détails à finaliser |
 | `centre-formation.html` | ~30 % — structure solide, contenu à rédiger |
+| `gamedevready-bases-cpp.html` | ~70 % — deck cartes OK en local, déploiement FTP à faire |

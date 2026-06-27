@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bases C++ — GameDevReady Bootcamp</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .nintendo-red { background: #E60012; }
+        .text-nintendo-red { color: #E60012; }
+        .gradient-text {
+            background: linear-gradient(90deg, #E60012, #FBDD08, #05C31C, #1B8CE4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        /* Aperçu carte Frogger 350×520 scalé */
+        .frogger-card-sm {
+            width: 175px;
+            height: 260px;
+            overflow: hidden;
+            border-radius: 0.5rem;
+            border: 2px solid #374151;
+            background: #0f2818;
+        }
+        .frogger-card-sm iframe {
+            width: 350px;
+            height: 520px;
+            border: 0;
+            display: block;
+            transform: scale(0.5);
+            transform-origin: 0 0;
+            pointer-events: none;
+        }
+        .frogger-card-md {
+            width: 280px;
+            height: 416px;
+            overflow: hidden;
+            border-radius: 0.75rem;
+            border: 3px solid #E60012;
+            background: #0f2818;
+            flex-shrink: 0;
+        }
+        .frogger-card-md iframe {
+            width: 350px;
+            height: 520px;
+            border: 0;
+            display: block;
+            transform: scale(0.8);
+            transform-origin: 0 0;
+        }
+        .frogger-card-sm:hover,
+        .frogger-card-md:hover {
+            border-color: #E60012;
+            box-shadow: 0 8px 32px rgba(230, 0, 18, 0.25);
+        }
+        /* Deck : retour à la ligne auto + 20px entre cartes */
+        .deck-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .deck-card-link {
+            width: 175px;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body class="bg-black text-white font-mono">
+
+    <nav class="fixed top-0 w-full bg-black bg-opacity-95 backdrop-blur-sm z-50 border-b-2 border-gray-800">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="/" class="text-2xl md:text-3xl font-bold gradient-text hover:scale-105 transition-transform">FLASHDEV</a>
+            <div class="flex gap-4 md:gap-6 text-sm md:text-base">
+                <a href="/gamedevready.html" class="text-gray-300 hover:text-green-500 transition font-bold">GameDevReady</a>
+                <a href="/gamedevready-bases-cpp.html" class="text-red-400 font-bold">Bases C++</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="pt-24">
+        <header class="py-12 px-4 border-b border-gray-800">
+            <div class="max-w-6xl mx-auto">
+                <a href="/gamedevready.html" class="text-sm text-gray-500 hover:text-red-400 transition">← GameDevReady</a>
+                <h1 class="text-4xl md:text-6xl font-bold mt-4 mb-3">
+                    <span class="text-nintendo-red">Phase 1</span> — Bases C++
+                </h1>
+                <p class="text-gray-400 max-w-2xl">
+                    Bootcamp console : 7 cartes du deck GameDevReady (thème Frogger).
+                    Chaque carte est disponible en HTML interactif — clique pour l'ouvrir en plein écran.
+                </p>
+            </div>
+        </header>
+
+        <!-- Deck : 7 cartes Frogger -->
+        <section class="py-12 px-4 bg-gray-950">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-sm uppercase tracking-widest text-gray-500 mb-2">Deck bootstrap</h2>
+                <p class="text-gray-400 text-sm mb-8">Cartes HTML Frogger — modules 01 à 07</p>
+                <div class="deck-grid">
+
+                    <a href="guides/cards/01-printf.html" target="_blank" class="deck-card-link text-center group">
+                        <div class="frogger-card-sm group-hover:border-red-500 transition"><iframe src="guides/cards/01-printf.html" title="Carte Printf" loading="lazy"></iframe></div>
+                        <span class="text-xs text-gray-400 mt-3 block group-hover:text-red-400 font-bold">01 · Printf</span>
+                    </a>
+                    <a href="guides/cards/02-variables.html" target="_blank" class="deck-card-link text-center group">
+                        <div class="frogger-card-sm group-hover:border-red-500 transition"><iframe src="guides/cards/02-variables.html" title="Carte Variables" loading="lazy"></iframe></div>
+                        <span class="text-xs text-gray-400 mt-3 block group-hover:text-red-400 font-bold">02 · Variables</span>
+                    </a>
+                    <a href="guides/cards/03-conditions.html" target="_blank" class="deck-card-link text-center group">
+                        <div class="frogger-card-sm group-hover:border-red-500 transition"><iframe src="guides/cards/03-conditions.html" title="Carte Conditions" loading="lazy"></iframe></div>
+                        <span class="text-xs text-gray-400 mt-3 block group-hover:text-red-400 font-bold">03 · Conditions</span>
+                    </a>
+                    <a href="guides/cards/04-boucles.html" target="_blank" class="deck-card-link text-center group">
+                        <div class="frogger-card-sm group-hover:border-red-500 transition"><iframe src="guides/cards/04-boucles.html" title="Carte Boucles" loading="lazy"></iframe></div>
+                        <span class="text-xs text-gray-400 mt-3 block group-hover:text-red-400 font-bold">04 · Boucles</span>
+                    </a>
+                    <a href="guides/cards/05-std-fonctions.html" target="_blank" class="deck-card-link text-center group">
+                        <div class="frogger-card-sm group-hover:border-red-500 transition"><iframe src="guides/cards/05-std-fonctions.html" title="Carte STD &amp; Fonctions" loading="lazy"></iframe></div>
+                        <span class="text-xs text-gray-400 mt-3 block group-hover:text-red-400 font-bold">05 · STD &amp; Fonctions</span>
+                    </a>
+                    <a href="guides/cards/06-conteneurs.html" target="_blank" class="deck-card-link text-center group">
+                        <div class="frogger-card-sm group-hover:border-red-500 transition"><iframe src="guides/cards/06-conteneurs.html" title="Carte Conteneurs" loading="lazy"></iframe></div>
+                        <span class="text-xs text-gray-400 mt-3 block group-hover:text-red-400 font-bold">06 · Conteneurs</span>
+                    </a>
+                    <a href="guides/cards/07-struct-methodes.html" target="_blank" class="deck-card-link text-center group">
+                        <div class="frogger-card-sm group-hover:border-red-500 transition"><iframe src="guides/cards/07-struct-methodes.html" title="Carte Struct &amp; Méthodes" loading="lazy"></iframe></div>
+                        <span class="text-xs text-gray-400 mt-3 block group-hover:text-red-400 font-bold">07 · Struct &amp; Méthodes</span>
+                    </a>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Modules détaillés -->
+        <div class="max-w-6xl mx-auto px-4 py-16 space-y-20">
+
+            <!-- 01 Printf -->
+            <article id="carte-print" class="scroll-mt-28">
+                <div class="flex flex-col lg:flex-row gap-8 items-start">
+                    <a href="guides/cards/01-printf.html" target="_blank" class="block">
+                        <div class="frogger-card-md"><iframe src="guides/cards/01-printf.html" title="Carte Printf"></iframe></div>
+                    </a>
+                    <div class="flex-1">
+                        <h2 class="text-3xl font-bold text-nintendo-red mb-2">01 — Printf</h2>
+                        <p class="text-gray-400 text-sm mb-3">Carte <code class="text-gray-300">0x_Print</code> · feedback console, format, DrawText</p>
+                        <a href="guides/cards/01-printf.html" target="_blank" class="inline-block mt-2 px-4 py-2 bg-red-900 hover:bg-red-700 text-red-200 rounded text-sm font-bold transition">Ouvrir la carte →</a>
+                        <p class="text-xs text-gray-600 mt-4">Guide complet : <code>printfC++FrogTheme.html</code> — à publier</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 02 Variables -->
+            <article id="carte-variable" class="scroll-mt-28 border-t border-gray-800 pt-20">
+                <div class="flex flex-col lg:flex-row gap-8 items-start">
+                    <a href="guides/cards/02-variables.html" target="_blank" class="block">
+                        <div class="frogger-card-md"><iframe src="guides/cards/02-variables.html" title="Carte Variables"></iframe></div>
+                    </a>
+                    <div class="flex-1">
+                        <h2 class="text-3xl font-bold text-nintendo-red mb-2">02 — Variables</h2>
+                        <p class="text-gray-400 text-sm mb-3">Carte <code class="text-gray-300">0X_Variable</code> · types, mémoire, pointeurs</p>
+                        <a href="guides/cards/02-variables.html" target="_blank" class="inline-block mt-2 px-4 py-2 bg-red-900 hover:bg-red-700 text-red-200 rounded text-sm font-bold transition">Ouvrir la carte →</a>
+                        <p class="text-xs text-gray-600 mt-4">Guide complet : <code>VariableC++FroggerTheme.html</code> — à publier</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 03 Conditions -->
+            <article id="carte-conditions" class="scroll-mt-28 border-t border-gray-800 pt-20">
+                <div class="flex flex-col lg:flex-row gap-8 items-start">
+                    <a href="guides/cards/03-conditions.html" target="_blank" class="block">
+                        <div class="frogger-card-md"><iframe src="guides/cards/03-conditions.html" title="Carte Conditions"></iframe></div>
+                    </a>
+                    <div class="flex-1">
+                        <h2 class="text-3xl font-bold text-nintendo-red mb-2">03 — Conditions</h2>
+                        <p class="text-gray-400 text-sm mb-3">Carte <code class="text-gray-300">0x_Conditions</code> · if, else, else if, portée</p>
+                        <a href="guides/cards/03-conditions.html" target="_blank" class="inline-block mt-2 px-4 py-2 bg-red-900 hover:bg-red-700 text-red-200 rounded text-sm font-bold transition">Ouvrir la carte →</a>
+                        <p class="text-xs text-gray-600 mt-4">Guide complet : <code>Conditions.html</code> — à publier</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 04 Boucles -->
+            <article id="carte-boucles" class="scroll-mt-28 border-t border-gray-800 pt-20">
+                <div class="flex flex-col lg:flex-row gap-8 items-start">
+                    <a href="guides/cards/04-boucles.html" target="_blank" class="block">
+                        <div class="frogger-card-md"><iframe src="guides/cards/04-boucles.html" title="Carte Boucles"></iframe></div>
+                    </a>
+                    <div class="flex-1">
+                        <h2 class="text-3xl font-bold text-nintendo-red mb-2">04 — Boucles</h2>
+                        <p class="text-gray-400 text-sm mb-3">Carte <code class="text-gray-300">0X_Boucles</code> · while, for, foreach, do-while</p>
+                        <a href="guides/cards/04-boucles.html" target="_blank" class="inline-block mt-2 px-4 py-2 bg-red-900 hover:bg-red-700 text-red-200 rounded text-sm font-bold transition">Ouvrir la carte →</a>
+                        <p class="text-xs text-gray-600 mt-4">Guide complet : <code>LoopModule.html</code> — à publier</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 05 STD & Fonctions -->
+            <article id="carte-std" class="scroll-mt-28 border-t border-gray-800 pt-20">
+                <div class="flex flex-col lg:flex-row gap-8 items-start">
+                    <a href="guides/cards/05-std-fonctions.html" target="_blank" class="block">
+                        <div class="frogger-card-md"><iframe src="guides/cards/05-std-fonctions.html" title="Carte STD &amp; Fonctions"></iframe></div>
+                    </a>
+                    <div class="flex-1">
+                        <h2 class="text-3xl font-bold text-nintendo-red mb-2">05 — Librairie standard &amp; Fonctions</h2>
+                        <p class="text-gray-400 text-sm mb-3">Carte <code class="text-gray-300">0x_STD_Fonctions</code> · iostream, cin, fonctions</p>
+                        <a href="guides/cards/05-std-fonctions.html" target="_blank" class="inline-block mt-2 px-4 py-2 bg-red-900 hover:bg-red-700 text-red-200 rounded text-sm font-bold transition">Ouvrir la carte →</a>
+                        <p class="text-xs text-gray-600 mt-4">Guide complet : <code>stdLib&amp;Fonction.html</code> — à publier</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 06 Conteneurs -->
+            <article id="carte-conteneurs" class="scroll-mt-28 border-t border-gray-800 pt-20">
+                <div class="flex flex-col lg:flex-row gap-8 items-start">
+                    <a href="guides/cards/06-conteneurs.html" target="_blank" class="block">
+                        <div class="frogger-card-md"><iframe src="guides/cards/06-conteneurs.html" title="Carte Conteneurs"></iframe></div>
+                    </a>
+                    <div class="flex-1">
+                        <h2 class="text-3xl font-bold text-nintendo-red mb-2">06 — Conteneurs</h2>
+                        <p class="text-gray-400 text-sm mb-3">Carte <code class="text-gray-300">0X_Conteneurs</code> · vector, array, parcours</p>
+                        <a href="guides/cards/06-conteneurs.html" target="_blank" class="inline-block mt-2 px-4 py-2 bg-red-900 hover:bg-red-700 text-red-200 rounded text-sm font-bold transition">Ouvrir la carte →</a>
+                        <p class="text-xs text-gray-600 mt-4">Guide complet : <code>Conteneurs.html</code> — à publier</p>
+                    </div>
+                </div>
+            </article>
+
+            <!-- 07 Struct & Méthodes -->
+            <article id="carte-struct" class="scroll-mt-28 border-t border-gray-800 pt-20">
+                <div class="flex flex-col lg:flex-row gap-8 items-start">
+                    <a href="guides/cards/07-struct-methodes.html" target="_blank" class="block">
+                        <div class="frogger-card-md"><iframe src="guides/cards/07-struct-methodes.html" title="Carte Struct &amp; Méthodes"></iframe></div>
+                    </a>
+                    <div class="flex-1">
+                        <h2 class="text-3xl font-bold text-nintendo-red mb-2">07 — Struct &amp; Méthodes</h2>
+                        <p class="text-gray-400 text-sm mb-3">Carte <code class="text-gray-300">0x_Struct_Methodes</code> · structs, méthodes, Frogger</p>
+                        <a href="guides/cards/07-struct-methodes.html" target="_blank" class="inline-block mt-2 px-4 py-2 bg-red-900 hover:bg-red-700 text-red-200 rounded text-sm font-bold transition">Ouvrir la carte →</a>
+                        <p class="text-xs text-gray-600 mt-4">Guide complet : <code>StructMethodes.html</code> — à publier</p>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </div>
+
+    <footer class="py-8 px-4 bg-gray-950 border-t border-gray-800">
+        <div class="max-w-6xl mx-auto text-center text-gray-500 text-sm">
+            <a href="/gamedevready.html" class="text-gray-400 hover:text-red-400 transition">← Retour GameDevReady</a>
+        </div>
+    </footer>
+
+</body>
+</html>
