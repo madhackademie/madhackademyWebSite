@@ -51,6 +51,37 @@ function Test-YesResponse {
     return $normalized -in @('o', 'oui', 'y', 'yes')
 }
 
+function Invoke-GitCommand {
+    param(
+        [Parameter(Mandatory)]
+        [string[]]$Arguments,
+        [switch]$ShowOutput
+    )
+
+    $prevEap = $ErrorActionPreference
+    $ErrorActionPreference = 'Continue'
+    try {
+        $output = & git @Arguments 2>&1
+        $exitCode = $LASTEXITCODE
+
+        if ($ShowOutput) {
+            foreach ($line in @($output)) {
+                if ($null -eq $line) { continue }
+                $text = if ($line -is [System.Management.Automation.ErrorRecord]) { $line.ToString() } else { [string]$line }
+                if ($text) { Write-Host $text }
+            }
+        }
+
+        return [PSCustomObject]@{
+            ExitCode = $exitCode
+            Output   = @($output)
+        }
+    }
+    finally {
+        $ErrorActionPreference = $prevEap
+    }
+}
+
 function Get-RepoSyncStatus {
     param(
         [string]$Path,
@@ -76,8 +107,8 @@ function Get-RepoSyncStatus {
         $fetchMessage = "fetch ignore (-NoFetch)"
 
         if (-not $SkipFetch -and -not $IsDryRun) {
-            git fetch origin 2>&1 | Out-Host
-            if ($LASTEXITCODE -ne 0) {
+            $fetchResult = Invoke-GitCommand -Arguments @('fetch', 'origin') -ShowOutput
+            if ($fetchResult.ExitCode -ne 0) {
                 $fetchOk = $false
                 $fetchMessage = "fetch echoue"
             }
@@ -221,8 +252,8 @@ function Invoke-RepoPull {
 
     Push-Location $Status.Path
     try {
-        git pull --ff-only
-        if ($LASTEXITCODE -ne 0) {
+        $pullResult = Invoke-GitCommand -Arguments @('pull', '--ff-only') -ShowOutput
+        if ($pullResult.ExitCode -ne 0) {
             throw ("git pull a echoue dans {0}" -f $Status.Label)
         }
 
