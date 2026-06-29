@@ -1,0 +1,947 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conditions C++ - GameDevReady</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;600;700;800&family=Courier+Prime:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(180deg, #87CEEB 0%, #98D8C8 50%, #6B8E23 100%);
+            color: #2d5016;
+            line-height: 1.7;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(255,255,255,0.03) 50px, rgba(255,255,255,0.03) 100px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 50px 30px;
+            background: linear-gradient(135deg, rgba(34, 139, 34, 0.9), rgba(107, 142, 35, 0.9));
+            border: 4px solid #8B4513;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3), inset 0 2px 10px rgba(255,255,255,0.2);
+            position: relative;
+        }
+        
+        header::before {
+            content: '🐸';
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 4em;
+            animation: hop 2s ease-in-out infinite;
+        }
+        
+        @keyframes hop {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-15px); }
+        }
+
+        .property-banner {
+            background: linear-gradient(135deg, #DAA520, #FFD700);
+            color: #2d5016;
+            padding: 12px 20px;
+            text-align: center;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.75em;
+            border-bottom: 4px solid #8B4513;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .property-icon {
+            font-size: 1.5em;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+        
+        h1 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 2.5em;
+            color: #FFD700;
+            text-shadow: 3px 3px 0 #8B4513, 5px 5px 10px rgba(0,0,0,0.5);
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+        
+        .subtitle {
+            font-size: 2.3em;
+            color: #FFFACD;
+            font-weight: 700;
+            text-transform: none;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        section {
+            background: rgba(255, 255, 255, 0.95);
+            border: 3px solid #6B8E23;
+            border-radius: 15px;
+            padding: 35px;
+            margin-bottom: 35px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            position: relative;
+        }
+        
+        section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 8px;
+            height: 100%;
+            background: linear-gradient(180deg, #228B22, #6B8E23, #8B4513);
+            border-radius: 15px 0 0 15px;
+        }
+        
+        h2 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.6em;
+            color: #228B22;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #90EE90;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            line-height: 1.6;
+        }
+        
+        h2::before {
+            content: '🌿';
+            font-size: 1.3em;
+        }
+        
+        h3 {
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.5em;
+            color: #6B8E23;
+            margin: 30px 0 15px 0;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        h3::before {
+            content: '🍃';
+            font-size: 1em;
+        }
+        
+        .separator {
+            height: 50px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50"><path d="M0,25 Q25,5 50,25 T100,25" fill="none" stroke="%236B8E23" stroke-width="3"/></svg>') repeat-x center;
+            margin: 40px 0;
+            position: relative;
+        }
+        
+        .separator::after {
+            content: '🐸';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2em;
+            background: rgba(255,255,255,0.9);
+            padding: 0 15px;
+            border-radius: 50%;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { 
+                box-shadow: 0 0 5px rgba(255,215,0,0.5);
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% { 
+                box-shadow: 0 0 20px rgba(255,215,0,1), 0 0 30px rgba(255,215,0,0.7);
+                transform: translate(-50%, -50%) scale(1.25);
+            }
+        }
+        
+        .image-placeholder {
+            background: linear-gradient(135deg, rgba(152, 216, 200, 0.3), rgba(144, 238, 144, 0.3));
+            border: 3px dashed #6B8E23;
+            border-radius: 12px;
+            padding: 40px 20px;
+            margin: 25px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .image-placeholder-icon {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+        }
+        
+        .image-placeholder-text {
+            color: #2d5016;
+            font-family: 'Courier Prime', monospace;
+            font-size: 1em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .image-placeholder-100 {
+            background: linear-gradient(135deg, rgba(152, 216, 200, 0.3), rgba(144, 238, 144, 0.3));
+            border: 3px dashed #6B8E23;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 25px auto;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-placeholder-100 img {
+        /* Règle essentielle du responsive */
+        width: 100%;    /* L'image prend 100% de la largeur du conteneur parent (800px maximum dans cet exemple) */
+        height: auto;   /* GARANTIT que l'image ne sera pas déformée */
+        display: block; /* Évite les espaces blancs sous l'image */
+        
+        /* Optionnel : Rendre l'image elle-même légèrement arrondie pour épouser le cadre */
+        border-radius: 8px; 
+        }
+        .image-placeholder-75 {
+            background: linear-gradient(135deg, rgba(152, 216, 200, 0.3), rgba(144, 238, 144, 0.3));
+            border: 3px dashed #6B8E23;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 25px auto;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-placeholder-75 img {
+        /* Règle essentielle du responsive */
+        width: 75%;    /* L'image prend 100% de la largeur du conteneur parent (800px maximum dans cet exemple) */
+        height: auto;   /* GARANTIT que l'image ne sera pas déformée */
+        display: inline-block; /* Évite les espaces blancs sous l'image */
+        
+        /* Optionnel : Rendre l'image elle-même légèrement arrondie pour épouser le cadre */
+        border-radius: 8px; 
+        }
+
+        .image-placeholder-50 {
+            background: linear-gradient(135deg, rgba(152, 216, 200, 0.3), rgba(144, 238, 144, 0.3));
+            border: 3px dashed #6B8E23;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 25px auto;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-placeholder-50 img {
+        /* Règle essentielle du responsive */
+        width: 50%;    /* L'image prend 100% de la largeur du conteneur parent (800px maximum dans cet exemple) */
+        height: auto;   /* GARANTIT que l'image ne sera pas déformée */
+        display: inline-block; /* Évite les espaces blancs sous l'image */
+        
+        /* Optionnel : Rendre l'image elle-même légèrement arrondie pour épouser le cadre */
+        border-radius: 8px; 
+        }
+
+        .image-placeholder-25 {
+            background: linear-gradient(135deg, rgba(152, 216, 200, 0.3), rgba(144, 238, 144, 0.3));
+            border: 3px dashed #6B8E23;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 25px auto;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-placeholder-25 img {
+            /* Règle essentielle du responsive */
+            width: 25%;    /* L'image prend 100% de la largeur du conteneur parent (800px maximum dans cet exemple) */
+            height: auto;   /* GARANTIT que l'image ne sera pas déformée */
+            display: inline-block; /* Évite les espaces blancs sous l'image */
+            
+            /* Optionnel : Rendre l'image elle-même légèrement arrondie pour épouser le cadre */
+            border-radius: 8px; 
+        }
+        
+        ul, ol {
+            margin: 20px 0 20px 35px;
+        }
+        
+        li {
+            margin: 12px 0;
+            padding-left: 10px;
+            position: relative;
+        }
+        
+        ul li::before {
+            content: '🌱';
+            position: absolute;
+            left: -30px;
+            font-size: 1em;
+        }
+        
+        ol li {
+            font-weight: 600;
+        }
+        
+        code {
+            font-family: 'Courier Prime', monospace;
+            background: rgba(107, 142, 35, 0.15);
+            color: #2d5016;
+            padding: 3px 10px;
+            border-radius: 6px;
+            border: 2px solid rgba(107, 142, 35, 0.3);
+            font-weight: 700;
+            font-size: 1.05em;
+        }
+        
+        .info-box {
+            background: linear-gradient(135deg, rgba(152, 216, 200, 0.4), rgba(144, 238, 144, 0.4));
+            border-left: 6px solid #228B22;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .warning-box {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(255, 165, 0, 0.3));
+            border-left: 6px solid #FF8C00;
+            padding: 25px 60px 25px 25px;
+            margin: 25px 0;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .warning-box::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2em;
+            z-index: 1;
+        }
+
+        .link-web {
+            color: #2d5016;
+            font-weight: 800;
+            text-decoration: none;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+
+        /* Soulignement animé qui apparaît au hover */
+        .link-web::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #08ddf0, #228B22);
+            transition: width 0.3s ease;
+        }
+
+        .link-web:hover::after {
+            width: 100%;
+        }
+
+        /* Effet de surbrillance au hover */
+        .link-web:hover {
+            color: #12c2d2;
+            background: rgba(89, 255, 0, 0.411);
+            transform: translateY(-1px);
+        }
+
+        /* Curseur main + effet subtil */
+        .link-web:hover {
+            cursor: pointer;
+        }
+
+        /* Petite icône externe qui apparaît */
+        .link-web::before {
+            content: '🔗';
+            font-size: 0.8em;
+            opacity: 1;
+            margin-right: 3px;
+            transition: opacity 0.3s ease;
+        }
+
+        .link-web:hover::before {
+            transform: scale(1.2); /* L'icône grossit un peu au survol */
+        }
+
+        /* Classe à appliquer sur le <span> qui entoure l'emoji */
+        .icon-blink {
+            display: inline-block;       /* Nécessaire pour que la transformation (scale) fonctionne */
+            font-size: 1.3em;            /* Taille de base déjà un peu plus grande que le texte */
+            vertical-align: text-bottom; /* Aligne mieux l'emoji par rapport à la ligne de texte */
+            margin: 0 3px;               /* Un tout petit peu d'espace autour */
+            
+            /* L'animation : rapide (0.6s), fluide (ease-in-out), infinie et en aller-retour */
+            animation: icon-pulse 0.6s ease-in-out infinite alternate;
+            
+            /* Sécurité : on s'assure qu'il n'y a pas de bordure ou de fond hérités */
+            background: none !important;
+            border: none !important;
+            padding: 0 !important;
+        }
+
+        /* Définition de l'animation de pulsation */
+        @keyframes icon-pulse {
+            0% {
+                transform: scale(1); /* Taille normale au début */
+                /* Pas de halo au départ */
+                filter: drop-shadow(0 0 0px rgba(255, 215, 0, 0)); 
+            }
+            100% {
+                transform: scale(1.5); /* Grandit jusqu'à 1.5x la taille */
+                /* Double halo lumineux : Jaune Or (#FFD700) + Orange (#FF4500) */
+                /* filter: drop-shadow est meilleur que text-shadow pour les emojis */
+                filter: drop-shadow(0 0 5px #FFD700) drop-shadow(0 0 8px #FF4500);
+            }
+        }
+        
+        .key-points {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(218, 165, 32, 0.2));
+            border: 3px solid #DAA520;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 5px 15px rgba(218, 165, 32, 0.3);
+        }
+        
+        .key-points h3 {
+            color: #B8860B;
+            margin-top: 0;
+        }
+        
+        .key-points h3::before {
+            content: '⭐';
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+            background: linear-gradient(135deg, rgba(34, 139, 34, 0.8), rgba(107, 142, 35, 0.8));
+            border-radius: 15px;
+            color: #FFD700;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.8em;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+        
+        footer::before {
+            content: '🐸 🪵 🚗 🪵 🐸';
+            display: block;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+        
+        strong {
+            color: #228B22;
+            font-weight: 800;
+        }
+
+        .strong-no-color{
+            font-weight: 800;
+            color: inherit;
+        }
+        
+        p {
+            margin: 12px 0;
+            font-size: 1.05em;
+        }
+        
+        .objective-box {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.25), rgba(255, 248, 220, 0.25));
+            border: 3px solid #FFD700;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            box-shadow: 0 4px 12px rgba(218, 165, 32, 0.3);
+        }
+        
+        .objective-box h3 {
+            color: #DAA520;
+        }
+        
+        .objective-box h3::before {
+            content: '🎯';
+        }
+        /* Style pour les mots du glossaire */
+        .glossary-term {
+            font-family: 'Courier Prime', monospace;
+            background: linear-gradient(135deg, rgba(0, 123, 255, 0.15), rgba(58, 183, 255, 0.15));
+            color: #006bb3;
+            padding: 2px 8px;
+            border-radius: 6px;
+            border: 2px solid rgba(0, 123, 255, 0.4);
+            font-weight: 700;
+            font-size: 1.05em;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        /* Effet au survol */
+        .glossary-term:hover {
+            background: linear-gradient(135deg, rgba(0, 123, 255, 0.25), rgba(58, 183, 255, 0.25));
+            border-color: rgba(0, 123, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.4), 0 0 20px rgba(58, 183, 255, 0.3);
+        }
+
+        /* Petit indicateur de lien */
+        .glossary-term::after {
+            content: '📖';
+            font-size: 0.8em;
+            margin-left: 3px;
+            opacity: 0.7;
+        }
+
+        /* Animation douce de glow (pas agressive) */
+        @keyframes soft-glow {
+            0%, 100% { 
+                box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+            }
+            50% { 
+                box-shadow: 0 0 8px rgba(0, 123, 255, 0.4), 0 0 12px rgba(58, 183, 255, 0.3);
+            }
+        }
+
+        .glossary-term:hover {
+            animation: soft-glow 2s ease-in-out infinite;
+        }
+
+        /* Style pour les définitions avec ancre */
+        .definition-item {
+            scroll-margin-top: 100px; /* Espace pour la bannière sticky */
+            transition: background 0.3s ease;
+        }
+        /* Couleurs syntax highlighting type IDE */
+        .keyword {
+            color: #C586C0; /* Rose/Violet - if, else, return, etc. */
+            font-weight: 700;
+        }
+
+        .operator {
+            color: #a7a6a6; /* Gris clair - =, +, -, etc. */
+        }
+
+        .variable {
+            color: #9CDCFE; /* Bleu clair - noms de variables */
+        }
+
+        .output {
+            color: #4EC9B0; /* Vert - résultats/strings */
+        }
+
+        .number {
+            color: #8FD926; /* Vert pâle - nombres */
+        }
+
+        .comment {
+            color: #6A9955; /* Vert olive - commentaires */
+            font-style: italic;
+        }
+
+        .redColor {
+            color: red; 
+        }
+
+        .greenColor {
+            color: green;
+        }
+        .orangeColor {
+            color: orange;
+        }
+    </style>
+</head>
+<body>
+    <div class="property-banner">
+        <span class="property-icon">🛡️</span>
+        <span class="property-text">© 2025 MadHackAdemy | Formation Propriétaire | Tous droits réservés</span>
+        <span class="property-icon">🛡️</span>
+    </div>
+    <div class="container">
+        <header>
+            <h1>Conditions C++</h1>
+            <p class="subtitle">GameDevReady</p>
+        </header>
+
+        <section>
+            <h2>Objectif du Module</h2>
+            
+            <p>Les conditions sont essentielles en programmation. 
+                Il y a 4 grandes structures conditionnelles :
+            </p>
+            
+            <ul>
+                <li><code>if</code> (si) - la condition de base</li>
+                <li><code>else</code> (sinon)</li>
+                <li><code>else if</code> (sinon si)</li>
+                <li><code>switch</code> (une structure qui remplace une suite de else if) 
+                    - sera vue plus tard en <a href="#def-refactorisation" class="glossary-term">refactorisation</a> </li>
+            </ul>
+            
+            <div class="objective-box">
+                <h3>Points clés de ce module</h3>
+                <ul>
+                    <li>Les structures de contrôle (ou instructions conditionnelles)</li>
+                    <li>L'indentation</li>
+                    <li>La portée des variables</li>
+                </ul>
+            </div>
+            
+            <p>Pour les conditions, prenons la cuisson des pâtes comme un programme. 
+                Dans ce programme nous avons : <strong>si l'eau bout alors mettre 
+                les pâtes</strong>. Il s'agit là d'une instruction conditionnelle. 
+                Indispensable en programmation, il s'agit de toute la logique nécessaire 
+                pour résoudre votre problématique et transformer A en B si c'est votre 
+                objectif.
+            </p>
+            
+            <p>L'indentation nous permet d'avoir une structure ou une architecture visuelle 
+                de cette logique et elle délimite aussi la portée des variables. 
+                Disons, en essayant de simplifier, qu'une variable peut être existante
+                 pour tout le programme ou seulement une partie de ce dernier. 
+                 Elles sont définies de la manière qui suit :
+            </p>
+            
+            <ul>
+                <li><strong>Globale</strong> (tout le programme)</li>
+                <li><strong>Locale</strong> (au sein d'une fonction par exemple)</li>
+            </ul>
+        </section>
+
+        <div class="separator"></div>
+
+        <section>
+            <h2>If - La condition de base</h2>
+            
+            <div class="image-placeholder-100">
+                <img src="Image/simpleConditionIF.jpg" alt="if condition">
+                <div class="image-placeholder-text">IMAGE : Exemple de condition if simple</div>
+            </div>
+            
+            <p>On peut le traduire ainsi :<span class="strong-no-color"><span class="keyword"> Si</span></span>
+                l'<span class="strong-no-color"><span class="variable">âge </span><span class="operator">est supérieur ou égal</span></span>
+                à <span class="strong-no-color"><span class="number">18</span></span> {on affiche le message en vert dans la
+                <a href="#def-Console" class="glossary-term">console</a>}.
+            </p>
+            
+            <div class="info-box">
+                <p>Les valeurs dans l'encadré vert sont ce que l'on appelle des 
+                    <a href="#def-Balise" class="glossary-term">balises</a> , très courantes en HTML et CSS pour
+                    le développement web. Ici elles nous permettent de changer la couleur du <code>printf()</code> en vert.
+                    C'est inutile mais bon à savoir si vous voulez donner une information visuellement attractive en plus.
+                </p>
+                <p>Je vous laisse modifier la variable pour voir les différents résultats.</p>
+            </div>
+
+        </section>
+
+        <div class="separator"></div>
+
+        <section>
+            <h2>If Else - Avec alternative</h2>
+            
+            <p>Passons à une option un peu plus avancée qui va nous permettre de voir le principe des blocs de code et/ou la portée.</p>
+            
+            <div class="image-placeholder-100">
+                <img src="Image/IfElse.jpg" alt="If Else">
+                <div class="image-placeholder-text">IMAGE : Exemple de condition if else</div>
+            </div>
+            
+            <p>On peut le traduire ainsi : 
+                <span class="strong-no-color"><span class="keyword">Si</span></span>
+                (<span class="strong-no-color"><span class="variable">age </span><span class="operator">supérieur ou égal à</span> 
+                <span class="number">18</span></span>) {fait quelque chose} 
+                <span class="strong-no-color"><span class="keyword">sinon</span></span> {fait autre chose}. 
+                Encore une fois il y a les balises de couleurs : <span class="greenColor">32 vert</span> et <span class="redColor">31 rouge</span> .
+            </p>
+            
+            <div class="key-points">
+                <h3>Information importante</h3>
+                <p>Je crois que je m'avance un peu mais avec cette condition vous pouvez tout coder 
+                    (Wow, Windows, la nouvelle tech IA de demain).
+                </p>
+            </div>
+            
+            <div class="info-box">
+                <p><strong>Ici une nouveauté importante :</strong> les <code>{ }</code> accolades ou brackets délimitent le bloc de code.
+                    Si on remplit la condition, alors ce qui se trouve entre ces accolades sera interprété.
+                </p>
+            </div>
+        </section>
+
+        <div class="separator"></div>
+
+        <section>
+            <h2>Else If - Conditions multiples</h2>
+            
+            <p>On va l'utiliser dans notre cas pour valider que l'âge est une valeur correcte. Ici nous avons juste vérifié s'il est 
+                supérieur à 18 et donc majeur, et dans le cas contraire nous avons dit qu'il était mineur. Cela a du sens, mais si 
+                le stagiaire en programmation n'a pas donné de valeur ou plutôt s'il a mis 0 par défaut, alors nous avons un mauvais
+                comportement. L'individu n'est même pas encore né dans ce cas.
+                Voici le code corrigé ou <a href="#def-refactorisation" class="glossary-term">refactorisé</a> :
+            </p>
+            
+            <div class="image-placeholder-100">
+                <img src="Image/ElseIF.jpg" alt="ElseIF">
+                <div class="image-placeholder-text">IMAGE : Exemple de condition else if</div>
+            </div>
+        </section>
+
+        <div class="separator"></div>
+
+        <section>
+            <h2>La Portée des Variables</h2>
+            
+           <div class="image-placeholder-100">
+            <img src="Image/VarScope.jpg" alt="Scope">
+                <div class="image-placeholder-text">IMAGE : Portée globale vs locale & Erreur de portée de variable</div>
+            </div>
+
+            <p>Ici on peut voir une <strong>variable globale</strong> <code><span class="variable">age</span></code> (encadré en vert) 
+                qui est accessible partout dans le code du <a href="#def-Main" class="glossary-term">Main</a>. Alors que la variable 
+                <code><span class="variable">test</span></code> (encadré en rouge)
+                n'est accessible qu'entre les <code>{ }</code> où elle a été initialisée. On pourrait l'appeler une variable poubelle
+                ou éphémère. Les <code>{ }</code> nous permettent aussi de mettre en place ce que l'on appelle l'<a href="#def-Indentation" class="glossary-term">indentation</a>, 
+                et donc de voir visuellement les blocs de code imbriqués les uns dans les autres.
+            </p>
+            
+            <p>Si une variable est créée dans un bloc, elle n'existera que dans cet espace et pas en dehors du bloc.
+                Il s'agit de la différence entre une variable <code>globale</code> et <code>locale</code>. On peux voir que, j'ai codé une erreur
+                liée à la portée d'une variable qui n'est pas dans le "scope" (portée en anglais).
+            </p>
+            
+        </section>
+
+        <div class="separator"></div>
+
+        <section>
+            <h2>L'Indentation</h2>
+
+            <div class="image-placeholder-100">
+                <img src="Image/Indentation.jpg" alt="Indentation">
+            <div class="image-placeholder-text">IMAGE : Comparaison code avec/sans indentation</div>
+            </div>
+
+            <div class="info-box">
+                <p><strong>Petite démonstration :</strong> Sur le screen vous avez la condition puis à la ligne entre <code>{ accolades }</code>
+                    vous avez l'action effectuée si la condition est valide. Et comme vous pouvez le voir, il est possible d'imbriquer un bloc
+                    dans un bloc résultant d'une cascade de conditions.
+                </p>
+                <div class="image-placeholder">
+                    <img src="Image/inceptionAnim.gif" alt="Inception bloc in bloc">
+                <div class="image-placeholder-text">bloc dans un bloc à la Inception</div>
+                </div>
+                <a href="https://www.youtube.com/watch?v=qxMkcOI_hTs" target="_blank" rel="noopener noreferrer" 
+                    class="link-web">Pfiouu Inception Master Piece
+                </a>
+            </div>
+            <div class="warning-box">
+                <p><span class="icon-blink">⚠️</span> Il va sans dire que si vous avez des collègues et que vous codez sans indentation (<span class="redColor">encadré rouge</span>),
+                    je vous conseille d'avoir une bonne assurance et au minimum un bon dentiste.
+                    En résumé, les blocs de code délimitent la portée et doivent être structurés, ordonnés suivant une convention
+                    appelée l'indentation. Je vous avoue qu'après quelques semaines de code vous n'y ferez plus attention
+                    car votre éditeur de code s'en charge automatiquement. Mais si une variable est non définie c'est un axe de recherche.
+                </p>
+            </div>
+            
+        </section>
+
+        <div class="separator"></div>
+
+        <section>
+            <h2>Exercices</h2>
+            
+            <h3>Exercice principal</h3>
+            <p>Ici vous allez devoir créer une variable <code>int</code> (pour un contrôle d'âge) d'une valeur de 10. 
+                Ensuite vous allez devoir afficher à l'écran de jeu :
+            </p>
+            
+            <ul>
+                <li><strong>En rouge</strong> : un message si l'utilisateur n'a pas donné de valeur valide (0 ou moins) :
+                    "Veuillez donner un âge valide !"
+                </li>
+                <li><strong>En vert</strong> : "Super vous êtes vivant !"</li>
+            </ul>
+            
+            <h3>Le challenge</h3>
+            <p>Le challenge est double :</p>
+            <ol>
+                <li>Passer la couleur en variable pour apprendre à fouiller dans raylib et découvrir l'une des premières variables nécessaires
+                    de la lib.</li>
+                <li>Déterminer si l'âge est == avec un print en bleu : "Oh vous avez exactement x ans, vous gagnez le premier prix mystère !"
+                    (il y a 2 manières de procéder à ma connaissance)</li>
+            </ol>
+            
+            <div class="info-box">
+                <p>Essayez de ne pas foncer sur la solution. Le travail de recherche est celui qui est le plus important, même s'il est fait
+                    avec une IA.</p>
+                <p>Jouez avec la valeur intégrale pour vérifier si toutes les conditions fonctionnent.</p>
+            </div>
+        </section>
+
+        <div class="separator"></div>
+
+        <section>
+            <h2>Résumé</h2>
+            
+            <div class="key-points">
+                <h3>Points Clés</h3>
+                <ul>
+                    <li><strong>Point clé 1 :</strong> Les conditions <code>if</code>, <code>else</code>, <code>else if</code> contrôlent
+                        le flux du programme.</li>
+                    <li><strong>Point clé 2 :</strong> Les accolades <code>{ }</code> délimitent les blocs de code et la portée des variables.</li>
+                    <li><strong>Point clé 3 :</strong> L'indentation rend le code lisible et est gérée automatiquement par l'éditeur.</li>
+                </ul>
+            </div>
+            
+            <div class="key-points">
+                <h3>À retenir</h3>
+                <ul>
+                    <li><strong>Règle importante :</strong> Toujours indenter correctement son code.</li>
+                    <li><strong>Piège à éviter :</strong> Utiliser une variable hors de sa portée (scope).</li>
+                    <li><strong>Bonne pratique :</strong> Valider les valeurs avant de les traiter (âge >= 0, etc.).</li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="separator"></div>
+
+        <section>
+            <h2>Définitions</h2>
+            
+            <div class="info-box">
+                <div id="def-refactorisation" class="definition-item">
+                    <p><strong><a href="https://www.lemagit.fr/definition/Refactorisation" 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        class="link-web">Refactorisation :</a></strong> 
+                        Uncle Bob va vous aimer ! Il s'agit de corriger ou améliorer un code
+                        déjà existant de manière à éliminer un "bug" ou rendre le code plus lisible, comme renommer une variable
+                        de manière plus explicite. Ou encore de transformer une série de else if en un switch (vu plus tard). 
+                        C'est une méthodologie qui va de pair avec le code smell (qui lui vous dira de changer les switch par autre chose 😊). Elles font toutes deux partie d'une philosophie
+                        nommée <a href="#def-Clean Code" class="glossary-term">Clean Code</a> (encore une fois Uncle Bob).
+                    </p>
+                </div>
+                
+                <div id="def-Balise" class="definition-item">
+                    <p><strong>Balises :</strong> Une balise est un élément de code qui délimite ou marque un contenu afin que le
+                        programme ou le navigateur sache comment l'interpréter ou l'afficher.
+                    </p>
+                </div>
+                
+                <div id="def-Clean Code" class="definition-item">
+                    <p><strong><a href="https://clean-code-developer.de/fr/" 
+                        target="_blank" rel="noopener noreferrer" 
+                        class="link-web">Clean Code :</a></strong>
+                        Philosophie, méthodologie pour écrire un code soi-disant de manière propre,
+                        maintenable et évoluable. Qui définit le principe <a href="https://clean-code-developer.de/fr/plus-dinfos/solid/" 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        class="link-web">SOLID</a>. 
+                        Oui, dans cette sphère de la programmation il y a beaucoup de choses qui font toujours encore débat mais qui sont 
+                        des principes méthodologiques fonctionnels dans la majeure partie des situations. Mais en fonction du paradigme
+                        de code que vous allez choisir toutes ces informations seront peut-être inutiles.
+                    </p>
+                </div>
+
+                <div id="def-Console" class="definition-item">
+                    <p><strong>Console :</strong> Élément de l'éditeur qui essaye de communiquer avec nous tant bien que mal.</p>
+                </div>
+
+                <div id="def-Main" class="definition-item"> 
+                    <p><strong>Main :</strong> Il s'agit du code central ou principal vous en apprendrez plus lors du nettoyage du code</p>
+                </div>
+                <div id="def-Indentation" class="definition-item">
+                    <p><a href="https://www.castoo.fr/programmation/castoo_programmation_indentation.html" 
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="link-web">Indentation :</a>
+                        C'est comme le sommaire d'un livre ou une liste à puces : cela permet de voir visuellement la hiérarchie de ton code.
+                    </p>
+                </div>
+                
+            </div>
+        </section>
+
+        <div class="separator"></div>
+
+        <section>
+            <h2>Validation des Compétences</h2>
+            
+            <div class="key-points">
+                <h3>L'élève doit savoir</h3>
+                <ul>
+                    <li>Utiliser les structures <code>if</code>, <code>else</code>, <code>else if</code>.</li>
+                    <li>Comprendre la portée des variables (<code>globale</code> vs <code>locale</code>).</li>
+                    <li>Indenter correctement son code.</li>
+                    <li>Valider les données avant de les traiter.(ageUtilisateur = -10)</li>
+                </ul>
+            </div>
+        </section>
+
+        <footer>
+            <p>MODULE DE FORMATION C++</p>
+            <p style="font-size: 0.85em; margin-top: 12px; opacity: 0.9;">Programmation • GameDev • Raylib</p>
+        </footer>
+    </div>
+</body>
+</html>

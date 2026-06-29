@@ -1,0 +1,6 @@
+# Bloquer l'accès HTTP direct aux fichiers HTML des guides (*Guide/)
+# Les guides passent par /auth/guide.php (session requise)
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^(.+Guide)/.+\\.html?$ - [F,L,NC]
+</IfModule>

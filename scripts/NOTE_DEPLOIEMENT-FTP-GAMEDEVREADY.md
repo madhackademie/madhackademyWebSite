@@ -123,17 +123,29 @@ Quand les **guides pédagogiques complets** seront en ligne, `URLNet` pourra poi
 4. Tester les URLs publiques
 5. Si les cartes changent côté `FicheFormationHtlm/`, recopier vers `WebSite/guides/cards/` puis re-upload
 
-**Sources cartes (repo)** — à recopier avant FTP si tu modifies les originaux :
+**Cartes HTML (repo)** — source unique : `WebSite/guides/cards/` (modules 03–07 : plus de HTML carte dans `FicheFormationHtlm/`).
 
-| Module | Source `FicheFormationHtlm/` | Destination `WebSite/guides/cards/` |
-|--------|------------------------------|--------------------------------------|
-| 01 | `01_PrintC++/ClaudePdf/frogger_card_printf.html` | `01-printf.html` |
-| 02 | `02_Variable/ClaudeVariableHtml/frogger_card_Variables.html` | `02-variables.html` |
-| 03 | `03_Conditions/ClaudeHtmlConditions/frogger_card_conditions.html` | `03-conditions.html` |
-| 04 | `04_Les boucles/ClaudeHtml/frogger_card_boucles.html` | `04-boucles.html` |
-| 05 | `05_LibrairieStandard&FonctionsC++/ClaudePdf/frogger_card_StdFonction.html` | `05-std-fonctions.html` |
-| 06 | `06_Conteneurs/ClaudePdf/frogger_card_conteneur.html` | `06-conteneurs.html` |
-| 07 | `07_Struct_Methodes/ClaudeHtml/Frogger_theme_StrucAndMehtodeCard.html` | `07-struct-methodes.html` |
+| Module | Fichier publié `WebSite/guides/cards/` |
+|--------|----------------------------------------|
+| 01 | `01-printf.html` |
+| 02 | `02-variables.html` |
+| 03 | `03-conditions.html` |
+| 04 | `04-boucles.html` |
+| 05 | `05-std-fonctions.html` |
+| 06 | `06-conteneurs.html` |
+| 07 | `07-struct-methodes.html` |
+
+**Guides pédagogiques (repo)** — sources dans `FicheFormationHtlm/{module}/*Guide/` :
+
+| Module | Guide source |
+|--------|--------------|
+| 01 | `01_PrintC++/01_PrintFGuide/printfC++FrogTheme.html` |
+| 02 | `02_Variable/02_VariableGuide/VariableC++FroggerTheme.html` |
+| 03 | `03_Conditions/03_ConditionsGuide/Conditions.html` |
+| 04 | `04_Les boucles/04_BouclesGuide/LoopModule.html` |
+| 05 | `05_LibrairieStandard&FonctionsC++/05_StdFonctionsGuide/stdLib&Fonction.html` |
+| 06 | `06_Conteneurs/06_ConteneursGuide/Conteneurs.html` |
+| 07 | `07_Struct_Methodes/07_StructMethodesGuide/StructMethodes.html` |
 
 ---
 
