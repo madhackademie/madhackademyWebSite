@@ -1,0 +1,12 @@
+<?php
+declare(strict_types=1);
+
+require_once __DIR__ . '/../api/bootstrap.php';
+
+header('Content-Type: application/json; charset=UTF-8');
+
+$user = mha_current_user();
+echo json_encode([
+    'logged_in' => $user !== null,
+    'email' => $user['email'] ?? null,
+], JSON_UNESCAPED_UNICODE);

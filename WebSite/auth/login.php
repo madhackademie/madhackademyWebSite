@@ -6,10 +6,7 @@ require_once __DIR__ . '/../api/bootstrap.php';
 $error = '';
 $redirect = $_GET['redirect'] ?? '/gamedevready-bases-cpp.html';
 
-if (mha_is_logged_in()) {
-    header('Location: ' . ($redirect ?: '/gamedevready-bases-cpp.html'));
-    exit;
-}
+$loggedInUser = mha_current_user();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email'] ?? '');
@@ -39,10 +36,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h1 class="text-2xl font-bold mb-2 text-red-500">MadHackAdemy</h1>
         <p class="text-gray-400 text-sm mb-6">Connexion élève / testeur / admin</p>
 
-        <?php if ($error !== ''): ?>
+        <?php if ($loggedInUser !== null): ?>
+            <p class="mb-4 text-sm text-green-400 border border-green-900 bg-green-950/40 rounded px-3 py-2">
+                Connecté en tant que <?= mha_escape($loggedInUser['email']) ?>
+            </p>
+            <div class="space-y-3 mb-6">
+                <a href="<?= mha_escape($redirect ?: '/gamedevready-bases-cpp.html') ?>"
+                    class="block w-full py-3 text-center bg-red-900 hover:bg-red-700 text-red-100 font-bold rounded text-sm transition">
+                    Continuer vers Bases C++
+                </a>
+                <a href="/auth/logout.php"
+                    class="block w-full py-3 text-center border border-gray-700 hover:border-red-500 text-gray-300 rounded text-sm transition">
+                    Déconnexion
+                </a>
+            </div>
+        <?php endif; ?>
+
+        <?php if ($loggedInUser === null && $error !== ''): ?>
             <p class="mb-4 text-sm text-red-400 border border-red-900 bg-red-950/40 rounded px-3 py-2"><?= mha_escape($error) ?></p>
         <?php endif; ?>
 
+        <?php if ($loggedInUser === null): ?>
         <form method="post" class="space-y-4">
             <input type="hidden" name="redirect" value="<?= mha_escape($redirect) ?>">
             <div>
@@ -60,6 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 Se connecter
             </button>
         </form>
+        <?php endif; ?>
 
         <p class="mt-6 text-center text-xs text-gray-600">
             <a href="/gamedevready-bases-cpp.html" class="text-gray-400 hover:text-red-400">← Retour Bases C++</a>

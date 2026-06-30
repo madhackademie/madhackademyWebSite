@@ -92,7 +92,9 @@
             <div class="flex gap-4 md:gap-6 text-sm md:text-base items-center">
                 <a href="/gamedevready.html" class="text-gray-300 hover:text-green-500 transition font-bold">GameDevReady</a>
                 <a href="/gamedevready-bases-cpp.html" class="text-red-400 font-bold">Bases C++</a>
-                <a href="/auth/login.php?redirect=/gamedevready-bases-cpp.html" class="text-gray-400 hover:text-yellow-400 transition text-xs md:text-sm">Connexion</a>
+                <span id="auth-nav">
+                    <a href="/auth/login.php?redirect=/gamedevready-bases-cpp.html" class="text-gray-400 hover:text-yellow-400 transition text-xs md:text-sm">Connexion</a>
+                </span>
             </div>
         </div>
     </nav>
@@ -260,6 +262,28 @@
             <a href="/gamedevready.html" class="text-gray-400 hover:text-red-400 transition">← Retour GameDevReady</a>
         </div>
     </footer>
+
+    <script>
+    (function () {
+        fetch('/auth/me.php', { credentials: 'same-origin' })
+            .then(function (r) { return r.json(); })
+            .then(function (d) {
+                var el = document.getElementById('auth-nav');
+                if (!el || !d.logged_in) return;
+                el.textContent = '';
+                var span = document.createElement('span');
+                span.className = 'text-gray-500 text-xs md:text-sm hidden sm:inline';
+                span.textContent = d.email;
+                var link = document.createElement('a');
+                link.href = '/auth/logout.php';
+                link.className = 'text-gray-400 hover:text-yellow-400 transition text-xs md:text-sm';
+                link.textContent = 'Déconnexion';
+                el.appendChild(span);
+                el.appendChild(link);
+            })
+            .catch(function () {});
+    })();
+    </script>
 
 </body>
 </html>

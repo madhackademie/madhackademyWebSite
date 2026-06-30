@@ -163,6 +163,43 @@ function mha_escape(string $value): string
     return htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }
 
+function mha_auth_nav_html(?string $redirectAfter = null): string
+{
+    $user = mha_current_user();
+    if ($user !== null) {
+        return sprintf(
+            '<span class="text-gray-500 text-xs md:text-sm hidden sm:inline">%s</span>'
+            . '<a href="/auth/logout.php" class="text-gray-400 hover:text-yellow-400 transition text-xs md:text-sm">Déconnexion</a>',
+            mha_escape($user['email'])
+        );
+    }
+    $redirect = $redirectAfter ?? '/gamedevready-bases-cpp.html';
+    $href = '/auth/login.php?redirect=' . rawurlencode($redirect);
+
+    return sprintf(
+        '<a href="%s" class="text-gray-400 hover:text-yellow-400 transition text-xs md:text-sm">Connexion</a>',
+        mha_escape($href)
+    );
+}
+
+function mha_guide_toolbar_html(): string
+{
+    $user = mha_current_user();
+    if ($user === null) {
+        return '';
+    }
+
+    return '<div style="position:fixed;top:0;left:0;right:0;z-index:9999;background:#111;border-bottom:1px solid #333;'
+        . 'padding:8px 16px;font-family:monospace;font-size:12px;color:#aaa;display:flex;'
+        . 'justify-content:space-between;align-items:center;gap:12px;">'
+        . '<span>MadHackAdemy · ' . mha_escape($user['email']) . '</span>'
+        . '<span style="display:flex;gap:12px;">'
+        . '<a href="/gamedevready-bases-cpp.html" style="color:#fbbf24;text-decoration:none;">← Bases C++</a>'
+        . '<a href="/auth/logout.php" style="color:#f87171;text-decoration:none;">Déconnexion</a>'
+        . '</span></div>'
+        . '<div style="height:36px;"></div>';
+}
+
 function mha_guides_catalog(): array
 {
     return [
@@ -226,6 +263,14 @@ function mha_serve_guide_html(string $moduleId): void
         $html = preg_replace('/<head>/i', '<head>' . $baseTag, $html, 1);
     } else {
         $html = $baseTag . $html;
+    }
+    $toolbar = mha_guide_toolbar_html();
+    if ($toolbar !== '') {
+        if (preg_match('/<body[^>]*>/i', $html)) {
+            $html = preg_replace('/<body([^>]*)>/i', '<body$1>' . $toolbar, $html, 1);
+        } else {
+            $html = $toolbar . $html;
+        }
     }
     header('Content-Type: text/html; charset=UTF-8');
     header('X-Frame-Options: SAMEORIGIN');
