@@ -7,22 +7,34 @@
 
 ## Prochaine session de travail
 
-> **Guide de référence : [`scripts/NOTE_PROCHAINE-SESSION.md`](scripts/NOTE_PROCHAINE-SESSION.md)**  
-> Reprendre à la **section 3 — Checklist** (auth PHP/MySQL OVH + comptes admin/testeur — **guides déjà en ligne**).
+> **Priorité absolue (P0)** — **réorganiser `WebSite/guides/`** (`guides/BaseCpp/{NN}/guide/` + `card/`) **avant** tout nouveau contenu, auth OVH ou déploiement FTP massif.  
+> Sinon : refactorisation coûteuse sur une base `guides/cards/` déjà brouillonne.
+
+> Guide session (auth, etc.) : [`scripts/NOTE_PROCHAINE-SESSION.md`](scripts/NOTE_PROCHAINE-SESSION.md) — **à reprendre après la migration P0**.
 
 | Doc | Sujet |
 |-----|--------|
-| [`scripts/NOTE_OVH-PHP-MYSQL.md`](scripts/NOTE_OVH-PHP-MYSQL.md) | **Prochaine étape** — PHP, MySQL, auth OVH |
-| [`scripts/NOTE_PROCHAINE-SESSION.md`](scripts/NOTE_PROCHAINE-SESSION.md) | Checklist session complète |
+| **`TODO.md` § P0** | **Réorganisation `guides/BaseCpp/`** — structure cible + checklist |
+| [`scripts/NOTE_DEPLOIEMENT-FTP-GAMEDEVREADY.md`](scripts/NOTE_DEPLOIEMENT-FTP-GAMEDEVREADY.md) | FTP *(à mettre à jour après P0)* |
+| [`scripts/NOTE_OVH-PHP-MYSQL.md`](scripts/NOTE_OVH-PHP-MYSQL.md) | PHP, MySQL, auth OVH *(après P0)* |
 | [`scripts/NOTE_AUTH-SETUP.md`](scripts/NOTE_AUTH-SETUP.md) | Rôles, URLs auth |
 
 ### Checklist rapide prochaine session
 
-- [x] **P1** — Guides `*Guide/` (01–07) uploadés chez l'hébergeur OVH — juin 2026
+**P0 — Réorganisation guides (faire en premier)**
+
+- [ ] **P0** — Créer `WebSite/guides/BaseCpp/` + 7 modules `{NN}_{nom}/guide/` + `card/` — détail § P0 ci-dessous
+- [ ] **P0** — Migrer HTML + `Image/` (harmoniser casse `Image/`)
+- [ ] **P0** — Mettre à jour `gamedevready-bases-cpp.html`, `api/bootstrap.php`, `auth/guide.php`, notes FTP, `URLNet`
+- [ ] **P0** — Re-sync FTP sur la **nouvelle** arborescence ; supprimer ancien `guides/cards/` + doublons `Image/GameDevReady/bases-cpp/`
+
+**P1 — Auth OVH** *(ne pas déployer de nouveaux chemins guides tant que P0 n’est pas fini)*
+
+- [x] **P1** — Guides `*Guide/` (01–07) uploadés chez l'hébergeur OVH — juin 2026 *(chemins legacy — à remplacer après P0)*
 - [ ] **P1** — Vérifier PHP 8+ et MySQL chez OVH → **`scripts/NOTE_OVH-PHP-MYSQL.md`**
 - [ ] **P1** — Importer `WebSite/sql/schema.sql` dans phpMyAdmin
 - [ ] **P1** — Créer `api/config.php` (copie de `config.example.php`) sur le FTP
-- [ ] **P1** — Uploader `api/`, `auth/`, `guides/cards/.htaccess`, `gamedevready-bases-cpp.html` (si pas à jour)
+- [ ] **P1** — Uploader `api/`, `auth/`, `.htaccess` guides, `gamedevready-bases-cpp.html` *(chemins post-P0)*
 - [ ] **P1** — Créer compte **admin** + comptes **tester** via `/auth/setup.php?key=…`
 - [ ] **P1** — Supprimer `auth/setup.php` du FTP après création des comptes
 - [ ] **P1** — Tester login + guides via `/auth/guide.php?m=01` … + blocage URL directe (403)
@@ -36,11 +48,86 @@
 | Centre de formation | [https://gameopenmoney.com/centre-formation.html](https://gameopenmoney.com/centre-formation.html) |
 | GameDevReady (hub) | [https://gameopenmoney.com/gamedevready.html](https://gameopenmoney.com/gamedevready.html) |
 | Bases C++ (deck) | [https://gameopenmoney.com/gamedevready-bases-cpp.html](https://gameopenmoney.com/gamedevready-bases-cpp.html) |
-| Guides (01–07) | `guides/cards/*Guide/` — **en ligne chez l'hébergeur** *(accès public tant que auth PHP non déployée)* |
+| Guides (01–07) | `guides/cards/*Guide/` *(legacy — migration P0 → `guides/BaseCpp/`)* |
+
+---
+
+## P0 — Réorganisation `WebSite/guides/` (priorité absolue)
+
+> **Bloquant** — à terminer **avant** auth OVH, nouveaux modules, Unreal/SDL, ou gros ajouts de contenu.  
+> Objectif : ne plus construire sur `guides/cards/` (structure brouillonne, refactorisation inévitable sinon).
+
+### Réorganisation deck Bases C++ (indexation & FTP)
+
+> **Constat (juillet 2026)** — le dossier `guides/cards/` mélange cartes Frogger, guides pédagogiques et assets au même niveau. Difficile à parcourir (FileZilla), à déployer module par module, et à maintenir une fois le site monolithique grossi.
+
+**État actuel (brouillon)**
+
+```
+guides/cards/
+├── 01-printf.html … 06-conteneurs.html     ← cartes (racine)
+├── 07_StructMethode_Card/                  ← carte 07 (exception)
+├── 01_PrintFGuide/ … 07_StructMethodesGuide/  ← guides complets
+│   └── Image/ ou image/                    ← casse incohérente
+└── .htaccess
+```
+
+**Structure cible validée** *(intention produit — juillet 2026)*
+
+Un **parcours** (`BaseCpp`, puis éventuellement `Unreal`, `SDL`, etc.) regroupe des **modules** numérotés.  
+Chaque module = dossier `{NN}_{nom}` avec deux sous-dossiers **`guide/`** et **`card/`**, chacun avec **son propre** `Image/`.
+
+> **BaseCpp** = Phase 1 actuelle (deck Raylib / C++ console). La même arborescence pourra accueillir d’autres stacks sans tout mélanger : `guides/Unreal/`, `guides/SDL/`, etc.
+
+```
+WebSite/guides/
+├── BaseCpp/                        ← parcours C++ fondamentaux (actuel)
+│   ├── 01_printf/
+│   │   ├── guide/ … + Image/
+│   │   └── card/  … + Image/
+│   …
+│   └── 07_struct_methodes/
+├── Unreal/                         ← futur
+└── SDL/                            ← futur
+```
+
+Exemple détaillé **BaseCpp** : `01_printf/guide/` + `01_printf/card/` (chacun avec `Image/`).
+
+**Convention** : parcours `guides/{Stack}/` · module `{NN}_{snake_case}` · HTML carte `{NN}-{slug}-card.html`
+
+**Correspondance migration (01 → 07)**
+
+| Module | Dossier cible | Source guide | Source carte |
+|--------|---------------|--------------|--------------|
+| 01 | `01_printf/` | `01_PrintFGuide/` | `01-printf.html` |
+| 02 | `02_variables/` | `02_VariableGuide/` | `02-variables.html` |
+| 03 | `03_conditions/` | `03_ConditionsGuide/` | `03-conditions.html` |
+| 04 | `04_boucles/` | `04_BouclesGuide/` | `04-boucles.html` |
+| 05 | `05_std_fonctions/` | `05_StdFonctionsGuide/` | `05-std-fonctions.html` |
+| 06 | `06_conteneurs/` | `06_ConteneursGuide/` | `06-conteneurs.html` |
+| 07 | `07_struct_methodes/` | `07_StructMethodesGuide/` | `07_StructMethode_Card/` |
+
+**Fichiers à mettre à jour après migration**
+
+- `gamedevready-bases-cpp.html`, `api/bootstrap.php`, `auth/guide.php`
+- `NOTE_DEPLOIEMENT-FTP-GAMEDEVREADY.md`, `FlashRevisionSoft/data.json` (`URLNet`), `.htaccess`
+
+**Checklist réorganisation**
+
+- [ ] **P0** — Créer `WebSite/guides/BaseCpp/` et les 7 dossiers `{NN}_{nom}/guide/` + `card/`
+- [ ] **P0** — Déplacer HTML + `Image/` de chaque module (harmoniser la casse `Image/`)
+- [ ] **P0** — Corriger tous les `src="Image/…"` et `url('Image/…')`
+- [ ] **P0** — Mettre à jour iframes, `bootstrap.php`, notes FTP, `URLNet`
+- [ ] **P0** — Redirections 301 ou compat temporaire (`guides/cards/…` → `guides/BaseCpp/…`)
+- [ ] **P0** — Supprimer l’ancien `guides/cards/` et `WebSite/Image/GameDevReady/bases-cpp/` (doublons)
+- [ ] **P0** — Documenter l’arborescence finale dans `NOTE_DEPLOIEMENT-FTP-GAMEDEVREADY.md` + re-upload FTP
+- [ ] **P3** — Extension `guides/Unreal/`, `guides/SDL/` sur le même modèle *(après P0 stable)*
 
 ---
 
 ## Tâches prioritaires
+
+> **Après P0** — auth OVH, déploiement FTP guides, nouveaux contenus.
 
 Ces tâches débloquent la mise en ligne ou corrigent des problèmes visibles pour les visiteurs.
 
@@ -65,8 +152,8 @@ Ces tâches débloquent la mise en ligne ou corrigent des problèmes visibles po
 > Session complète : **`scripts/NOTE_PROCHAINE-SESSION.md`** §3
 
 - [x] **P1** — Guides `*Guide/` (01–07) en production sur gameopenmoney.com — juin 2026
-- [ ] **P1** — Uploader / mettre à jour `gamedevready-bases-cpp.html` (boutons `/auth/guide.php`) si pas encore fait
-- [ ] **P1** — Vérifier en production les 7 cartes + accès guides via `/auth/guide.php?m=01` … `m=07` (après auth)
+- [ ] **P1** — Uploader / mettre à jour `gamedevready-bases-cpp.html` — **après P0** (chemins finaux)
+- [ ] **P1** — Vérifier en production les 7 cartes + accès guides via `/auth/guide.php?m=01` … `m=07` — **après P0 + auth**
 - [ ] **P1** — Tester le parcours : Bases C++ → miniature → carte → **Ouvrir le guide** (login requis)
 - [ ] **P2** — Renseigner `URLNet` dans `FlashRevisionSoft/data.json` avec les URLs HTTPS
 
@@ -77,7 +164,7 @@ Ces tâches débloquent la mise en ligne ou corrigent des problèmes visibles po
 - [x] Code auth PHP local (`api/`, `auth/`, `sql/schema.sql`) — juin 2026
 - [x] Boutons guide → `/auth/guide.php?m=XX` sur `gamedevready-bases-cpp.html`
 - [x] 7 guides publiés dans `WebSite/guides/cards/*Guide/`
-- [ ] **P1** — Déployer auth en production (voir checklist prochaine session)
+- [ ] **P1** — Déployer auth en production — **après P0** (voir checklist prochaine session)
 - [ ] **P1** — Comptes admin + testeurs créés ; `setup.php` retiré du FTP
 - [ ] **P2** — Webhook paiement → accès `student` (`user_products`)
 
@@ -114,118 +201,10 @@ Tâches utiles mais non bloquantes — à traiter après les priorités.
 - [x] Structure `FicheFormationHtlm/*Guide/` (sources, sans HTML carte) — juin 2026
 - [x] Page Bases C++ : miniatures → ancres, boutons guide protégés — juin 2026
 - [x] Guides 01–07 en production FTP (`WebSite/guides/cards/*Guide/`) — juin 2026
-- [ ] **P1** — Exposer **auth PHP** en production (voir `NOTE_OVH-PHP-MYSQL.md`) — guides encore publics en direct sans auth
-- [ ] **P2** — Renseigner `URLNet` dans `FlashRevisionSoft/data.json` pour chaque carte du deck
-
-### Réorganisation `WebSite/guides/` — deck Bases C++ (indexation & FTP)
-
-> **Constat (juillet 2026)** — le dossier `guides/cards/` mélange cartes Frogger, guides pédagogiques et assets au même niveau. Difficile à parcourir (FileZilla), à déployer module par module, et à maintenir une fois le site monolithique grossi.
-
-**État actuel (brouillon)**
-
-```
-guides/cards/
-├── 01-printf.html … 06-conteneurs.html     ← cartes (racine)
-├── 07_StructMethode_Card/                  ← carte 07 (exception)
-├── 01_PrintFGuide/ … 07_StructMethodesGuide/  ← guides complets
-│   └── Image/ ou image/                    ← casse incohérente
-└── .htaccess
-```
-
-**Structure cible validée** *(intention produit — juillet 2026)*
-
-Un **parcours** (`BaseCpp`, puis éventuellement `Unreal`, `SDL`, etc.) regroupe des **modules** numérotés.  
-Chaque module = dossier `{NN}_{nom}` avec deux sous-dossiers **`guide/`** et **`card/`**, chacun avec **son propre** `Image/`.
-
-> **BaseCpp** = Phase 1 actuelle (deck Raylib / C++ console). La même arborescence pourra accueillir d’autres stacks sans tout mélanger : `guides/Unreal/`, `guides/SDL/`, etc.
-
-```
-WebSite/guides/
-├── BaseCpp/                        ← parcours C++ fondamentaux (actuel)
-│   ├── 01_printf/
-│   │   ├── guide/ … + Image/
-│   │   └── card/  … + Image/
-│   ├── 02_variables/
-│   …
-│   └── 07_struct_methodes/
-├── Unreal/                         ← futur (ex. modules Blueprint, C++ Actor…)
-│   └── 01_…/guide/ + card/
-└── SDL/                            ← futur (ex. fenêtre, events, texture…)
-    └── 01_…/guide/ + card/
-```
-
-Exemple détaillé **BaseCpp** :
-
-```
-WebSite/guides/BaseCpp/
-├── 01_printf/
-│   ├── guide/
-│   │   ├── printfC++FrogTheme.html
-│   │   └── Image/
-│   └── card/
-│       ├── 01-printf-card.html
-│       └── Image/                 ← vide si SVG inline ; assets si filigrane, etc.
-├── 02_variables/
-│   ├── guide/ … + Image/
-│   └── card/  … + Image/
-├── 03_conditions/
-├── 04_boucles/
-├── 05_std_fonctions/
-├── 06_conteneurs/
-└── 07_struct_methodes/
-    ├── guide/
-    │   ├── StructMethodes.html
-    │   └── Image/
-    └── card/
-        ├── 07-struct-methodes-card.html
-        └── Image/david-vs-goliath-duel-reference.png
-```
-
-**Convention de nommage**
-
-| Élément | Règle | Exemple |
-|---------|--------|---------|
-| Parcours | `guides/{Stack}/` | `BaseCpp`, `Unreal`, `SDL` |
-| Module | `{NN}_{snake_case}` | `01_printf`, `07_struct_methodes` |
-| HTML guide | nom historique ou `{NN}-guide.html` | `printfC++FrogTheme.html` |
-| HTML carte | `{NN}-{slug}-card.html` | `07-struct-methodes-card.html` |
-| Assets | `guide/Image/` et `card/Image/` **séparés** | pas de dossier `Image/` partagé entre les deux |
-
-**Correspondance migration (01 → 07)**
-
-| Module | Dossier cible | Source guide actuelle | Source carte actuelle |
-|--------|---------------|----------------------|----------------------|
-| 01 | `01_printf/` | `01_PrintFGuide/` | `01-printf.html` |
-| 02 | `02_variables/` | `02_VariableGuide/` | `02-variables.html` |
-| 03 | `03_conditions/` | `03_ConditionsGuide/` | `03-conditions.html` |
-| 04 | `04_boucles/` | `04_BouclesGuide/` | `04-boucles.html` |
-| 05 | `05_std_fonctions/` | `05_StdFonctionsGuide/` | `05-std-fonctions.html` |
-| 06 | `06_conteneurs/` | `06_ConteneursGuide/` | `06-conteneurs.html` |
-| 07 | `07_struct_methodes/` | `07_StructMethodesGuide/` | `07_StructMethode_Card/` *(déjà proche du modèle)* |
-
-**Fichiers à mettre à jour après migration**
-
-- `gamedevready-bases-cpp.html` — iframes → `guides/BaseCpp/{NN}_*/card/*-card.html`
-- `api/bootstrap.php` — chemins guides + `base` URL
-- `auth/guide.php` (si chemins en dur)
-- `NOTE_DEPLOIEMENT-FTP-GAMEDEVREADY.md`
-- `FlashRevisionSoft/data.json` — `URLNet` par carte
-- `.htaccess` dans `guides/` si règles d’accès
-
-**Checklist réorganisation** *(P2 — après auth OVH stable)*
-
-- [ ] **P2** — Créer `WebSite/guides/BaseCpp/` et les 7 dossiers `{NN}_{nom}/guide/` + `card/`
-- [ ] **P2** — Déplacer HTML + `Image/` de chaque module (harmoniser la casse `Image/`)
-- [ ] **P2** — Corriger tous les `src="Image/…"` et `url('Image/…')` (chemins relatifs inchangés si `Image/` reste à côté du HTML)
-- [ ] **P2** — Mettre à jour iframes, `bootstrap.php`, notes FTP, `URLNet`
-- [ ] **P2** — Redirections 301 ou compat temporaire (`guides/cards/…` → `guides/BaseCpp/…`)
-- [ ] **P2** — Supprimer l’ancien `guides/cards/` et `WebSite/Image/GameDevReady/bases-cpp/` (doublons)
-- [ ] **P2** — Documenter l’arborescence finale pour le déploiement FTP module par module
-- [ ] **P3** — Prévoir l’extension `guides/Unreal/`, `guides/SDL/` sur le même modèle `{NN}/guide/` + `card/` (contenu à définir)
+- [ ] **P1** — Exposer **auth PHP** en production (voir `NOTE_OVH-PHP-MYSQL.md`) — **après P0**
+- [ ] **P2** — Renseigner `URLNet` dans `FlashRevisionSoft/data.json` — **après P0**
 
 ### Contenu & éditorial
-
-- [ ] Ajouter une page ou section FAQ (méthode, prérequis, durée des formations)
 - [ ] Rédiger les textes légaux (mentions légales, CGV boutique)
 - [ ] Préparer des témoignages / preuves sociales pour la page centre-formation
 - [ ] Aligner la roadmap centre-formation avec celle de FlashDev (`index.html`) ou expliquer la différence
@@ -314,7 +293,8 @@ Maquette d’écran cible (beat’em up arcade type *Golden Axe* / *Cadillacs an
 
 | Tag | Signification |
 |-----|---------------|
-| **P1** | Critique — à faire en premier |
+| **P0** | **Priorité absolue** — réorganisation `guides/BaseCpp/` ; bloque auth OVH et nouveaux contenus |
+| **P1** | Critique — à faire juste après P0 |
 | **P2** | Important — rapidement après P1 |
 | **polish** | Amélioration visuelle / UX — non bloquant |
 | *(backlog)* | Amélioration — quand le site est en ligne et le contenu rempli |
