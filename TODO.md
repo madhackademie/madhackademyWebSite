@@ -1,16 +1,42 @@
 ﻿# TODO — madhackademyWebSite
 
-> Dernière mise à jour : 27 juin 2026  
+> Dernière mise à jour : 29 juin 2026  
 > Projet : site vitrine FlashDev + MadHackAdemy
 
-## Site en production
+---
+
+## Prochaine session de travail
+
+> **Guide de référence : [`scripts/NOTE_PROCHAINE-SESSION.md`](scripts/NOTE_PROCHAINE-SESSION.md)**  
+> Reprendre à la **section 3 — Checklist** (auth PHP/MySQL OVH + comptes admin/testeur — **guides déjà en ligne**).
+
+| Doc | Sujet |
+|-----|--------|
+| [`scripts/NOTE_OVH-PHP-MYSQL.md`](scripts/NOTE_OVH-PHP-MYSQL.md) | **Prochaine étape** — PHP, MySQL, auth OVH |
+| [`scripts/NOTE_PROCHAINE-SESSION.md`](scripts/NOTE_PROCHAINE-SESSION.md) | Checklist session complète |
+| [`scripts/NOTE_AUTH-SETUP.md`](scripts/NOTE_AUTH-SETUP.md) | Rôles, URLs auth |
+
+### Checklist rapide prochaine session
+
+- [x] **P1** — Guides `*Guide/` (01–07) uploadés chez l'hébergeur OVH — juin 2026
+- [ ] **P1** — Vérifier PHP 8+ et MySQL chez OVH → **`scripts/NOTE_OVH-PHP-MYSQL.md`**
+- [ ] **P1** — Importer `WebSite/sql/schema.sql` dans phpMyAdmin
+- [ ] **P1** — Créer `api/config.php` (copie de `config.example.php`) sur le FTP
+- [ ] **P1** — Uploader `api/`, `auth/`, `guides/cards/.htaccess`, `gamedevready-bases-cpp.html` (si pas à jour)
+- [ ] **P1** — Créer compte **admin** + comptes **tester** via `/auth/setup.php?key=…`
+- [ ] **P1** — Supprimer `auth/setup.php` du FTP après création des comptes
+- [ ] **P1** — Tester login + guides via `/auth/guide.php?m=01` … + blocage URL directe (403)
+- [ ] **P2** — Distribuer identifiants aux testeurs beta
+
+---
 
 | Page | URL |
 |------|-----|
 | Accueil FlashDev | [https://gameopenmoney.com/](https://gameopenmoney.com/) |
 | Centre de formation | [https://gameopenmoney.com/centre-formation.html](https://gameopenmoney.com/centre-formation.html) |
-| GameDevReady (hub) | [https://gameopenmoney.com/gamedevready.html](https://gameopenmoney.com/gamedevready.html) *(à déployer)* |
-| Bases C++ (deck) | [https://gameopenmoney.com/gamedevready-bases-cpp.html](https://gameopenmoney.com/gamedevready-bases-cpp.html) *(à déployer)* |
+| GameDevReady (hub) | [https://gameopenmoney.com/gamedevready.html](https://gameopenmoney.com/gamedevready.html) |
+| Bases C++ (deck) | [https://gameopenmoney.com/gamedevready-bases-cpp.html](https://gameopenmoney.com/gamedevready-bases-cpp.html) |
+| Guides (01–07) | `guides/cards/*Guide/` — **en ligne chez l'hébergeur** *(accès public tant que auth PHP non déployée)* |
 
 ---
 
@@ -35,12 +61,25 @@ Ces tâches débloquent la mise en ligne ou corrigent des problèmes visibles po
 
 ### Déploiement GameDevReady (provider / FTP)
 
-> Procédure détaillée : **`scripts/NOTE_DEPLOIEMENT-FTP-GAMEDEVREADY.md`** (arborescence FTP, URLs publiques, `URLNet` FlashDev)
+> Procédure détaillée : **`scripts/NOTE_DEPLOIEMENT-FTP-GAMEDEVREADY.md`**  
+> Session complète : **`scripts/NOTE_PROCHAINE-SESSION.md`** §3
 
-- [ ] **P1** — **Mettre à jour chez le provider** : uploader via FTP le contenu de `WebSite/` (pages `gamedevready*.html` + dossier `guides/cards/`)
-- [ ] **P1** — Vérifier en production les 7 URLs cartes (`https://gameopenmoney.com/guides/cards/01-printf.html` … `07-struct-methodes.html`)
-- [ ] **P1** — Tester le parcours : accueil → Bases C++ → cartes Frogger (iframes + liens plein écran)
-- [ ] **P2** — Renseigner `URLNet` dans `FlashRevisionSoft/data.json` avec les URLs HTTPS ci-dessus
+- [x] **P1** — Guides `*Guide/` (01–07) en production sur gameopenmoney.com — juin 2026
+- [ ] **P1** — Uploader / mettre à jour `gamedevready-bases-cpp.html` (boutons `/auth/guide.php`) si pas encore fait
+- [ ] **P1** — Vérifier en production les 7 cartes + accès guides via `/auth/guide.php?m=01` … `m=07` (après auth)
+- [ ] **P1** — Tester le parcours : Bases C++ → miniature → carte → **Ouvrir le guide** (login requis)
+- [ ] **P2** — Renseigner `URLNet` dans `FlashRevisionSoft/data.json` avec les URLs HTTPS
+
+### Auth — guides protégés (admin / testeurs)
+
+> Détail : **`scripts/NOTE_AUTH-SETUP.md`**
+
+- [x] Code auth PHP local (`api/`, `auth/`, `sql/schema.sql`) — juin 2026
+- [x] Boutons guide → `/auth/guide.php?m=XX` sur `gamedevready-bases-cpp.html`
+- [x] 7 guides publiés dans `WebSite/guides/cards/*Guide/`
+- [ ] **P1** — Déployer auth en production (voir checklist prochaine session)
+- [ ] **P1** — Comptes admin + testeurs créés ; `setup.php` retiré du FTP
+- [ ] **P2** — Webhook paiement → accès `student` (`user_products`)
 
 ### Corrections techniques urgentes
 
@@ -56,23 +95,26 @@ Tâches utiles mais non bloquantes — à traiter après les priorités.
 
 ### Guides de formation HTML (FlashDev / deck GameDevReady)
 
-> Thème **Frogger** (charte du deck). Sources dans **`FicheFormationHtlm/`** — chaque module a un dossier `ClaudeHtml*`, `ClaudePdf` ou `ClaudeVariableHtml` avec le support HTML de la carte (squelette de base réutilisable).
+> Thème **Frogger** (charte du deck). Guides pédagogiques dans **`FicheFormationHtlm/{module}/*Guide/`** — cartes HTML Frogger publiées dans **`WebSite/guides/cards/`** uniquement.
 
-| Dossier module | Support HTML (URLNet cible) | Carte FlashSoft |
-|----------------|----------------------------|-----------------|
-| `01_PrintC++` | `ClaudePdf/printfC++FrogTheme.html` | `0x_Print` |
-| `02_Variable` | `ClaudeVariableHtml/VariableC++FroggerTheme.html` | `0X_Variable` |
-| `03_Conditions` | `ClaudeHtmlConditions/Conditions.html` | `0x_Conditions` |
-| `04_Les boucles` | `ClaudeHtml/LoopModule.html` | `0X_Boucles` |
-| `05_LibrairieStandard&FonctionsC++` | `ClaudePdf/stdLib&Fonction.html` | `0x_STD_Fonctions` |
-| `06_Conteneurs` | `ClaudePdf/Conteneurs.html` | `0X_Conteneurs` |
-| `0x_Struct_Methodes` | `FicheFormationHtlm/07_Struct_Methodes/ClaudeHtml/StructMethodes.html` |
+| Dossier module | Guide HTML | Carte FlashSoft |
+|----------------|------------|-----------------|
+| `01_PrintC++` | `01_PrintFGuide/printfC++FrogTheme.html` | `0x_Print` |
+| `02_Variable` | `02_VariableGuide/VariableC++FroggerTheme.html` | `0X_Variable` |
+| `03_Conditions` | `03_ConditionsGuide/Conditions.html` | `0x_Conditions` |
+| `04_Les boucles` | `04_BouclesGuide/LoopModule.html` | `0X_Boucles` |
+| `05_LibrairieStandard&FonctionsC++` | `05_StdFonctionsGuide/stdLib&Fonction.html` | `0x_STD_Fonctions` |
+| `06_Conteneurs` | `06_ConteneursGuide/Conteneurs.html` | `0X_Conteneurs` |
+| `07_Struct_Methodes` | `07_StructMethodesGuide/StructMethodes.html` | `0x_Struct_Methodes` |
 
 - [x] Importer les guides HTML sources dans ce repo (`FicheFormationHtlm/`)
 - [x] Carte `07_Struct_Methodes` validée (guide Frogger `Frogger_theme_StrucAndMehtodeCard.html`) — juin 2026
 - [x] Cartes Frogger HTML intégrées localement (`WebSite/guides/cards/`, page `gamedevready-bases-cpp.html`) — juin 2026
-- [ ] **P1** — Exposer les cartes + pages GameDevReady en production (FTP provider — voir `scripts/NOTE_DEPLOIEMENT-FTP-GAMEDEVREADY.md`)
-- [ ] **P1** — Exposer les **guides complets** HTML sous `gameopenmoney.com` (à venir : `printfC++FrogTheme.html`, etc.) — chemins images relatifs à vérifier
+- [x] Guides 01–07 copiés dans `WebSite/guides/cards/*Guide/` — juin 2026
+- [x] Structure `FicheFormationHtlm/*Guide/` (sources, sans HTML carte) — juin 2026
+- [x] Page Bases C++ : miniatures → ancres, boutons guide protégés — juin 2026
+- [x] Guides 01–07 en production FTP (`WebSite/guides/cards/*Guide/`) — juin 2026
+- [ ] **P1** — Exposer **auth PHP** en production (voir `NOTE_OVH-PHP-MYSQL.md`) — guides encore publics en direct sans auth
 - [ ] **P2** — Renseigner `URLNet` dans `FlashRevisionSoft/data.json` pour chaque carte du deck
 
 ### Contenu & éditorial
@@ -179,4 +221,4 @@ Maquette d’écran cible (beat’em up arcade type *Golden Axe* / *Cadillacs an
 |------|---------------------|
 | `index.html` (FlashDev) | ~80 % — contenu OK, liens et détails à finaliser |
 | `centre-formation.html` | ~30 % — structure solide, contenu à rédiger |
-| `gamedevready-bases-cpp.html` | ~70 % — deck cartes OK en local, déploiement FTP à faire |
+| `gamedevready-bases-cpp.html` | ~90 % — deck + guides en prod ; auth PHP à déployer (OVH) |

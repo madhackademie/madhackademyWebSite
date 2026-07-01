@@ -1,0 +1,1173 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Variables C++ - GameDevReady</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;600;700;800&family=Courier+Prime:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(180deg, #87CEEB 0%, #98D8C8 50%, #6B8E23 100%);
+            color: #2d5016;
+            line-height: 1.7;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(255,255,255,0.03) 50px, rgba(255,255,255,0.03) 100px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 50px 30px;
+            background: linear-gradient(135deg, rgba(34, 139, 34, 0.9), rgba(107, 142, 35, 0.9));
+            border: 4px solid #8B4513;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3), inset 0 2px 10px rgba(255,255,255,0.2);
+            position: relative;
+        }
+        
+        header::before {
+            content: '🐸';
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 4em;
+            animation: hop 2s ease-in-out infinite;
+        }
+        
+        @keyframes hop {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-15px); }
+        }
+
+        .property-banner {
+            background: linear-gradient(135deg, #DAA520, #FFD700);
+            color: #2d5016;
+            padding: 12px 20px;
+            text-align: center;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.75em;
+            border-bottom: 4px solid #8B4513;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .property-icon {
+            font-size: 1.5em;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+        
+        h1 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 2.5em;
+            color: #FFD700;
+            text-shadow: 3px 3px 0 #8B4513, 5px 5px 10px rgba(0,0,0,0.5);
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+        
+        .subtitle {
+            font-size: 2.3em;
+            color: #FFFACD;
+            font-weight: 700;
+            text-transform: none;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        section {
+            background: rgba(255, 255, 255, 0.95);
+            border: 3px solid #6B8E23;
+            border-radius: 15px;
+            padding: 35px;
+            margin-bottom: 35px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            position: relative;
+        }
+        
+        section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 8px;
+            height: 100%;
+            background: linear-gradient(180deg, #228B22, #6B8E23, #8B4513);
+            border-radius: 15px 0 0 15px;
+        }
+        
+        h2 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.6em;
+            color: #228B22;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #90EE90;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            line-height: 1.6;
+        }
+        
+        h2::before {
+            content: '🌿';
+            font-size: 1.3em;
+        }
+        
+        h3 {
+            font-family: 'Nunito', sans-serif;
+            font-size: 1.5em;
+            color: #6B8E23;
+            margin: 30px 0 15px 0;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        h3::before {
+            content: '🍃';
+            font-size: 1em;
+        }
+        
+        .separator {
+            height: 50px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 50"><path d="M0,25 Q25,5 50,25 T100,25" fill="none" stroke="%236B8E23" stroke-width="3"/></svg>') repeat-x center;
+            margin: 40px 0;
+            position: relative;
+        }
+        
+        .separator::after {
+            content: '🐸';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2em;
+            background: rgba(255,255,255,0.9);
+            padding: 0 15px;
+            border-radius: 50%;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { 
+                box-shadow: 0 0 5px rgba(255,215,0,0.5);
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% { 
+                box-shadow: 0 0 20px rgba(255,215,0,1), 0 0 30px rgba(255,215,0,0.7);
+                transform: translate(-50%, -50%) scale(1.25);
+            }
+        }
+         
+        .image-placeholder-icon {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+        }
+        
+        .image-placeholder-text {
+            color: #2d5016;
+            font-family: 'Courier Prime', monospace;
+            font-size: 1em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .image-placeholder-100 {
+            background: linear-gradient(135deg, rgba(152, 216, 200, 0.3), rgba(144, 238, 144, 0.3));
+            border: 3px dashed #6B8E23;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 25px auto;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-placeholder-100 img {
+        /* Règle essentielle du responsive */
+        width: 100%;    /* L'image prend 100% de la largeur du conteneur parent (800px maximum dans cet exemple) */
+        height: auto;   /* GARANTIT que l'image ne sera pas déformée */
+        display: block; /* Évite les espaces blancs sous l'image */
+        
+        /* Optionnel : Rendre l'image elle-même légèrement arrondie pour épouser le cadre */
+        border-radius: 8px; 
+        }
+        .image-placeholder-75 {
+            background: linear-gradient(135deg, rgba(152, 216, 200, 0.3), rgba(144, 238, 144, 0.3));
+            border: 3px dashed #6B8E23;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 25px auto;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-placeholder-75 img {
+        /* Règle essentielle du responsive */
+        width: 75%;    /* L'image prend 100% de la largeur du conteneur parent (800px maximum dans cet exemple) */
+        height: auto;   /* GARANTIT que l'image ne sera pas déformée */
+        display: inline-block; /* Évite les espaces blancs sous l'image */
+        
+        /* Optionnel : Rendre l'image elle-même légèrement arrondie pour épouser le cadre */
+        border-radius: 8px; 
+        }
+
+        .image-placeholder-50 {
+            background: linear-gradient(135deg, rgba(152, 216, 200, 0.3), rgba(144, 238, 144, 0.3));
+            border: 3px dashed #6B8E23;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 25px auto;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-placeholder-50 img {
+        /* Règle essentielle du responsive */
+        width: 50%;    /* L'image prend 100% de la largeur du conteneur parent (800px maximum dans cet exemple) */
+        height: auto;   /* GARANTIT que l'image ne sera pas déformée */
+        display: inline-block; /* Évite les espaces blancs sous l'image */
+        
+        /* Optionnel : Rendre l'image elle-même légèrement arrondie pour épouser le cadre */
+        border-radius: 8px; 
+        }
+
+        .image-placeholder-25 {
+            background: linear-gradient(135deg, rgba(152, 216, 200, 0.3), rgba(144, 238, 144, 0.3));
+            border: 3px dashed #6B8E23;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 25px auto;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-placeholder-25 img {
+            /* Règle essentielle du responsive */
+            width: 25%;    /* L'image prend 100% de la largeur du conteneur parent (800px maximum dans cet exemple) */
+            height: auto;   /* GARANTIT que l'image ne sera pas déformée */
+            display: inline-block; /* Évite les espaces blancs sous l'image */
+            
+            /* Optionnel : Rendre l'image elle-même légèrement arrondie pour épouser le cadre */
+            border-radius: 8px; 
+        }
+
+        .image-float-right {
+            float: right;
+            max-width: 20%; 
+            width: auto;
+            margin: 1px 0 1px 2px; /* Espace autour du texte */
+            /* ... style du cadre (border, padding) ... */
+            /* Le reste de votre style de cadre */
+            border: 3px dashed #6B8E23;
+            border-radius: 12px;
+            padding: 10px;
+        }
+
+        .image-float-right img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 8px;
+        }
+        
+        .image-inline {
+            display: inline-block;
+            vertical-align: middle; 
+            max-width: 250px;       
+            margin: 0 10px;
+            border: 3px dashed #6B8E23;
+            border-radius: 12px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        /* Pour cibler les images à l'intérieur */
+        .image-inline img {
+            width: 100%;        /* L'image prend toute la largeur du conteneur */
+            height: auto;       /* Garde les proportions */
+            display: block;     /* Évite les espaces blancs sous l'image */
+            margin: 0 auto;     /* ← Cette ligne ne causera plus d'erreur */
+        }
+
+        .clear-float {
+            clear: both; /* Annule l'effet float pour les éléments suivants */
+        }
+        
+        .image-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        .link-web {
+            color: #2d5016;
+            font-weight: 800;
+            text-decoration: none;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+
+        /* Soulignement animé qui apparaît au hover */
+        .link-web::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #08ddf0, #228B22);
+            transition: width 0.3s ease;
+        }
+
+        .link-web:hover::after {
+            width: 100%;
+        }
+
+        /* Effet de surbrillance au hover */
+        .link-web:hover {
+            color: #12c2d2;
+            background: rgba(89, 255, 0, 0.411);
+            transform: translateY(-1px);
+        }
+
+        /* Curseur main + effet subtil */
+        .link-web:hover {
+            cursor: pointer;
+        }
+
+        /* Petite icône externe qui apparaît */
+        .link-web::before {
+            content: '🔗';
+            font-size: 0.8em;
+            opacity: 1;
+            margin-right: 3px;
+            transition: opacity 0.3s ease;
+        }
+
+        .link-web:hover::before {
+            transform: scale(1.2); /* L'icône grossit un peu au survol */
+        }
+
+        ul, ol {
+            margin: 20px 0 20px 35px;
+        }
+        
+        li {
+            margin: 12px 0;
+            padding-left: 10px;
+            position: relative;
+        }
+        
+        ul li::before {
+            content: '🌱';
+            position: absolute;
+            left: -30px;
+            font-size: 1em;
+        }
+        
+        ol li {
+            font-weight: 600;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: rgba(255, 248, 220, 0.9);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        
+        th {
+            background: linear-gradient(135deg, #228B22, #6B8E23);
+            color: #FFD700;
+            padding: 18px;
+            text-align: left;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7em;
+            border-bottom: 3px solid #8B4513;
+        }
+        
+        td {
+            padding: 15px 18px;
+            border-bottom: 2px solid rgba(107, 142, 35, 0.2);
+            font-weight: 600;
+        }
+        
+        tr:nth-child(even) {
+            background: rgba(144, 238, 144, 0.1);
+        }
+        
+        tr:hover {
+            background: rgba(152, 216, 200, 0.3);
+            transform: scale(1.01);
+            transition: all 0.2s;
+        }
+        
+        code {
+            font-family: 'Courier Prime', monospace;
+            background: rgba(107, 142, 35, 0.15);
+            color: #2d5016;
+            padding: 3px 10px;
+            border-radius: 6px;
+            border: 2px solid rgba(107, 142, 35, 0.3);
+            font-weight: 700;
+            font-size: 1.05em;
+        }
+
+        .alert-siren {
+            color: #ff0000;
+            font-weight: 900;
+            text-transform: uppercase;
+            font-family: 'Courier Prime', monospace;
+            
+            /* --- AJUSTEMENTS POUR RÉDUIRE LA TAILLE --- */
+            display: inline;           /* On repasse en 'inline' pour qu'il se comporte comme du texte */
+            padding: 1px 2px;         /* On réduit le rembourrage (Haut/Bas 1px, Gauche/Droite 4px) */
+            margin: 0 3px;            /* Petit espace extérieur pour ne pas coller aux mots voisins */
+            vertical-align: baseline; /* Aligne parfaitement le cadre sur la ligne de texte */
+            /* ------------------------------------------ */
+
+            background: rgba(255, 0, 0, 0.1);
+            border-radius: 4px;
+            border: 1px solid #ff0000;
+            
+            animation: girophare 1s infinite alternate;
+            
+            /* Pour éviter que le badge ne soit coupé en deux en fin de ligne */
+            white-space: nowrap;
+        }
+
+        /* Définition de l'effet lumineux (Girophare) */
+        @keyframes girophare {
+            0% {
+                box-shadow: 0 0 0px #ff0000;
+                text-shadow: 0 0 0px #ff0000;
+                background: rgba(255, 0, 0, 0.1);
+            }
+            100% {
+                box-shadow: 0 0 5px #ff0000; /* Halo rouge extérieur */
+                text-shadow: 0 0 8px #ff0000;  /* Halo rouge sur les lettres */
+                background: rgba(255, 0, 0, 0.3);
+            }
+        }
+        
+        .info-box {
+            background: linear-gradient(135deg, rgba(152, 216, 200, 0.4), rgba(144, 238, 144, 0.4));
+            border-left: 6px solid #228B22;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .warning-box {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(255, 165, 0, 0.3));
+            border-left: 6px solid #FF8C00;
+            padding: 25px 60px 25px 25px;
+            margin: 25px 0;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        .warning-box::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2em;
+            z-index: 1;
+        }
+
+        /* Classe à appliquer sur le <span> qui entoure l'emoji */
+        .icon-blink {
+            display: inline-block;       /* Nécessaire pour que la transformation (scale) fonctionne */
+            font-size: 1.3em;            /* Taille de base déjà un peu plus grande que le texte */
+            vertical-align: text-bottom; /* Aligne mieux l'emoji par rapport à la ligne de texte */
+            margin: 0 3px;               /* Un tout petit peu d'espace autour */
+            
+            /* L'animation : rapide (0.6s), fluide (ease-in-out), infinie et en aller-retour */
+            animation: icon-pulse 0.6s ease-in-out infinite alternate;
+            
+            /* Sécurité : on s'assure qu'il n'y a pas de bordure ou de fond hérités */
+            background: none !important;
+            border: none !important;
+            padding: 0 !important;
+        }
+
+        /* Définition de l'animation de pulsation */
+        @keyframes icon-pulse {
+            0% {
+                transform: scale(1); /* Taille normale au début */
+                /* Pas de halo au départ */
+                filter: drop-shadow(0 0 0px rgba(255, 215, 0, 0)); 
+            }
+            100% {
+                transform: scale(1.5); /* Grandit jusqu'à 1.5x la taille */
+                /* Double halo lumineux : Jaune Or (#FFD700) + Orange (#FF4500) */
+                /* filter: drop-shadow est meilleur que text-shadow pour les emojis */
+                filter: drop-shadow(0 0 5px #FFD700) drop-shadow(0 0 8px #FF4500);
+            }
+        }
+        
+        .key-points {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(218, 165, 32, 0.2));
+            border: 3px solid #DAA520;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 5px 15px rgba(218, 165, 32, 0.3);
+        }
+        
+        .key-points h3 {
+            color: #B8860B;
+            margin-top: 0;
+        }
+        
+        .key-points h3::before {
+            content: '⭐';
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+            background: linear-gradient(135deg, rgba(34, 139, 34, 0.8), rgba(107, 142, 35, 0.8));
+            border-radius: 15px;
+            color: #FFD700;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.8em;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+        
+        footer::before {
+            content: '🐸 🪵 🚗 🪵 🐸';
+            display: block;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+        
+        strong {
+            color: #228B22;
+            font-weight: 800;
+        }
+        
+        p {
+            margin: 12px 0;
+            font-size: 1.05em;
+        }
+        
+        .objective-box {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.25), rgba(255, 248, 220, 0.25));
+            border: 3px solid #FFD700;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            box-shadow: 0 4px 12px rgba(218, 165, 32, 0.3);
+        }
+        
+        .objective-box h3 {
+            color: #DAA520;
+        }
+        
+        .objective-box h3::before {
+            content: '🎯';
+        }
+        /* Style pour les mots du glossaire */
+        .glossary-term {
+            font-family: 'Courier Prime', monospace;
+            background: linear-gradient(135deg, rgba(0, 123, 255, 0.15), rgba(58, 183, 255, 0.15));
+            color: #006bb3;
+            padding: 2px 8px;
+            border-radius: 6px;
+            border: 2px solid rgba(0, 123, 255, 0.4);
+            font-weight: 700;
+            font-size: 1.05em;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        /* Effet au survol */
+        .glossary-term:hover {
+            background: linear-gradient(135deg, rgba(0, 123, 255, 0.25), rgba(58, 183, 255, 0.25));
+            border-color: rgba(0, 123, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.4), 0 0 20px rgba(58, 183, 255, 0.3);
+        }
+
+        /* Petit indicateur de lien */
+        .glossary-term::after {
+            content: '📖';
+            font-size: 0.8em;
+            margin-left: 3px;
+            opacity: 0.7;
+        }
+
+        /* Animation douce de glow (pas agressive) */
+        @keyframes soft-glow {
+            0%, 100% { 
+                box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+            }
+            50% { 
+                box-shadow: 0 0 8px rgba(0, 123, 255, 0.4), 0 0 12px rgba(58, 183, 255, 0.3);
+            }
+        }
+
+        .glossary-term:hover {
+            animation: soft-glow 2s ease-in-out infinite;
+        }
+
+        /* Style pour les définitions avec ancre */
+        .definition-item {
+            scroll-margin-top: 100px; /* Espace pour la bannière sticky */
+            transition: background 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="property-banner">
+        <span class="property-icon">🛡️</span>
+        <span class="property-text">© 2025 MadHackAdemy | Formation Propriétaire | Tous droits réservés</span>
+        <span class="property-icon">🛡️</span>
+    </div>
+    <div class="container">
+        <header>
+            <h1>Variables C++</h1>
+            <p class="subtitle">GameDevReady</p>
+        </header>
+
+        <section>
+            <h2>Objectif du Module</h2>
+            <p>Nous allons voir rapidement ce qu'est une variable en C++, et surtout les formes les plus importantes
+                 (voire indispensables selon les 80/20 de la <strong><code><a href="https://fr.wikipedia.org/wiki/Principe_de_Pareto" target="_blank" 
+                    rel="noopener noreferrer" class="link-web">loi de Pareto</a></code></strong>).
+            </p>
+
+            <p>Nous verrons ultérieurement les variables les plus importantes de la librairie Raylib (dans l'univers 2D selon le même principe).</p>
+            
+            <p>Nous apprendrons comment créer une variable et y écrire.</p>
+            
+            <p>Pour commencer, une variable correspond à un espace mémoire réservé dans l'ordinateur. Cet espace est dédié uniquement à cette variable.</p>
+            
+            <p>Cependant, vous ne pouvez pas stocker n'importe quoi n'importe où : 
+                si l'ordinateur attend des bananes, vous ne pouvez pas lui donner des patates. C'est le principe du typage en C++.
+                (bien qu'il effectue parfois des conversions automatiques non souhaitées). 
+                La programmation n'étant qu'une suite de traitements et de transformations de données, 
+                les variables sont donc indispensables.
+            </p>
+            
+            <div class="info-box">
+                <strong>On peut distinguer deux grandes familles :</strong>
+                <ul>
+                    <li>les simples (elles stockent une donnée unique)</li>
+                    <li>les complexes (elles regroupent plusieurs données ou suivent un modèle)</li>
+                </ul>
+            </div>
+            
+            <p>Commençons par énumérer les types fondamentaux. Le format générique est le suivant :</p>
+            <p><code>typeVariable nomVariable</code> ⇒ <code>int age</code>, <code>float tailleEnMètre</code>, <code>bool estVivant</code></p>
+            
+            <div class="objective-box">
+                <h3>Ce que l'élève saura faire à la fin</h3>
+                <p>Déclarer et typer correctement une variable, utiliser des opérateurs arithmétiques et d'affectation, comprendre le concept de mémoire et les <a href="#def-Pointeur" class="glossary-term">pointeurs</a>  basiques.</p>
+            </div>
+        </section>
+
+        <div class="separator"></div>
+
+        <section>
+            <h2>Théorie</h2>
+            
+            <h3>Le Typage</h3>
+            
+            <p><strong>Variables simples :</strong></p>
+            <ul>
+                <li><code>Int</code> ⇒ entier (1, 2, 3, 4, ...)</li>
+                <li><code>Float</code> ⇒ nombre décimal (1.5)</li>
+                <li><code>Char</code> ⇒ caractère (a, b, c)</li>
+                <li><code>Bool</code> ⇒ vrai/faux</li>
+            </ul>
+            
+            <p><strong>Variables complexes :</strong></p>
+            <ol>
+                <li><code>array</code> - Tableau</li>
+                <li><code>struct</code> - Structure</li>
+            </ol>
+        </section>
+
+        <div class="separator"></div>
+
+        <section>
+            <h2>Variables les plus utilisées</h2>
+
+            <div class="image-placeholder-50">
+                <img src="Image/ExempleVariable.jpg" alt="Exemple des variables les plus courantes">
+                <div class="image-placeholder-text">IMAGE : Exemples de variables dans l'éditeur</div>
+            </div>
+
+            <div class="info-box">
+                <ol>
+                    <li><strong>int</strong> → un entier, un chiffre rond.</li>
+                    <li><strong>float</strong> → un nombre à virgule. Il faut terminer la valeur par la lettre <code>f</code>.</li>
+                    <li><strong>bool</strong> → une valeur logique : <code>true</code> ou <code>false</code>, pas d'autre option.</li>
+                    <li><strong>char</strong> → un caractère simple (lettre, chiffre, symbole), écrit entre <code>' '</code>.</li>
+                    <li><strong>Tableau (array)</strong> → plusieurs valeurs du même type regroupées.</li>
+                    <li><strong>struct (structure)</strong> → un type modulaire qui peut contenir plusieurs valeurs de types différents, représentant une entité (personnage, livre, voiture, etc.).</li>
+                    <li><strong>Pointeur</strong> → une variable contenant une adresse (ici un int) initialisée à nullptr(ou null).</li>
+                    <li><strong>Adresse</strong> → l'adresse d'une variable existante (ici aussi un int).</li>
+                </ol>
+            </div>
+
+            <div class="key-points">
+                <h3>Résumé</h3>
+                <p><strong>Le tableau</strong> = plusieurs valeurs du même type.</p>
+                <p><strong>La struct</strong> = plusieurs valeurs, éventuellement de types différents.</p>
+            </div>
+
+            <p>Eh bien, dans le code précédent, nous avons instancié les variables et attribué une valeur à ces dernières 
+                (ce qui est une bonne pratique même si c'est zéro). Nous allons utiliser ce que l'on appelle des opérateurs
+                pour modifier et comparer les variables. La modification et l'accès aux variables "complexes"
+                se feront ultérieurement.
+            </p>
+        </section>
+
+        <div class="separator"></div>
+
+        <section>
+            <h2>La Mémoire</h2>
+            <p>Il va nous falloir survoler un concept qui fait peur mais qui est essentiel et 
+                finalement pas trop compliqué à comprendre, mais au début difficile à appliquer.
+                Pour commencer, on crée/stocke des données mais où ? Le mieux c'est de s'imaginer 
+                la mémoire comme un parking et chaque place peut contenir une donnée (variable). Imaginons la création 
+                d'un <code>int age = 20;</code> Voici comment on pourrait schématiser la mémoire.
+            </p>
+
+            <div class="image-placeholder-100">
+                <img src="Image/SchemaMémoire.jpg" alt="Case mémoire">
+                <div class="image-placeholder-text">IMAGE : Schéma mémoire ordinateur</div>
+            </div>
+
+            <p>Et chaque case mémoire dispose d'une adresse (attention c'est là que ça devient fumant). Nous allons voir qu'il 
+                est possible de modifier une variable via des opérateurs classiques et faciles à prendre en main 
+                (voire très intuitifs façon calculatrice). Mais le principe de l'adresse est quelque chose d'utilisé par l'ordinateur.
+                Et en tant que programmeur C++ tout puissant, nous disposons aussi de cet accès (rapide / direct / empreinte mémoire faible).
+                Il s'agit des pointeurs. On va les survoler très rapidement, on en aura besoin bientôt. Mais pas de panique, 
+                vous devez juste savoir ce que c'est et revenir à ce chapitre quand vous y êtes confronté.
+                On les manipulera avec plus de précision et expliquerons leur intérêt plus tard.
+                </p>
+
+            <div class="info-box">
+                <p>Dans la carte sur le <code>printf()</code>, il y avait un <code>%p</code>; il sert à afficher l'adresse de ladite case.
+                    Et il s'agit d' <a href="#def-Hexadécimal" class="glossary-term">hexadécimal</a>, là encore pas de panique, c'est un code informatique presque matériel.
+                    Et si on regarde cette place de parking vue d'en haut, cela correspond à des cellules d'un tableau.
+                    C'est pourquoi l'adresse pour simplifier est ici notée N et N+1 pour chaque case ou cellule mémoire adjacente.
+                    Voyons comment initialiser un pointeur. Ci-dessous le code complet pour pointer vers une variable 
+                    de type <code>int</code>
+                </p>
+            </div>
+
+            <div class="image-placeholder-100">
+                <img src="Image/PointerEtPointé.jpg" alt="Code pointer complet">
+                <div class="image-placeholder-text">IMAGE : Code du pointeur et de la variable pointée</div>
+            </div>
+
+            <div class="image-placeholder-25">
+                <img src="Image/pointer.jpg" alt="pointer type int">
+                <div class="image-placeholder-text">IMAGE : Un pointeur de type int</div>
+            </div>
+
+            <p><code>int*</code> est une variable qui peut stocker l'adresse d'un int. 
+                Il s'agit de l'adresse GPS où est garée la voiture (le chiffre).
+            </p>
+            
+            <div class="image-placeholder-25">
+                <img src="Image/Adresse.jpg" alt="adresse de la variable">
+                <div class="image-placeholder-text">IMAGE : Une addresse de variable</div>
+            </div>
+            
+            <p><code>&</code> cible l'adresse de la voiture. Donc avec <code>int*</code> vous créez une variable de type adresse pour un int 
+                et avec <code>&</code> vous lui assignez l'adresse d'une variable de type int. On dit donc que 
+                <code>int*</code> ⇒ pointe vers <code>&</code>. Si vous devez créer un pointeur vide, 
+                il est<span class="alert-siren">⚠️ IMPÉRATIF ⚠️</span> de le rendre nul sinon vous risquez de tout péter.</p>
+
+            <div class="warning-box">
+                <p><strong><span class="icon-blink">⚠️</span> On peut vraiment citer "De grands pouvoirs impliquent de grandes responsabilités" dans ce cas précis.</strong></p>
+            </div>
+
+            <p>Et pour essayer de résumer le plus simplement possible, je dirais que :</p>
+            <div class="key-points">
+                <p><strong>Un pointeur est une variable qui stocke l'adresse d'une autre variable de même type.</strong></p>
+            </div>
+
+            <p>Voici comment initialiser un pointeur vide sur l'image suivante.</p>
+
+            <div class="image-placeholder-25">
+                <img src="Image/NullPointer.jpg" alt="pointeur null">
+                <div class="image-placeholder-text">IMAGE : Initialisation d'un pointeur vide</div>
+            </div>
+
+            <div class="info-box">
+                <p>Il y a un concept d'adresse mémoire dynamique mais pour l'heure je n'en sais pas plus que vous, 
+                    on apprendra ceci ultérieurement pour infliger des dégâts par exemple. 
+                    L'image suivante montre une adresse hexadécimale pour information.
+                </p>
+            </div>
+
+            <div class="image-placeholder-50">
+                <img src="Image/AdresseHexa.jpg" alt="pointeur null">
+                <div class="image-placeholder-text">IMAGE : Adresse hexadécimale</div>
+            </div>
+
+            <p>Ne bloquez pas sur ces concepts, ils ne sont pas fondamentaux. Mais avec notre méthodologie vous y arriverez sans souci.
+                Il s'agit d'une approche "easy to do but hard to master" dans la programmation pro.
+                Ce qui fait des pointeurs et adresses des éléments de maîtrise, et il est bien d'essayer de les utiliser pour un 
+                code propre et performant. Pour ma part, je ne maîtrise pas encore ces concepts mais nous allons les assimiler
+                en parallèle avec notre nouvel Atomic Habit. J'ai essayé de faire un schéma pour représenter un pointeur
+                sur l'image qui suit.</p>
+
+            <div class="image-placeholder-50">
+                <img src="Image/SchemaPointeur.jpg" alt="Schéma pointeur">
+                <div class="image-placeholder-text">IMAGE : Schéma pointeur</div>
+            </div>
+
+            <div class="image-placeholder-25">
+                <img src="Image/AddToPointer.jpg" alt="add to pointer">
+                <div class="image-placeholder-text">IMAGE : Addition via pointeur</div>
+            </div>
+
+            <div class="warning-box">
+                <p><span class="icon-blink">⚠️</span> Le code ci-dessus permet d'utiliser un opérateur (ici l'addition) 
+                    pour modifier la valeur de la variable pointée. <strong>Attention</strong> <code>*</code> est ici 
+                    indispensable sinon encore une fois vous risquez de tout péter. C'est un coup à prendre mais ça viendra 
+                    avec le temps et l'itération des cartes (j'espère 😊).</p>
+            </div>
+        </section>
+
+        <div class="separator"></div>
+
+        <section>
+            <h2>Opérateurs</h2>
+
+            <h3>Opérateurs Arithmétiques</h3>
+            <p>Permettent de faire des calculs (résultat : <code>true</code> ou <code>false</code>).</p>
+            
+            <table>
+                <tr>
+                    <th>Opérateur</th>
+                    <th>Signification</th>
+                    <th>Exemple</th>
+                </tr>
+                <tr>
+                    <td><code>+</code></td>
+                    <td>Addition</td>
+                    <td><code>a + b</code></td>
+                </tr>
+                <tr>
+                    <td><code>-</code></td>
+                    <td>Soustraction</td>
+                    <td><code>a - b</code></td>
+                </tr>
+                <tr>
+                    <td><code>*</code></td>
+                    <td>Multiplication</td>
+                    <td><code>a * b</code></td>
+                </tr>
+                <tr>
+                    <td><code>/</code></td>
+                    <td>Division</td>
+                    <td><code>a / b</code></td>
+                </tr>
+                <tr>
+                    <td><code>%</code></td>
+                    <td>Modulo</td>
+                    <td><code>a % b</code></td>
+                </tr>
+                <tr>
+                    <td><code>++</code></td>
+                    <td>Incrémenter</td>
+                    <td><code>a++</code> (a+1)</td>
+                </tr>
+                <tr>
+                    <td><code>--</code></td>
+                    <td>Décrémenter</td>
+                    <td><code>a--</code> (a-1)</td>
+                </tr>
+            </table>
+
+            <h3>Opérateurs d'Affectation</h3>
+            <p>Permettent de modifier une variable.</p>
+            
+            <table>
+                <tr>
+                    <th>Opérateur</th>
+                    <th>Signification</th>
+                    <th>Exemple</th>
+                </tr>
+                <tr>
+                    <td><code>=</code></td>
+                    <td>a = 10</td>
+                    <td><code>a vaut 10</code></td>
+                </tr>
+                <tr>
+                    <td><code>+=</code></td>
+                    <td>a += 5</td>
+                    <td><code>a = a + 5</code></td>
+                </tr>
+                <tr>
+                    <td><code>-=</code></td>
+                    <td>a -= 3</td>
+                    <td><code>a = a - 3</code></td>
+                </tr>
+                <tr>
+                    <td><code>*=</code></td>
+                    <td>a *= 4</td>
+                    <td><code>a = a * 4</code></td>
+                </tr>
+                <tr>
+                    <td><code>/=</code></td>
+                    <td>a /= 2</td>
+                    <td><code>a = a / 2</code></td>
+                </tr>
+            </table>
+
+            <h3>Opérateurs de Comparaison</h3>
+            <p>Permettent de comparer deux valeurs (résultat : <code>true</code> ou <code>false</code>).</p>
+            
+            <table>
+                <tr>
+                    <th>Opérateur</th>
+                    <th>Signification</th>
+                    <th>Exemple</th>
+                </tr>
+                <tr>
+                    <td><code>==</code></td>
+                    <td>Égal à</td>
+                    <td><code>a == b</code></td>
+                </tr>
+                <tr>
+                    <td><code>!=</code></td>
+                    <td>Différent de</td>
+                    <td><code>a != b</code></td>
+                </tr>
+                <tr>
+                    <td><code><=</code></td>
+                    <td>Inférieur ou égal à</td>
+                    <td><code>a <= b</code></td>
+                </tr>
+                <tr>
+                    <td><code>>=</code></td>
+                    <td>Supérieur ou égal à</td>
+                    <td><code>a >= b</code></td>
+                </tr>
+                <tr>
+                    <td><code><</code></td>
+                    <td>Strictement inférieur</td>
+                    <td><code>a < b</code></td>
+                </tr>
+                <tr>
+                    <td><code>></code></td>
+                    <td>Strictement supérieur</td>
+                    <td><code>a > b</code></td>
+                </tr>
+            </table>
+
+            <h3>Opérateurs Logiques</h3>
+            <p>Permettent de combiner les opérateurs de comparaison.</p>
+            
+            <table>
+                <tr>
+                    <th>Opérateur</th>
+                    <th>Signification</th>
+                    <th>Exemple</th>
+                </tr>
+                <tr>
+                    <td><code>&&</code></td>
+                    <td>ET</td>
+                    <td><code>a > b && a < c</code><br>(a compris entre b et c)</td>
+                </tr>
+                <tr>
+                    <td><code>||</code></td>
+                    <td>OU</td>
+                    <td><code>a > b || c < d</code></td>
+                </tr>
+            </table>
+        </section>
+
+        <div class="separator"></div>
+
+        <section>
+            <h2>Partie Pratique</h2>
+            
+            <h3>La Console</h3>
+            
+            <p>La <a href="#def-Console" class="glossary-term">console</a> nous donne des informations importantes. Nous allons la solliciter pour cette flashcard dans 
+                la mesure où j'ai généré une erreur de typage relatif à un typage (mouhahaha).
+            </p>
+
+            <div class="image-placeholder-75">
+                <img src="Image/Consol.jpg" alt="consol view">
+                <div class="image-placeholder-text">IMAGE : Console avec informations</div>
+            </div>
+            
+            <h3>Warnings</h3>
+            
+            <div class="warning-box">
+                <p><strong><span class="icon-blink">⚠️</span> Contrairement à ce qu'on pourrait croire</strong>, le compilateur est très permissif 
+                    (c'est une bonne pratique de le rendre un peu plus rigide pour éviter des bugs cachés). Vous pouvez voir que nous avons des valeurs 
+                    qui ne correspondent pas du tout au type mais le compilateur fait soit une conversion implicite (<a href="#def-Cast" class="glossary-term">cast</a>) et transforme un entier en float 
+                    par exemple. Vous ne verrez donc pas d'erreur apparaître dans ces cas de figure, à vous d'avoir de la rigueur. Mais il s'agira d'une 
+                    pratique courante/quotidienne de créer et gérer des variables. L'image de la console affiche une erreur qui pointe vers la ligne de code qui génère cette dernière.
+                    Il est important de lire ces messages d'erreurs et warnings pour comprendre ce qui cloche dans le code. Et s'habituer à les corriger, car cela fait 
+                    partie du métier de programmeur.
+                </p>
+            </div>
+
+            <p>Bien, passons maintenant à l'exercice.Il faudra relire toutes les variables et leur attribuer au choix le bon type ou une valeur 
+                correspondante au type existant et corriger les typos s'il y a lieu. Création et modification 
+                de variables (cf énoncé de la carte).
+            </p>
+
+        </section>
+
+        <div class="separator"></div>
+
+        <section>
+            <h2>Résumé</h2>
+            
+            <div class="key-points">
+                <h3>Points Clés</h3>
+                <ul>
+                    <li><strong>Point clé 1 :</strong> Les variables stockent des données typées en mémoire.</li>
+                    <li><strong>Point clé 2 :</strong> Types simples : <code>int</code>, <code>float</code>, <code>char</code>, <code>bool</code> ; complexes : <code>array</code>, <code>struct</code>.</li>
+                    <li><strong>Point clé 3 :</strong> Opérateurs pour calculs, affectations et comparaisons.</li>
+                </ul>
+            </div>
+            
+            <div class="key-points">
+                <h3>À retenir</h3>
+                <ul>
+                    <li><strong>Règle importante :</strong> Toujours initialiser les variables pour éviter les bugs.</li>
+                    <li><strong>Piège à éviter :</strong> Conversions implicites qui masquent des erreurs de typage.</li>
+                    <li><strong>Bonne pratique :</strong> Utiliser des noms de variables descriptifs comme <code>tailleEnMètre</code>.</li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="separator"></div>
+
+        <section>
+            <h2>Définitions</h2>
+            
+            <div class="info-box">
+                <div id="def-Cast" class="definition-item">
+                    <p><strong><code><a href="https://public.iutenligne.net/informatique/algorithme-et-programmation/priou/LangageC/442_les_conversions_explicites__loprateur_de_cast.html" 
+                        target="_blank" rel="noopener noreferrer" class="link-web">Cast :</a>
+                        </code></strong>Un cast (ou transtypage) est l'opération qui permet de convertir une valeur d'un type de 
+                        donnée en un autre type. (explication et utilisation ultérieurement dans la formation)
+                    </p> 
+                </div>
+                
+                <div id="def-Hexadécimal" class="definition-item">
+                    <p><strong><code><a href="https://info.blaisepascal.fr/nsi-code-hexadecimal/" target="_blank" 
+                        rel="noopener noreferrer" class="link-web">Hexadécimal :</a>
+                        </code></strong>Système de numération en base 16 utilisé en programmation pour représenter des adresses mémoire.
+                    </p>
+                </div>
+                
+                <div id="def-Pointeur" class="definition-item">
+                    <p><strong><code><a href="https://www.youtube.com/watch?v=2ybLD6_2gKM" target="_blank" 
+                        rel="noopener noreferrer" class="link-web">Pointeur :</a>
+                        </code></strong> Un pointeur est une variable dont le contenu est une adresse.
+                    </p>
+                </div>
+                <div id="def-Console" class="definition-item">
+                    <p><strong>Console :</strong> Élément de l'éditeur qui essaie de communiquer avec nous tant bien que mal.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="separator"></div>
+
+        <section>
+            <h2>Validation des Compétences</h2>
+            
+            <div class="key-points">
+                <h3>L'élève doit savoir</h3>
+                <ul>
+                    <li>Déclarer et typer correctement une variable.</li>
+                    <li>Utiliser des opérateurs arithmétiques et d'affectation.</li>
+                    <li>Comprendre le concept de mémoire et pointeurs basiques.</li>
+                </ul>
+            </div>
+        </section>
+
+        <footer>
+            <p>MODULE DE FORMATION C++</p>
+            <p style="font-size: 0.85em; margin-top: 12px; opacity: 0.9;">Programmation • GameDev • Raylib</p>
+        </footer>
+    </div>
+</body>
+</html>

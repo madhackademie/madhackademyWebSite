@@ -6,6 +6,7 @@
     <title>Bases C++ — GameDevReady Bootcamp</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        html { scroll-behavior: smooth; }
         .nintendo-red { background: #E60012; }
         .text-nintendo-red { color: #E60012; }
         .gradient-text {
@@ -14,7 +15,7 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        /* Aperçu carte Frogger 350×520 scalé */
+        /* Miniature deck — aperçu scalé de la carte HTML Frogger (350×520 → 175×260) */
         .frogger-card-sm {
             width: 175px;
             height: 260px;
@@ -31,6 +32,10 @@
             transform: scale(0.5);
             transform-origin: 0 0;
             pointer-events: none;
+        }
+        .deck-card-link:hover .frogger-card-sm {
+            border-color: #E60012;
+            box-shadow: 0 8px 32px rgba(230, 0, 18, 0.25);
         }
         .frogger-card-md {
             width: 280px;
@@ -49,7 +54,6 @@
             transform: scale(0.8);
             transform-origin: 0 0;
         }
-        .frogger-card-sm:hover,
         .frogger-card-md:hover {
             border-color: #E60012;
             box-shadow: 0 8px 32px rgba(230, 0, 18, 0.25);
@@ -64,6 +68,20 @@
             width: 175px;
             flex-shrink: 0;
         }
+        .btn-guide {
+            display: inline-block;
+            margin-top: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            background: #7f1d1d;
+            color: #fecaca;
+            border-radius: 0.25rem;
+            font-size: 0.875rem;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        .btn-guide:hover {
+            background: #b91c1c;
+        }
     </style>
 </head>
 <body class="bg-black text-white font-mono">
@@ -71,9 +89,12 @@
     <nav class="fixed top-0 w-full bg-black bg-opacity-95 backdrop-blur-sm z-50 border-b-2 border-gray-800">
         <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
             <a href="/" class="text-2xl md:text-3xl font-bold gradient-text hover:scale-105 transition-transform">FLASHDEV</a>
-            <div class="flex gap-4 md:gap-6 text-sm md:text-base">
+            <div class="flex gap-4 md:gap-6 text-sm md:text-base items-center">
                 <a href="/gamedevready.html" class="text-gray-300 hover:text-green-500 transition font-bold">GameDevReady</a>
                 <a href="/gamedevready-bases-cpp.html" class="text-red-400 font-bold">Bases C++</a>
+                <span id="auth-nav">
+                    <a href="/auth/login.php?redirect=/gamedevready-bases-cpp.html" class="text-gray-400 hover:text-yellow-400 transition text-xs md:text-sm">Connexion</a>
+                </span>
             </div>
         </div>
     </nav>
@@ -87,7 +108,7 @@
                 </h1>
                 <p class="text-gray-400 max-w-2xl">
                     Bootcamp console : 7 cartes du deck GameDevReady (thème Frogger).
-                    Chaque carte est disponible en HTML interactif — clique pour l'ouvrir en plein écran.
+                    Clique une miniature pour descendre vers la carte, puis ouvre le guide pédagogique.
                 </p>
             </div>
         </header>
@@ -99,32 +120,32 @@
                 <p class="text-gray-400 text-sm mb-8">Cartes HTML Frogger — modules 01 à 07</p>
                 <div class="deck-grid">
 
-                    <a href="guides/cards/01-printf.html" target="_blank" class="deck-card-link text-center group">
-                        <div class="frogger-card-sm group-hover:border-red-500 transition"><iframe src="guides/cards/01-printf.html" title="Carte Printf" loading="lazy"></iframe></div>
+                    <a href="#carte-print" class="deck-card-link text-center group">
+                        <div class="frogger-card-sm transition"><iframe src="guides/cards/01-printf.html" title="Carte Printf" loading="lazy"></iframe></div>
                         <span class="text-xs text-gray-400 mt-3 block group-hover:text-red-400 font-bold">01 · Printf</span>
                     </a>
-                    <a href="guides/cards/02-variables.html" target="_blank" class="deck-card-link text-center group">
-                        <div class="frogger-card-sm group-hover:border-red-500 transition"><iframe src="guides/cards/02-variables.html" title="Carte Variables" loading="lazy"></iframe></div>
+                    <a href="#carte-variable" class="deck-card-link text-center group">
+                        <div class="frogger-card-sm transition"><iframe src="guides/cards/02-variables.html" title="Carte Variables" loading="lazy"></iframe></div>
                         <span class="text-xs text-gray-400 mt-3 block group-hover:text-red-400 font-bold">02 · Variables</span>
                     </a>
-                    <a href="guides/cards/03-conditions.html" target="_blank" class="deck-card-link text-center group">
-                        <div class="frogger-card-sm group-hover:border-red-500 transition"><iframe src="guides/cards/03-conditions.html" title="Carte Conditions" loading="lazy"></iframe></div>
+                    <a href="#carte-conditions" class="deck-card-link text-center group">
+                        <div class="frogger-card-sm transition"><iframe src="guides/cards/03-conditions.html" title="Carte Conditions" loading="lazy"></iframe></div>
                         <span class="text-xs text-gray-400 mt-3 block group-hover:text-red-400 font-bold">03 · Conditions</span>
                     </a>
-                    <a href="guides/cards/04-boucles.html" target="_blank" class="deck-card-link text-center group">
-                        <div class="frogger-card-sm group-hover:border-red-500 transition"><iframe src="guides/cards/04-boucles.html" title="Carte Boucles" loading="lazy"></iframe></div>
+                    <a href="#carte-boucles" class="deck-card-link text-center group">
+                        <div class="frogger-card-sm transition"><iframe src="guides/cards/04-boucles.html" title="Carte Boucles" loading="lazy"></iframe></div>
                         <span class="text-xs text-gray-400 mt-3 block group-hover:text-red-400 font-bold">04 · Boucles</span>
                     </a>
-                    <a href="guides/cards/05-std-fonctions.html" target="_blank" class="deck-card-link text-center group">
-                        <div class="frogger-card-sm group-hover:border-red-500 transition"><iframe src="guides/cards/05-std-fonctions.html" title="Carte STD &amp; Fonctions" loading="lazy"></iframe></div>
+                    <a href="#carte-std" class="deck-card-link text-center group">
+                        <div class="frogger-card-sm transition"><iframe src="guides/cards/05-std-fonctions.html" title="Carte STD &amp; Fonctions" loading="lazy"></iframe></div>
                         <span class="text-xs text-gray-400 mt-3 block group-hover:text-red-400 font-bold">05 · STD &amp; Fonctions</span>
                     </a>
-                    <a href="guides/cards/06-conteneurs.html" target="_blank" class="deck-card-link text-center group">
-                        <div class="frogger-card-sm group-hover:border-red-500 transition"><iframe src="guides/cards/06-conteneurs.html" title="Carte Conteneurs" loading="lazy"></iframe></div>
+                    <a href="#carte-conteneurs" class="deck-card-link text-center group">
+                        <div class="frogger-card-sm transition"><iframe src="guides/cards/06-conteneurs.html" title="Carte Conteneurs" loading="lazy"></iframe></div>
                         <span class="text-xs text-gray-400 mt-3 block group-hover:text-red-400 font-bold">06 · Conteneurs</span>
                     </a>
-                    <a href="guides/cards/07-struct-methodes.html" target="_blank" class="deck-card-link text-center group">
-                        <div class="frogger-card-sm group-hover:border-red-500 transition"><iframe src="guides/cards/07-struct-methodes.html" title="Carte Struct &amp; Méthodes" loading="lazy"></iframe></div>
+                    <a href="#carte-struct" class="deck-card-link text-center group">
+                        <div class="frogger-card-sm transition"><iframe src="guides/cards/07-struct-methodes.html" title="Carte Struct &amp; Méthodes" loading="lazy"></iframe></div>
                         <span class="text-xs text-gray-400 mt-3 block group-hover:text-red-400 font-bold">07 · Struct &amp; Méthodes</span>
                     </a>
 
@@ -138,14 +159,13 @@
             <!-- 01 Printf -->
             <article id="carte-print" class="scroll-mt-28">
                 <div class="flex flex-col lg:flex-row gap-8 items-start">
-                    <a href="guides/cards/01-printf.html" target="_blank" class="block">
-                        <div class="frogger-card-md"><iframe src="guides/cards/01-printf.html" title="Carte Printf"></iframe></div>
-                    </a>
+                    <div class="frogger-card-md">
+                        <iframe src="guides/cards/01-printf.html" title="Carte Printf"></iframe>
+                    </div>
                     <div class="flex-1">
                         <h2 class="text-3xl font-bold text-nintendo-red mb-2">01 — Printf</h2>
                         <p class="text-gray-400 text-sm mb-3">Carte <code class="text-gray-300">0x_Print</code> · feedback console, format, DrawText</p>
-                        <a href="guides/cards/01-printf.html" target="_blank" class="inline-block mt-2 px-4 py-2 bg-red-900 hover:bg-red-700 text-red-200 rounded text-sm font-bold transition">Ouvrir la carte →</a>
-                        <p class="text-xs text-gray-600 mt-4">Guide complet : <code>printfC++FrogTheme.html</code> — à publier</p>
+                        <a href="/auth/guide.php?m=01" target="_blank" rel="noopener noreferrer" class="btn-guide">Ouvrir le guide →</a>
                     </div>
                 </div>
             </article>
@@ -153,14 +173,13 @@
             <!-- 02 Variables -->
             <article id="carte-variable" class="scroll-mt-28 border-t border-gray-800 pt-20">
                 <div class="flex flex-col lg:flex-row gap-8 items-start">
-                    <a href="guides/cards/02-variables.html" target="_blank" class="block">
-                        <div class="frogger-card-md"><iframe src="guides/cards/02-variables.html" title="Carte Variables"></iframe></div>
-                    </a>
+                    <div class="frogger-card-md">
+                        <iframe src="guides/cards/02-variables.html" title="Carte Variables"></iframe>
+                    </div>
                     <div class="flex-1">
                         <h2 class="text-3xl font-bold text-nintendo-red mb-2">02 — Variables</h2>
                         <p class="text-gray-400 text-sm mb-3">Carte <code class="text-gray-300">0X_Variable</code> · types, mémoire, pointeurs</p>
-                        <a href="guides/cards/02-variables.html" target="_blank" class="inline-block mt-2 px-4 py-2 bg-red-900 hover:bg-red-700 text-red-200 rounded text-sm font-bold transition">Ouvrir la carte →</a>
-                        <p class="text-xs text-gray-600 mt-4">Guide complet : <code>VariableC++FroggerTheme.html</code> — à publier</p>
+                        <a href="/auth/guide.php?m=02" target="_blank" rel="noopener noreferrer" class="btn-guide">Ouvrir le guide →</a>
                     </div>
                 </div>
             </article>
@@ -168,14 +187,13 @@
             <!-- 03 Conditions -->
             <article id="carte-conditions" class="scroll-mt-28 border-t border-gray-800 pt-20">
                 <div class="flex flex-col lg:flex-row gap-8 items-start">
-                    <a href="guides/cards/03-conditions.html" target="_blank" class="block">
-                        <div class="frogger-card-md"><iframe src="guides/cards/03-conditions.html" title="Carte Conditions"></iframe></div>
-                    </a>
+                    <div class="frogger-card-md">
+                        <iframe src="guides/cards/03-conditions.html" title="Carte Conditions"></iframe>
+                    </div>
                     <div class="flex-1">
                         <h2 class="text-3xl font-bold text-nintendo-red mb-2">03 — Conditions</h2>
                         <p class="text-gray-400 text-sm mb-3">Carte <code class="text-gray-300">0x_Conditions</code> · if, else, else if, portée</p>
-                        <a href="guides/cards/03-conditions.html" target="_blank" class="inline-block mt-2 px-4 py-2 bg-red-900 hover:bg-red-700 text-red-200 rounded text-sm font-bold transition">Ouvrir la carte →</a>
-                        <p class="text-xs text-gray-600 mt-4">Guide complet : <code>Conditions.html</code> — à publier</p>
+                        <a href="/auth/guide.php?m=03" target="_blank" rel="noopener noreferrer" class="btn-guide">Ouvrir le guide →</a>
                     </div>
                 </div>
             </article>
@@ -183,14 +201,13 @@
             <!-- 04 Boucles -->
             <article id="carte-boucles" class="scroll-mt-28 border-t border-gray-800 pt-20">
                 <div class="flex flex-col lg:flex-row gap-8 items-start">
-                    <a href="guides/cards/04-boucles.html" target="_blank" class="block">
-                        <div class="frogger-card-md"><iframe src="guides/cards/04-boucles.html" title="Carte Boucles"></iframe></div>
-                    </a>
+                    <div class="frogger-card-md">
+                        <iframe src="guides/cards/04-boucles.html" title="Carte Boucles"></iframe>
+                    </div>
                     <div class="flex-1">
                         <h2 class="text-3xl font-bold text-nintendo-red mb-2">04 — Boucles</h2>
                         <p class="text-gray-400 text-sm mb-3">Carte <code class="text-gray-300">0X_Boucles</code> · while, for, foreach, do-while</p>
-                        <a href="guides/cards/04-boucles.html" target="_blank" class="inline-block mt-2 px-4 py-2 bg-red-900 hover:bg-red-700 text-red-200 rounded text-sm font-bold transition">Ouvrir la carte →</a>
-                        <p class="text-xs text-gray-600 mt-4">Guide complet : <code>LoopModule.html</code> — à publier</p>
+                        <a href="/auth/guide.php?m=04" target="_blank" rel="noopener noreferrer" class="btn-guide">Ouvrir le guide →</a>
                     </div>
                 </div>
             </article>
@@ -198,14 +215,13 @@
             <!-- 05 STD & Fonctions -->
             <article id="carte-std" class="scroll-mt-28 border-t border-gray-800 pt-20">
                 <div class="flex flex-col lg:flex-row gap-8 items-start">
-                    <a href="guides/cards/05-std-fonctions.html" target="_blank" class="block">
-                        <div class="frogger-card-md"><iframe src="guides/cards/05-std-fonctions.html" title="Carte STD &amp; Fonctions"></iframe></div>
-                    </a>
+                    <div class="frogger-card-md">
+                        <iframe src="guides/cards/05-std-fonctions.html" title="Carte STD &amp; Fonctions"></iframe>
+                    </div>
                     <div class="flex-1">
                         <h2 class="text-3xl font-bold text-nintendo-red mb-2">05 — Librairie standard &amp; Fonctions</h2>
                         <p class="text-gray-400 text-sm mb-3">Carte <code class="text-gray-300">0x_STD_Fonctions</code> · iostream, cin, fonctions</p>
-                        <a href="guides/cards/05-std-fonctions.html" target="_blank" class="inline-block mt-2 px-4 py-2 bg-red-900 hover:bg-red-700 text-red-200 rounded text-sm font-bold transition">Ouvrir la carte →</a>
-                        <p class="text-xs text-gray-600 mt-4">Guide complet : <code>stdLib&amp;Fonction.html</code> — à publier</p>
+                        <a href="/auth/guide.php?m=05" target="_blank" rel="noopener noreferrer" class="btn-guide">Ouvrir le guide →</a>
                     </div>
                 </div>
             </article>
@@ -213,14 +229,13 @@
             <!-- 06 Conteneurs -->
             <article id="carte-conteneurs" class="scroll-mt-28 border-t border-gray-800 pt-20">
                 <div class="flex flex-col lg:flex-row gap-8 items-start">
-                    <a href="guides/cards/06-conteneurs.html" target="_blank" class="block">
-                        <div class="frogger-card-md"><iframe src="guides/cards/06-conteneurs.html" title="Carte Conteneurs"></iframe></div>
-                    </a>
+                    <div class="frogger-card-md">
+                        <iframe src="guides/cards/06-conteneurs.html" title="Carte Conteneurs"></iframe>
+                    </div>
                     <div class="flex-1">
                         <h2 class="text-3xl font-bold text-nintendo-red mb-2">06 — Conteneurs</h2>
                         <p class="text-gray-400 text-sm mb-3">Carte <code class="text-gray-300">0X_Conteneurs</code> · vector, array, parcours</p>
-                        <a href="guides/cards/06-conteneurs.html" target="_blank" class="inline-block mt-2 px-4 py-2 bg-red-900 hover:bg-red-700 text-red-200 rounded text-sm font-bold transition">Ouvrir la carte →</a>
-                        <p class="text-xs text-gray-600 mt-4">Guide complet : <code>Conteneurs.html</code> — à publier</p>
+                        <a href="/auth/guide.php?m=06" target="_blank" rel="noopener noreferrer" class="btn-guide">Ouvrir le guide →</a>
                     </div>
                 </div>
             </article>
@@ -228,14 +243,13 @@
             <!-- 07 Struct & Méthodes -->
             <article id="carte-struct" class="scroll-mt-28 border-t border-gray-800 pt-20">
                 <div class="flex flex-col lg:flex-row gap-8 items-start">
-                    <a href="guides/cards/07-struct-methodes.html" target="_blank" class="block">
-                        <div class="frogger-card-md"><iframe src="guides/cards/07-struct-methodes.html" title="Carte Struct &amp; Méthodes"></iframe></div>
-                    </a>
+                    <div class="frogger-card-md">
+                        <iframe src="guides/cards/07-struct-methodes.html" title="Carte Struct &amp; Méthodes"></iframe>
+                    </div>
                     <div class="flex-1">
                         <h2 class="text-3xl font-bold text-nintendo-red mb-2">07 — Struct &amp; Méthodes</h2>
                         <p class="text-gray-400 text-sm mb-3">Carte <code class="text-gray-300">0x_Struct_Methodes</code> · structs, méthodes, Frogger</p>
-                        <a href="guides/cards/07-struct-methodes.html" target="_blank" class="inline-block mt-2 px-4 py-2 bg-red-900 hover:bg-red-700 text-red-200 rounded text-sm font-bold transition">Ouvrir la carte →</a>
-                        <p class="text-xs text-gray-600 mt-4">Guide complet : <code>StructMethodes.html</code> — à publier</p>
+                        <a href="/auth/guide.php?m=07" target="_blank" rel="noopener noreferrer" class="btn-guide">Ouvrir le guide →</a>
                     </div>
                 </div>
             </article>
@@ -248,6 +262,28 @@
             <a href="/gamedevready.html" class="text-gray-400 hover:text-red-400 transition">← Retour GameDevReady</a>
         </div>
     </footer>
+
+    <script>
+    (function () {
+        fetch('/auth/me.php', { credentials: 'same-origin' })
+            .then(function (r) { return r.json(); })
+            .then(function (d) {
+                var el = document.getElementById('auth-nav');
+                if (!el || !d.logged_in) return;
+                el.textContent = '';
+                var span = document.createElement('span');
+                span.className = 'text-gray-500 text-xs md:text-sm hidden sm:inline';
+                span.textContent = d.email;
+                var link = document.createElement('a');
+                link.href = '/auth/logout.php';
+                link.className = 'text-gray-400 hover:text-yellow-400 transition text-xs md:text-sm';
+                link.textContent = 'Déconnexion';
+                el.appendChild(span);
+                el.appendChild(link);
+            })
+            .catch(function () {});
+    })();
+    </script>
 
 </body>
 </html>
