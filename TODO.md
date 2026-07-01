@@ -1,6 +1,6 @@
 ﻿# TODO — madhackademyWebSite
 
-> Dernière mise à jour : 29 juin 2026  
+> Dernière mise à jour : 1er juillet 2026  
 > Projet : site vitrine FlashDev + MadHackAdemy
 
 ---
@@ -116,6 +116,112 @@ Tâches utiles mais non bloquantes — à traiter après les priorités.
 - [x] Guides 01–07 en production FTP (`WebSite/guides/cards/*Guide/`) — juin 2026
 - [ ] **P1** — Exposer **auth PHP** en production (voir `NOTE_OVH-PHP-MYSQL.md`) — guides encore publics en direct sans auth
 - [ ] **P2** — Renseigner `URLNet` dans `FlashRevisionSoft/data.json` pour chaque carte du deck
+
+### Réorganisation `WebSite/guides/` — deck Bases C++ (indexation & FTP)
+
+> **Constat (juillet 2026)** — le dossier `guides/cards/` mélange cartes Frogger, guides pédagogiques et assets au même niveau. Difficile à parcourir (FileZilla), à déployer module par module, et à maintenir une fois le site monolithique grossi.
+
+**État actuel (brouillon)**
+
+```
+guides/cards/
+├── 01-printf.html … 06-conteneurs.html     ← cartes (racine)
+├── 07_StructMethode_Card/                  ← carte 07 (exception)
+├── 01_PrintFGuide/ … 07_StructMethodesGuide/  ← guides complets
+│   └── Image/ ou image/                    ← casse incohérente
+└── .htaccess
+```
+
+**Structure cible validée** *(intention produit — juillet 2026)*
+
+Un **parcours** (`BaseCpp`, puis éventuellement `Unreal`, `SDL`, etc.) regroupe des **modules** numérotés.  
+Chaque module = dossier `{NN}_{nom}` avec deux sous-dossiers **`guide/`** et **`card/`**, chacun avec **son propre** `Image/`.
+
+> **BaseCpp** = Phase 1 actuelle (deck Raylib / C++ console). La même arborescence pourra accueillir d’autres stacks sans tout mélanger : `guides/Unreal/`, `guides/SDL/`, etc.
+
+```
+WebSite/guides/
+├── BaseCpp/                        ← parcours C++ fondamentaux (actuel)
+│   ├── 01_printf/
+│   │   ├── guide/ … + Image/
+│   │   └── card/  … + Image/
+│   ├── 02_variables/
+│   …
+│   └── 07_struct_methodes/
+├── Unreal/                         ← futur (ex. modules Blueprint, C++ Actor…)
+│   └── 01_…/guide/ + card/
+└── SDL/                            ← futur (ex. fenêtre, events, texture…)
+    └── 01_…/guide/ + card/
+```
+
+Exemple détaillé **BaseCpp** :
+
+```
+WebSite/guides/BaseCpp/
+├── 01_printf/
+│   ├── guide/
+│   │   ├── printfC++FrogTheme.html
+│   │   └── Image/
+│   └── card/
+│       ├── 01-printf-card.html
+│       └── Image/                 ← vide si SVG inline ; assets si filigrane, etc.
+├── 02_variables/
+│   ├── guide/ … + Image/
+│   └── card/  … + Image/
+├── 03_conditions/
+├── 04_boucles/
+├── 05_std_fonctions/
+├── 06_conteneurs/
+└── 07_struct_methodes/
+    ├── guide/
+    │   ├── StructMethodes.html
+    │   └── Image/
+    └── card/
+        ├── 07-struct-methodes-card.html
+        └── Image/david-vs-goliath-duel-reference.png
+```
+
+**Convention de nommage**
+
+| Élément | Règle | Exemple |
+|---------|--------|---------|
+| Parcours | `guides/{Stack}/` | `BaseCpp`, `Unreal`, `SDL` |
+| Module | `{NN}_{snake_case}` | `01_printf`, `07_struct_methodes` |
+| HTML guide | nom historique ou `{NN}-guide.html` | `printfC++FrogTheme.html` |
+| HTML carte | `{NN}-{slug}-card.html` | `07-struct-methodes-card.html` |
+| Assets | `guide/Image/` et `card/Image/` **séparés** | pas de dossier `Image/` partagé entre les deux |
+
+**Correspondance migration (01 → 07)**
+
+| Module | Dossier cible | Source guide actuelle | Source carte actuelle |
+|--------|---------------|----------------------|----------------------|
+| 01 | `01_printf/` | `01_PrintFGuide/` | `01-printf.html` |
+| 02 | `02_variables/` | `02_VariableGuide/` | `02-variables.html` |
+| 03 | `03_conditions/` | `03_ConditionsGuide/` | `03-conditions.html` |
+| 04 | `04_boucles/` | `04_BouclesGuide/` | `04-boucles.html` |
+| 05 | `05_std_fonctions/` | `05_StdFonctionsGuide/` | `05-std-fonctions.html` |
+| 06 | `06_conteneurs/` | `06_ConteneursGuide/` | `06-conteneurs.html` |
+| 07 | `07_struct_methodes/` | `07_StructMethodesGuide/` | `07_StructMethode_Card/` *(déjà proche du modèle)* |
+
+**Fichiers à mettre à jour après migration**
+
+- `gamedevready-bases-cpp.html` — iframes → `guides/BaseCpp/{NN}_*/card/*-card.html`
+- `api/bootstrap.php` — chemins guides + `base` URL
+- `auth/guide.php` (si chemins en dur)
+- `NOTE_DEPLOIEMENT-FTP-GAMEDEVREADY.md`
+- `FlashRevisionSoft/data.json` — `URLNet` par carte
+- `.htaccess` dans `guides/` si règles d’accès
+
+**Checklist réorganisation** *(P2 — après auth OVH stable)*
+
+- [ ] **P2** — Créer `WebSite/guides/BaseCpp/` et les 7 dossiers `{NN}_{nom}/guide/` + `card/`
+- [ ] **P2** — Déplacer HTML + `Image/` de chaque module (harmoniser la casse `Image/`)
+- [ ] **P2** — Corriger tous les `src="Image/…"` et `url('Image/…')` (chemins relatifs inchangés si `Image/` reste à côté du HTML)
+- [ ] **P2** — Mettre à jour iframes, `bootstrap.php`, notes FTP, `URLNet`
+- [ ] **P2** — Redirections 301 ou compat temporaire (`guides/cards/…` → `guides/BaseCpp/…`)
+- [ ] **P2** — Supprimer l’ancien `guides/cards/` et `WebSite/Image/GameDevReady/bases-cpp/` (doublons)
+- [ ] **P2** — Documenter l’arborescence finale pour le déploiement FTP module par module
+- [ ] **P3** — Prévoir l’extension `guides/Unreal/`, `guides/SDL/` sur le même modèle `{NN}/guide/` + `card/` (contenu à définir)
 
 ### Contenu & éditorial
 
