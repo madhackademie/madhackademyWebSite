@@ -1,7 +1,7 @@
 # Guide — Prochaine session de travail
 
 > **Référence principale** pour reprendre le projet madhackademyWebSite  
-> Dernière mise à jour : 29 juin 2026  
+> Dernière mise à jour : 2 juillet 2026  
 > Domaine : [gameopenmoney.com](https://gameopenmoney.com/)
 
 ---
@@ -13,8 +13,9 @@
 | Zone | État |
 |------|------|
 | **Page Bases C++** | Miniatures → ancres sur la même page ; cartes Frogger en iframe ; boutons **Ouvrir le guide →** |
-| **7 guides HTML** | Copiés localement + **en ligne chez l'hébergeur** (`guides/cards/*Guide/`) |
-| **Structure FicheFormationHtlm** | Dossiers `*Guide/` pour modules 01–07 ; HTML carte supprimé des sources (cartes = `WebSite/guides/cards/` uniquement) |
+| **7 guides HTML** | `WebSite/Formations/BaseCpp/guides/*Guide/` (local + FTP) |
+| **Structure FicheFormationHtlm** | Dossiers `*Guide/` pour modules 01–07 ; cartes = `WebSite/Formations/BaseCpp/cards/` |
+| **Réorganisation Formations** | `Formations/BaseCpp/cards/` + `guides/` — juillet 2026 |
 | **Auth MVP (code local)** | PHP login + rôles admin/tester/student + `auth/guide.php` + blocage `.htaccess` |
 
 ### Pas encore fait en production
@@ -25,7 +26,7 @@
 - [ ] Création comptes **admin** (vous) et **tester** (beta testeurs)
 - [ ] Test complet du parcours protégé en HTTPS
 
-> **Note :** tant que l'auth PHP n'est pas déployée, les guides restent accessibles en **URL directe** (ex. `…/01_PrintFGuide/printfC++FrogTheme.html`). Priorité : étapes B–F du §3 + guide OVH.
+> **Note :** tant que l'auth PHP n'est pas déployée, les guides restent accessibles en **URL directe** (ex. `…/Formations/BaseCpp/guides/01_PrintFGuide/printfC++FrogTheme.html`). Priorité : étapes B–F du §3 + guide OVH.
 
 ---
 
@@ -35,12 +36,12 @@
 Visiteur
   └── gamedevready-bases-cpp.html     (public — cartes visibles)
         ├── Miniatures deck           → scroll #carte-print … #carte-struct
-        ├── Carte Frogger (iframe)    → guides/cards/01-printf.html … (public)
+        ├── Carte Frogger (iframe)    → Formations/BaseCpp/cards/01-printf.html … (public)
         └── Bouton « Ouvrir le guide »→ /auth/guide.php?m=01 … m=07 (protégé)
 
 /auth/login.php                       → connexion
 /auth/guide.php?m=XX                  → vérifie session → sert le HTML guide
-/guides/cards/*Guide/*.html           → bloqué en direct (.htaccess) — passer par auth
+/Formations/BaseCpp/guides/*.html     → bloqué en direct (.htaccess) — passer par auth
 ```
 
 ### Rôles
@@ -56,8 +57,8 @@ Visiteur
 | Chemin | Rôle |
 |--------|------|
 | `WebSite/gamedevready-bases-cpp.html` | Page deck + liens guides |
-| `WebSite/guides/cards/01-printf.html` … `07-struct-methodes.html` | Cartes Frogger (publiques) |
-| `WebSite/guides/cards/01_PrintFGuide/` … `07_StructMethodesGuide/` | Guides pédagogiques |
+| `WebSite/Formations/BaseCpp/cards/` | Cartes Frogger (publiques) |
+| `WebSite/Formations/BaseCpp/guides/` | Guides pédagogiques (`*Guide/`) |
 | `WebSite/api/bootstrap.php` | Logique auth |
 | `WebSite/auth/login.php`, `guide.php`, `setup.php` | Pages auth |
 | `WebSite/sql/schema.sql` | Tables MySQL |
@@ -72,7 +73,7 @@ Visiteur
 - [ ] PHP **8+** activé sur gameopenmoney.com
 - [ ] MySQL / MariaDB + accès **phpMyAdmin**
 - [ ] HTTPS actif
-- [ ] `mod_rewrite` activé (pour `.htaccess` dans `guides/cards/`)
+- [ ] `mod_rewrite` activé (pour `.htaccess` dans `Formations/BaseCpp/guides/`)
 
 > Si pas de PHP/MySQL : voir **`NOTE_OVH-PHP-MYSQL.md`** (guide OVH) ou §6 plan B ci-dessous.
 
@@ -94,11 +95,12 @@ Tables créées : `users`, `user_products`
 
 Envoyer **le contenu de `WebSite/`** à la racine web (pas tout le repo) :
 
-- [x] `guides/cards/*Guide/` (01–07) — **déjà en ligne**
+- [ ] `Formations/BaseCpp/guides/` (01–07) + `.htaccess`
+- [ ] `Formations/BaseCpp/cards/`
 - [ ] `api/` + `api/config.php`
 - [ ] `auth/`
-- [ ] `guides/cards/.htaccess`
 - [ ] `gamedevready-bases-cpp.html` (boutons `/auth/guide.php`) si pas à jour
+- [ ] Retirer ancien `guides/cards/` du FTP si encore présent
 
 ### Étape E — Créer les comptes
 
@@ -114,7 +116,7 @@ Envoyer **le contenu de `WebSite/`** à la racine web (pas tout le repo) :
 | `/gamedevready-bases-cpp.html` | Page OK, miniatures + cartes |
 | Clic **Ouvrir le guide** sans être connecté | Redirection `/auth/login.php` |
 | Login admin → **Ouvrir le guide** module 01 | Guide Frogger complet + images |
-| URL directe `…/01_PrintFGuide/printfC++FrogTheme.html` | **403 Forbidden** |
+| URL directe `…/Formations/BaseCpp/guides/01_PrintFGuide/printfC++FrogTheme.html` | **403 Forbidden** |
 | Modules 02–07 guides | Idem via `?m=02` … `?m=07` |
 | `/auth/logout.php` | Déconnexion OK |
 
@@ -130,15 +132,15 @@ Envoyer **le contenu de `WebSite/`** à la racine web (pas tout le repo) :
 
 | # | Carte (public) | Guide (protégé) | Lien bouton |
 |---|----------------|-----------------|-------------|
-| 01 | `guides/cards/01-printf.html` | `01_PrintFGuide/printfC++FrogTheme.html` | `/auth/guide.php?m=01` |
-| 02 | `02-variables.html` | `02_VariableGuide/VariableC++FroggerTheme.html` | `?m=02` |
-| 03 | `03-conditions.html` | `03_ConditionsGuide/Conditions.html` | `?m=03` |
-| 04 | `04-boucles.html` | `04_BouclesGuide/LoopModule.html` | `?m=04` |
-| 05 | `05-std-fonctions.html` | `05_StdFonctionsGuide/stdLib&Fonction.html` | `?m=05` |
-| 06 | `06-conteneurs.html` | `06_ConteneursGuide/Conteneurs.html` | `?m=06` |
-| 07 | `07-struct-methodes.html` | `07_StructMethodesGuide/StructMethodes.html` | `?m=07` |
+| 01 | `Formations/BaseCpp/cards/01-printf.html` | `guides/01_PrintFGuide/printfC++FrogTheme.html` | `/auth/guide.php?m=01` |
+| 02 | `02-variables.html` | `guides/02_VariableGuide/VariableC++FroggerTheme.html` | `?m=02` |
+| 03 | `03-conditions.html` | `guides/03_ConditionsGuide/Conditions.html` | `?m=03` |
+| 04 | `04-boucles.html` | `guides/04_BouclesGuide/LoopModule.html` | `?m=04` |
+| 05 | `05-std-fonctions.html` | `guides/05_StdFonctionsGuide/stdLib&Fonction.html` | `?m=05` |
+| 06 | `06-conteneurs.html` | `guides/06_ConteneursGuide/Conteneurs.html` | `?m=06` |
+| 07 | `07_StructMethode_Card/07-struct-methodes-card.html` | `guides/07_StructMethodesGuide/StructMethodes.html` | `?m=07` |
 
-**Sources éditoriales** (modifier ici, recopier vers `WebSite/`) :
+**Sources éditoriales** (modifier ici, recopier vers `WebSite/Formations/BaseCpp/`) :
 
 `FicheFormationHtlm/{module}/*Guide/`
 

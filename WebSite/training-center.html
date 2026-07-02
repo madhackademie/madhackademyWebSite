@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[MadHackAdemy] - Training Center</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(32px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+         @keyframes bounce {
+            0%, 100% { transform: scale(1) translateY(0); animation-timing-function: ease-out; }
+            30%       { transform: scale(1.15, 0.9) translateY(0); }
+            50%       { transform: scale(0.95, 1.05) translateY(-30px); }
+            70%       { transform: scale(1.05, 0.95) translateY(0); }
+            85%       { transform: scale(0.98, 1.02) translateY(-8px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { filter: drop-shadow(0 0 6px rgba(100,140,200,0.6)); }
+            50%       { filter: drop-shadow(0 0 18px rgba(100,180,255,0.9)); }
+        }
+
+        .minipoulpe {
+            width: 120px;
+            animation: bounce 1.8s infinite, glow 2.5s ease-in-out infinite;
+            cursor: pointer;
+            transform-origin: bottom center;
+        }
+
+        .nav-open { overflow: hidden; }
+
+        .minipoulpe:hover {
+            animation-duration: 0.6s, 1s;
+        }
+        .float-anim  { animation: float 3s ease-in-out infinite; }
+        .pulse-anim  { animation: pulse-slow 2s ease-in-out infinite; }
+        .fade-up     { opacity: 0; transform: translateY(32px); transition: opacity .6s ease, transform .6s ease; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        .nintendo-red    { background: #E60012; }
+        .nintendo-yellow { background: #FBDD08; }
+        .nintendo-green  { background: #05C31C; }
+        .nintendo-blue   { background: #1B8CE4; }
+
+        .nintendo-red:hover    { background: #E60012; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; }
+        .nintendo-yellow:hover { background: rgba(251,221,8,.8); }
+        .nintendo-green:hover  { background: rgba(5,195,28,.6); }
+        .nintendo-blue:hover   { background: #1B8CE4; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; }
+
+        .text-nintendo-red    { color: #E60012; }
+        .text-nintendo-yellow { color: #FBDD08; }
+        .text-nintendo-green  { color: #05C31C; }
+        .text-nintendo-blue   { color: #1B8CE4; }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #E60012, #FBDD08, #05C31C, #1B8CE4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .pixel-border {
+            box-shadow: 0 -4px 0 0 currentColor, 4px 0 0 0 currentColor,
+                        0 4px 0 0 currentColor, -4px 0 0 0 currentColor;
+        }
+
+        /* Scanlines */
+        body::before {
+            content: '';
+            position: fixed; inset: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,.04) 3px, rgba(0,0,0,.04) 4px);
+            pointer-events: none;
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body class="bg-black text-white font-mono">
+
+    <!-- NAV -->
+    <nav class="sticky top-0 z-50 bg-black/95 backdrop-blur-sm border-b-2 border-gray-800">
+        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+            <a href="/index-en.html" class="text-base sm:text-lg md:text-xl font-bold gradient-text hover:scale-105 transition-transform shrink min-w-0 truncate max-w-[45vw] sm:max-w-none">
+                [MadHackAdemy / LOGO]
+            </a>
+
+            <div class="flex items-center gap-3">
+                <!-- Desktop menu -->
+                <div class="hidden md:flex gap-4 lg:gap-6 text-sm font-bold">
+                    <a href="/index-en.html" class="text-gray-400 hover:text-red-500 transition-colors">← FLASHDEV</a>
+                    <a href="#intro" class="text-gray-400 hover:text-yellow-400 transition-colors">INTRO</a>
+                    <a href="#methode" class="text-gray-400 hover:text-green-500 transition-colors">METHOD</a>
+                    <a href="#roadmap" class="text-gray-400 hover:text-blue-500 transition-colors">ROADMAP</a>
+                    <a href="#boutique" class="text-gray-400 hover:text-red-500 transition-colors">SHOP</a>
+                </div>
+
+                <div class="flex items-center gap-1.5 text-xs font-bold border border-gray-700 rounded px-2 py-1" role="navigation" aria-label="Language">
+                    <a href="/centre-formation.html" class="text-gray-400 hover:text-white transition-colors" hreflang="fr" lang="fr">FR</a>
+                    <span class="text-gray-600" aria-hidden="true">|</span>
+                    <span class="text-white" aria-current="page">EN</span>
+                </div>
+            </div>
+
+            <!-- Mobile hamburger button -->
+            <button
+                id="nav-toggle"
+                type="button"
+                class="md:hidden flex flex-col justify-center items-center w-10 h-10 gap-1.5 rounded border border-gray-700 hover:border-gray-500 transition-colors"
+                aria-label="Open menu"
+                aria-expanded="false"
+                aria-controls="nav-mobile-menu"
+            >
+                <span class="nav-bar block w-5 h-0.5 bg-white transition-all"></span>
+                <span class="nav-bar block w-5 h-0.5 bg-white transition-all"></span>
+                <span class="nav-bar block w-5 h-0.5 bg-white transition-all"></span>
+            </button>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="nav-mobile-menu" class="hidden md:hidden border-t border-gray-800 bg-black">
+            <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-3 text-sm font-bold">
+                <a href="/index-en.html" class="text-gray-400 hover:text-red-500 transition-colors py-2">← FLASHDEV</a>
+                <a href="#intro" class="text-gray-400 hover:text-yellow-400 transition-colors py-2">INTRO</a>
+                <a href="#methode" class="text-gray-400 hover:text-green-500 transition-colors py-2">METHOD</a>
+                <a href="#roadmap" class="text-gray-400 hover:text-blue-500 transition-colors py-2">ROADMAP</a>
+                <a href="#boutique" class="text-gray-400 hover:text-red-500 transition-colors py-2">SHOP</a>
+                <div class="flex items-center gap-1.5 text-xs font-bold border border-gray-700 rounded px-2 py-1 w-fit mt-1" aria-label="Language">
+                    <a href="/centre-formation.html" class="text-gray-400 hover:text-white transition-colors" hreflang="fr" lang="fr">FR</a>
+                    <span class="text-gray-600" aria-hidden="true">|</span>
+                    <span class="text-white" aria-current="page">EN</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ══════════════════════════════════════════
+         HERO
+    ══════════════════════════════════════════ -->
+    <section class="min-h-[calc(100dvh-4rem)] md:min-h-screen flex items-center justify-center relative overflow-hidden px-4 py-12 md:py-0">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-20 left-10 w-32 h-32 nintendo-red rounded-full blur-3xl"></div>
+            <div class="absolute bottom-20 right-10 w-40 h-40 nintendo-blue rounded-full blur-3xl"></div>
+            <div class="absolute top-1/2 left-1/3 w-36 h-36 nintendo-yellow rounded-full blur-3xl"></div>
+        </div>
+
+        <div class="text-center z-10 max-w-4xl">
+            <div class="float-anim mb-8">
+                <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold mb-4 gradient-text break-words px-2">[MadHackAdemy]</h1>
+                <div class="flex justify-center gap-2 mb-6">
+                    <span class="w-16 h-2 nintendo-red"></span>
+                    <span class="w-16 h-2 nintendo-yellow"></span>
+                    <span class="w-16 h-2 nintendo-green"></span>
+                    <span class="w-16 h-2 nintendo-blue"></span>
+                </div>
+            </div>
+
+            <p class="text-xl sm:text-2xl md:text-3xl mb-4 text-gray-300 px-2">
+                Training Center <span class="text-nintendo-red">GameDev && Coding</span>
+            </p>
+            <p class="text-lg md:text-xl mb-12 text-gray-400 max-w-2xl mx-auto">
+                GameDev training for self-taught learners: a structured path on the site, daily practice in FlashDev — to finally move from tutorials to real code.
+            </p>
+
+            <div class="flex flex-col sm:flex-row flex-wrap gap-4 justify-center w-full max-w-md sm:max-w-none mx-auto">
+                <a href="#methode" class="w-full sm:w-auto px-6 sm:px-8 py-4 bg-transparent border-2 border-yellow-600 nintendo-red text-nintendo-yellow font-bold rounded transition-all text-center text-sm sm:text-base">
+                    DISCOVER THE METHOD
+                </a>
+                <a href="#boutique" class="w-full sm:w-auto px-6 sm:px-8 py-4 bg-transparent border-2 border-green-600 nintendo-blue text-nintendo-green font-bold rounded transition-all text-center text-sm sm:text-base">
+                    VIEW OFFERS
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         INTRO
+    ══════════════════════════════════════════ -->
+    <section id="intro" class="py-20 px-4 bg-gradient-to-b from-black to-gray-900">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 fade-up">
+                <span class="gradient-text">Who am I?</span>
+            </h2>
+
+            <div class="grid md:grid-cols-2 gap-10 items-center fade-up">
+                <!-- Text -->
+                <div>
+                    <p class="text-gray-300 text-lg leading-relaxed mb-6">
+                        It has now been over a decade since I started learning programming. I am now sharing with you
+                        some of the fruits of that work. I am an ordinary person, but I share your thirst for knowledge. My field is
+                        video games — one of the least forgiving, but the most fun. I have a number of prototypes under my belt, along with several
+                        certifications (Udemy, Unity, Harvard). But that matters less in a field that has been deeply shaken by the rise of AI in recent years.
+                    </p>
+                </div>
+                <!-- Photo placeholder -->
+                <div class="bg-gray-800 border-2 border-gray-600 rounded-lg flex items-center justify-center aspect-video text-gray-500 text-sm font-bold tracking-widest">
+                    <img 
+                        src="/Image/MiniPoulpeDicord.png" 
+                        class="minipoulpe" 
+                        alt="MiniPoulpe"
+                    />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         METHOD
+    ══════════════════════════════════════════ -->
+    <section id="methode" class="py-20 px-4 bg-black">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-4 fade-up">
+                 <span class="gradient-text">The Method</span>
+            </h2>
+            <p class="text-center text-gray-400 mb-10 fade-up">
+                Mental fitness for code — consistency before talent.
+            </p>
+
+            <!-- Method description -->
+            <div class="bg-gray-800 p-8 rounded-lg border-2 border-blue-500 mb-16 fade-up">
+                <p class="text-gray-300 text-lg leading-relaxed mb-4">
+                    The MadHackAdemy method rests on a simple principle: you don't learn to code by watching — you learn by <strong class="text-white">repeating</strong>. Like at the gym — it's not the heroic session that makes the difference, it's consistency. A little every day, even when it's not glamorous.
+                </p>
+                <p class="text-gray-300 text-lg leading-relaxed mb-4">
+                    FlashDev keeps you coming back, card after card, exercise after exercise. At first, you reproduce patterns without always grasping everything — and that's normal. You train your brain like a muscle: the motion first, fluency later.
+                </p>
+                <p class="text-gray-300 text-lg leading-relaxed">
+                    Then, if you follow the protocol, something shifts. The code you copy mechanically becomes code you <strong class="text-nintendo-green">understand</strong>. Repetition doesn't replace thinking — it prepares it. That's mental fitness: train until it becomes natural, then let understanding emerge on its own.
+                </p>
+            </div>
+
+            <!-- 2-column table: SITE / SOFT -->
+            <h3 class="text-2xl font-bold text-center mb-8 fade-up">
+                The 2 <span class="text-nintendo-yellow">core</span> pillars of the method
+            </h3>
+
+            <div class="fade-up overflow-x-auto">
+                <table class="w-full border-collapse">
+                    <thead>
+                        <tr>
+                            <th class="bg-red-900 border-2 border-red-600 px-6 py-4 text-left text-nintendo-red text-lg w-1/2">
+                                🌐 PILLAR 1 — THE SITE
+                            </th>
+                            <th class="bg-blue-900 border-2 border-blue-600 px-6 py-4 text-left text-nintendo-blue text-lg w-1/2">
+                                💻 PILLAR 2 — THE SOFTWARE
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Row 1 -->
+                        <tr class="hover:bg-gray-800 transition-all">
+                            <td class="bg-gray-900 border-2 border-red-900 px-6 py-5 align-top">
+                                <span class="inline-block px-2 py-1 bg-red-900 text-red-400 text-xs font-bold mb-2">MODULE A</span><br/>
+                                <strong class="text-white">Online roadmap</strong>
+                                <p class="text-gray-400 text-sm mt-1">A visual, interactive path on the site: learners see where they stand, what they've already completed, and the next step. Clear progress tracking, module by module.</p>
+                            </td>
+                            <td class="bg-gray-900 border-2 border-blue-900 px-6 py-5 align-top">
+                                <span class="inline-block px-2 py-1 bg-blue-900 text-blue-400 text-xs font-bold mb-2">MODULE A</span><br/>
+                                <strong class="text-white">Automated review management</strong>
+                                <p class="text-gray-400 text-sm mt-1">Reviews driven by a spaced-repetition algorithm over time. Ready-to-use themed decks so you can start without setup.</p>
+                            </td>
+                        </tr>
+                        <!-- Row 2 -->
+                        <tr class="hover:bg-gray-800 transition-all">
+                            <td class="bg-gray-900 border-2 border-red-900 px-6 py-5 align-top">
+                                <span class="inline-block px-2 py-1 bg-red-900 text-red-400 text-xs font-bold mb-2">MODULE B</span><br/>
+                                <strong class="text-white">Leaderboards &amp; motivation</strong>
+                                <p class="text-gray-400 text-sm mt-1">A ranking system inspired by Duolingo: XP, review streaks, leagues between learners. The goal is to make review addictive and encourage regular return visits.</p>
+                            </td>
+                            <td class="bg-gray-900 border-2 border-blue-900 px-6 py-5 align-top">
+                                <span class="inline-block px-2 py-1 bg-blue-900 text-blue-400 text-xs font-bold mb-2">MODULE B</span><br/>
+                                <strong class="text-white">Open source</strong>
+                                <p class="text-gray-400 text-sm mt-1">Create your own decks or cards for custom needs. Open code lets you adapt the tool to any domain that requires software practice: programming, digital painting, animation, and more.</p>
+                            </td>
+                        </tr>
+                        <!-- Row 3 -->
+                        <tr class="hover:bg-gray-800 transition-all">
+                            <td class="bg-gray-900 border-2 border-red-900 px-6 py-5 align-top">
+                                <span class="inline-block px-2 py-1 bg-red-900 text-red-400 text-xs font-bold mb-2">MODULE C</span><br/>
+                                <strong class="text-white">Marketplace leaderboards</strong>
+                                <p class="text-gray-400 text-sm mt-1">Global leaderboard and per-deck rankings for adventures from the marketplace or officially validated paths — the community showcase for RPG-style progress.</p>
+                            </td>
+                            <td class="bg-gray-900 border-2 border-blue-900 px-6 py-5 align-top">
+                                <span class="inline-block px-2 py-1 bg-blue-900 text-blue-400 text-xs font-bold mb-2">MODULE C</span><br/>
+                                <strong class="text-white">Adventure-based gamification</strong>
+                                <p class="text-gray-400 text-sm mt-1">Each deck is an adventure: progress through keystones, face mini-bosses and bosses, and earn HP with every victory. Global and per-deck leaderboards for marketplace or validated paths.</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         ROADMAP
+    ══════════════════════════════════════════ -->
+    <section id="roadmap" class="py-20 px-4 bg-gradient-to-b from-black to-gray-900">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-4 fade-up">
+                <span class="gradient-text">GameDevReady</span> Roadmap
+            </h2>
+            <p class="text-center text-gray-400 mb-16 fade-up">
+                The complete training path to become a Game Developer
+            </p>
+
+            <div class="space-y-8">
+                <!-- Module 1 -->
+                <a href="/gamedevready-bases-cpp.html" class="block bg-gray-900 p-6 rounded-lg border-l-4 border-red-600 hover:bg-gray-800 transition-all fade-up group">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 nintendo-red rounded flex items-center justify-center flex-shrink-0 font-bold text-xl">1</div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2 text-nintendo-red group-hover:text-red-300">C++ Basics</h3>
+                            <p class="text-gray-300 mb-3">feedback(Printf), variables, conditions, loops, functions, arrays</p>
+                            <span class="text-sm text-gray-500">Bootcamp 1–2 weeks</span>
+                            <span class="block text-sm text-red-500 font-bold mt-2">View the deck →</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Module 2 -->
+                <div class="bg-gray-900 p-6 rounded-lg border-l-4 border-yellow-500 hover:bg-gray-800 transition-all fade-up">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 nintendo-yellow rounded flex items-center justify-center flex-shrink-0 font-bold text-xl text-black">2</div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2 text-nintendo-yellow">First Challenge</h3>
+                            <p class="text-gray-300 mb-3">Applying the basics + simple game logic</p>
+                            <span class="text-sm text-gray-500">Guided project ~ 1 week</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Module 3 -->
+                <div class="bg-gray-900 p-6 rounded-lg border-l-4 border-green-500 hover:bg-gray-800 transition-all fade-up">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 nintendo-green rounded flex items-center justify-center flex-shrink-0 font-bold text-xl">3</div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2 text-nintendo-green">Raylib Framework</h3>
+                            <p class="text-gray-300 mb-3">Graphics, input, audio, collisions with Raylib</p>
+                            <span class="text-sm text-gray-500">Bootcamp 2–3 weeks</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Module 4 -->
+                <div class="bg-gray-900 p-6 rounded-lg border-l-4 border-blue-500 hover:bg-gray-800 transition-all fade-up">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 nintendo-blue rounded flex items-center justify-center flex-shrink-0 font-bold text-xl">4</div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2 text-nintendo-blue">Frogger Remake Project</h3>
+                            <p class="text-gray-300 mb-3">Structs with methods, architecture without OOP</p>
+                            <span class="text-sm text-gray-500">Full project ~ 2–3 weeks</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Module 5 -->
+                <div class="bg-gray-900 p-6 rounded-lg border-l-4 border-purple-500 hover:bg-gray-800 transition-all fade-up">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-purple-600 rounded flex items-center justify-center flex-shrink-0 font-bold text-xl">5</div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2 text-purple-400">OOP vs ECS: Paradigm Choice</h3>
+                            <p class="text-gray-300 mb-3">Understand both approaches and choose your path</p>
+                            <div class="flex gap-3 mt-3">
+                                <span class="px-3 py-1 bg-purple-900 text-purple-300 rounded text-sm">OOP Path →</span>
+                                <span class="px-3 py-1 bg-indigo-900 text-indigo-300 rounded text-sm">ECS Path →</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════
+         SHOP
+    ══════════════════════════════════════════ -->
+    <section id="boutique" class="py-20 px-4 bg-black">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-4 fade-up">
+                <span class="gradient-text">The Shop</span>
+            </h2>
+            <p class="text-center text-gray-400 mb-16 fade-up">
+                [Briefly introduce the shop. Who is it for? What types of products or offers?]
+            </p>
+
+            <div class="grid md:grid-cols-3 gap-8 fade-up">
+                <!-- Offer 1 -->
+                <div class="bg-gray-800 p-8 rounded-lg border-2 border-red-600 hover:bg-gray-700 transition-all">
+                    <div class="text-red-500 text-4xl mb-4">🎮</div>
+                    <h3 class="text-xl font-bold mb-2 text-nintendo-red">[OFFER NAME 1]</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed mb-6">
+                        [Describe what this offer includes. Who it's for. What outcome it delivers. Format: video, live, PDF, coaching...]
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-2xl font-bold text-nintendo-yellow">[PRICE] €</span>
+                        <a href="#" class="px-4 py-2 nintendo-red text-white font-bold rounded text-sm transition-all">
+                            BUY →
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Offer 2 — flagship -->
+                <div class="bg-gray-800 p-8 rounded-lg border-2 border-yellow-500 hover:bg-gray-700 transition-all relative">
+                    <div class="absolute -top-3 left-1/2 -translate-x-1/2">
+                        <span class="px-4 py-1 nintendo-yellow text-black text-xs font-bold rounded">⭐ FLAGSHIP OFFER</span>
+                    </div>
+                    <div class="text-yellow-500 text-4xl mb-4 mt-3">🚀</div>
+                    <h3 class="text-xl font-bold mb-2 text-nintendo-yellow">[MAIN OFFER NAME]</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed mb-6">
+                        [Your flagship offer. What truly transforms people. Highlight the value, not just the content. Why this is THE training to take.]
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-2xl font-bold text-nintendo-yellow">[PRICE] €</span>
+                        <a href="#" class="px-4 py-2 nintendo-yellow text-black font-bold rounded text-sm transition-all">
+                            BUY →
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Offer 3 -->
+                <div class="bg-gray-800 p-8 rounded-lg border-2 border-blue-500 hover:bg-gray-700 transition-all">
+                    <div class="text-blue-400 text-4xl mb-4">💎</div>
+                    <h3 class="text-xl font-bold mb-2 text-nintendo-blue">[PREMIUM OFFER NAME]</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed mb-6">
+                        [Mentoring, coaching, or personalized follow-up option. For those who want to go faster with your direct help.]
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-2xl font-bold text-nintendo-yellow">[PRICE] €</span>
+                        <a href="#" class="px-4 py-2 nintendo-blue text-white font-bold rounded text-sm transition-all">
+                            BUY →
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Global CTA -->
+            <div class="mt-16 bg-gray-800 p-8 rounded-lg border-2 border-green-500 text-center fade-up">
+                <h3 class="text-2xl font-bold mb-4 text-nintendo-green">Not sure yet?</h3>
+                <p class="text-gray-300 mb-6">
+                    [Incentive text — a guarantee, a bonus, or a reason to take action now]
+                </p>
+                <a href="#" class="inline-block px-8 py-4 nintendo-green text-white font-bold rounded transition-all">
+                    VIEW ALL OFFERS →
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-8 px-4 bg-gray-950 border-t border-gray-800">
+        <div class="max-w-6xl mx-auto text-center text-gray-500">
+            <div class="flex justify-center gap-2 mb-4">
+                <span class="w-8 h-1 nintendo-red"></span>
+                <span class="w-8 h-1 nintendo-yellow"></span>
+                <span class="w-8 h-1 nintendo-green"></span>
+                <span class="w-8 h-1 nintendo-blue"></span>
+            </div>
+            <p>[YOUR NAME / TRAINING CENTER] © 2026</p>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+        const navToggle = document.getElementById('nav-toggle');
+        const navMenu = document.getElementById('nav-mobile-menu');
+        if (navToggle && navMenu) {
+            const closeMenu = () => {
+                navMenu.classList.add('hidden');
+                navToggle.setAttribute('aria-expanded', 'false');
+                navToggle.setAttribute('aria-label', 'Open menu');
+                document.body.classList.remove('nav-open');
+            };
+
+            navToggle.addEventListener('click', () => {
+                const isOpen = !navMenu.classList.contains('hidden');
+                if (isOpen) {
+                    closeMenu();
+                } else {
+                    navMenu.classList.remove('hidden');
+                    navToggle.setAttribute('aria-expanded', 'true');
+                    navToggle.setAttribute('aria-label', 'Close menu');
+                    document.body.classList.add('nav-open');
+                }
+            });
+
+            navMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
+        }
+    </script>
+</body>
+</html>

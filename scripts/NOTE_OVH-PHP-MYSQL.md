@@ -48,7 +48,9 @@ Espace client OVH
 Sur le FTP (racine www/)
   ├── api/config.php     ← secrets MySQL (jamais sur Git)
   ├── auth/              ← login, guide, setup
-  ├── guides/cards/      ← cartes + *Guide/
+  ├── Formations/BaseCpp/
+  │   ├── cards/           ← cartes Frogger (publiques)
+  │   └── guides/          ← guides + .htaccess
   └── gamedevready-bases-cpp.html
 ```
 
@@ -223,11 +225,14 @@ www/
 │   ├── guide.php
 │   └── setup.php           ← à supprimer après install
 ├── sql/                    ← optionnel sur FTP
-├── guides/
-│   └── cards/
-│       ├── .htaccess
-│       ├── 01-printf.html …
-│       └── 01_PrintFGuide/ … 07_StructMethodesGuide/
+├── Formations/
+│   └── BaseCpp/
+│       ├── cards/
+│       │   ├── 01-printf.html …
+│       │   └── 07_StructMethode_Card/
+│       └── guides/
+│           ├── .htaccess
+│           └── 01_PrintFGuide/ … 07_StructMethodesGuide/
 └── Image/
 ```
 
@@ -235,7 +240,7 @@ www/
 
 OVH active **mod_rewrite** par défaut sur l’hébergement mutualisé.
 
-Vérifiez que `guides/cards/.htaccess` est bien uploadé (bloque l’accès direct aux `.html` dans les dossiers `*Guide/`).
+Vérifiez que `Formations/BaseCpp/guides/.htaccess` est bien uploadé (bloque l’accès direct aux `.html` des guides).
 
 ---
 
@@ -282,7 +287,7 @@ https://gameopenmoney.com/auth/setup.php?key=VOTRE_SETUP_KEY
 | 3 | `gamedevready-bases-cpp.html` → **Ouvrir le guide** (module 01) | Guide complet + images |
 | 4 | Déconnexion `/auth/logout.php` | Session terminée |
 | 5 | **Ouvrir le guide** sans login | Redirection vers login |
-| 6 | URL directe `…/guides/cards/01_PrintFGuide/printfC++FrogTheme.html` | **403 Forbidden** |
+| 6 | URL directe `…/Formations/BaseCpp/guides/01_PrintFGuide/printfC++FrogTheme.html` | **403 Forbidden** |
 | 7 | Modules 02–07 via `?m=02` … `?m=07` | Guides OK si connecté |
 
 ---
@@ -314,18 +319,18 @@ https://gameopenmoney.com/auth/setup.php?key=VOTRE_SETUP_KEY
 2. Causes fréquentes :
    - Syntaxe PHP dans `config.php`
    - Extension PDO MySQL manquante (rare sur OVH — normalement OK)
-   - `.htaccess` incompatible — tester en renommant temporairement `guides/cards/.htaccess`
+   - `.htaccess` incompatible — tester en renommant temporairement `Formations/BaseCpp/guides/.htaccess`
 
 ### `.htaccess` ne bloque pas les guides (accès direct encore possible)
 
 - Vérifiez que `mod_rewrite` est actif (OVH mutualisé : oui par défaut)
-- Le fichier doit être dans `guides/cards/.htaccess`
+- Le fichier doit être dans `Formations/BaseCpp/guides/.htaccess`
 - Testez avec un `.htaccess` minimal :
 
 ```apache
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteRule ^(.+Guide)/.+\\.html?$ - [F,L,NC]
+    RewriteRule .+\.html?$ - [F,L,NC]
 </IfModule>
 ```
 

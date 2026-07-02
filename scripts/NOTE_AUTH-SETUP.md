@@ -42,7 +42,7 @@ Sur le FTP :
 WebSite/api/          → /api/
 WebSite/auth/         → /auth/
 WebSite/sql/          → (optionnel, déjà importé)
-WebSite/guides/cards/.htaccess  → bloque HTML direct des *Guide/
+WebSite/Formations/BaseCpp/guides/.htaccess  → bloque accès direct aux .html
 ```
 
 ### 4. Créer vos comptes
@@ -63,7 +63,7 @@ https://gameopenmoney.com/auth/setup.php?key=VOTRE_SETUP_KEY
 2. `https://gameopenmoney.com/gamedevready-bases-cpp.html` → **Ouvrir le guide →**
 3. Sans login → redirection connexion
 4. URL directe guide (doit être bloquée) :
-   `https://gameopenmoney.com/guides/cards/01_PrintFGuide/printfC++FrogTheme.html` → **403**
+   `https://gameopenmoney.com/Formations/BaseCpp/guides/01_PrintFGuide/printfC++FrogTheme.html` → **403**
 
 ---
 
@@ -84,7 +84,7 @@ https://gameopenmoney.com/auth/setup.php?key=VOTRE_SETUP_KEY
 |---------|------|
 | `api/bootstrap.php` | Session, login, contrôle accès |
 | `auth/guide.php` | Sert le HTML guide si autorisé |
-| `guides/cards/.htaccess` | Bloque accès direct aux `.html` dans `*Guide/` |
+| `Formations/BaseCpp/guides/.htaccess` | Bloque accès direct aux `.html` des guides |
 
 ---
 

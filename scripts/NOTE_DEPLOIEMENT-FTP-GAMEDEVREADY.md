@@ -1,6 +1,6 @@
 # Note — Déploiement FTP GameDevReady (gameopenmoney.com)
 
-> Dernière mise à jour : 27 juin 2026  
+> Dernière mise à jour : 2 juillet 2026  
 > Domaine : [https://gameopenmoney.com/](https://gameopenmoney.com/)
 
 ---
@@ -10,7 +10,7 @@
 Mettre en ligne les pages **GameDevReady** et les **cartes HTML Frogger** pour que :
 
 1. Les visiteurs accèdent au deck depuis le site (`/gamedevready-bases-cpp.html`, etc.)
-2. FlashDev puisse charger les URLs via le champ **`URLNet`** dans `FlashRevisionSoft/data.json`
+2. FlashDev puisse charger les URLs via le champ **`URLNet`** dans `FlashRevisionSoft/SquelletteGCS/data.json`
 
 ---
 
@@ -20,22 +20,35 @@ Le dépôt local sert le site depuis le dossier **`WebSite/`**.
 Sur le FTP du provider, le **contenu de `WebSite/`** doit se retrouver à la **racine web** du domaine (souvent `public_html/`, `www/` ou `htdocs/` — voir panneau hébergeur).
 
 ```
-Repo local                          FTP (racine gameopenmoney.com)
-─────────────────────────────────   ────────────────────────────────
-WebSite/index.html          →       /index.html
-WebSite/gamedevready.html   →       /gamedevready.html
-WebSite/gamedevready-bases-cpp.html → /gamedevready-bases-cpp.html
-WebSite/guides/cards/*.html →       /guides/cards/*.html
-WebSite/Image/...           →       /Image/...
+Repo local                                    FTP (racine gameopenmoney.com)
+───────────────────────────────────────────   ────────────────────────────────
+WebSite/index.html                    →       /index.html
+WebSite/gamedevready.html             →       /gamedevready.html
+WebSite/gamedevready-bases-cpp.html   →       /gamedevready-bases-cpp.html
+WebSite/Formations/BaseCpp/cards/     →       /Formations/BaseCpp/cards/
+WebSite/Formations/BaseCpp/guides/    →       /Formations/BaseCpp/guides/
+WebSite/Image/...                     →       /Image/...
 ```
 
 **Ne pas** envoyer tout le repo (`FicheFormationHtlm/`, `scripts/`, `TODO.md`, etc.) — uniquement **`WebSite/`** et son arborescence.
 
 ---
 
+## Arborescence formations (juillet 2026)
+
+```
+WebSite/Formations/
+└── BaseCpp/
+    ├── cards/          ← cartes Frogger (publiques, iframes)
+    └── guides/         ← guides pédagogiques (protégés via /auth/guide.php)
+        └── .htaccess
+```
+
+---
+
 ## Arborescence à indexer (upload FTP)
 
-### Pages HTML (obligatoire pour les liens actuels)
+### Pages HTML (obligatoire)
 
 | Fichier local | URL publique |
 |---------------|--------------|
@@ -46,25 +59,31 @@ WebSite/Image/...           →       /Image/...
 
 ### Cartes Frogger (deck bootstrap — Phase 1)
 
-Dossier entier : **`WebSite/guides/cards/`**
+Dossier entier : **`WebSite/Formations/BaseCpp/cards/`**
 
 | Fichier local | URL publique (pour `URLNet` FlashDev) |
 |---------------|---------------------------------------|
-| `guides/cards/01-printf.html` | `https://gameopenmoney.com/guides/cards/01-printf.html` |
-| `guides/cards/02-variables.html` | `https://gameopenmoney.com/guides/cards/02-variables.html` |
-| `guides/cards/03-conditions.html` | `https://gameopenmoney.com/guides/cards/03-conditions.html` |
-| `guides/cards/04-boucles.html` | `https://gameopenmoney.com/guides/cards/04-boucles.html` |
-| `guides/cards/05-std-fonctions.html` | `https://gameopenmoney.com/guides/cards/05-std-fonctions.html` |
-| `guides/cards/06-conteneurs.html` | `https://gameopenmoney.com/guides/cards/06-conteneurs.html` |
-| `guides/cards/07-struct-methodes.html` | `https://gameopenmoney.com/guides/cards/07-struct-methodes.html` |
+| `Formations/BaseCpp/cards/01-printf.html` | `https://gameopenmoney.com/Formations/BaseCpp/cards/01-printf.html` |
+| `Formations/BaseCpp/cards/02-variables.html` | `https://gameopenmoney.com/Formations/BaseCpp/cards/02-variables.html` |
+| `Formations/BaseCpp/cards/03-conditions.html` | `https://gameopenmoney.com/Formations/BaseCpp/cards/03-conditions.html` |
+| `Formations/BaseCpp/cards/04-boucles.html` | `https://gameopenmoney.com/Formations/BaseCpp/cards/04-boucles.html` |
+| `Formations/BaseCpp/cards/05-std-fonctions.html` | `https://gameopenmoney.com/Formations/BaseCpp/cards/05-std-fonctions.html` |
+| `Formations/BaseCpp/cards/06-conteneurs.html` | `https://gameopenmoney.com/Formations/BaseCpp/cards/06-conteneurs.html` |
+| `Formations/BaseCpp/cards/07_StructMethode_Card/07-struct-methodes-card.html` | `https://gameopenmoney.com/Formations/BaseCpp/cards/07_StructMethode_Card/07-struct-methodes-card.html` |
 
-Les liens du site utilisent des chemins **relatifs** (`guides/cards/...`) — ils fonctionnent tant que la structure FTP est identique.
+Les liens du site utilisent des chemins **relatifs** (`Formations/BaseCpp/cards/...`) — ils fonctionnent tant que la structure FTP est identique.
 
-### Assets (si utilisés plus tard)
+### Guides pédagogiques (protégés)
+
+Dossier entier : **`WebSite/Formations/BaseCpp/guides/`** (inclure **`.htaccess`**)
+
+Accès via `/auth/guide.php?m=01` … `m=07` — pas d’URL directe publique.
+
+### Assets (optionnel)
 
 | Dossier local | Remarque |
 |---------------|----------|
-| `WebSite/Image/` | Mascotte, vignettes GameDevReady (optionnel si page sans illustrations JPG) |
+| `WebSite/Image/` | Mascotte, vignettes GameDevReady |
 
 ---
 
@@ -73,67 +92,66 @@ Les liens du site utilisent des chemins **relatifs** (`guides/cards/...`) — il
 1. **Connexion** — Client FTP/SFTP (FileZilla, WinSCP…) avec identifiants du provider gameopenmoney.com
 2. **Racine web** — Ouvrir le dossier document root (`public_html`, `www`, etc.)
 3. **Upload** — Glisser le contenu de `madhackademyWebSite/WebSite/` (pas le dossier `WebSite` lui-même, sauf si le provider l’exige)
-4. **Créer les dossiers** si absents : `guides/cards/`
-5. **Vérifier les permissions** — fichiers `644`, dossiers `755` (classique Apache)
-6. **Tester dans le navigateur** :
-   - [https://gameopenmoney.com/gamedevready.html](https://gameopenmoney.com/gamedevready.html)
+4. **Créer les dossiers** si absents : `Formations/BaseCpp/cards/`, `Formations/BaseCpp/guides/`
+5. **Retirer** les anciens chemins obsolètes : `guides/cards/` (legacy)
+6. **Vérifier les permissions** — fichiers `644`, dossiers `755` (classique Apache)
+7. **Tester dans le navigateur** :
    - [https://gameopenmoney.com/gamedevready-bases-cpp.html](https://gameopenmoney.com/gamedevready-bases-cpp.html)
-   - [https://gameopenmoney.com/guides/cards/01-printf.html](https://gameopenmoney.com/guides/cards/01-printf.html)
-7. **Lien depuis l’accueil** — Module « Bases C++ » → `/gamedevready-bases-cpp.html`
+   - [https://gameopenmoney.com/Formations/BaseCpp/cards/01-printf.html](https://gameopenmoney.com/Formations/BaseCpp/cards/01-printf.html)
+8. **Lien depuis l’accueil** — Module « Bases C++ » → `/gamedevready-bases-cpp.html`
 
 ---
 
-## Mise à jour chez le provider (à faire)
+## Mise à jour chez le provider
 
-- [ ] **Uploader** les nouveaux fichiers listés ci-dessus (premier déploiement GameDevReady)
+- [ ] **Uploader** `Formations/BaseCpp/` + pages GameDevReady
+- [ ] **Retirer** l’ancien dossier `guides/cards/` du FTP si encore présent
 - [ ] **Vérifier** que le domaine pointe bien sur le bon dossier (pas de sous-dossier oublié type `/WebSite/` dans l’URL)
 - [ ] **HTTPS** — certificat actif sur toutes les URLs (FlashDev charge `URLNet` en HTTPS)
 - [ ] **Cache** — vider le cache CDN / navigateur après upload si les anciennes pages s’affichent encore
-- [ ] **Guides complets** (futur) — dossier `WebSite/guides/modules/` ou équivalent quand `printfC++FrogTheme.html`, etc. seront publiés
+- [ ] **Auth PHP** — voir `NOTE_OVH-PHP-MYSQL.md` et `NOTE_AUTH-SETUP.md`
 
 ---
 
 ## Lier FlashRevisionSoft (`URLNet`)
 
-Après déploiement FTP, renseigner dans `FlashRevisionSoft/SquelletteGCS/data.json` pour chaque carte GameDevReady :
+Dans `FlashRevisionSoft/SquelletteGCS/data.json` pour chaque carte GameDevReady :
 
 ```json
-"URLNet": "https://gameopenmoney.com/guides/cards/01-printf.html"
+"URLNet": "https://gameopenmoney.com/Formations/BaseCpp/cards/01-printf.html"
 ```
 
 | Carte `data.json` | `URLNet` cible |
 |-------------------|----------------|
-| `0x_Print` | `https://gameopenmoney.com/guides/cards/01-printf.html` |
-| `0X_Variable` | `https://gameopenmoney.com/guides/cards/02-variables.html` |
-| `0x_Conditions` | `https://gameopenmoney.com/guides/cards/03-conditions.html` |
-| `0X_Boucles` | `https://gameopenmoney.com/guides/cards/04-boucles.html` |
-| `0x_STD_Fonctions` | `https://gameopenmoney.com/guides/cards/05-std-fonctions.html` |
-| `0X_Conteneurs` | `https://gameopenmoney.com/guides/cards/06-conteneurs.html` |
-| `0x_Struct_Methodes` | `https://gameopenmoney.com/guides/cards/07-struct-methodes.html` |
-
-Quand les **guides pédagogiques complets** seront en ligne, `URLNet` pourra pointer vers eux (ex. `https://gameopenmoney.com/guides/modules/01-printf.html`) au lieu de la carte seule.
+| `0x_Print` | `https://gameopenmoney.com/Formations/BaseCpp/cards/01-printf.html` |
+| `0X_Variable` | `https://gameopenmoney.com/Formations/BaseCpp/cards/02-variables.html` |
+| `0x_Conditions` | `https://gameopenmoney.com/Formations/BaseCpp/cards/03-conditions.html` |
+| `0X_Boucles` | `https://gameopenmoney.com/Formations/BaseCpp/cards/04-boucles.html` |
+| `0x_STD_Fonctions` | `https://gameopenmoney.com/Formations/BaseCpp/cards/05-std-fonctions.html` |
+| `0X_Conteneurs` | `https://gameopenmoney.com/Formations/BaseCpp/cards/06-conteneurs.html` |
+| `0x_Struct_Methodes` | `https://gameopenmoney.com/Formations/BaseCpp/cards/07_StructMethode_Card/07-struct-methodes-card.html` |
 
 ---
 
 ## Workflow de mise à jour
 
-1. Modifier les fichiers dans `WebSite/` (local)
+1. Modifier les sources dans `FicheFormationHtlm/{module}/*Guide/` ou les cartes dans `WebSite/Formations/BaseCpp/`
 2. Prévisualiser en ouvrant les HTML localement ou via un serveur statique
 3. Upload FTP **uniquement les fichiers modifiés** (ou resync du dossier `WebSite/`)
 4. Tester les URLs publiques
-5. Si les cartes changent côté `FicheFormationHtlm/`, recopier vers `WebSite/guides/cards/` puis re-upload
+5. Si les guides changent côté `FicheFormationHtlm/`, recopier vers `WebSite/Formations/BaseCpp/guides/` puis re-upload
 
-**Cartes HTML (repo)** — source unique : `WebSite/guides/cards/` (modules 03–07 : plus de HTML carte dans `FicheFormationHtlm/`).
+**Cartes HTML (repo)** — `WebSite/Formations/BaseCpp/cards/` :
 
-| Module | Fichier publié `WebSite/guides/cards/` |
-|--------|----------------------------------------|
+| Module | Fichier publié |
+|--------|----------------|
 | 01 | `01-printf.html` |
 | 02 | `02-variables.html` |
 | 03 | `03-conditions.html` |
 | 04 | `04-boucles.html` |
 | 05 | `05-std-fonctions.html` |
 | 06 | `06-conteneurs.html` |
-| 07 | `07-struct-methodes.html` |
+| 07 | `07_StructMethode_Card/07-struct-methodes-card.html` |
 
 **Guides pédagogiques (repo)** — sources dans `FicheFormationHtlm/{module}/*Guide/` :
 
@@ -153,6 +171,7 @@ Quand les **guides pédagogiques complets** seront en ligne, `URLNet` pourra poi
 
 | Fichier | Contenu |
 |---------|---------|
-| `TODO.md` | Tâches P1 déploiement provider |
+| `TODO.md` | Tâches prioritaires |
 | `NOTE_ARCHITECTURE_SOFT-SITE.md` | Sync soft ↔ site (API future) |
 | `scripts/NOTE_COMMIT-BOTH.md` | Commit site + soft |
+| `scripts/NOTE_AUTH-SETUP.md` | Auth guides protégés |

@@ -205,38 +205,38 @@ function mha_guides_catalog(): array
     return [
         '01' => [
             'title' => '01 — Printf',
-            'file' => dirname(__DIR__) . '/guides/cards/01_PrintFGuide/printfC++FrogTheme.html',
-            'base' => '/guides/cards/01_PrintFGuide/',
+            'file' => dirname(__DIR__) . '/Formations/BaseCpp/guides/01_PrintFGuide/printfC++FrogTheme.html',
+            'base' => '/Formations/BaseCpp/guides/01_PrintFGuide/',
         ],
         '02' => [
             'title' => '02 — Variables',
-            'file' => dirname(__DIR__) . '/guides/cards/02_VariableGuide/VariableC++FroggerTheme.html',
-            'base' => '/guides/cards/02_VariableGuide/',
+            'file' => dirname(__DIR__) . '/Formations/BaseCpp/guides/02_VariableGuide/VariableC++FroggerTheme.html',
+            'base' => '/Formations/BaseCpp/guides/02_VariableGuide/',
         ],
         '03' => [
             'title' => '03 — Conditions',
-            'file' => dirname(__DIR__) . '/guides/cards/03_ConditionsGuide/Conditions.html',
-            'base' => '/guides/cards/03_ConditionsGuide/',
+            'file' => dirname(__DIR__) . '/Formations/BaseCpp/guides/03_ConditionsGuide/Conditions.html',
+            'base' => '/Formations/BaseCpp/guides/03_ConditionsGuide/',
         ],
         '04' => [
             'title' => '04 — Boucles',
-            'file' => dirname(__DIR__) . '/guides/cards/04_BouclesGuide/LoopModule.html',
-            'base' => '/guides/cards/04_BouclesGuide/',
+            'file' => dirname(__DIR__) . '/Formations/BaseCpp/guides/04_BouclesGuide/LoopModule.html',
+            'base' => '/Formations/BaseCpp/guides/04_BouclesGuide/',
         ],
         '05' => [
             'title' => '05 — STD & Fonctions',
-            'file' => dirname(__DIR__) . '/guides/cards/05_StdFonctionsGuide/stdLib&Fonction.html',
-            'base' => '/guides/cards/05_StdFonctionsGuide/',
+            'file' => dirname(__DIR__) . '/Formations/BaseCpp/guides/05_StdFonctionsGuide/stdLib&Fonction.html',
+            'base' => '/Formations/BaseCpp/guides/05_StdFonctionsGuide/',
         ],
         '06' => [
             'title' => '06 — Conteneurs',
-            'file' => dirname(__DIR__) . '/guides/cards/06_ConteneursGuide/Conteneurs.html',
-            'base' => '/guides/cards/06_ConteneursGuide/',
+            'file' => dirname(__DIR__) . '/Formations/BaseCpp/guides/06_ConteneursGuide/Conteneurs.html',
+            'base' => '/Formations/BaseCpp/guides/06_ConteneursGuide/',
         ],
         '07' => [
             'title' => '07 — Struct & Méthodes',
-            'file' => dirname(__DIR__) . '/guides/cards/07_StructMethodesGuide/StructMethodes.html',
-            'base' => '/guides/cards/07_StructMethodesGuide/',
+            'file' => dirname(__DIR__) . '/Formations/BaseCpp/guides/07_StructMethodesGuide/StructMethodes.html',
+            'base' => '/Formations/BaseCpp/guides/07_StructMethodesGuide/',
         ],
     ];
 }

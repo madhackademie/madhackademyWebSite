@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlashDev - Flashcards by Doing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .float-anim { animation: float 3s ease-in-out infinite; }
+        .pulse-anim { animation: pulse-slow 2s ease-in-out infinite; }
+        .nintendo-red { background: #E60012; }
+        .nintendo-yellow { background: #FBDD08; }
+        .nintendo-green { background: #05C31C; }
+        .nintendo-blue { background: #1B8CE4; }
+        .nintendo-green:hover{background: rgba(5, 195, 28, 0.6);}
+        .nintendo-yellow:hover{background: rgba(251, 221, 8, 0.8);}
+        .nintendo-blue:hover{
+            background : #1B8CE4;
+            text-shadow: 
+                -1px -1px 0 #000,
+                1px -1px 0 #000,
+                -1px  1px 0 #000,
+                1px  1px 0 #000;
+        }
+        .nintendo-red:hover{
+            background: #E60012;
+            text-shadow: 
+                -1px -1px 0 #000,
+                1px -1px 0 #000,
+                -1px  1px 0 #000,
+                1px  1px 0 #000;
+        }
+        .text-nintendo-red {color: #E60012;}
+        .text-nintendo-yellow {color : #FBDD08;}
+        .text-nintendo-green {color : #05C31C;}
+        .text-nintendo-blue {color: #1B8CE4;}
+        .gradient-text {
+            background: linear-gradient(90deg, #E60012, #FBDD08, #05C31C, #1B8CE4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .pixel-border {
+            box-shadow: 
+                0 -4px 0 0 currentColor,
+                4px 0 0 0 currentColor,
+                0 4px 0 0 currentColor,
+                -4px 0 0 0 currentColor;
+        }
+    </style>
+</head>
+<body class="bg-black text-white font-mono">
+    <!-- NAVIGATION NINTENDO STYLE -->
+    <nav class="fixed top-0 w-full bg-black bg-opacity-95 backdrop-blur-sm z-50 border-b-2 border-gray-800">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            
+            <a href="/index-en.html" class="text-2xl md:text-3xl font-bold gradient-text hover:scale-105 transition-transform">
+                FLASHDEV
+            </a>
+            
+            <div class="hidden md:flex gap-2">
+                <div class="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center font-bold text-sm">A</div>
+                <div class="w-8 h-8 rounded-full bg-yellow-400 flex items-center justify-center font-bold text-sm text-black">B</div>
+                <div class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center font-bold text-sm">X</div>
+                <div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center font-bold text-sm">Y</div>
+            </div>
+            
+            <div class="flex gap-4 md:gap-6 items-center">
+                <a href="/index-en.html" class="text-gray-300 hover:text-red-500 transition font-bold">
+                    Home
+                </a>
+                <span class="inline-flex items-center gap-1.5">
+                    <a href="/training-center.html" class="text-gray-300 hover:text-yellow-400 transition font-bold">
+                        Training Center
+                    </a>
+                    <a href="/centre-formation.html" class="text-gray-500 hover:text-yellow-400 transition text-xs font-bold" hreflang="fr" lang="fr" title="Centre de Formation (Français)">FR</a>
+                </span>
+                <a href="/gamedevready.html" class="text-gray-300 hover:text-green-500 transition font-bold">
+                    GameDevReady
+                </a>
+                <a href="#roadmap" class="text-gray-300 hover:text-green-500 transition font-bold">
+                    Roadmap
+                </a>
+                <a href="#stream" class="text-gray-300 hover:text-blue-500 transition font-bold">
+                    Stream
+                </a>
+                <div class="flex items-center gap-1.5 text-xs font-bold border border-gray-700 rounded px-2 py-1" role="navigation" aria-label="Language">
+                    <a href="/" class="text-gray-400 hover:text-white transition-colors" hreflang="fr" lang="fr">FR</a>
+                    <span class="text-gray-600" aria-hidden="true">|</span>
+                    <span class="text-white" aria-current="page">EN</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="pt-24">
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center relative overflow-hidden px-4">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-20 left-10 w-32 h-32 nintendo-red rounded-full blur-3xl"></div>
+            <div class="absolute bottom-20 right-10 w-40 h-40 nintendo-blue rounded-full blur-3xl"></div>
+            <div class="absolute top-1/2 left-1/3 w-36 h-36 nintendo-yellow rounded-full blur-3xl"></div>
+        </div>
+        
+        <div class="text-center z-10 max-w-4xl">
+            <div class="float-anim mb-8">
+                <h1 class="text-6xl md:text-8xl font-bold mb-4 gradient-text">FLASHDEV</h1>
+                <div class="flex justify-center gap-2 mb-6">
+                    <span class="w-16 h-2 nintendo-red"></span>
+                    <span class="w-16 h-2 nintendo-yellow"></span>
+                    <span class="w-16 h-2 nintendo-green"></span>
+                    <span class="w-16 h-2 nintendo-blue"></span>
+                </div>
+            </div>
+            
+            <p class="text-2xl md:text-3xl mb-4 text-gray-300">Flashcards by <span class="text-red-500">Doing</span></p>
+            <p class="text-lg md:text-xl mb-12 text-gray-400 max-w-2xl mx-auto">
+                The first review software that makes you code while you learn.
+                No passive reading. Only practice.
+            </p>
+            
+            <div class="flex flex-wrap gap-4 justify-center">
+                <a href="#roadmap" class="px-8 py-4 bg-transparent border-2 border-yellow-600 nintendo-red text-nintendo-yellow font-bold rounded transition-all">
+                    VIEW THE ROADMAP
+                </a>
+                <a href="#stream" class="px-8 py-4 bg-transparent border-2 border-green-600 nintendo-blue text-nintendo-green font-bold rounded transition-all">
+                    SATURDAY STREAM
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem/Solution Section -->
+    <section class="py-20 px-4 bg-gradient-to-b from-black to-gray-900">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16">
+                Why <span class="gradient-text">FlashDev</span>?
+            </h2>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-gray-800 p-8 rounded-lg border-2 border-red-600">
+                    <div class="text-red-500 text-5xl mb-4">❌</div>
+                    <h3 class="text-2xl font-bold mb-4 text-red-400">The Current Market</h3>
+                    <ul class="space-y-3 text-gray-300">
+                        <li>→ Passive flashcards (read-only)</li>
+                        <li>→ No real practice</li>
+                        <li>→ Quick forgetting without application</li>
+                        <li>→ Boring and ineffective</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-gray-800 p-8 rounded-lg border-2 border-green-500">
+                    <div class="text-green-500 text-5xl mb-4">✓</div>
+                    <h3 class="text-2xl font-bold mb-4 text-green-400">FlashDev: Learn by Doing</h3>
+                    <ul class="space-y-3 text-gray-300">
+                        <li>→ Code directly in the tool (Lua)</li>
+                        <li>→ Flashcards = coding challenges</li>
+                        <li>→ Spaced repetition + practice</li>
+                        <li>→ Active, lasting memorization</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mt-16 bg-gray-800 p-8 rounded-lg border-2 border-yellow-500 text-center">
+                <h3 class="text-2xl font-bold mb-4 text-yellow-400">Open-Source + Premium Model</h3>
+                <p class="text-gray-300 mb-4">
+                    💡 The software is <span class="text-green-400">100% free and open-source</span>
+                </p>
+                <p class="text-gray-300">
+                    💰 <span class="text-yellow-400">Premium training decks</span> are for sale (GameDevReady, C++, Raylib...)
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap Section -->
+    <section id="roadmap" class="py-20 px-4 bg-black">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-4">
+                <a href="/gamedevready.html" class="gradient-text hover:opacity-80 transition">GameDevReady</a> Roadmap
+            </h2>
+            <p class="text-center text-gray-400 mb-16">The complete training path to become a Game Developer</p>
+            
+            <div class="space-y-8">
+                <a href="/gamedevready-bases-cpp.html" class="block bg-gray-900 p-6 rounded-lg border-l-4 border-red-600 hover:bg-gray-800 transition-all group">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 nintendo-red rounded flex items-center justify-center flex-shrink-0 font-bold text-xl">
+                            1
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2 text-red-400 group-hover:text-red-300">C++ Basics</h3>
+                            <p class="text-gray-300 mb-3">feedback(Printf), variables, conditions, loops, functions, arrays</p>
+                            <span class="text-sm text-gray-500">Bootcamp 1–2 weeks</span>
+                            <span class="block text-sm text-red-500 font-bold mt-2">View the deck →</span>
+                        </div>
+                    </div>
+                </a>
+                
+                <div class="bg-gray-900 p-6 rounded-lg border-l-4 border-yellow-500 hover:bg-gray-800 transition-all">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 nintendo-yellow rounded flex items-center justify-center flex-shrink-0 font-bold text-xl text-black">
+                            2
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2 text-yellow-400">First Challenge</h3>
+                            <p class="text-gray-300 mb-3">Applying the basics + simple game logic</p>
+                            <span class="text-sm text-gray-500">Guided project ~ 1 week</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-900 p-6 rounded-lg border-l-4 border-green-500 hover:bg-gray-800 transition-all">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 nintendo-green rounded flex items-center justify-center flex-shrink-0 font-bold text-xl">
+                            3
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2 text-green-400">Raylib Framework</h3>
+                            <p class="text-gray-300 mb-3">Graphics, input, audio, collisions with Raylib</p>
+                            <span class="text-sm text-gray-500">Bootcamp 2–3 weeks</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-900 p-6 rounded-lg border-l-4 border-blue-500 hover:bg-gray-800 transition-all">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 nintendo-blue rounded flex items-center justify-center flex-shrink-0 font-bold text-xl">
+                            4
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2 text-blue-400">Frogger Remake Project</h3>
+                            <p class="text-gray-300 mb-3">Structs with methods, architecture without OOP</p>
+                            <span class="text-sm text-gray-500">Full project ~ 2–3 weeks</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-900 p-6 rounded-lg border-l-4 border-purple-500 hover:bg-gray-800 transition-all">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 bg-purple-600 rounded flex items-center justify-center flex-shrink-0 font-bold text-xl">
+                            5
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2 text-purple-400">OOP vs ECS: Paradigm Choice</h3>
+                            <p class="text-gray-300 mb-3">Understand both approaches and choose your path</p>
+                            <div class="flex gap-3 mt-3">
+                                <span class="px-3 py-1 bg-purple-900 text-purple-300 rounded text-sm">OOP Path →</span>
+                                <span class="px-3 py-1 bg-indigo-900 text-indigo-300 rounded text-sm">ECS Path →</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stream Section -->
+    <section id="stream" class="py-20 px-4 bg-gradient-to-b from-black to-gray-900">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="pulse-anim inline-block mb-6">
+                <div class="w-4 h-4 bg-red-600 rounded-full inline-block mr-2"></div>
+                <span class="text-red-500 font-bold">LIVE</span>
+            </div>
+            
+            <h2 class="text-4xl md:text-5xl font-bold mb-6">Saturday Night Stream</h2>
+            <p class="text-xl text-gray-300 mb-8">
+                Every Saturday, I code a new FlashDev feature live!
+            </p>
+            
+            <div class="bg-gray-800 p-8 rounded-lg border-2 border-red-600 mb-8">
+                <p class="text-2xl mb-4">⏰ Next stream in:</p>
+                <p class="text-5xl font-bold gradient-text" id="countdown">Saturday 8 PM</p>
+            </div>
+            
+            <div class="flex flex-wrap gap-4 justify-center">
+                <a href="#" class="px-8 py-4 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded transition-all">
+                    🎮 Twitch
+                </a>
+                <a href="#" class="px-8 py-4 bg-red-700 hover:bg-red-800 text-white font-bold rounded transition-all">
+                    📺 YouTube
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 px-4 bg-black">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6">Ready to Learn by Coding?</h2>
+            <p class="text-xl text-gray-300 mb-12">
+                FlashDev is open-source. Download it for free or buy a premium deck.
+            </p>
+            
+            <div class="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+                <div class="bg-gray-800 p-8 rounded-lg border-2 border-green-500 text-left">
+                    <h3 class="text-2xl font-bold mb-4 text-green-400 text-center">Open Source</h3>
+                    <p class="text-gray-300 mb-6 text-center">
+                        The full software, free forever — leave your email to receive the download link.
+                    </p>
+                    <a
+                        id="flashdev-systemio-cta"
+                        href="#"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="block w-full px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded transition-all text-center"
+                    >
+                        Get FlashDev for free →
+                    </a>
+                    <p class="text-xs text-gray-500 text-center mt-4 leading-relaxed">
+                        Sign up via System.io — software access, follow-ups, and FlashDev updates.
+                    </p>
+                </div>
+                
+                <div class="bg-gray-800 p-8 rounded-lg border-2 border-yellow-500">
+                    <h3 class="text-2xl font-bold mb-4 text-yellow-400">Premium Decks</h3>
+                    <p class="text-gray-300 mb-6">Complete GameDevReady training paths</p>
+                    <a href="#" class="inline-block px-6 py-3 bg-yellow-600 hover:bg-yellow-700 text-white font-bold rounded transition-all">
+                        💰 Buy
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    </div>
+
+    <footer class="py-8 px-4 bg-gray-950 border-t border-gray-800">
+        <div class="max-w-6xl mx-auto text-center text-gray-500">
+            <div class="flex justify-center gap-2 mb-4">
+                <span class="w-8 h-1 nintendo-red"></span>
+                <span class="w-8 h-1 nintendo-yellow"></span>
+                <span class="w-8 h-1 nintendo-green"></span>
+                <span class="w-8 h-1 nintendo-blue"></span>
+            </div>
+            <p>FlashDev - Learn by Doing © 2026</p>
+        </div>
+    </footer>
+
+</body>
+</html>
