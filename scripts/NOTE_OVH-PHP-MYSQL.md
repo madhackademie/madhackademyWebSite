@@ -2,13 +2,14 @@
 
 > Guide complet pour héberger l’auth PHP et MySQL du site sur **OVH Web Cloud Databases** ou **hébergement mutualisé OVH**  
 > Projet : madhackademyWebSite — guides protégés, comptes admin/testeur  
-> Dernière mise à jour : 29 juin 2026
+> Dernière mise à jour : 7 juillet 2026  
+> **Déploiement et validation terminés** (juillet 2026) — ce guide sert de référence maintenance et dépannage.
 
 **Documents liés :**
 
 | Doc | Contenu |
 |-----|---------|
-| [`NOTE_PROCHAINE-SESSION.md`](NOTE_PROCHAINE-SESSION.md) | Checklist globale prochaine session |
+| [`NOTE_PROCHAINE-SESSION.md`](NOTE_PROCHAINE-SESSION.md) | État projet et prochaines évolutions |
 | [`NOTE_AUTH-SETUP.md`](NOTE_AUTH-SETUP.md) | Rôles, URLs auth, fichiers PHP |
 | [`NOTE_DEPLOIEMENT-FTP-GAMEDEVREADY.md`](NOTE_DEPLOIEMENT-FTP-GAMEDEVREADY.md) | Cartes Frogger, guides, `URLNet` |
 
@@ -387,12 +388,11 @@ Email testeur 1 : _______________
 
 ---
 
-## 14. Prochaines étapes (après auth OK)
+## 14. Prochaines étapes
 
-1. Distribuer identifiants aux testeurs beta
-2. Cocher la checklist dans [`TODO.md`](../TODO.md)
-3. Brancher paiement (Stripe / System.io) → table `user_products`
-4. Lier FlashDev (`URLNet`, token API) — voir [`NOTE_ARCHITECTURE_SOFT-SITE.md`](../NOTE_ARCHITECTURE_SOFT-SITE.md)
+1. Contenu centre-formation — [`TODO.md`](../TODO.md)
+2. Brancher paiement (Stripe / System.io) → table `user_products`
+3. Lier FlashDev (token API) — voir [`NOTE_ARCHITECTURE_SOFT-SITE.md`](../NOTE_ARCHITECTURE_SOFT-SITE.md)
 
 ---
 
@@ -405,4 +405,4 @@ Email testeur 1 : _______________
 
 ---
 
-*Fin du guide OVH — revenir à [`NOTE_PROCHAINE-SESSION.md`](NOTE_PROCHAINE-SESSION.md) §3 pour la checklist complète.*
+*Fin du guide OVH — voir [`NOTE_PROCHAINE-SESSION.md`](NOTE_PROCHAINE-SESSION.md) et [`TODO.md`](../TODO.md) pour la suite.*

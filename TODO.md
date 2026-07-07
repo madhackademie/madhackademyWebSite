@@ -1,43 +1,26 @@
 ﻿# TODO — madhackademyWebSite
 
-> Dernière mise à jour : 2 juillet 2026  
+> Dernière mise à jour : 7 juillet 2026  
 > Projet : site vitrine FlashDev + MadHackAdemy
 
 ---
 
 ## Prochaine session de travail
 
-> **P0 terminé (juillet 2026)** — arborescence `WebSite/Formations/BaseCpp/` en place (cartes + guides séparés, code et `URLNet` à jour).
+> **P0 + auth OVH terminés (juillet 2026)** — `Formations/BaseCpp/`, déploiement FTP, tests production, beta testeurs.
 
-> Guide session (auth OVH, etc.) : [`scripts/NOTE_PROCHAINE-SESSION.md`](scripts/NOTE_PROCHAINE-SESSION.md)
+> Guide session : [`scripts/NOTE_PROCHAINE-SESSION.md`](scripts/NOTE_PROCHAINE-SESSION.md)
 
 | Doc | Sujet |
 |-----|--------|
-| [`scripts/NOTE_PROCHAINE-SESSION.md`](scripts/NOTE_PROCHAINE-SESSION.md) | Auth OVH, checklist production |
+| [`scripts/NOTE_PROCHAINE-SESSION.md`](scripts/NOTE_PROCHAINE-SESSION.md) | État projet, architecture, prochaines évolutions |
 | [`scripts/NOTE_DEPLOIEMENT-FTP-GAMEDEVREADY.md`](scripts/NOTE_DEPLOIEMENT-FTP-GAMEDEVREADY.md) | FTP GameDevReady |
-| [`scripts/NOTE_OVH-PHP-MYSQL.md`](scripts/NOTE_OVH-PHP-MYSQL.md) | PHP, MySQL, auth OVH |
+| [`scripts/NOTE_OVH-PHP-MYSQL.md`](scripts/NOTE_OVH-PHP-MYSQL.md) | PHP, MySQL, auth OVH (maintenance) |
 | [`scripts/NOTE_AUTH-SETUP.md`](scripts/NOTE_AUTH-SETUP.md) | Rôles, URLs auth |
 
 ### Checklist rapide prochaine session
 
-**P0 — Réorganisation guides** *(fait)*
-
-- [x] **P0** — Créer `WebSite/Formations/BaseCpp/cards/` + `guides/`
-- [x] **P0** — Migrer HTML + `Image/` des 7 modules
-- [x] **P0** — Mettre à jour `gamedevready-bases-cpp.html`, `api/bootstrap.php`, `URLNet`, docs
-- [ ] **P0** — Re-sync FTP sur `Formations/BaseCpp/` ; retirer anciens chemins (`guides/cards/`, etc.)
-
-**P1 — Auth OVH**
-
-- [x] **P1** — Guides `*Guide/` (01–07) uploadés chez l'hébergeur — juin 2026 *(chemins legacy — remplacer par `Formations/BaseCpp/` au prochain FTP)*
-- [ ] **P1** — Vérifier PHP 8+ et MySQL chez OVH → **`scripts/NOTE_OVH-PHP-MYSQL.md`**
-- [ ] **P1** — Importer `WebSite/sql/schema.sql` dans phpMyAdmin
-- [ ] **P1** — Créer `api/config.php` (copie de `config.example.php`) sur le FTP
-- [ ] **P1** — Uploader `api/`, `auth/`, `Formations/BaseCpp/guides/.htaccess`, `gamedevready-bases-cpp.html`
-- [ ] **P1** — Créer compte **admin** + comptes **tester** via `/auth/setup.php?key=…`
-- [ ] **P1** — Supprimer `auth/setup.php` du FTP après création des comptes
-- [ ] **P1** — Tester login + guides via `/auth/guide.php?m=01` … + blocage URL directe (403)
-- [ ] **P2** — Distribuer identifiants aux testeurs beta
+**Priorité : contenu centre-formation** — voir § *Tâches prioritaires* ci-dessous.
 
 ---
 
@@ -96,7 +79,7 @@ WebSite/Formations/
 - [x] **P0** — Créer `WebSite/Formations/BaseCpp/cards/` + `guides/`
 - [x] **P0** — Déplacer HTML + `Image/` des 7 modules
 - [x] **P0** — Mettre à jour iframes, `bootstrap.php`, `URLNet`, documentation
-- [ ] **P0** — Re-upload FTP `Formations/BaseCpp/` ; retirer anciens chemins serveur
+- [x] **P0** — Re-upload FTP `Formations/BaseCpp/` ; retirer anciens chemins serveur — juillet 2026
 - [ ] **P3** — Sous-dossiers par module `{NN}_{nom}/guide/` + `card/` *(optionnel, si besoin)*
 - [ ] **P3** — Extension `Formations/Unreal/`, `Formations/SDL/` sur le même modèle
 
@@ -104,7 +87,7 @@ WebSite/Formations/
 
 ## Tâches prioritaires
 
-> **Priorité actuelle : P1** — auth OVH, déploiement FTP, nouveaux contenus.
+> **Priorité actuelle : P1** — contenu centre-formation.
 
 Ces tâches débloquent la mise en ligne ou corrigent des problèmes visibles pour les visiteurs.
 
@@ -125,13 +108,12 @@ Ces tâches débloquent la mise en ligne ou corrigent des problèmes visibles po
 
 ### Déploiement GameDevReady (provider / FTP)
 
-> Procédure détaillée : **`scripts/NOTE_DEPLOIEMENT-FTP-GAMEDEVREADY.md`**  
-> Session complète : **`scripts/NOTE_PROCHAINE-SESSION.md`** §3
+> Procédure détaillée : **`scripts/NOTE_DEPLOIEMENT-FTP-GAMEDEVREADY.md`**
 
 - [x] **P1** — Réorganisation locale `Formations/BaseCpp/` + chemins code — juillet 2026
-- [ ] **P1** — Uploader / mettre à jour `gamedevready-bases-cpp.html` + `Formations/BaseCpp/` sur le FTP
-- [ ] **P1** — Vérifier en production les 7 cartes + accès guides via `/auth/guide.php?m=01` … `m=07`
-- [ ] **P1** — Tester le parcours : Bases C++ → miniature → carte → **Ouvrir le guide** (login requis)
+- [x] **P1** — Upload FTP `gamedevready-bases-cpp.html` + `Formations/BaseCpp/` — juillet 2026
+- [x] **P1** — Vérifier en production les 7 cartes + accès guides via `/auth/guide.php?m=01` … `m=07` — juillet 2026
+- [x] **P1** — Tester le parcours : Bases C++ → miniature → carte → **Ouvrir le guide** — juillet 2026
 - [x] **P2** — Renseigner `URLNet` dans `FlashRevisionSoft/data.json` avec les URLs HTTPS
 
 ### Auth — guides protégés (admin / testeurs)
@@ -141,8 +123,9 @@ Ces tâches débloquent la mise en ligne ou corrigent des problèmes visibles po
 - [x] Code auth PHP local (`api/`, `auth/`, `sql/schema.sql`) — juin 2026
 - [x] Boutons guide → `/auth/guide.php?m=XX` sur `gamedevready-bases-cpp.html`
 - [x] 7 guides publiés dans `WebSite/Formations/BaseCpp/guides/*Guide/`
-- [ ] **P1** — Déployer auth en production (voir checklist prochaine session)
-- [ ] **P1** — Comptes admin + testeurs créés ; `setup.php` retiré du FTP
+- [x] Auth déployée en production OVH (PHP, MySQL, FTP, comptes, `setup.php` retiré) — juillet 2026
+- [x] Tests production (login, guides 01–07, 403 URL directe) — juillet 2026
+- [x] Identifiants testeurs beta distribués — juillet 2026
 - [ ] **P2** — Webhook paiement → accès `student` (`user_products`)
 
 ### Corrections techniques urgentes
@@ -177,9 +160,6 @@ Tâches utiles mais non bloquantes — à traiter après les priorités.
 - [x] Guides 01–07 dans `WebSite/Formations/BaseCpp/guides/` — juillet 2026
 - [x] Structure `FicheFormationHtlm/*Guide/` (sources, sans HTML carte) — juin 2026
 - [x] Page Bases C++ : miniatures → ancres, boutons guide protégés — juin 2026
-- [ ] **P1** — Guides + cartes en production FTP (`Formations/BaseCpp/`) — re-upload juillet 2026
-- [ ] **P1** — Exposer **auth PHP** en production (voir `NOTE_OVH-PHP-MYSQL.md`)
-
 ### Contenu & éditorial
 - [ ] Rédiger les textes légaux (mentions légales, CGV boutique)
 - [ ] Préparer des témoignages / preuves sociales pour la page centre-formation
@@ -269,8 +249,8 @@ Maquette d’écran cible (beat’em up arcade type *Golden Axe* / *Cadillacs an
 
 | Tag | Signification |
 |-----|---------------|
-| **P0** | Réorganisation `Formations/BaseCpp/` — **fait** (juillet 2026) |
-| **P1** | Critique — auth OVH, FTP final |
+| **P0** | Réorganisation `Formations/BaseCpp/` + auth OVH — **fait** (juillet 2026) |
+| **P1** | Critique — contenu centre-formation |
 | **P2** | Important — rapidement après P1 |
 | **polish** | Amélioration visuelle / UX — non bloquant |
 | *(backlog)* | Amélioration — quand le site est en ligne et le contenu rempli |
@@ -283,4 +263,4 @@ Maquette d’écran cible (beat’em up arcade type *Golden Axe* / *Cadillacs an
 |------|---------------------|
 | `index.html` (FlashDev) | ~80 % — contenu OK, liens et détails à finaliser |
 | `centre-formation.html` | ~30 % — structure solide, contenu à rédiger |
-| `gamedevready-bases-cpp.html` | ~90 % — deck + guides en prod ; auth PHP à déployer (OVH) |
+| `gamedevready-bases-cpp.html` | ~100 % — deck + guides + auth en prod, tests OK |

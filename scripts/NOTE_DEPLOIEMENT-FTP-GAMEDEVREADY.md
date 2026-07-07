@@ -104,12 +104,12 @@ Accès via `/auth/guide.php?m=01` … `m=07` — pas d’URL directe publique.
 
 ## Mise à jour chez le provider
 
-- [ ] **Uploader** `Formations/BaseCpp/` + pages GameDevReady
-- [ ] **Retirer** l’ancien dossier `guides/cards/` du FTP si encore présent
+> **Déploiement initial fait** (juillet 2026) — checklist ci-dessous pour les **mises à jour ultérieures** uniquement.
+
+- [ ] **Uploader** les fichiers modifiés (`Formations/BaseCpp/`, pages GameDevReady, `api/`, `auth/` si changement)
 - [ ] **Vérifier** que le domaine pointe bien sur le bon dossier (pas de sous-dossier oublié type `/WebSite/` dans l’URL)
 - [ ] **HTTPS** — certificat actif sur toutes les URLs (FlashDev charge `URLNet` en HTTPS)
 - [ ] **Cache** — vider le cache CDN / navigateur après upload si les anciennes pages s’affichent encore
-- [ ] **Auth PHP** — voir `NOTE_OVH-PHP-MYSQL.md` et `NOTE_AUTH-SETUP.md`
 
 ---
 

@@ -1,9 +1,9 @@
 # Auth — comptes admin / testeur / guides protégés
 
 > Première mise en place : juin 2026  
-> Prérequis hébergeur : **PHP 8+** et **MySQL** sur gameopenmoney.com  
-> **OVH :** [`NOTE_OVH-PHP-MYSQL.md`](NOTE_OVH-PHP-MYSQL.md) — guide pas à pas complet  
-> **Session de travail :** [`NOTE_PROCHAINE-SESSION.md`](NOTE_PROCHAINE-SESSION.md)
+> **Production OVH : juillet 2026** — déploiement, tests parcours, identifiants testeurs distribués  
+> **OVH (maintenance / dépannage) :** [`NOTE_OVH-PHP-MYSQL.md`](NOTE_OVH-PHP-MYSQL.md)  
+> **État projet :** [`NOTE_PROCHAINE-SESSION.md`](NOTE_PROCHAINE-SESSION.md)
 
 ---
 
@@ -11,59 +11,9 @@
 
 | Rôle | Accès guides | Usage |
 |------|--------------|-------|
-| **admin** | Oui (tous) | Vous — peut créer des comptes via setup |
+| **admin** | Oui (tous) | Vous — gestion comptes via phpMyAdmin si besoin |
 | **tester** | Oui (tous) | Testeurs beta |
 | **student** | Si produit accordé | Futurs élèves payants |
-
----
-
-## Installation FTP (une fois)
-
-### 1. Base MySQL
-
-Dans phpMyAdmin (panneau hébergeur) :
-
-1. Créer une base (ex. `madhackademy`)
-2. Importer `WebSite/sql/schema.sql`
-
-### 2. Configuration PHP
-
-Sur le FTP :
-
-1. Copier `api/config.example.php` → `api/config.php`
-2. Renseigner host, user, pass MySQL
-3. Changer `setup_key` (chaîne secrète longue)
-
-**Ne pas** committer `config.php` (déjà dans `.gitignore`).
-
-### 3. Upload des dossiers
-
-```
-WebSite/api/          → /api/
-WebSite/auth/         → /auth/
-WebSite/sql/          → (optionnel, déjà importé)
-WebSite/Formations/BaseCpp/guides/.htaccess  → bloque accès direct aux .html
-```
-
-### 4. Créer vos comptes
-
-Ouvrir dans le navigateur :
-
-```
-https://gameopenmoney.com/auth/setup.php?key=VOTRE_SETUP_KEY
-```
-
-1. Créer votre compte **admin** (votre email)
-2. Créer un compte **tester** par testeur
-3. **Supprimer** `auth/setup.php` du FTP après installation
-
-### 5. Tester
-
-1. `https://gameopenmoney.com/auth/login.php`
-2. `https://gameopenmoney.com/gamedevready-bases-cpp.html` → **Ouvrir le guide →**
-3. Sans login → redirection connexion
-4. URL directe guide (doit être bloquée) :
-   `https://gameopenmoney.com/Formations/BaseCpp/guides/01_PrintFGuide/printfC++FrogTheme.html` → **403**
 
 ---
 
@@ -83,6 +33,7 @@ https://gameopenmoney.com/auth/setup.php?key=VOTRE_SETUP_KEY
 | Fichier | Rôle |
 |---------|------|
 | `api/bootstrap.php` | Session, login, contrôle accès |
+| `api/config.php` | Secrets MySQL (sur FTP uniquement, jamais sur Git) |
 | `auth/guide.php` | Sert le HTML guide si autorisé |
 | `Formations/BaseCpp/guides/.htaccess` | Bloque accès direct aux `.html` des guides |
 

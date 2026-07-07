@@ -273,9 +273,9 @@ end
 
 Vérifier chez l’hébergeur de gameopenmoney.com :
 
-- [ ] PHP 8+ activé
-- [ ] MySQL / MariaDB disponible
-- [ ] HTTPS (obligatoire pour les tokens)
+- [x] PHP 8+ activé
+- [x] MySQL / MariaDB disponible
+- [x] HTTPS (obligatoire pour les tokens)
 - [ ] Cron optionnel (recalcul ligues chaque lundi)
 
 Aujourd’hui le site est **statique HTML** — l’API PHP sera une **couche à ajouter** sur le même domaine.
