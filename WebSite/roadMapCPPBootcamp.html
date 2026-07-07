@@ -25,6 +25,13 @@
             margin: 0 auto;
             aspect-ratio: 3 / 5;
             min-height: 680px;
+            background-color: #6ec8f0;
+            background-image: url('Image/background.png');
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            border-radius: 0.75rem;
+            overflow: hidden;
         }
 
         @media (min-width: 768px) {
@@ -35,10 +42,7 @@
         }
 
         .roadmap-scene svg {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
+            display: none; /* chemin inclus dans background.png */
         }
 
         /* ── Nœuds positionnés le long du S ── */
@@ -65,6 +69,11 @@
         /* Départ : Mini Mario transparent, 1,5× plus petit que les autres sprites */
         .node-sprite img.sprite-start {
             width: clamp(35px, 7.3vw, 59px);
+        }
+
+        /* Poulpe cape volante : ~10 % plus petit que l'invincible (compense le halo de l'image) */
+        [data-layout-id="cape"] > img.sprite-transparent {
+            width: clamp(72px, 14.4vw, 117px);
         }
 
         .node-item img {
@@ -125,9 +134,127 @@
             }
         }
 
+        @keyframes plume-zoom {
+            0%, 100% {
+                transform: scale(1);
+                filter:
+                    drop-shadow(0 0 6px rgba(255, 255, 255, 0.55))
+                    drop-shadow(0 0 14px rgba(255, 255, 255, 0.35));
+            }
+            50% {
+                transform: scale(1.5);
+                filter:
+                    drop-shadow(0 0 12px rgba(255, 255, 255, 0.95))
+                    drop-shadow(0 0 24px rgba(255, 255, 255, 0.75))
+                    drop-shadow(0 0 40px rgba(255, 255, 255, 0.45));
+            }
+        }
+
+        @keyframes star-zoom {
+            0%, 100% {
+                transform: scale(1);
+                filter:
+                    drop-shadow(0 0 6px rgba(251, 221, 8, 0.55))
+                    drop-shadow(0 0 14px rgba(255, 140, 0, 0.35));
+            }
+            50% {
+                transform: scale(1.5);
+                filter:
+                    drop-shadow(0 0 12px rgba(251, 221, 8, 0.95))
+                    drop-shadow(0 0 24px rgba(255, 140, 0, 0.75))
+                    drop-shadow(0 0 40px rgba(255, 102, 0, 0.45));
+            }
+        }
+
+        /* Halo arc-en-ciel clignotant — poulpe invincible final */
+        @keyframes invincible-rainbow-halo {
+            0%, 8% {
+                filter:
+                    drop-shadow(0 0 12px rgba(255, 60, 60, 0.95))
+                    drop-shadow(0 0 26px rgba(255, 160, 0, 0.8))
+                    drop-shadow(0 0 42px rgba(255, 230, 0, 0.55));
+            }
+            10%, 12% {
+                filter:
+                    drop-shadow(0 0 3px rgba(255, 60, 60, 0.12))
+                    drop-shadow(0 0 6px rgba(255, 160, 0, 0.08))
+                    drop-shadow(0 0 10px rgba(255, 230, 0, 0.05));
+            }
+            20%, 28% {
+                filter:
+                    drop-shadow(0 0 12px rgba(255, 200, 0, 0.95))
+                    drop-shadow(0 0 26px rgba(80, 220, 80, 0.8))
+                    drop-shadow(0 0 42px rgba(0, 200, 255, 0.55));
+            }
+            30%, 32% {
+                filter:
+                    drop-shadow(0 0 3px rgba(255, 200, 0, 0.12))
+                    drop-shadow(0 0 6px rgba(80, 220, 80, 0.08))
+                    drop-shadow(0 0 10px rgba(0, 200, 255, 0.05));
+            }
+            40%, 48% {
+                filter:
+                    drop-shadow(0 0 12px rgba(60, 200, 120, 0.95))
+                    drop-shadow(0 0 26px rgba(0, 180, 255, 0.8))
+                    drop-shadow(0 0 42px rgba(120, 80, 255, 0.55));
+            }
+            50%, 52% {
+                filter:
+                    drop-shadow(0 0 3px rgba(60, 200, 120, 0.12))
+                    drop-shadow(0 0 6px rgba(0, 180, 255, 0.08))
+                    drop-shadow(0 0 10px rgba(120, 80, 255, 0.05));
+            }
+            60%, 68% {
+                filter:
+                    drop-shadow(0 0 12px rgba(0, 160, 255, 0.95))
+                    drop-shadow(0 0 26px rgba(140, 80, 255, 0.8))
+                    drop-shadow(0 0 42px rgba(255, 80, 200, 0.55));
+            }
+            70%, 72% {
+                filter:
+                    drop-shadow(0 0 3px rgba(0, 160, 255, 0.12))
+                    drop-shadow(0 0 6px rgba(140, 80, 255, 0.08))
+                    drop-shadow(0 0 10px rgba(255, 80, 200, 0.05));
+            }
+            80%, 88% {
+                filter:
+                    drop-shadow(0 0 12px rgba(180, 80, 255, 0.95))
+                    drop-shadow(0 0 26px rgba(255, 80, 160, 0.8))
+                    drop-shadow(0 0 42px rgba(255, 60, 60, 0.55));
+            }
+            90%, 92% {
+                filter:
+                    drop-shadow(0 0 3px rgba(180, 80, 255, 0.12))
+                    drop-shadow(0 0 6px rgba(255, 80, 160, 0.08))
+                    drop-shadow(0 0 10px rgba(255, 60, 60, 0.05));
+            }
+            100% {
+                filter:
+                    drop-shadow(0 0 12px rgba(255, 60, 60, 0.95))
+                    drop-shadow(0 0 26px rgba(255, 160, 0, 0.8))
+                    drop-shadow(0 0 42px rgba(255, 230, 0, 0.55));
+            }
+        }
+
         @keyframes sprite-bob {
             0%, 100% { transform: translateY(0); }
             50%       { transform: translateY(-4px); }
+        }
+
+        /* MiniPoulpe départ — marche sur place (pas + balancement) */
+        @keyframes minipoulpe-walk {
+            0%, 100% {
+                transform: translate(0, 0) rotate(-1.5deg) scale(1.02, 0.96);
+            }
+            25% {
+                transform: translate(5px, -7px) rotate(2deg) scale(0.98, 1.04);
+            }
+            50% {
+                transform: translate(0, 0) rotate(-1.5deg) scale(1.02, 0.96);
+            }
+            75% {
+                transform: translate(-5px, -7px) rotate(2deg) scale(0.98, 1.04);
+            }
         }
 
         :root {
@@ -280,17 +407,41 @@
             filter: none;
         }
 
+        .anim-plume-zoom img {
+            transform-origin: center center;
+            animation: plume-zoom 2s ease-in-out infinite;
+            filter: none;
+        }
+
+        .anim-star-zoom img {
+            transform-origin: center center;
+            animation: star-zoom 2s ease-in-out infinite;
+            filter: none;
+        }
+
         .anim-invincible img {
             animation: sprite-bob 1.6s ease-in-out infinite;
         }
 
-        .anim-bob .node-sprite img {
+        .node-final.anim-invincible .invincible-wrap img {
+            animation:
+                sprite-bob 1.6s ease-in-out infinite,
+                invincible-rainbow-halo 2s linear infinite;
+            filter: none;
+        }
+
+        .node-sprite.anim-bob > img {
             animation: sprite-bob 2s ease-in-out infinite;
+        }
+
+        .anim-walk-depart img.sprite-start {
+            transform-origin: center bottom;
+            animation: minipoulpe-walk 0.65s ease-in-out infinite;
         }
 
         /* Délais gérés par JavaScript */
 
-        /* Poulpe final : l'image inclut déjà l'aura arc-en-ciel */
+        /* Poulpe final invincible — halo arc-en-ciel clignotant (CSS) */
         .node-final img {
             width: clamp(80px, 16vw, 130px);
         }
@@ -333,15 +484,22 @@
             outline-color: #FBDD08;
         }
 
-        .layout-edit-mode .anim-bob .node-sprite img,
+        .layout-edit-mode .node-sprite.anim-bob > img,
+        .layout-edit-mode .anim-walk-depart img.sprite-start,
         .layout-edit-mode .mario-grow-wrap,
         .layout-edit-mode .fire-mario-wrap,
         .layout-edit-mode .anim-float .node-item img,
         .layout-edit-mode .anim-star-glow .node-item img,
         .layout-edit-mode .anim-flower-powerup img,
+        .layout-edit-mode .anim-plume-zoom img,
+        .layout-edit-mode .anim-star-zoom img,
         .layout-edit-mode .anim-invincible img,
         .layout-edit-mode .fire-fx-layer .fireball {
             animation: none !important;
+        }
+
+        .layout-edit-mode .node-final.anim-invincible .invincible-wrap img {
+            filter: none;
         }
 
         .layout-panel {
@@ -493,7 +651,7 @@
                 <!-- ── Sprites MiniPoulpe (états de progression) ── -->
 
                 <!-- Départ : poulpe de base -->
-                <div class="node node-sprite anim-bob" data-layout-id="depart" style="left: 11.0%; top: 93.0%;">
+                <div class="node node-sprite anim-walk-depart" data-layout-id="depart" style="left: 10.4%; top: 89.4%;">
                     <img src="Image/MiniPoupleMiniMarioTransparence.png" alt="MiniPoulpe Mario — départ" class="sprite-transparent sprite-start">
                     <div class="node-label">
                         <strong>Départ</strong>
@@ -502,7 +660,7 @@
                 </div>
 
                 <!-- Après champignon : Mini Mario (grossit par paliers) -->
-                <div class="node node-sprite" data-layout-id="mario-01" style="left: 79.8%; top: 79.8%;">
+                <div class="node node-sprite" data-layout-id="mario-01" style="left: 72.1%; top: 69.4%;">
                     <div class="mario-grow-wrap">
                         <img src="Image/MiniPoupleMiniMarioTransparence.png" alt="MiniPoulpe Mario" class="sprite-transparent">
                     </div>
@@ -513,7 +671,7 @@
                 </div>
 
                 <!-- Après fleur de feu -->
-                <div class="node node-sprite" data-layout-id="fire-flower" style="left: 74.7%; top: 50.7%;">
+                <div class="node node-sprite" data-layout-id="fire-flower" style="left: 47.1%; top: 53.7%;">
                     <div class="fire-sprite-stage">
                         <div class="fire-mario-wrap">
                             <img src="Image/minipoulpeFleur.png" alt="MiniPoulpe Fire Flower" class="sprite-transparent">
@@ -526,7 +684,7 @@
                 </div>
 
                 <!-- Après plume : Cape volante -->
-                <div class="node node-sprite anim-bob" data-layout-id="cape" style="left: 15.7%; top: 32.3%;">
+                <div class="node node-sprite anim-invincible" data-layout-id="cape" style="left: 49.7%; top: 32.3%;">
                     <img src="Image/MiniPoulpeVolant.png" alt="MiniPoulpe Cape" class="sprite-transparent">
                     <div class="node-label">
                         <strong>04–05 · Boucles &amp; STD</strong>
@@ -535,7 +693,7 @@
                 </div>
 
                 <!-- Final : invincible -->
-                <div class="node node-sprite anim-invincible node-final" data-layout-id="invincible" style="left: 62.0%; top: 9.0%;">
+                <div class="node node-sprite anim-invincible node-final" data-layout-id="invincible" style="left: 82.2%; top: 24.2%;">
                     <div class="invincible-wrap">
                         <img src="Image/PoulpeInvicibleNoBackground.png" alt="MiniPoulpe invincible" class="sprite-transparent">
                     </div>
@@ -547,22 +705,22 @@
 
                 <!-- ── Items Mario (power-ups) ── -->
 
-                <div class="node node-item anim-float" data-layout-id="item-mushroom" style="left: 46.7%; top: 84.5%;">
+                <div class="node node-item anim-plume-zoom" data-layout-id="item-mushroom" style="left: 39.7%; top: 80.9%;">
                     <img src="Image/MushRoom.png" alt="Champignon">
                     <div class="node-label">Power-up<br>Champignon</div>
                 </div>
 
-                <div class="node node-item anim-flower-powerup" data-layout-id="item-flower" style="left: 92.6%; top: 67.5%;">
+                <div class="node node-item anim-flower-powerup" data-layout-id="item-flower" style="left: 69.2%; top: 58.7%;">
                     <img src="Image/flower.png" alt="Fleur de feu">
                     <div class="node-label">Power-up<br>Fleur de feu</div>
                 </div>
 
-                <div class="node node-item anim-float anim-float-delay-2" data-layout-id="item-plume" style="left: 41.3%; top: 45.2%;">
+                <div class="node node-item anim-plume-zoom" data-layout-id="item-plume" style="left: 27.1%; top: 43.6%;">
                     <img src="Image/plume.png" alt="Plume cape">
                     <div class="node-label">Power-up<br>Plume</div>
                 </div>
 
-                <div class="node node-item anim-star-glow anim-float-delay-3" data-layout-id="item-star" style="left: 27.6%; top: 14.3%;">
+                <div class="node node-item anim-star-zoom" data-layout-id="item-star" style="left: 66.1%; top: 27.5%;">
                     <img src="Image/etoile.png" alt="Étoile invincible">
                     <div class="node-label">Power-up<br>Étoile</div>
                 </div>
