@@ -133,6 +133,7 @@ Ces tâches débloquent la mise en ligne ou corrigent des problèmes visibles po
 - [x] **P1** — Fermer la balise `<div class="pt-24">` manquante sur `index.html`
 - [ ] **P2** — Normaliser le chemin image MiniPoulpe : `/Image/MiniPoulpeDicord.png` (au lieu de `\`)
 - [ ] **P2** — Harmoniser le discours Lua vs C++ sur `index.html` (roadmap = C++/Raylib)
+- [ ] **P2** — Roadmaps `index.html` / `centre-formation.html` : barrer ou marquer les vignettes des modules non prêts (2–5) en **« À venir »** / **en construction**, sur le modèle des phases 2–3 de `gamedevready.html` (badge `À VENIR`, `opacity-75`, bordure grise, « Bientôt disponible », pas de lien) — seul **Bases C++** reste cliquable
 
 ---
 
@@ -261,6 +262,6 @@ Maquette d’écran cible (beat’em up arcade type *Golden Axe* / *Cadillacs an
 
 | Page | Avancement estimé |
 |------|---------------------|
-| `index.html` (FlashDev) | ~80 % — contenu OK, liens et détails à finaliser |
+| `index.html` (FlashDev) | ~80 % — contenu OK, liens et détails à finaliser ; modules roadmap 2–5 à marquer « à venir » |
 | `centre-formation.html` | ~30 % — structure solide, contenu à rédiger |
 | `gamedevready-bases-cpp.html` | ~100 % — deck + guides + auth en prod, tests OK |
