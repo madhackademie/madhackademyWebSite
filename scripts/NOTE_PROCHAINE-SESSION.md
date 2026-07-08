@@ -1,7 +1,7 @@
 # Guide — Prochaine session de travail
 
 > **Référence principale** pour reprendre le projet madhackademyWebSite  
-> Dernière mise à jour : 7 juillet 2026  
+> Dernière mise à jour : 8 juillet 2026  
 > Domaine : [gameopenmoney.com](https://gameopenmoney.com/)
 
 ---
@@ -23,9 +23,13 @@
 
 ### Prochaine étape
 
+> **P1 prioritaire session suivante :** valider le périmètre MVP avant release (`scripts/NOTE_MVP-FLASHDEV.md`) — pour chaque ligne Must-have, trancher bloquant release oui/non.
+
+- [ ] **P1** — Valider le périmètre MVP avant release (`scripts/NOTE_MVP-FLASHDEV.md`) — cocher Must-have / Should-have / Won't-have
 - [ ] Contenu centre-formation (voir `TODO.md` § P1 contenu)
 - [ ] Paiement / rôle `student` (webhook → `user_products`)
-- [ ] Appairage FlashDev ↔ compte (token API)
+- [ ] **P1** — Dashboard élève (`dashboard/index.php`) : install FlashRevisionSoft, utilitaires, contenu acheté
+- [ ] *(phase ultérieure)* Appairage FlashDev ↔ compte (token API) — **P2 avant release publique** : site = guides via login, soft = révisions locales
 
 > Dépannage auth / OVH : **`NOTE_OVH-PHP-MYSQL.md`** · **`NOTE_AUTH-SETUP.md`**
 
@@ -94,15 +98,20 @@ Visiteur
 | **`scripts/NOTE_AUTH-SETUP.md`** | Détail auth (rôles, URLs, fichiers) |
 | **`scripts/NOTE_DEPLOIEMENT-FTP-GAMEDEVREADY.md`** | FTP GameDevReady, cartes, `URLNet` FlashDev |
 | **`NOTE_ARCHITECTURE_SOFT-SITE.md`** | Sync FlashDev ↔ site, API future, paiement |
+| **`scripts/NOTE_CREATION-ENTREPRISE.md`** | Création entreprise (Allemagne), compte N26, calendrier sept. 2026 |
+| **`scripts/NOTE_REVISION-BOOTCAMP-FR.md`** | Checklist révision cartes + guides FR + test soft (P1) |
+| **`scripts/CONVENTIONS-LAURENT.md`** | 5 conventions personnelles — rappel début session |
+| **`scripts/NOTE_MVP-FLASHDEV.md`** | Périmètre MVP avant release — **P1 prochaine session** |
 
 ---
 
 ## 5. Prochaines évolutions
 
 1. **Contenu centre-formation** — bio, boutique, offres (`TODO.md` § P1 contenu)
-2. **Paiement** — Stripe ou System.io → webhook PHP → `user_products` pour rôle `student`
-3. **FlashDev** — token API après login (appairage soft ↔ compte)
-4. **Dashboard élève** — roadmap + classement (`NOTE_ARCHITECTURE_SOFT-SITE.md`)
+2. **Entreprise & compte pro** — statut Allemagne, N26 (objectif sept. 2026) — `NOTE_CREATION-ENTREPRISE.md`
+3. **Paiement** — Stripe ou System.io → webhook PHP → `user_products` pour rôle `student`
+4. **FlashDev** — token API après login (appairage soft ↔ compte)
+5. **Dashboard élève** — roadmap + classement (`NOTE_ARCHITECTURE_SOFT-SITE.md`)
 
 ### Plan B — hébergeur sans PHP
 

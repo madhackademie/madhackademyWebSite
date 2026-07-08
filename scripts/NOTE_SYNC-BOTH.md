@@ -138,6 +138,12 @@ Le pull utilise `git pull --ff-only` (fast-forward uniquement, pas de merge surp
 .\scripts\commit-both.ps1
 ```
 
+### Note branche SOFT (en attente de tests)
+
+- Tu travailles actuellement sur **une autre branche** dans `FlashRevisionSoft`, en attente des retours de test.
+- Une fois validée, fais d'abord le **merge + commit sur l'ordinateur de bureau**.
+- Ensuite seulement, synchronise l'autre machine avec `sync-both.ps1`.
+
 ---
 
 ## Dépannage

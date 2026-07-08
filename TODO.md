@@ -17,6 +17,9 @@
 | [`scripts/NOTE_DEPLOIEMENT-FTP-GAMEDEVREADY.md`](scripts/NOTE_DEPLOIEMENT-FTP-GAMEDEVREADY.md) | FTP GameDevReady |
 | [`scripts/NOTE_OVH-PHP-MYSQL.md`](scripts/NOTE_OVH-PHP-MYSQL.md) | PHP, MySQL, auth OVH (maintenance) |
 | [`scripts/NOTE_AUTH-SETUP.md`](scripts/NOTE_AUTH-SETUP.md) | Rôles, URLs auth |
+| [`scripts/NOTE_CREATION-ENTREPRISE.md`](scripts/NOTE_CREATION-ENTREPRISE.md) | Création entreprise Allemagne, N26, calendrier sept. 2026 |
+| [`scripts/NOTE_REVISION-BOOTCAMP-FR.md`](scripts/NOTE_REVISION-BOOTCAMP-FR.md) | Checklist révision cartes + guides FR + test soft (P1) |
+| [`scripts/NOTE_MVP-FLASHDEV.md`](scripts/NOTE_MVP-FLASHDEV.md) | Périmètre MVP avant release — à valider |
 
 ### Checklist rapide prochaine session
 
@@ -91,6 +94,20 @@ WebSite/Formations/
 
 Ces tâches débloquent la mise en ligne ou corrigent des problèmes visibles pour les visiteurs.
 
+### Pages vitrine — validation contenu & liens (**P1**)
+
+> Cocher la page principale quand **contenu + liens** sont validés. Détail des liens `#` restants : voir grep `href="#"` dans chaque fichier.
+
+- [ ] **P1** — [`index.html`](WebSite/index.html) (FlashDev — accueil)
+  - [ ] Contenu validé (hero, comparaison, roadmap, stream, download)
+  - [ ] Tous les liens réels — GitHub, Twitch, YouTube, System.io, achat premium (plus de `href="#"`)
+- [ ] **P1** — [`centre-formation.html`](WebSite/centre-formation.html) (MadHackAdemy)
+  - [ ] Contenu validé — hero, qui suis-je, méthode SITE+SOFT, roadmap, boutique (3 offres), footer
+  - [ ] Tous les liens réels — CTA offres, nav, ancres (plus de placeholders `[…]` ni `href="#"`)
+- [ ] **P1** — [`gamedevready.html`](WebSite/gamedevready.html) (hub GameDevReady)
+  - [ ] Contenu validé — 3 phases, textes phases 2–3 « à venir »
+  - [ ] Tous les liens réels — deck Bases C++, roadmap accueil, nav inter-pages
+
 ### Contenu (bloquant publication centre-formation)
 
 - [ ] **P1** — Rédiger l'accroche hero de `centre-formation.html` (1–2 phrases, cible + promesse)
@@ -105,6 +122,21 @@ Ces tâches débloquent la mise en ligne ou corrigent des problèmes visibles po
 - [ ] **P1** — Remplacer tous les liens `#` sur `index.html` (GitHub, Twitch, YouTube, achat premium)
 - [x] **P1** — Configurer l'hébergement statique → [gameopenmoney.com](https://gameopenmoney.com/)
 - [x] **P2** — Vérifier que la navigation inter-pages fonctionne en production (`/` ↔ `/centre-formation.html`)
+
+### Révision bootcamp FR + test soft — **P1**
+
+> Checklist détaillée (une case par carte / guide / module soft) : **`scripts/NOTE_REVISION-BOOTCAMP-FR.md`**
+
+- [ ] **P1** — Révision site : 7 cartes HTML + 7 guides FR (cohérence, images, liens)
+- [ ] **P1** — Test soft : install `DeckBootCampCpp/` + parcours complet sur les 7 cartes
+- [ ] **P1** — Re-upload FTP après corrections
+
+### Mise à jour FlashDev (coordination site ↔ soft) — **P1 critique**
+
+> Voir **`FlashRevisionSoft/TODO.md`** § *Mise à jour du soft*. Bloquant avant distribution publique.
+
+- [ ] **P1** — Héberger manifest version + lien téléchargement sur le site (ex. `latest-version.json` ou dashboard)
+- [ ] **P1** — Documenter procédure release : tag version → build → upload → manifest mis à jour
 
 ### Déploiement GameDevReady (provider / FTP)
 
@@ -127,6 +159,17 @@ Ces tâches débloquent la mise en ligne ou corrigent des problèmes visibles po
 - [x] Tests production (login, guides 01–07, 403 URL directe) — juillet 2026
 - [x] Identifiants testeurs beta distribués — juillet 2026
 - [ ] **P2** — Webhook paiement → accès `student` (`user_products`)
+
+### Espace utilisateur — `dashboard/` (avant commercialisation bootcamp)
+
+> Nom prévu : **`WebSite/dashboard/index.php`** — espace élève (`NOTE_ARCHITECTURE_SOFT-SITE.md`).
+
+- [ ] **P1** — Créer `dashboard/index.php` : page connectée post-login avec
+  - guides d'installation et d'utilisation de FlashRevisionSoft
+  - fichiers utilitaires à télécharger
+  - contenu déjà acheté (decks, accès guides GameDevReady)
+  - **bouton télécharger l'installeur** (lien vers script/exe — à créer après validation MVP, voir `NOTE_INSTALL-MADHACKADEMY.md`)
+- [ ] **P1** — Lien depuis la nav auth (`login.php`, `gamedevready-bases-cpp.html`) vers le dashboard
 
 ### Corrections techniques urgentes
 
@@ -161,8 +204,10 @@ Tâches utiles mais non bloquantes — à traiter après les priorités.
 - [x] Guides 01–07 dans `WebSite/Formations/BaseCpp/guides/` — juillet 2026
 - [x] Structure `FicheFormationHtlm/*Guide/` (sources, sans HTML carte) — juin 2026
 - [x] Page Bases C++ : miniatures → ancres, boutons guide protégés — juin 2026
+- [ ] **P2** — Avant release publique des guides GameDevReady : ajouter, en bas de chaque guide HTML (`WebSite/Formations/BaseCpp/guides/*Guide/`), un encart avec **lien officiel de vente** du deck (CTA vers la page boutique / deck) pour que les lecteurs arrivant via un partage pirate retombent sur ton site
+
 ### Contenu & éditorial
-- [ ] Rédiger les textes légaux (mentions légales, CGV boutique)
+- [ ] Rédiger les textes légaux (mentions légales, CGV boutique) — voir [`scripts/NOTE_CREATION-ENTREPRISE.md`](scripts/NOTE_CREATION-ENTREPRISE.md)
 - [ ] Préparer des témoignages / preuves sociales pour la page centre-formation
 - [ ] Aligner la roadmap centre-formation avec celle de FlashDev (`index.html`) ou expliquer la différence
 

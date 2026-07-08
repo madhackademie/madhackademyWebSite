@@ -1,0 +1,58 @@
+---
+description: Reprise de session MadHackAdemy — P1, tests, MVP, docs de référence
+alwaysApply: true
+---
+
+# Session de travail MadHackAdemy / FlashDev
+
+## Fin de session (obligatoire)
+
+Si l'utilisateur termine, fait une pause, ou dit « fin de session » / « on s'arrête » :
+
+1. Proposer ou rédiger la mise à jour de `scripts/NOTE_PROCHAINE-SESSION.md` :
+   - bilan du jour (fait / en cours)
+   - **prochaine P1** unique pour la session suivante
+   - tâches de test associées si pertinent
+2. Rappeler la convention 4 (`CONVENTIONS-LAURENT.md`) si la note n'est pas à jour.
+
+Ne pas laisser la session se fermer sans P1 suivante documentée.
+
+## Quand l'utilisateur demande « quoi faire » / « les tâches » / « la prochaine session »
+
+**D'abord** : rappel des 5 conventions (`conventions-laurent-rappel.mdc` → `scripts/CONVENTIONS-LAURENT.md`).
+
+Ensuite répondre avec **deux blocs distincts** :
+
+1. **P1 prioritaires** — issues de `TODO.md` (site + soft) et `scripts/NOTE_PROCHAINE-SESSION.md`
+2. **Tâches de test** — checklists dans `scripts/NOTE_REVISION-BOOTCAMP-FR.md`, tests deck soft, validation pages vitrine
+
+Ne pas noyer dans le backlog P2/P3 sauf si l'utilisateur le demande.
+
+## Documents à consulter en début de session
+
+| Priorité | Fichier |
+|----------|---------|
+| 1 | `scripts/NOTE_PROCHAINE-SESSION.md` |
+| 2 | `TODO.md` (site) + `../FlashRevisionSoft/TODO.md` (soft) |
+| 3 | `scripts/NOTE_MVP-FLASHDEV.md` — périmètre release |
+| 4 | `scripts/NOTE_REVISION-BOOTCAMP-FR.md` — cases par carte/guide |
+| 5 | `scripts/CONVENTIONS-LAURENT.md` — 5 règles personnelles (rappel début session) |
+| 6 | `scripts/NOTE_SYNC-BOTH.md` — branche soft en attente test |
+
+## P1 session en cours (juillet 2026)
+
+**Valider le périmètre MVP avant release** : cocher dans `NOTE_MVP-FLASHDEV.md` ce qui est **impératif** vs reporté. Mettre à jour la note après chaque décision.
+
+## Règles produit (rappel)
+
+- **Site** = guides via login ; **soft** = révisions locales (pas de linkage compte au départ)
+- **Linkage soft ↔ compte** = P2 avant release publique guides premium
+- **Installeur** = à définir ensemble après MVP soft ; bouton download sur `dashboard/index.php`
+- **Commercialisation bootcamp** : voir aussi `scripts/NOTE_CREATION-ENTREPRISE.md`
+
+## Workspace
+
+- Site : `madhackademyWebSite/`
+- Soft : `FlashRevisionSoft/` (sibling dans le workspace)
+
+Répondre en **français** sauf demande contraire.

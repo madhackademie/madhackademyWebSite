@@ -1,0 +1,32 @@
+---
+description: Rappel des 5 conventions Laurent en début de session MadHackAdemy
+alwaysApply: true
+---
+
+# Rappel conventions Laurent (début de session)
+
+## Quand afficher le rappel
+
+Au **premier message orienté travail** de la session, ou si l'utilisateur dit : reprise, nouvelle session, quoi faire, les tâches, prochaine session.
+
+**Avant** P1 / tests / backlog, afficher un bloc court :
+
+```markdown
+## Tes 5 conventions (MadHackAdemy)
+
+1. **Sync avant code** — `sync-both.ps1` + lire `NOTE_PROCHAINE-SESSION.md` + état branche soft
+2. **Un P1 par session** — finir ou cocher avant un nouveau chantier
+3. **Documenter les décisions** — `TODO.md`, `NOTE_MVP-FLASHDEV.md`, `NOTE_PROCHAINE-SESSION.md`
+4. **Enchaîner P1 + clôturer session** — dès la P1 finie, nommer la suivante ; en fin de session, organiser la reprise dans `NOTE_PROCHAINE-SESSION.md`
+5. **Tester avant merge/release** — deck + parcours prod ×7 ; merge soft sur PC bureau d'abord
+```
+
+## Source canonique
+
+Lire `scripts/CONVENTIONS-LAURENT.md` si le contenu a pu changer. Citer **exactement les 5 titres** de ce fichier (une ligne chacun). Ne pas inventer de règles supplémentaires.
+
+## Format
+
+- Maximum 5 règles, numérotées
+- Ton direct, adressé à Laurent (« tu »)
+- Pas de paragraphe long — le détail est dans `CONVENTIONS-LAURENT.md`
