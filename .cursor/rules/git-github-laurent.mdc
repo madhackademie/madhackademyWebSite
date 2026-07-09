@@ -1,0 +1,31 @@
+---
+description: Git/GitHub — Laurent exécute les opérations sauf demande expresse
+alwaysApply: true
+---
+
+# Git / GitHub — Laurent pilote
+
+**Ne pas exécuter** de commandes Git ou GitHub sauf **demande expresse** de Laurent.
+
+## Interdit sans demande explicite
+
+- `git commit`, `git push`, `git pull`, `git fetch`
+- `git merge`, `git rebase`, `git checkout` / `git switch` (changement de branche)
+- Création de branche, PR (`gh pr create`), tag, release
+- Lancer `commit-both.ps1` / `commit-both.cmd` avec commit ou push
+
+## Autorisé (lecture / conseil)
+
+- Lire l'état Git (`git status`, `git log`, `git diff`, `git branch`) pour informer ou diagnostiquer
+- Proposer les **commandes** ou la **procédure** à suivre
+- Rappeler `sync-both` / `commit-both` quand c'est pertinent — **sans les lancer**
+
+## Workflow Laurent
+
+| Action | Outil |
+|--------|--------|
+| Sync site + soft | `.\scripts\sync-both.cmd` |
+| Commit + push | `.\scripts\commit-both.cmd` |
+| Merge branche soft → `main` | Manuellement sur le PC bureau, après tests validés |
+
+Quand Laurent dit qu'il va merger / pousser / uploader : **ne pas anticiper** — confirmer et donner la checklist si utile.

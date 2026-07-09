@@ -138,11 +138,11 @@ Le pull utilise `git pull --ff-only` (fast-forward uniquement, pas de merge surp
 .\scripts\commit-both.ps1
 ```
 
-### Note branche SOFT (en attente de tests)
+### Note branche SOFT
 
-- Tu travailles actuellement sur **une autre branche** dans `FlashRevisionSoft`, en attente des retours de test.
-- Une fois validée, fais d'abord le **merge + commit sur l'ordinateur de bureau**.
-- Ensuite seulement, synchronise l'autre machine avec `sync-both.ps1`.
+- **Merge `feat/deck-bootcamp-cpp` → `main` fait** (juillet 2026) — tests deck validés, push `origin/main` OK.
+- `SquelletteGCS/data.json` : état **local** (réindexé par l'install deck) — ne pas committer ; `git restore` avant changement de branche si besoin.
+- Sur l'autre machine : `.\scripts\sync-both.cmd` pour récupérer `main`.
 
 ---
 
