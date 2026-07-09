@@ -111,7 +111,8 @@
 - [ ] **P1** — Parcours prod : carte → **Ouvrir le guide** → login → guide complet (×7)
 - [ ] **P1** — Images guides : pas de lien cassé (`Image/`, `image/`)
 - [ ] **P1** — Cohérence texte carte site ↔ guide (modules 01–07)
-- [ ] **P1** — Upload FTP après corrections (`Formations/BaseCpp/`)
+- [ ] **P1** — Anti-copie (×7) : accès direct `guides/*Guide/*.html` → **403** ; guide servi uniquement via `/auth/guide.php?m=XX` après login
+- [ ] **P1** — Upload FTP après corrections (`Formations/BaseCpp/` + `.htaccess` guides)
 
 ### Soft (test deck)
 
@@ -119,7 +120,7 @@
 - [ ] **P1** — 7 cartes installées dans `data.json` + images `images_current/`
 - [ ] **P1** — Parcours start / reset / code / done sur les 7 cartes
 - [ ] **P1** — Aucun crash `newImage`, ordre `nextRevision` OK
-- [ ] **P1** — `URLNet` ouvre la bonne page web (quand image cliquable implémentée)
+- [ ] **P1** — Bouton **webGuide** ouvre la bonne page web (`URLNet`)
 
 ---
 

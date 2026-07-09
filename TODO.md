@@ -204,7 +204,23 @@ Tâches utiles mais non bloquantes — à traiter après les priorités.
 - [x] Guides 01–07 dans `WebSite/Formations/BaseCpp/guides/` — juillet 2026
 - [x] Structure `FicheFormationHtlm/*Guide/` (sources, sans HTML carte) — juin 2026
 - [x] Page Bases C++ : miniatures → ancres, boutons guide protégés — juin 2026
-- [ ] **P2** — Avant release publique des guides GameDevReady : ajouter, en bas de chaque guide HTML (`WebSite/Formations/BaseCpp/guides/*Guide/`), un encart avec **lien officiel de vente** du deck (CTA vers la page boutique / deck) pour que les lecteurs arrivant via un partage pirate retombent sur ton site
+
+#### Protection anti-copie (guides Frogger + futurs Raylib C++)
+
+> **Déjà en place (bootcamp 01–07)** : auth `/auth/guide.php` + blocage `.htaccess` sur `guides/` (403 en accès direct).  
+> **Réaliste** : empêcher la consultation sans achat / compte. **Impossible à 100 %** : une fois affiché, le HTML reste copiable (DevTools, « Enregistrer sous », capture). Objectif = **friction + récupération commerciale**, pas un DRM inviolable.  
+> **Cartes Frogger** = volontairement **publiques** (vitrine) ; **guides pédagogiques** = **protégés**.
+
+**Checklist à appliquer à chaque nouveau guide GameDevReady** (bootcamp + modules Raylib avancés) :
+
+- [ ] Déposer le HTML dans `WebSite/Formations/BaseCpp/guides/*Guide/` (ne jamais publier le guide en URL publique directe)
+- [ ] Enregistrer le module dans `mha_guides_catalog()` (`WebSite/api/bootstrap.php`)
+- [ ] Bouton « Ouvrir le guide » → `/auth/guide.php?m=XX` sur la page deck (pas de lien vers le `.html`)
+- [ ] Vérifier après FTP : accès direct `…/guides/…/*.html` → **403** (`.htaccess` uploadé)
+- [ ] Footer du guide : © MadHackAdemy / GameDevReady + **encart lien officiel de vente** du deck (CTA boutique — lecteur pirate retombe sur ton site)
+- [ ] Côté soft : `URLNet` pointe la **carte publique** (`cards/…`) — **pas** le guide ni `/auth/guide.php`
+- [ ] **P2** — *(optionnel, polish)* Filigrane discret (email ou pseudo de session) injecté par `mha_serve_guide_html()` — dissuasion partage de compte
+- [ ] **P2** — *(ne pas prioriser)* `user-select: none` / blocage clic droit — contournable, UX dégradée ; ne remplace pas l'auth
 
 ### Contenu & éditorial
 - [ ] Rédiger les textes légaux (mentions légales, CGV boutique) — voir [`scripts/NOTE_CREATION-ENTREPRISE.md`](scripts/NOTE_CREATION-ENTREPRISE.md)

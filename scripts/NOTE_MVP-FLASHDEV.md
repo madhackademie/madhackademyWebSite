@@ -32,7 +32,7 @@ Un élève peut :
 | S2 | Parcours complet sur 7 cartes (start, reset, VS Code, done, SM2) | [ ] | [ ] |
 | S3 | `CardProperties` corrects par module (pas copiés depuis Print) | [ ] | [ ] |
 | S4 | JSON deck harmonisé (`URLNet`, chemins, `nextRevision`) | [ ] | [ ] |
-| S5 | Image carte cliquable → ouvre `URLNet` (site / guide) | [ ] | [ ] |
+| S5 | Bouton **webGuide** → ouvre `URLNet` (carte site) | [x] | [ ] |
 | S6 | Message « mise à jour disponible » + mécanisme update (même minimal) | [ ] | [ ] |
 | S7 | Installeur élève (script `.cmd` ou `.exe` — voir `NOTE_INSTALL-MADHACKADEMY.md`) | [ ] | [ ] |
 
