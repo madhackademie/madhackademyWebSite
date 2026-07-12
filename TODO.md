@@ -133,7 +133,7 @@ Ces tâches débloquent la mise en ligne ou corrigent des problèmes visibles po
 
 ### Mise à jour FlashDev (coordination site ↔ soft) — **P1 critique**
 
-> Voir **`FlashRevisionSoft/TODO.md`** § *Mise à jour du soft*. Bloquant avant distribution publique.
+> Voir **`FlashRevisionSoft/TODO.md`** § *Mise à jour du soft* et **`FlashRevisionSoft/scripts/NOTE_UPDATE-SYSTEM.md`** (manifest, check au lancement, garde-fous données). Bloquant avant distribution publique.
 
 - [ ] **P1** — Héberger manifest version + lien téléchargement sur le site (ex. `latest-version.json` ou dashboard)
 - [ ] **P1** — Documenter procédure release : tag version → build → upload → manifest mis à jour

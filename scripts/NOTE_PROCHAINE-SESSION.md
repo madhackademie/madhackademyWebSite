@@ -1,8 +1,31 @@
 # Guide — Prochaine session de travail
 
 > **Référence principale** pour reprendre le projet madhackademyWebSite  
-> Dernière mise à jour : 8 juillet 2026  
+> Dernière mise à jour : 12 juillet 2026  
 > Domaine : [gameopenmoney.com](https://gameopenmoney.com/)
+
+---
+
+## Session en cours / reprise demain matin (12 juillet 2026)
+
+### Branche soft
+
+- **`FlashRevisionSoft`** : branche **`feat/options-update`** (créée depuis `main`, juillet 2026)
+- **Objectif branche** : bouton **Options** ouvrant un menu déroulant avec entrée **Mise à jour** ; ou bouton **À jour** grisé lorsque le soft est à jour
+- **Implémentation** : directives à recevoir — ne pas coder avant validation du design
+
+### P1 demain matin (Laurent)
+
+- [ ] **Refaire les graphiques du bouton weblink** (`webGuide`, `currentProjectMenu.lua`) avec **mes assets**, selon **mon protocole de production** (remplacer les visuels actuels)
+
+### En cours sur `feat/options-update`
+
+- [ ] Bouton Options + menu déroulant mise à jour / état « à jour » grisé — **en attente directives d'implémentation**
+
+### Tests associés (après implémentation options)
+
+- [ ] Soft à jour → bouton « À jour » grisé, pas d'action
+- [ ] Update disponible → menu / bouton actif, flux check version (cf. `FlashRevisionSoft/TODO.md` § Mise à jour)
 
 ---
 
