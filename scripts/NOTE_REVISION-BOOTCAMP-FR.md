@@ -122,6 +122,15 @@
 - [ ] **P1** — Aucun crash `newImage`, ordre `nextRevision` OK
 - [ ] **P1** — Bouton **webGuide** ouvre la bonne page web (`URLNet`)
 
+### Soft (check mise à jour — Phase A, branche `feat/options-update`)
+
+> Manifest prod : `/flashdev/latest-version.json` · voir `FlashRevisionSoft/scripts/NOTE_UPDATE-SYSTEM.md`
+
+- [ ] **P1 — T2** — À jour (local = manifest v0.1.0) : console `[updateCheck] Soft a jour` ; Options → mise à jour **grisée**
+- [ ] **P1 — T3** — Hors ligne : **pas de crash** ; Start / Done / flèches OK ; bouton grisé
+- [ ] **P1** — Deck bootcamp (7 cartes) : `data.json` et SM2 **inchangés** après le check
+- [ ] **P1 — T1** *(optionnel)* — Manifest v0.2.0 en ligne → bouton mise à jour **actif**
+
 ---
 
 ## Synthèse progression

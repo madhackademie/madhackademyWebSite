@@ -1,0 +1,17 @@
+{
+  "version": "0.1.0",
+  "build": "20260714",
+  "minSupportedVersion": "0.1.0",
+  "releasedAt": "2026-07-14",
+  "channel": "stable",
+  "platform": "win64",
+  "requiresLove": "11.4",
+  "changelog": [
+    "Version bêta initiale — logiciel FlashDev (FlashRevisionSoft)",
+    "Deck GameDevReady Bootcamp C++ — 7 modules fondamentaux",
+    "Révision espacée SM2, cartes web (URLNet), menu Start / explore deck"
+  ],
+  "downloadUrl": "/flashdev/FlashRevisionSoft-0.1.0-win64.zip",
+  "sha256": "",
+  "sizeBytes": null
+}

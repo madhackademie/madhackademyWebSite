@@ -1,7 +1,7 @@
 # Guide — Prochaine session de travail
 
 > **Référence principale** pour reprendre le projet madhackademyWebSite  
-> Dernière mise à jour : 12 juillet 2026  
+> Dernière mise à jour : 14 juillet 2026  
 > Domaine : [gameopenmoney.com](https://gameopenmoney.com/)
 
 ---
@@ -20,12 +20,22 @@
 
 ### En cours sur `feat/options-update`
 
-- [ ] Bouton Options + menu déroulant mise à jour / état « à jour » grisé — **en attente directives d'implémentation**
+- [x] Bouton Options + menu déroulant mise à jour / état « à jour » grisé
+- [x] Phase A — `updateCheck.lua` + worker HTTPS (garde-fous hors ligne, sans toucher `data.json`)
+- [ ] Phase B — flux download 1 clic (`onUpdateRequested` → script PS1)
 
-### Tests associés (après implémentation options)
+### **P1 — Tests check mise à jour** (à faire avant merge / commit suivant)
 
-- [ ] Soft à jour → bouton « À jour » grisé, pas d'action
-- [ ] Update disponible → menu / bouton actif, flux check version (cf. `FlashRevisionSoft/TODO.md` § Mise à jour)
+> Branche `feat/options-update` · manifest : `https://gameopenmoney.com/flashdev/latest-version.json` · doc : `FlashRevisionSoft/scripts/NOTE_UPDATE-SYSTEM.md` § 7.5
+
+- [ ] **P1 — T2** — Lancement avec manifest **v0.1.0** (= `version.json` local) : console `[updateCheck] Soft a jour (0.1.0)` ; Options → entrée mise à jour **grisée**
+- [ ] **P1 — T3** — Lancement **hors ligne** (Wi‑Fi coupé) : **pas de crash** ; parcours révision OK (Start, Done, flèches) ; bouton grisé ; message d'erreur **console uniquement**
+- [ ] **P1** — Check terminé **pendant** une session (menu révision ouvert) : bouton passe grisé/actif sans redémarrer le soft
+- [ ] **P1** — Deck bootcamp installé : après check (succès ou échec réseau), **7 cartes** + `nextRevision` inchangés dans `data.json`
+- [ ] **P1 — T1** *(optionnel, manifest FTP)* — Passer `latest-version.json` en **v0.2.0** : Options → entrée mise à jour **active** ; clic → message console (Phase B pas encore implémentée)
+- [ ] **P1** — Non-régression : webGuide, explore deck, Start, Done — inchangés
+
+*(T4–T7 = Phase B download — après script `update-flashdev.ps1`)*
 
 ---
 
