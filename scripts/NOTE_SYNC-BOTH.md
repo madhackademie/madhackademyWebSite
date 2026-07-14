@@ -1,7 +1,14 @@
 # Note — Script `sync-both.ps1`
 
-> Dernière mise à jour : 23 juin 2026  
+> Dernière mise à jour : 14 juillet 2026  
 > Emplacement : `scripts/sync-both.ps1` (identique dans les deux dépôts)
+
+### État soft (juillet 2026)
+
+| Branche | État |
+|---------|------|
+| `feat/options-update` | Phase A commitée + poussée — **en attente merge → `main`** |
+| Merge | **PC bureau** manuellement, puis `sync-both` sur l'autre machine |
 
 ---
 
