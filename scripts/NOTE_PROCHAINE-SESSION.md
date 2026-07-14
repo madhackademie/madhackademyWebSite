@@ -6,17 +6,31 @@
 
 ---
 
-## Session en cours / reprise demain matin (12 juillet 2026)
+## Session en cours / reprise demain (14 juillet 2026)
+
+### Bilan session du 14/07
+
+| Fait | Détail |
+|------|--------|
+| Site | Page `flashdev.html` + `flashdev/latest-version.json` (à committer / FTP si pas fait) |
+| Soft | `version.json` local v0.1.0 + tag snapshot |
+| Soft | Phase A implémentée : `lib/updateCheck.lua`, `lib/updateCheckWorker.lua`, branchement `main.lua` + `currentProjectMenu.lua` |
+| Doc | Tests P1 check update dans `NOTE_PROCHAINE-SESSION`, `TODO.md` soft, `NOTE_REVISION-BOOTCAMP-FR.md` |
+
+| En attente | Détail |
+|------------|--------|
+| Tests | Checklist P1 ci-dessous — **demain matin** |
+| Commit | Laurent pilote (`commit-both` ou soft seul) |
+| Phase B | Download 1 clic — après tests Phase A validés |
 
 ### Branche soft
 
-- **`FlashRevisionSoft`** : branche **`feat/options-update`** (créée depuis `main`, juillet 2026)
-- **Objectif branche** : bouton **Options** ouvrant un menu déroulant avec entrée **Mise à jour** ; ou bouton **À jour** grisé lorsque le soft est à jour
-- **Implémentation** : directives à recevoir — ne pas coder avant validation du design
+- **`FlashRevisionSoft`** : branche **`feat/options-update`**
+- **Ne pas merger** avant tests deck + parcours update (convention 5)
 
-### P1 demain matin (Laurent)
+### **P1 demain matin (Laurent) — unique**
 
-- [ ] **Refaire les graphiques du bouton weblink** (`webGuide`, `currentProjectMenu.lua`) avec **mes assets**, selon **mon protocole de production** (remplacer les visuels actuels)
+> **Valider les tests check mise à jour (Phase A)** — cocher la checklist ci-dessous avant merge ou Phase B.
 
 ### En cours sur `feat/options-update`
 
@@ -24,7 +38,7 @@
 - [x] Phase A — `updateCheck.lua` + worker HTTPS (garde-fous hors ligne, sans toucher `data.json`)
 - [ ] Phase B — flux download 1 clic (`onUpdateRequested` → script PS1)
 
-### **P1 — Tests check mise à jour** (à faire avant merge / commit suivant)
+### **P1 — Tests check mise à jour** (demain — avant merge)
 
 > Branche `feat/options-update` · manifest : `https://gameopenmoney.com/flashdev/latest-version.json` · doc : `FlashRevisionSoft/scripts/NOTE_UPDATE-SYSTEM.md` § 7.5
 
@@ -36,6 +50,10 @@
 - [ ] **P1** — Non-régression : webGuide, explore deck, Start, Done — inchangés
 
 *(T4–T7 = Phase B download — après script `update-flashdev.ps1`)*
+
+### Reporté (après P1 tests)
+
+- [ ] Refaire les graphiques du bouton **webGuide** (`currentProjectMenu.lua`) — assets + protocole production
 
 ---
 
