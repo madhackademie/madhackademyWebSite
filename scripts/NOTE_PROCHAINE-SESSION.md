@@ -6,47 +6,46 @@
 
 ---
 
-## Session en cours / reprise demain (14 juillet 2026)
+## Session en cours / reprise (14 juillet 2026 — après-midi)
 
 ### Bilan session du 14/07
 
 | Fait | Détail |
 |------|--------|
-| Site | Page `flashdev.html` + `flashdev/latest-version.json` (à committer / FTP si pas fait) |
-| Soft | `version.json` local v0.1.0 + tag snapshot |
-| Soft | Phase A implémentée : `lib/updateCheck.lua`, `lib/updateCheckWorker.lua`, branchement `main.lua` + `currentProjectMenu.lua` |
-| Doc | Tests P1 check update dans `NOTE_PROCHAINE-SESSION`, `TODO.md` soft, `NOTE_REVISION-BOOTCAMP-FR.md` |
+| Site | `flashdev.html` + `flashdev/latest-version.json` + `index.html` — **FTP OK** |
+| Soft | Phase A : `updateCheck.lua` (fetch `curl.exe` thread principal), menu Options |
+| Tests | **T1** ✅ manifest v0.2.0 → bouton actif + message Phase B |
 
 | En attente | Détail |
 |------------|--------|
-| Tests | Checklist P1 ci-dessous — **demain matin** |
+| Tests | Checklist Phase A — 4 cases restantes ci-dessous |
 | Commit | Laurent pilote (`commit-both` ou soft seul) |
-| Phase B | Download 1 clic — après tests Phase A validés |
+| Phase B | Download 1 clic — après fin checklist Phase A |
 
 ### Branche soft
 
 - **`FlashRevisionSoft`** : branche **`feat/options-update`**
-- **Ne pas merger** avant tests deck + parcours update (convention 5)
+- **Ne pas merger** avant fin checklist Phase A + tests deck (convention 5)
 
-### **P1 demain matin (Laurent) — unique**
+### **P1 session suivante — unique**
 
-> **Valider les tests check mise à jour (Phase A)** — cocher la checklist ci-dessous avant merge ou Phase B.
+> **`data.json` intact** + **non-régression deck** → **commit** → **Phase B** (download 1 clic).
 
 ### En cours sur `feat/options-update`
 
 - [x] Bouton Options + menu déroulant mise à jour / état « à jour » grisé
-- [x] Phase A — `updateCheck.lua` + worker HTTPS (garde-fous hors ligne, sans toucher `data.json`)
+- [x] Phase A — `updateCheck.lua` + HTTPS (garde-fous hors ligne, sans toucher `data.json`)
 - [ ] Phase B — flux download 1 clic (`onUpdateRequested` → script PS1)
 
-### **P1 — Tests check mise à jour** (demain — avant merge)
+### **P1 — Tests check mise à jour** (avant merge)
 
 > Branche `feat/options-update` · manifest : `https://gameopenmoney.com/flashdev/latest-version.json` · doc : `FlashRevisionSoft/scripts/NOTE_UPDATE-SYSTEM.md` § 7.5
 
-- [ ] **P1 — T2** — Lancement avec manifest **v0.1.0** (= `version.json` local) : console `[updateCheck] Soft a jour (0.1.0)` ; Options → entrée mise à jour **grisée**
-- [ ] **P1 — T3** — Lancement **hors ligne** (Wi‑Fi coupé) : **pas de crash** ; parcours révision OK (Start, Done, flèches) ; bouton grisé ; message d'erreur **console uniquement**
-- [ ] **P1** — Check terminé **pendant** une session (menu révision ouvert) : bouton passe grisé/actif sans redémarrer le soft
+- [x] **P1 — T2** — Manifest **v0.1.0** : console `[updateCheck] Soft a jour (0.1.0)` ; Options → mise à jour **grisée**
+- [x] **P1 — T3** — **Hors ligne** : pas de crash ; parcours révision OK ; bouton grisé ; erreur console
+- [x] **P1** — Check pendant session : `setOnComplete` à la fin de la coroutine lancement ; Options OK sans redémarrage
 - [ ] **P1** — Deck bootcamp installé : après check (succès ou échec réseau), **7 cartes** + `nextRevision` inchangés dans `data.json`
-- [ ] **P1 — T1** *(optionnel, manifest FTP)* — Passer `latest-version.json` en **v0.2.0** : Options → entrée mise à jour **active** ; clic → message console (Phase B pas encore implémentée)
+- [x] **P1 — T1** — `latest-version.json` **v0.2.0** : bouton mise à jour **actif** ; clic → console Phase B — juillet 2026
 - [ ] **P1** — Non-régression : webGuide, explore deck, Start, Done — inchangés
 
 *(T4–T7 = Phase B download — après script `update-flashdev.ps1`)*

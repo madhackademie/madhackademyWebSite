@@ -126,10 +126,11 @@
 
 > Manifest prod : `/flashdev/latest-version.json` · voir `FlashRevisionSoft/scripts/NOTE_UPDATE-SYSTEM.md`
 
-- [ ] **P1 — T2** — À jour (local = manifest v0.1.0) : console `[updateCheck] Soft a jour` ; Options → mise à jour **grisée**
-- [ ] **P1 — T3** — Hors ligne : **pas de crash** ; Start / Done / flèches OK ; bouton grisé
+- [x] **P1 — T2** — À jour (local = manifest v0.1.0) : console `[updateCheck] Soft a jour (0.1.0)` ; Options → mise à jour **grisée**
+- [x] **P1 — T3** — Hors ligne : pas de crash ; Start / Done / flèches OK ; erreur console ; bouton grisé
+- [x] **P1** — Check pendant session : callback fin coroutine ; Options OK sans redémarrage
 - [ ] **P1** — Deck bootcamp (7 cartes) : `data.json` et SM2 **inchangés** après le check
-- [ ] **P1 — T1** *(optionnel)* — Manifest v0.2.0 en ligne → bouton mise à jour **actif**
+- [x] **P1 — T1** — Manifest v0.2.0 en ligne → bouton mise à jour **actif** ; clic → Phase B console
 
 ---
 
