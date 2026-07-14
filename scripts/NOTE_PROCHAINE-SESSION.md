@@ -1,8 +1,34 @@
 # Guide — Prochaine session de travail
 
 > **Référence principale** pour reprendre le projet madhackademyWebSite  
-> Dernière mise à jour : 14 juillet 2026  
+> Dernière mise à jour : 14 juillet 2026 (fin session — reprise **15/07 PC bureau**)  
 > Domaine : [gameopenmoney.com](https://gameopenmoney.com/)
+
+---
+
+## Reprise demain — PC bureau (15 juillet 2026)
+
+**Ordre recommandé :**
+
+1. `.\scripts\sync-both.cmd` — récupérer site + soft (branche `feat/options-update` déjà sur `origin`)
+2. **Merge** `feat/options-update` → `main` (FlashRevisionSoft) — convention 5
+3. Tests deck si pas finis : 7 cartes + `nextRevision` + non-régression (webGuide, explore, Start, Done)
+4. **Phase B** — script `update-flashdev.ps1` + branchement `onUpdateRequested()`
+
+### Rappel — dépôt mise à jour FlashDev (pas un repo Git)
+
+| Élément | Chemin / URL |
+|---------|----------------|
+| **Hébergement** | Dossier FTP `WebSite/flashdev/` → `https://gameopenmoney.com/flashdev/` |
+| **Manifest distant** | `latest-version.json` — version publiée, changelog, `downloadUrl`, `sha256` |
+| **Package** | `FlashRevisionSoft-X.Y.Z-win64.zip` (code only — **sans** `data.json` ni données user) |
+| **Version locale soft** | `FlashRevisionSoft/SquelletteGCS/version.json` — comparée au manifest au lancement |
+| **Check client** | `lib/updateCheck.lua` → GET manifest → menu Options actif ou grisé (Phase A ✅) |
+| **Doc complète** | `FlashRevisionSoft/scripts/NOTE_UPDATE-SYSTEM.md` (architecture §4, release §8, tests T4–T7) |
+
+**≠ `sync-both`** : sync Git entre tes machines · **`flashdev/`** = distribution aux élèves.
+
+**Prochaine release (après Phase B) :** incrémenter `version.json` → builder zip → `sha256` → mettre à jour `latest-version.json` → upload FTP.
 
 ---
 
@@ -157,6 +183,7 @@ Visiteur
 | **`scripts/NOTE_REVISION-BOOTCAMP-FR.md`** | Checklist révision cartes + guides FR + test soft (P1) |
 | **`scripts/CONVENTIONS-LAURENT.md`** | 5 conventions personnelles — rappel début session |
 | **`scripts/NOTE_MVP-FLASHDEV.md`** | Périmètre MVP avant release — **P1 prochaine session** |
+| **`FlashRevisionSoft/scripts/NOTE_UPDATE-SYSTEM.md`** | Mise à jour FlashDev — manifest, Phase A/B, procédure release, garde-fous `data.json` |
 
 ---
 
