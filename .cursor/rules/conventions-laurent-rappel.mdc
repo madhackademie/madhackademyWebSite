@@ -18,7 +18,7 @@ Au **premier message orienté travail** de la session, ou si l'utilisateur dit :
 2. **Un P1 par session** — finir ou cocher avant un nouveau chantier
 3. **Documenter les décisions** — `TODO.md`, `NOTE_MVP-FLASHDEV.md`, `NOTE_PROCHAINE-SESSION.md`
 4. **Enchaîner P1 + clôturer session** — dès la P1 finie, nommer la suivante ; en fin de session, organiser la reprise dans `NOTE_PROCHAINE-SESSION.md`
-5. **Tester avant merge/release** — deck + parcours prod ×7 ; merge soft sur PC bureau d'abord
+5. **Tester avant merge/release** — deck + parcours prod ×7 ; merge soft après tests (portable ou bureau), puis sync sur l'autre machine
 ```
 
 ## Source canonique

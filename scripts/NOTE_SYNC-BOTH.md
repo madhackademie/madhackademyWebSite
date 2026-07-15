@@ -7,8 +7,8 @@
 
 | Branche | État |
 |---------|------|
-| `feat/options-update` | Phase A commitée + poussée — **en attente merge → `main`** |
-| Merge | **PC bureau** manuellement, puis `sync-both` sur l'autre machine |
+| `feat/options-update` | Update 1 clic validé — polish asset + commit puis merge → `main` |
+| Merge | **Portable ou bureau** (après tests), puis `sync-both` sur l'autre machine |
 
 ---
 

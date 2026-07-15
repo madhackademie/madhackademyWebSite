@@ -2,7 +2,7 @@
 
 > **Pour Laurent** — règles personnelles à respecter sur le projet.  
 > L'assistant les cite en début de session (voir `.cursor/rules/conventions-laurent-rappel.mdc`).  
-> Dernière mise à jour : 8 juillet 2026
+> Dernière mise à jour : 15 juillet 2026
 
 ---
 
@@ -12,7 +12,7 @@ Avant toute modification :
 
 1. Lancer `.\scripts\sync-both.ps1` (site + soft)
 2. Lire `scripts/NOTE_PROCHAINE-SESSION.md`
-3. Vérifier la branche soft (`scripts/NOTE_SYNC-BOTH.md` — merge bureau après tests)
+3. Vérifier la branche soft (`scripts/NOTE_SYNC-BOTH.md` — merge après tests, portable ou bureau)
 
 **Pourquoi :** éviter de coder sur une base obsolète ou une branche non validée.
 
@@ -65,7 +65,7 @@ Avant merge branche soft ou déploiement FTP :
 
 - [ ] Tests deck `DeckBootCampCpp/` (install + 7 cartes, parcours complet)
 - [ ] Parcours prod site : carte → login → guide (×7)
-- [ ] Merge soft sur **PC bureau** d'abord, puis `sync-both` sur l'autre machine
+- [ ] Merge soft sur **portable ou bureau** (après tests), puis `sync-both` sur l'autre machine
 
 **Pourquoi :** les testeurs et la prod ne doivent pas recevoir une branche non validée.
 

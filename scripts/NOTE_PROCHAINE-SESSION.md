@@ -1,34 +1,40 @@
 # Guide — Prochaine session de travail
 
 > **Référence principale** pour reprendre le projet madhackademyWebSite  
-> Dernière mise à jour : 14 juillet 2026 (fin session — reprise **15/07 PC bureau**)  
+> Dernière mise à jour : 15 juillet 2026 (convention 5 — merge portable ou bureau)  
 > Domaine : [gameopenmoney.com](https://gameopenmoney.com/)
 
 ---
 
-## Reprise demain — PC bureau (15 juillet 2026)
+## Reprise session suivante — **P1 unique**
+
+> **Première version FlashDev téléchargeable** — installeur **sans deck** : Love2D + VS Code (+ Lua/Love pour le soft). Decks (bootcamp C++, futurs GO/Python…) = **achat + téléchargement sur le site** → install via explore deck.  
+> Détail : `FlashRevisionSoft/TODO.md` § *Première version téléchargeable*
+
+---
+
+## Session en cours (15 juillet 2026)
+
+**P1 en cours :** polish asset bouton mise à jour (Options) → commit `feat/options-update`
 
 **Ordre recommandé :**
 
-1. `.\scripts\sync-both.cmd` — récupérer site + soft (branche `feat/options-update` déjà sur `origin`)
-2. **Merge** `feat/options-update` → `main` (FlashRevisionSoft) — convention 5
-3. Tests deck si pas finis : 7 cartes + `nextRevision` + non-régression (webGuide, explore, Start, Done)
-4. **Phase B** — script `update-flashdev.ps1` + branchement `onUpdateRequested()`
+1. `.\scripts\sync-both.cmd`
+2. Polish bouton update + asset PNG (`buton_Choix-assets/`)
+3. `.\scripts\commit-both.cmd` (soft + site si manifest modifié)
+4. Merge `feat/options-update` → `main` quand prêt (convention 5)
 
-### Rappel — dépôt mise à jour FlashDev (pas un repo Git)
+### Release FlashDev — rappel rapide
 
 | Élément | Chemin / URL |
 |---------|----------------|
-| **Hébergement** | Dossier FTP `WebSite/flashdev/` → `https://gameopenmoney.com/flashdev/` |
-| **Manifest distant** | `latest-version.json` — version publiée, changelog, `downloadUrl`, `sha256` |
-| **Package** | `FlashRevisionSoft-X.Y.Z-win64.zip` (code only — **sans** `data.json` ni données user) |
-| **Version locale soft** | `FlashRevisionSoft/SquelletteGCS/version.json` — comparée au manifest au lancement |
-| **Check client** | `lib/updateCheck.lua` → GET manifest → menu Options actif ou grisé (Phase A ✅) |
-| **Doc complète** | `FlashRevisionSoft/scripts/NOTE_UPDATE-SYSTEM.md` (architecture §4, release §8, tests T4–T7) |
+| **Workflow complet** | `FlashRevisionSoft/scripts/NOTE_UPDATE-WORKFLOW.md` |
+| **Build zip** | `.\scripts\build-release-zip.cmd -Version "X.Y.Z" -UpdateManifest` |
+| **FTP** | `WebSite/flashdev/` → `https://gameopenmoney.com/flashdev/` |
+| **Manifest** | `latest-version.json` (UTF-8 **sans BOM**) |
+| **Package** | `FlashRevisionSoft-X.Y.Z-win64.zip` (code only) |
 
-**≠ `sync-both`** : sync Git entre tes machines · **`flashdev/`** = distribution aux élèves.
-
-**Prochaine release (après Phase B) :** incrémenter `version.json` → builder zip → `sha256` → mettre à jour `latest-version.json` → upload FTP.
+**≠ `sync-both`** : sync Git entre machines · **`flashdev/`** = distribution aux élèves.
 
 ---
 
@@ -46,18 +52,18 @@
 
 | En attente | Détail |
 |------------|--------|
-| **Merge soft** | `feat/options-update` → `main` sur **PC bureau** (convention 5) — **pas fait** |
-| Tests deck | `data.json` intact + non-régression (webGuide, explore deck, Start, Done) — avant ou après merge bureau |
-| Phase B | Download 1 clic — après merge validé |
+| **Merge soft** | `feat/options-update` → `main` après tests (convention 5) — **pas fait** |
+| Tests deck | `data.json` intact + non-régression (webGuide, explore deck, Start, Done) — avant merge |
+| Phase B | Update 1 clic — **validé** (prod 0.1.0 → 0.2.1, T4 ✅) |
 
 ### Branche soft
 
 - **`FlashRevisionSoft`** : branche **`feat/options-update`** — poussée sur `origin`
-- **Merge `main`** : à faire manuellement sur **PC bureau**, puis `sync-both` sur l'autre machine
+- **Merge `main`** : après tests validés (portable ou bureau), puis `sync-both` sur l'autre machine
 
 ### **P1 session suivante — unique**
 
-> **Merger `feat/options-update` → `main` sur PC bureau** (deck + non-régression si pas fini ici) → **Phase B** (download 1 clic).
+> **Merger `feat/options-update` → `main`** après polish bouton update + commit.
 
 ### En cours sur `feat/options-update`
 
@@ -65,21 +71,21 @@
 - [x] Phase A — `updateCheck.lua` + HTTPS (garde-fous hors ligne, sans toucher `data.json`)
 - [x] Phase A — tests T1 / T2 / T3 + callback fin coroutine
 - [x] Commit + push site et soft (juillet 2026)
-- [ ] **Merge** `feat/options-update` → `main` (PC bureau)
-- [ ] Phase B — flux download 1 clic (`onUpdateRequested` → script PS1)
+- [ ] **Merge** `feat/options-update` → `main` (après tests — portable ou bureau)
+- [x] Phase B — `update-flashdev.ps1` + update 1 clic (T4 prod ✅)
 
-### **P1 — Tests check mise à jour** (Phase A — validés, avant merge bureau)
+### **P1 — Tests check mise à jour** (Phase A — validés, avant merge)
 
-> Branche `feat/options-update` · manifest : `https://gameopenmoney.com/flashdev/latest-version.json` · doc : `FlashRevisionSoft/scripts/NOTE_UPDATE-SYSTEM.md` § 7.5
+> Branche `feat/options-update` · doc : `FlashRevisionSoft/scripts/NOTE_UPDATE-WORKFLOW.md` § 6
 
 - [x] **P1 — T2** — Manifest **v0.1.0** : console `[updateCheck] Soft a jour (0.1.0)` ; Options → mise à jour **grisée**
 - [x] **P1 — T3** — **Hors ligne** : pas de crash ; parcours révision OK ; bouton grisé ; erreur console
 - [x] **P1** — Check pendant session : `setOnComplete` à la fin de la coroutine lancement ; Options OK sans redémarrage
 - [x] **P1 — T1** — `latest-version.json` **v0.2.0** : bouton mise à jour **actif** ; clic → console Phase B — juillet 2026
-- [ ] **P1** — Deck bootcamp : **7 cartes** + `nextRevision` inchangés dans `data.json` après check
+- [x] **P1 — T4** — Deck bootcamp : **7 cartes** + `nextRevision` inchangés après update 0.1.0 → 0.2.1 — juillet 2026
 - [ ] **P1** — Non-régression : webGuide, explore deck, Start, Done — inchangés
 
-*(T4–T7 = Phase B download — après script `update-flashdev.ps1`)*
+*(T5–T7 = Phase B download — T4 ✅ juillet 2026)*
 
 ### Reporté (après P1 tests)
 
@@ -183,7 +189,7 @@ Visiteur
 | **`scripts/NOTE_REVISION-BOOTCAMP-FR.md`** | Checklist révision cartes + guides FR + test soft (P1) |
 | **`scripts/CONVENTIONS-LAURENT.md`** | 5 conventions personnelles — rappel début session |
 | **`scripts/NOTE_MVP-FLASHDEV.md`** | Périmètre MVP avant release — **P1 prochaine session** |
-| **`FlashRevisionSoft/scripts/NOTE_UPDATE-SYSTEM.md`** | Mise à jour FlashDev — manifest, Phase A/B, procédure release, garde-fous `data.json` |
+| **`FlashRevisionSoft/scripts/NOTE_UPDATE-WORKFLOW.md`** | Release FlashDev — zip, manifest, FTP, versions |
 
 ---
 

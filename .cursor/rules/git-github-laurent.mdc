@@ -26,6 +26,6 @@ alwaysApply: true
 |--------|--------|
 | Sync site + soft | `.\scripts\sync-both.cmd` |
 | Commit + push | `.\scripts\commit-both.cmd` |
-| Merge branche soft → `main` | Manuellement sur le PC bureau, après tests validés |
+| Merge branche soft → `main` | Manuellement sur portable ou bureau, après tests validés ; puis `sync-both` sur l'autre machine |
 
 Quand Laurent dit qu'il va merger / pousser / uploader : **ne pas anticiper** — confirmer et donner la checklist si utile.

@@ -131,12 +131,21 @@ Ces tâches débloquent la mise en ligne ou corrigent des problèmes visibles po
 - [ ] **P1** — Test soft : install `DeckBootCampCpp/` + parcours complet sur les 7 cartes
 - [ ] **P1** — Re-upload FTP après corrections
 
-### Mise à jour FlashDev (coordination site ↔ soft) — **P1 critique**
+### Mise à jour FlashDev (coordination site ↔ soft)
 
-> Voir **`FlashRevisionSoft/TODO.md`** § *Mise à jour du soft* et **`FlashRevisionSoft/scripts/NOTE_UPDATE-SYSTEM.md`** (manifest, check au lancement, garde-fous données). Bloquant avant distribution publique.
+> Workflow update : **`FlashRevisionSoft/scripts/NOTE_UPDATE-WORKFLOW.md`**
 
-- [ ] **P1** — Héberger manifest version + lien téléchargement sur le site (ex. `latest-version.json` ou dashboard)
-- [ ] **P1** — Documenter procédure release : tag version → build → upload → manifest mis à jour
+- [x] **P1** — Manifest + zip sur FTP (`WebSite/flashdev/`)
+- [x] **P1** — Procédure release documentée (`build-release-zip.ps1`)
+
+### Prochaine session — **P1** première version téléchargeable (site + soft)
+
+> Installeur **sans deck** (Love2D + VS Code) · decks = achat + download site · test bout en bout avec bootcamp C++ en deck payant séparé — voir `FlashRevisionSoft/TODO.md`
+
+- [ ] **P1** — Installeur plateforme hébergé sur `flashdev/` (distinct zip update + distinct packages decks payants)
+- [ ] **P1** — Bouton **Télécharger FlashDev** sur `dashboard/index.php` (soft gratuit ou inclus compte)
+- [ ] **P1** — Parcours boutique : achat deck → téléchargement → install `deckInstaller` → bootcamp C++ utilisable
+- [ ] **P1** — Test machine vierge : install socle seul → puis deck acheté téléchargé depuis le site
 
 ### Déploiement GameDevReady (provider / FTP)
 
