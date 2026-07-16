@@ -88,9 +88,9 @@
                 <div id="version-error" class="hidden bg-gray-900 border-2 border-red-600 rounded-xl p-8 text-center">
                     <p class="text-red-400 font-bold mb-2">Impossible de charger le manifest de version.</p>
                     <p class="text-gray-400 text-sm mb-6">Réessayez plus tard ou contactez le support MadHackAdemy.</p>
-                    <a href="/flashdev/FlashRevisionSoft-0.1.0-win64.zip"
+                    <a href="/flashdev/FlashDev-Setup-0.2.1-win64.exe"
                        class="inline-block px-8 py-4 bg-green-600 hover:bg-green-700 text-white font-bold rounded download-btn">
-                        Télécharger FlashDev (lien direct) ↓
+                        Télécharger l'installeur FlashDev ↓
                     </a>
                 </div>
 
@@ -120,10 +120,12 @@
                             <a id="download-btn"
                                href="#"
                                class="download-btn block w-full text-center px-8 py-5 bg-green-600 hover:bg-green-700 text-white text-xl font-bold rounded transition-all">
-                                Télécharger FlashDev ↓
+                                Télécharger l'installeur FlashDev ↓
                             </a>
                             <p id="download-hint" class="text-xs text-gray-500 text-center mt-4 leading-relaxed">
-                                Archive ZIP Windows — extrayez puis lancez avec LÖVE 11.x ou le raccourci fourni.
+                                Setup Windows (<code class="text-gray-400">.exe</code>) — installe FlashDev.
+                                Si LÖVE ou VS Code sont déjà présents, ils sont réutilisés ; sinon installation via <code class="text-gray-400">winget</code>.
+                                Les mises à jour du logiciel se font ensuite dans le menu Options.
                             </p>
                         </div>
                     </div>
@@ -143,9 +145,9 @@
                             <h2 class="text-xl font-bold text-nintendo-blue mb-4">Prérequis Windows</h2>
                             <ul class="space-y-2 text-gray-300 text-sm">
                                 <li>→ Windows 10 ou 11 (64 bits)</li>
-                                <li>→ <a href="https://love2d.org/" class="text-blue-400 hover:underline" target="_blank" rel="noopener">LÖVE 11.4</a> ou supérieur</li>
-                                <li>→ VS Code + extension C/C++ (pour exercices GameDevReady)</li>
-                                <li>→ Raylib + w64devkit dans <code class="text-gray-400">C:\raylib\</code> (bootcamp C++)</li>
+                                <li>→ L'installeur configure <strong class="text-gray-200">LÖVE 11.x</strong> et <strong class="text-gray-200">VS Code</strong> (via <code class="text-gray-400">winget</code>)</li>
+                                <li>→ Connexion Internet pour le premier setup</li>
+                                <li>→ Decks C++ : Raylib dans <code class="text-gray-400">C:\raylib\</code> (bootcamp, étape séparée)</li>
                             </ul>
                         </div>
                     </div>
@@ -189,7 +191,7 @@
     <script>
         (function () {
             var MANIFEST_URL = '/flashdev/latest-version.json';
-            var FALLBACK_ZIP = '/flashdev/FlashRevisionSoft-0.1.0-win64.zip';
+            var FALLBACK_INSTALLER = '/flashdev/FlashDev-Setup-0.2.1-win64.exe';
 
             function formatDate(iso) {
                 if (!iso) return '—';
@@ -210,7 +212,7 @@
             }
 
             function resolveDownloadUrl(url) {
-                if (!url) return FALLBACK_ZIP;
+                if (!url) return FALLBACK_INSTALLER;
                 if (url.indexOf('http://') === 0 || url.indexOf('https://') === 0) return url;
                 if (url.charAt(0) === '/') return url;
                 return '/' + url.replace(/^\.\//, '');
@@ -232,7 +234,7 @@
                 document.getElementById('ver-love').textContent = manifest.requiresLove ? '≥ ' + manifest.requiresLove : '11.x';
                 document.getElementById('changelog-ver').textContent = manifest.version || '?';
 
-                var size = formatBytes(manifest.sizeBytes);
+                var size = formatBytes(manifest.installerSizeBytes || manifest.sizeBytes);
                 if (size) {
                     document.getElementById('ver-size').textContent = size;
                     show('ver-size-wrap');
@@ -249,7 +251,7 @@
                 });
 
                 var dl = document.getElementById('download-btn');
-                var url = resolveDownloadUrl(manifest.downloadUrl);
+                var url = resolveDownloadUrl(manifest.installerDownloadUrl || manifest.downloadUrl);
                 dl.href = url;
                 dl.setAttribute('download', '');
                 dl.setAttribute('rel', 'noopener');

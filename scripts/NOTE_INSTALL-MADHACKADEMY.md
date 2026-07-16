@@ -1,8 +1,9 @@
 # Note — Options d'installateur MadHackademy (FlashDev + VS Code + Raylib)
 
-> Dernière mise à jour : 28 juin 2026  
+> Dernière mise à jour : 16 juillet 2026  
 > Emplacement : `scripts/NOTE_INSTALL-MADHACKADEMY.md` (identique dans les deux dépôts)  
-> Complète : `madhackademyWebSite/NOTE_SETUP_WORKSPACE.md` (setup développeur depuis zéro)
+> Complète : `madhackademyWebSite/NOTE_SETUP_WORKSPACE.md` (setup développeur depuis zéro)  
+> **Guide élève :** `scripts/NOTE_SETUP-UTILISATEUR.md` · **Script :** `../FlashRevisionSoft/scripts/install-madhackademy.cmd`
 
 ---
 
@@ -275,6 +276,7 @@ Le dossier parent peut être ajusté ; seul **`C:\raylib\`** est contraint par l
 
 | Document | Lien |
 |----------|------|
+| **Setup élève (LÖVE + VS Code + Lua)** | `scripts/NOTE_SETUP-UTILISATEUR.md` |
 | Setup workspace (dev) | `madhackademyWebSite/NOTE_SETUP_WORKSPACE.md` |
 | Déploiement cartes web | `madhackademyWebSite/scripts/NOTE_DEPLOIEMENT-FTP-GAMEDEVREADY.md` |
 | Architecture soft ↔ site | `madhackademyWebSite/NOTE_ARCHITECTURE_SOFT-SITE.md` |
@@ -295,11 +297,11 @@ Le dossier parent peut être ajusté ; seul **`C:\raylib\`** est contraint par l
 
 ## Prochaines étapes (TODO technique)
 
-- [ ] Créer `install-madhackademy.ps1` avec fonctions `Test-Love`, `Test-VSCode`, `Test-Raylib`, `Test-FlashDev`
-- [ ] Définir source de téléchargement Raylib (officiel vs miroir FTP)
-- [ ] Script de création raccourci : `love.exe` + chemin vers `SquelletteGCS`
+- [x] Créer `install-madhackademy.ps1` avec vérifications LÖVE, VS Code, extensions Lua, FlashDev
+- [x] Script de création raccourci : `love.exe` + chemin vers `SquelletteGCS`
+- [x] Documenter procédure manuelle de secours (`NOTE_SETUP-UTILISATEUR.md`)
+- [ ] Définir source de téléchargement Raylib (officiel vs miroir FTP) — hors socle v1
 - [ ] Tester sur une VM Windows vierge (sans outils préinstallés)
-- [ ] Documenter procédure manuelle de secours (fallback si script bloqué)
 - [ ] (Optionnel) Page sur gameopenmoney.com « Télécharger l'environnement MadHackademy »
 
 ---
