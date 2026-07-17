@@ -37,6 +37,16 @@
             50% { opacity: 0.4; }
         }
         .pulse-dot { animation: pulse-dot 1.5s ease-in-out infinite; }
+        .media-slot {
+            background: linear-gradient(135deg, rgba(30, 58, 138, 0.35), rgba(17, 24, 39, 0.95));
+            border: 2px dashed rgba(27, 140, 228, 0.45);
+        }
+        .media-slot:hover {
+            border-color: rgba(5, 195, 28, 0.55);
+        }
+        .auth-gate-hidden {
+            display: none;
+        }
     </style>
 </head>
 <body class="bg-black text-white font-mono">
@@ -75,6 +85,98 @@
                 <span class="w-12 h-2 nintendo-blue"></span>
             </div>
         </header>
+
+        <section id="flashdev-access-gate" class="py-16 px-4 border-b border-gray-800">
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-gray-900 rounded-xl border-2 border-yellow-500 overflow-hidden">
+                    <div class="h-2 nintendo-yellow"></div>
+                    <div class="p-8 md:p-10 text-center space-y-5">
+                        <p class="text-xs text-gray-500 uppercase tracking-widest">Acces controle</p>
+                        <h2 class="text-3xl md:text-4xl font-bold">Debloque le <span class="gradient-text">telechargement FlashDev</span></h2>
+                        <p class="text-gray-400 max-w-2xl mx-auto">
+                            Pour acceder au soft, il faut etre connecte avec un compte actif. Si ton compte n'est pas encore active,
+                            renseigne ton email dans le tunnel System.io pour recevoir la suite et etre ajoute aux prospects.
+                        </p>
+                        <div class="flex flex-col sm:flex-row justify-center gap-4">
+                            <a id="gate-login-link"
+                               href="/auth/login.php?redirect=%2Fflashdev.html"
+                               class="inline-flex items-center justify-center px-8 py-4 bg-red-900 hover:bg-red-700 text-red-100 font-bold rounded transition-all">
+                                Se connecter
+                            </a>
+                            <a id="gate-systemio-link"
+                               href="https://REPLACE-ME-SYSTEME-IO"
+                               target="_blank"
+                               rel="noopener"
+                               class="inline-flex items-center justify-center px-8 py-4 border-2 border-green-600 text-nintendo-green font-bold rounded hover:bg-green-900/30 transition-all">
+                                Activer mon acces par email
+                            </a>
+                        </div>
+                        <p id="gate-systemio-hint" class="text-xs text-yellow-400">
+                            Pense a remplacer l'URL placeholder du bouton par ton lien System.io avant mise en prod.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div id="flashdev-protected-content" class="auth-gate-hidden">
+        <!-- Aperçu vidéo / captures (à remplir) -->
+        <section id="apercu" class="py-16 px-4 bg-gradient-to-b from-black to-gray-950 border-b border-gray-800">
+            <div class="max-w-5xl mx-auto space-y-10">
+                <div class="text-center">
+                    <p class="text-xs text-gray-500 uppercase tracking-widest mb-3">Découvrir l'outil</p>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-3">Aperçu de <span class="gradient-text">FlashDev</span></h2>
+                    <p class="text-gray-400 max-w-2xl mx-auto text-sm md:text-base">
+                        Vidéo de démo et captures d'écran à venir — tu peux déposer les fichiers dans
+                        <code class="text-gray-500">/flashdev/media/</code> puis remplacer les emplacements ci-dessous.
+                    </p>
+                </div>
+
+                <!-- Vidéo : remplacer le bloc placeholder par <video> ou iframe YouTube -->
+                <div class="bg-gray-900 rounded-xl border-2 border-blue-600 overflow-hidden">
+                    <div class="h-2 nintendo-blue"></div>
+                    <div class="p-4 md:p-6">
+                        <div id="demo-video-slot" class="media-slot aspect-video rounded-lg flex flex-col items-center justify-center text-center px-6">
+                            <!-- Décommenter et adapter quand la vidéo est prête :
+                            <video class="w-full h-full rounded-lg object-cover" controls poster="/flashdev/media/demo-poster.jpg">
+                                <source src="/flashdev/media/flashdev-demo.mp4" type="video/mp4">
+                            </video>
+                            -->
+                            <span class="text-4xl mb-3" aria-hidden="true">▶</span>
+                            <p class="text-nintendo-blue font-bold">Vidéo de démo — bientôt disponible</p>
+                            <p class="text-gray-500 text-xs mt-2 max-w-md">
+                                Suggestion : 60–90 s montrant le menu, une carte, VS Code et la validation d'une révision.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Captures : remplacer les src="" par tes PNG/JPG -->
+                <div class="grid sm:grid-cols-3 gap-4">
+                    <figure class="bg-gray-900 rounded-xl border border-gray-700 overflow-hidden">
+                        <div class="media-slot aspect-video flex items-center justify-center text-gray-500 text-xs font-bold p-4 text-center">
+                            <!-- <img src="/flashdev/media/screen-menu.png" alt="Menu principal FlashDev" class="w-full h-full object-cover"> -->
+                            Capture 1 — menu / decks
+                        </div>
+                        <figcaption class="px-4 py-3 text-xs text-gray-400 border-t border-gray-800">Écran d'accueil</figcaption>
+                    </figure>
+                    <figure class="bg-gray-900 rounded-xl border border-gray-700 overflow-hidden">
+                        <div class="media-slot aspect-video flex items-center justify-center text-gray-500 text-xs font-bold p-4 text-center">
+                            <!-- <img src="/flashdev/media/screen-carte.png" alt="Carte flash en cours" class="w-full h-full object-cover"> -->
+                            Capture 2 — carte / révision
+                        </div>
+                        <figcaption class="px-4 py-3 text-xs text-gray-400 border-t border-gray-800">Session de révision</figcaption>
+                    </figure>
+                    <figure class="bg-gray-900 rounded-xl border border-gray-700 overflow-hidden">
+                        <div class="media-slot aspect-video flex items-center justify-center text-gray-500 text-xs font-bold p-4 text-center">
+                            <!-- <img src="/flashdev/media/screen-vscode.png" alt="Édition de code dans VS Code" class="w-full h-full object-cover"> -->
+                            Capture 3 — code / VS Code
+                        </div>
+                        <figcaption class="px-4 py-3 text-xs text-gray-400 border-t border-gray-800">Learn by doing</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </section>
 
         <!-- Version + téléchargement -->
         <section class="py-16 px-4">
@@ -173,6 +275,7 @@
                 </div>
             </div>
         </section>
+        </div>
 
     </div>
 
@@ -192,6 +295,42 @@
         (function () {
             var MANIFEST_URL = '/flashdev/latest-version.json';
             var FALLBACK_INSTALLER = '/flashdev/FlashDev-Setup-0.2.1-win64.exe';
+            var LOGIN_URL = '/auth/login.php?redirect=' + encodeURIComponent('/flashdev.html');
+            var SYSTEMIO_URL = 'https://REPLACE-ME-SYSTEME-IO';
+
+            function isPlaceholderSystemioUrl(url) {
+                return !url || url.indexOf('REPLACE-ME-SYSTEME-IO') !== -1;
+            }
+
+            function showGateOnly() {
+                document.getElementById('flashdev-access-gate').classList.remove('auth-gate-hidden');
+                document.getElementById('flashdev-protected-content').classList.add('auth-gate-hidden');
+            }
+
+            function showProtectedContent() {
+                document.getElementById('flashdev-access-gate').classList.add('auth-gate-hidden');
+                document.getElementById('flashdev-protected-content').classList.remove('auth-gate-hidden');
+            }
+
+            function configureGate() {
+                var loginLink = document.getElementById('gate-login-link');
+                var systemioLink = document.getElementById('gate-systemio-link');
+                var hint = document.getElementById('gate-systemio-hint');
+
+                loginLink.href = LOGIN_URL;
+                systemioLink.href = SYSTEMIO_URL;
+
+                if (isPlaceholderSystemioUrl(SYSTEMIO_URL)) {
+                    systemioLink.setAttribute('aria-disabled', 'true');
+                    systemioLink.classList.add('opacity-60', 'cursor-not-allowed');
+                    systemioLink.addEventListener('click', function (event) {
+                        event.preventDefault();
+                    });
+                    hint.classList.remove('hidden');
+                } else {
+                    hint.classList.add('hidden');
+                }
+            }
 
             function formatDate(iso) {
                 if (!iso) return '—';
@@ -265,12 +404,31 @@
                 show('version-error');
             }
 
-            fetch(MANIFEST_URL, { cache: 'no-store' })
+            configureGate();
+
+            fetch('/auth/me.php', { credentials: 'same-origin', cache: 'no-store' })
+                .then(function (response) {
+                    if (!response.ok) throw new Error('AUTH ' + response.status);
+                    return response.json();
+                })
+                .then(function (user) {
+                    if (!user || !user.logged_in) {
+                        showGateOnly();
+                        return null;
+                    }
+                    showProtectedContent();
+                    return fetch(MANIFEST_URL, { cache: 'no-store' });
+                })
                 .then(function (r) {
+                    if (!r) return null;
                     if (!r.ok) throw new Error('HTTP ' + r.status);
                     return r.json();
                 })
-                .then(render)
+                .then(function (manifest) {
+                    if (manifest) {
+                        render(manifest);
+                    }
+                })
                 .catch(onError);
         })();
     </script>
