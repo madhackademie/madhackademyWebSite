@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mock — Capture téléchargement FlashDev</title>
+    <style>
+      :root {
+        --fd-red: #E60012;
+        --fd-yellow: #FBDD08;
+        --fd-green: #05C31C;
+        --fd-blue: #1B8CE4;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background-color: #000;
+        background-image: url("Image/flashdev-snes-bg.png");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        color: #fff;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      }
+      .mock-badge {
+        position: fixed;
+        bottom: 12px;
+        left: 12px;
+        z-index: 50;
+        max-width: 300px;
+        padding: 8px 10px;
+        border: 1px solid rgba(5, 195, 28, 0.5);
+        border-radius: 6px;
+        background: rgba(3, 7, 18, 0.95);
+        font-size: 11px;
+        color: #86efac;
+      }
+      .fd-cap {
+        text-align: center;
+        width: 100%;
+        background: transparent;
+      }
+      .fd-top {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 28px 20px 8px;
+        text-align: center;
+      }
+      .fd-logo {
+        font-size: 22px;
+        font-weight: 700;
+        background: linear-gradient(90deg, #E60012, #FBDD08, #05C31C, #1B8CE4);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .fd-hero {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 32px 20px 8px;
+        background: transparent;
+      }
+      .fd-eyebrow {
+        margin: 0 0 12px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: #6b7280;
+      }
+      .fd-title {
+        margin: 0 0 12px;
+        font-size: 48px;
+        font-weight: 700;
+        background: linear-gradient(90deg, #E60012, #FBDD08, #05C31C, #1B8CE4);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .fd-tagline { margin: 0 0 16px; font-size: 20px; color: #d1d5db; }
+      .fd-tagline em { font-style: normal; color: var(--fd-red); font-weight: 700; }
+      .fd-bars { display: flex; justify-content: center; gap: 8px; margin: 0 0 20px; }
+      .fd-bars span { display: block; width: 48px; height: 6px; }
+      .fd-bars .r { background: var(--fd-red); }
+      .fd-bars .y { background: var(--fd-yellow); }
+      .fd-bars .g { background: var(--fd-green); }
+      .fd-bars .b { background: var(--fd-blue); }
+      .fd-lead {
+        margin: 0 auto 28px;
+        max-width: 34rem;
+        font-size: 16px;
+        line-height: 1.6;
+        color: #9ca3af;
+      }
+      .fd-deck {
+        margin: 0 auto;
+        max-width: 380px;
+        text-align: left;
+        overflow: hidden;
+        border: 2px solid #374151;
+        border-radius: 12px;
+        background: #030712;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.55), 0 0 36px rgba(5,195,28,0.12);
+      }
+      .fd-deck-top {
+        display: flex; align-items: center; gap: 8px;
+        padding: 8px 12px; border-bottom: 1px solid #1f1f1f; background: #111827;
+      }
+      .fd-dot { width: 10px; height: 10px; border-radius: 50%; }
+      .fd-dot.r { background: #dc2626; }
+      .fd-dot.y { background: #facc15; }
+      .fd-dot.g { background: #22c55e; }
+      .fd-deck-top .label { margin-left: 4px; font-size: 10px; color: #6b7280; }
+      .fd-deck-body { padding: 20px 22px; }
+      .fd-phase {
+        margin: 0 0 10px; font-size: 11px; font-weight: 700;
+        letter-spacing: 0.12em; text-transform: uppercase; color: var(--fd-green);
+      }
+      .fd-deck-body h3 { margin: 0 0 10px; font-size: 20px; }
+      .fd-deck-body p { margin: 0 0 14px; font-size: 13px; line-height: 1.55; color: #9ca3af; }
+      .fd-code {
+        margin: 0 0 14px; padding: 12px; border: 1px solid #1f1f1f;
+        border-radius: 6px; background: #000; font-size: 12px; color: var(--fd-green);
+      }
+      .fd-code .cmt { color: #4b5563; margin-bottom: 4px; }
+      .fd-code .dim { color: #6b7280; }
+      .fd-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+      .fd-tag { padding: 4px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; }
+      .fd-tag.r { background: var(--fd-red); color: #fff; }
+      .fd-tag.y { background: var(--fd-yellow); color: #000; }
+      .fd-tag.g { background: var(--fd-green); color: #000; }
+      .fd-stripe { display: flex; height: 6px; }
+      .fd-stripe i { flex: 1; display: block; }
+      .fd-stripe .r { background: var(--fd-red); }
+      .fd-stripe .y { background: var(--fd-yellow); }
+      .fd-stripe .g { background: var(--fd-green); }
+      .fd-stripe .b { background: var(--fd-blue); }
+
+      .form-band {
+        width: 100%;
+        margin-top: 36px;
+        padding: 28px 24px 40px;
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        background: transparent;
+        text-align: left;
+      }
+      .form-band-inner { max-width: 720px; margin: 0 auto; }
+      .form-band h2 {
+        margin: 0 0 16px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #6b7280;
+        text-align: center;
+      }
+      .form-band label {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #6b7280;
+      }
+      .form-band input[type="email"] {
+        width: 100%;
+        padding: 14px 16px;
+        border: 2px solid #374151;
+        border-radius: 8px;
+        background: #fff;
+        color: #111;
+        font-size: 16px;
+        margin-bottom: 14px;
+      }
+      .form-band .consent {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        margin-bottom: 16px;
+        font-size: 13px;
+        color: #9ca3af;
+        line-height: 1.45;
+      }
+      .form-band .consent input { margin-top: 3px; }
+      .form-band button {
+        width: 100%;
+        padding: 14px 18px;
+        border: 2px solid #15803d;
+        border-radius: 8px;
+        background: var(--fd-green);
+        color: #000;
+        font-size: 14px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        cursor: pointer;
+      }
+      .form-band .note {
+        margin: 12px 0 0;
+        text-align: center;
+        font-size: 11px;
+        color: #4b5563;
+      }
+      #merci {
+        border-top: 1px solid #1f1f1f;
+        padding: 48px 20px;
+        text-align: center;
+        background: #030712;
+      }
+      #merci h2 {
+        margin: 0 0 12px;
+        font-size: 28px;
+        background: linear-gradient(90deg, #E60012, #FBDD08, #05C31C, #1B8CE4);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      #merci p { color: #9ca3af; max-width: 28rem; margin: 0 auto 20px; }
+      #merci a {
+        display: inline-block;
+        padding: 12px 20px;
+        border: 2px solid #15803d;
+        border-radius: 8px;
+        background: var(--fd-green);
+        color: #000;
+        font-weight: 700;
+        font-size: 13px;
+        text-decoration: none;
+      }
+    </style>
+</head>
+<body>
+  <div class="mock-badge">
+    <strong>MOCK</strong> — tunnel téléchargement FlashDev (pas de vente formation).
+  </div>
+
+  <div class="fd-cap">
+    <div class="fd-top">
+      <div class="fd-logo">FLASHDEV</div>
+    </div>
+
+    <div class="fd-hero">
+      <p class="fd-eyebrow">Logiciel de révision · Windows</p>
+      <h1 class="fd-title">FlashDev</h1>
+      <p class="fd-tagline">Flashcards by <em>Doing</em></p>
+      <div class="fd-bars" aria-hidden="true">
+        <span class="r"></span><span class="y"></span><span class="g"></span><span class="b"></span>
+      </div>
+      <p class="fd-lead">
+        Laisse ton email et reçois le lien pour télécharger FlashDev —
+        le logiciel de flashcards où tu codes pendant que tu révises.
+        Gratuit. Pas de vente de formation ici.
+      </p>
+
+      <div class="fd-deck">
+        <div class="fd-deck-top">
+          <i class="fd-dot r"></i><i class="fd-dot y"></i><i class="fd-dot g"></i>
+          <span class="label">FlashDev · Soft local</span>
+        </div>
+        <div class="fd-deck-body">
+          <p class="fd-phase">Learn by doing</p>
+          <h3>Révise en codant</h3>
+          <p>Pas de lecture passive. Tu ouvres une carte, tu codes la réponse, tu valides.</p>
+          <div class="fd-code">
+            <div class="cmt">// ce que tu fais dans FlashDev</div>
+            <div>carte → défi → code → validé</div>
+            <div class="dim">Windows 10/11 · installeur .exe</div>
+          </div>
+          <div class="fd-tags">
+            <span class="fd-tag g">GRATUIT</span>
+            <span class="fd-tag y">LOCAL</span>
+            <span class="fd-tag r">PRACTICE</span>
+          </div>
+        </div>
+        <div class="fd-stripe" aria-hidden="true">
+          <i class="r"></i><i class="y"></i><i class="g"></i><i class="b"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="form-band">
+    <div class="form-band-inner">
+      <h2>Reçois le lien de téléchargement</h2>
+      <form action="#" method="post" onsubmit="event.preventDefault(); alert('Mock — Systeme.io envoie le lien par email.');">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" required placeholder="ton@email.com">
+        <label class="consent">
+          <input type="checkbox" required>
+          <span>J’accepte de recevoir des emails de FlashDev (lien de téléchargement et infos produit). Désinscription possible à tout moment.</span>
+        </label>
+        <button type="submit">Recevoir le lien de téléchargement</button>
+        <p class="note">Windows 10/11 · Soft gratuit · Pas de spam.</p>
+      </form>
+    </div>
+  </section>
+
+  <section id="merci">
+    <p style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#6b7280;margin:0 0 8px;">Page merci · tunnel Systeme.io</p>
+    <h2>C’est parti — vérifie ta boîte mail.</h2>
+    <p>
+      Tu vas recevoir le lien pour télécharger FlashDev.
+      Tu peux aussi y aller directement :
+    </p>
+    <a href="https://gameopenmoney.com/flashdev.html">Télécharger FlashDev →</a>
+  </section>
+</body>
+</html>
