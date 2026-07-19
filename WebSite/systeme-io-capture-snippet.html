@@ -14,12 +14,14 @@
   Couleurs bouton : fond #05C31C · texte #000000 (ou #E60012 / #FBDD08)
   Case : consentement emails FlashDev
 
-  Image de fond (section Systeme.io, cover) :
-  WebSite/Image/flashdev-snes-bg.png
-  → uploader dans Systeme.io OU héberger sur gameopenmoney.com/Image/flashdev-snes-bg.png
+  Image de fond : WebSite/Image/flashdev-snes-bg.png (format vertical + barre 4 couleurs en haut)
 
-  HTML = transparent. Barre 4 couleurs = DANS l’image de fond (pas dans le HTML).
-  Section : image flashdev-snes-bg.png + cover + padding 0.
+  Systeme.io — pour éviter le rendu « pas top » :
+  1) UNE seule Section pour HTML + Formulaire (sinon trait blanc / coupure)
+  2) Image de fond = ce PNG · mode Cover · position Haut / Centre
+  3) Pas de bordure de section · padding section 0
+  4) Fond HTML = transparent (déjà le cas)
+  5) Ne pas étirer / répéter l’image
 -->
 <style>
   .fd-cap {
@@ -46,7 +48,7 @@
   .fd-cap .fd-top {
     max-width: 720px;
     margin: 0 auto;
-    padding: 28px 20px 8px;
+    padding: 36px 20px 8px; /* laisse respirer sous la barre intégrée à l’image */
     text-align: center;
   }
   .fd-cap .fd-logo {

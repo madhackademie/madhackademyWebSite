@@ -1,4 +1,28 @@
 <!--
-  NE PAS UTILISER tel quel — version précédente trop agressive (cassait la page).
-  Voir instructions ci-dessous pour un fix SANS CSS global.
+  Bloc Code HTML à placer JUSTE SOUS le formulaire Systeme.io.
+  Coller uniquement le <style>...</style>
+
+  Safe : empêche le débordement (max-width 100%),
+  sans forcer une largeur fixe (évite le plantage précédent).
 -->
+<style>
+  /* Empêche les champs de dépasser leur conteneur */
+  input[type="email"],
+  input[type="text"],
+  input[type="tel"],
+  input[type="checkbox"],
+  textarea,
+  select,
+  button,
+  [type="submit"] {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  form {
+    max-width: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+</style>
