@@ -1,131 +1,128 @@
 <!--
   COLLABLE DANS SYSTEME.IO → Code HTML (à partir de <style>).
+  Page capture FlashDev en flex — SANS champs email (formulaire natif en dessous).
 
-  Objectif : capturer l’email pour offrir le TÉLÉCHARGEMENT de FlashDev
-  (pas de vente formation pour l’instant).
-
-  Ordre dans Systeme.io :
-  1) Ce bloc HTML
-  2) Section fond #000 — Formulaire (email + case + bouton)
-  3) Page merci + email → lien de téléchargement UNIQUEMENT après opt-in
-     (jamais de lien flashdev.html sur cette page capture → boucle avec le gate)
-
-  Bouton formulaire : « Recevoir le lien de téléchargement »
-  Couleurs bouton : fond #05C31C · texte #000000 (ou #E60012 / #FBDD08)
-  Case : consentement emails FlashDev
-
-  Image de fond : WebSite/Image/flashdev-snes-bg.png (format vertical + barre 4 couleurs en haut)
-
-  Systeme.io — pour éviter le rendu « pas top » :
-  1) UNE seule Section pour HTML + Formulaire (sinon trait blanc / coupure)
-  2) Image de fond = ce PNG · mode Cover · position Haut / Centre
-  3) Pas de bordure de section · padding section 0
-  4) Fond HTML = transparent (déjà le cas)
-  5) Ne pas étirer / répéter l’image
+  Sous ce bloc : Formulaire Systeme.io uniquement.
 -->
 <style>
-  .fd-cap {
+  .fd-page {
     --fd-red: #E60012;
     --fd-yellow: #FBDD08;
     --fd-green: #05C31C;
     --fd-blue: #1B8CE4;
     box-sizing: border-box;
-    display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
-    max-width: none;
     margin: 0;
-    padding: 0 0 8px;
-    background: transparent;
+    padding: 0 0 28px;
     color: #fff;
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    text-align: center;
-  }
-  .fd-cap *,
-  .fd-cap *::before,
-  .fd-cap *::after { box-sizing: border-box; }
-  .fd-cap a { text-decoration: none; color: inherit; }
-
-  .fd-cap .fd-top {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 36px 20px 8px; /* laisse respirer sous la barre intégrée à l’image */
-    text-align: center;
-  }
-  .fd-cap .fd-logo {
-    font-size: 22px;
-    font-weight: 700;
-    background: linear-gradient(90deg, #E60012, #FBDD08, #05C31C, #1B8CE4);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .fd-cap .fd-hero {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 32px 20px 28px;
     background: transparent;
   }
-  .fd-cap .fd-eyebrow {
-    margin: 0 0 12px;
+  .fd-page *,
+  .fd-page *::before,
+  .fd-page *::after { box-sizing: border-box; }
+
+  .fd-page .fd-snes-bar {
+    display: flex;
+    width: 100%;
+    height: 8px;
+    flex-shrink: 0;
+  }
+  .fd-page .fd-snes-bar i { flex: 1; display: block; }
+  .fd-page .fd-snes-bar .r { background: var(--fd-red); }
+  .fd-page .fd-snes-bar .y { background: var(--fd-yellow); }
+  .fd-page .fd-snes-bar .g { background: var(--fd-green); }
+  .fd-page .fd-snes-bar .b { background: var(--fd-blue); }
+
+  .fd-page .fd-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 640px;
+    padding: 28px 16px 0;
+    gap: 14px;
+  }
+
+  .fd-page .fd-eyebrow {
+    margin: 0;
     font-size: 11px;
     font-weight: 700;
-    letter-spacing: 0.25em;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: #6b7280;
+    color: #9ca3af;
+    text-align: center;
   }
-  .fd-cap .fd-title {
-    margin: 0 0 16px;
-    font-size: 38px;
-    font-weight: 700;
-    line-height: 1.1;
-  }
-  @media (min-width: 640px) {
-    .fd-cap .fd-title { font-size: 52px; }
-  }
-  .fd-cap .fd-title-g {
-    display: block;
-    background: linear-gradient(90deg, #E60012, #FBDD08, #05C31C, #1B8CE4);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .fd-cap .fd-tagline {
-    margin: 0 0 16px;
-    font-size: 20px;
-    color: #d1d5db;
-  }
-  .fd-cap .fd-tagline em {
-    font-style: normal;
-    color: var(--fd-red);
-    font-weight: 700;
-  }
-  .fd-cap .fd-bars {
+
+  .fd-page .fd-logo {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    gap: 8px;
-    margin: 0 0 20px;
+    margin: 0;
+    font-size: clamp(36px, 9vw, 56px);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: 0.02em;
   }
-  .fd-cap .fd-bars span {
+  .fd-page .fd-logo .c-r { color: var(--fd-red); }
+  .fd-page .fd-logo .c-y { color: var(--fd-yellow); }
+  .fd-page .fd-logo .c-g { color: var(--fd-green); }
+  .fd-page .fd-logo .c-b { color: var(--fd-blue); }
+
+  .fd-page .fd-tagline {
+    margin: 0;
+    font-size: clamp(18px, 4.5vw, 22px);
+    color: #e5e7eb;
+    text-align: center;
+  }
+  .fd-page .fd-tagline em {
+    font-style: normal;
+    font-weight: 700;
+    color: var(--fd-red);
+  }
+
+  .fd-page .fd-bars {
+    display: flex;
+    width: 100%;
+    max-width: 220px;
+    gap: 8px;
+  }
+  .fd-page .fd-bars span {
     display: block;
-    width: 48px;
+    flex: 1;
     height: 6px;
   }
-  .fd-cap .fd-bars .r { background: var(--fd-red); }
-  .fd-cap .fd-bars .y { background: var(--fd-yellow); }
-  .fd-cap .fd-bars .g { background: var(--fd-green); }
-  .fd-cap .fd-bars .b { background: var(--fd-blue); }
+  .fd-page .fd-bars .r { background: var(--fd-red); }
+  .fd-page .fd-bars .y { background: var(--fd-yellow); }
+  .fd-page .fd-bars .g { background: var(--fd-green); }
+  .fd-page .fd-bars .b { background: var(--fd-blue); }
 
-  .fd-cap .fd-lead {
-    margin: 0 auto 28px;
+  .fd-page .fd-lead {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
     max-width: 34rem;
-    font-size: 16px;
-    line-height: 1.6;
-    color: #9ca3af;
+    margin: 6px 0 8px;
+    text-align: center;
+    font-size: 15px;
+    line-height: 1.55;
+    color: #9CA3AF;
   }
+  .fd-page .fd-lead p { margin: 0; width: 100%; }
 
-  .fd-cap .fd-deck {
-    margin: 0 auto;
+  .fd-page .fd-deck-wrap {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 8px 0 4px;
+  }
+  .fd-page .fd-deck {
+    width: 100%;
     max-width: 380px;
     text-align: left;
     overflow: hidden;
@@ -137,7 +134,7 @@
       0 20px 50px rgba(0, 0, 0, 0.55),
       0 0 36px rgba(5, 195, 28, 0.12);
   }
-  .fd-cap .fd-deck-top {
+  .fd-page .fd-deck-top {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -145,21 +142,22 @@
     border-bottom: 1px solid #1f1f1f;
     background: #111827;
   }
-  .fd-cap .fd-dot {
+  .fd-page .fd-dot {
     width: 10px;
     height: 10px;
     border-radius: 50%;
+    flex-shrink: 0;
   }
-  .fd-cap .fd-dot.r { background: #dc2626; }
-  .fd-cap .fd-dot.y { background: #facc15; }
-  .fd-cap .fd-dot.g { background: #22c55e; }
-  .fd-cap .fd-deck-top .label {
+  .fd-page .fd-dot.r { background: #dc2626; }
+  .fd-page .fd-dot.y { background: #facc15; }
+  .fd-page .fd-dot.g { background: #22c55e; }
+  .fd-page .fd-deck-top .label {
     margin-left: 4px;
     font-size: 10px;
     color: #6b7280;
   }
-  .fd-cap .fd-deck-body { padding: 20px 22px 22px; }
-  .fd-cap .fd-phase {
+  .fd-page .fd-deck-body { padding: 20px 22px 22px; }
+  .fd-page .fd-phase {
     margin: 0 0 10px;
     font-size: 11px;
     font-weight: 700;
@@ -167,19 +165,19 @@
     text-transform: uppercase;
     color: var(--fd-green);
   }
-  .fd-cap .fd-deck-body h3 {
+  .fd-page .fd-deck-body h3 {
     margin: 0 0 10px;
     font-size: 20px;
     font-weight: 700;
     color: #fff;
   }
-  .fd-cap .fd-deck-body p {
+  .fd-page .fd-deck-body > p {
     margin: 0 0 14px;
     font-size: 13px;
     line-height: 1.55;
     color: #9ca3af;
   }
-  .fd-cap .fd-code {
+  .fd-page .fd-code {
     margin: 0 0 14px;
     padding: 12px;
     border: 1px solid #1f1f1f;
@@ -189,107 +187,113 @@
     line-height: 1.5;
     color: var(--fd-green);
   }
-  .fd-cap .fd-code .cmt { color: #4b5563; margin-bottom: 4px; }
-  .fd-cap .fd-code .dim { color: #6b7280; }
-  .fd-cap .fd-tags {
+  .fd-page .fd-code .cmt { color: #4b5563; margin-bottom: 4px; }
+  .fd-page .fd-code .dim { color: #6b7280; }
+  .fd-page .fd-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
   }
-  .fd-cap .fd-tag {
+  .fd-page .fd-tag {
     display: inline-block;
     padding: 4px 8px;
     border-radius: 4px;
     font-size: 10px;
     font-weight: 700;
   }
-  .fd-cap .fd-tag.r { background: var(--fd-red); color: #fff; }
-  .fd-cap .fd-tag.y { background: var(--fd-yellow); color: #000; }
-  .fd-cap .fd-tag.g { background: var(--fd-green); color: #000; }
-  .fd-cap .fd-stripe {
+  .fd-page .fd-tag.r { background: var(--fd-red); color: #fff; }
+  .fd-page .fd-tag.y { background: var(--fd-yellow); color: #000; }
+  .fd-page .fd-tag.g { background: var(--fd-green); color: #000; }
+  .fd-page .fd-stripe {
     display: flex;
     height: 6px;
   }
-  .fd-cap .fd-stripe i { flex: 1; display: block; }
-  .fd-cap .fd-stripe .r { background: var(--fd-red); }
-  .fd-cap .fd-stripe .y { background: var(--fd-yellow); }
-  .fd-cap .fd-stripe .g { background: var(--fd-green); }
-  .fd-cap .fd-stripe .b { background: var(--fd-blue); }
+  .fd-page .fd-stripe i { flex: 1; display: block; }
+  .fd-page .fd-stripe .r { background: var(--fd-red); }
+  .fd-page .fd-stripe .y { background: var(--fd-yellow); }
+  .fd-page .fd-stripe .g { background: var(--fd-green); }
+  .fd-page .fd-stripe .b { background: var(--fd-blue); }
 
-  .fd-cap .fd-form-band {
-    margin: 36px 0 0;
-    padding: 20px 20px 4px;
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
-    background: transparent;
+  /* Zone libre pour le formulaire Systeme.io (en dessous de ce HTML) */
+  .fd-page .fd-form-hint {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 480px;
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px dashed #4b5563;
+    gap: 6px;
   }
-  .fd-cap .fd-form-band p {
+  .fd-page .fd-form-hint p {
     margin: 0;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: #6b7280;
+    text-align: center;
   }
 </style>
 
-<div class="fd-cap">
-  <div class="fd-top">
-    <div class="fd-logo">FLASHDEV</div>
+<div class="fd-page">
+  <div class="fd-snes-bar" aria-hidden="true">
+    <i class="r"></i><i class="y"></i><i class="g"></i><i class="b"></i>
   </div>
 
-  <div class="fd-hero">
+  <div class="fd-inner">
     <p class="fd-eyebrow">Logiciel de révision · Windows</p>
-    <h1 class="fd-title">
-      <span class="fd-title-g">FlashDev</span>
+
+    <h1 class="fd-logo" aria-label="FLASHDEV">
+      <span class="c-r">F</span><span class="c-y">L</span><span class="c-g">A</span><span class="c-b">S</span><span class="c-r">H</span><span class="c-y">D</span><span class="c-g">E</span><span class="c-b">V</span>
     </h1>
+
     <p class="fd-tagline">Flashcards by <em>Doing</em></p>
+
     <div class="fd-bars" aria-hidden="true">
-      <span class="r"></span>
-      <span class="y"></span>
-      <span class="g"></span>
-      <span class="b"></span>
+      <span class="r"></span><span class="y"></span><span class="g"></span><span class="b"></span>
     </div>
-    <p class="fd-lead">
-      Laisse ton email et reçois le lien pour télécharger FlashDev —
-      le logiciel de flashcards où tu codes pendant que tu révises.
-      Gratuit. Pas de vente de formation ici.
-    </p>
 
-    <div class="fd-deck">
-      <div class="fd-deck-top">
-        <i class="fd-dot r"></i>
-        <i class="fd-dot y"></i>
-        <i class="fd-dot g"></i>
-        <span class="label">FlashDev · Soft local</span>
-      </div>
-      <div class="fd-deck-body">
-        <p class="fd-phase">Learn by doing</p>
-        <h3>Révise en codant</h3>
-        <p>
-          Pas de lecture passive. Tu ouvres une carte, tu codes la réponse,
-          tu valides. Répétition espacée + pratique.
-        </p>
-        <div class="fd-code">
-          <div class="cmt">// ce que tu fais dans FlashDev</div>
-          <div>carte → défi → code → validé</div>
-          <div class="dim">Windows 10/11 · installeur .exe</div>
+    <div class="fd-lead">
+      <p>Laisse ton email et reçois le lien pour télécharger FlashDev.</p>
+      <p>Le logiciel de flashcards où tu codes pendant que tu révises. Gratuit. Pas de vente de formation ici.</p>
+    </div>
+
+    <div class="fd-deck-wrap">
+      <div class="fd-deck">
+        <div class="fd-deck-top">
+          <i class="fd-dot r"></i>
+          <i class="fd-dot y"></i>
+          <i class="fd-dot g"></i>
+          <span class="label">FlashDev · Soft local</span>
         </div>
-        <div class="fd-tags">
-          <span class="fd-tag g">GRATUIT</span>
-          <span class="fd-tag y">LOCAL</span>
-          <span class="fd-tag r">PRACTICE</span>
+        <div class="fd-deck-body">
+          <p class="fd-phase">Learn by doing</p>
+          <h3>Révise en codant</h3>
+          <p>
+            Pas de lecture passive. Tu ouvres une carte, tu codes la réponse,
+            tu valides. Répétition espacée + pratique.
+          </p>
+          <div class="fd-code">
+            <div class="cmt">// ce que tu fais dans FlashDev</div>
+            <div>carte → défi → code → validé</div>
+            <div class="dim">Windows 10/11 · installeur .exe</div>
+          </div>
+          <div class="fd-tags">
+            <span class="fd-tag g">GRATUIT</span>
+            <span class="fd-tag y">LOCAL</span>
+            <span class="fd-tag r">PRACTICE</span>
+          </div>
         </div>
-      </div>
-      <div class="fd-stripe" aria-hidden="true">
-        <i class="r"></i>
-        <i class="y"></i>
-        <i class="g"></i>
-        <i class="b"></i>
+        <div class="fd-stripe" aria-hidden="true">
+          <i class="r"></i><i class="y"></i><i class="g"></i><i class="b"></i>
+        </div>
       </div>
     </div>
 
-    <div class="fd-form-band">
-      <p>Reçois le lien de téléchargement</p>
+    <div class="fd-form-hint">
+      <p>Formulaire Systeme.io juste en dessous ↓</p>
     </div>
   </div>
 </div>
