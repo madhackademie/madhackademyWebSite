@@ -44,3 +44,8 @@
 Quand Stripe / System.io sera branché : webhook PHP → insert `user_products` pour rôle `student`.
 
 Voir `NOTE_ARCHITECTURE_SOFT-SITE.md` §5 et §7.
+
+## Opt-in téléchargement FlashDev (prioritaire)
+
+Formulaire sur le site → API Systeme.io (créer contact) → email avec lien download.  
+Tuto : [`NOTE_SYSTEMEIO-API-FLASHDEV.md`](NOTE_SYSTEMEIO-API-FLASHDEV.md).

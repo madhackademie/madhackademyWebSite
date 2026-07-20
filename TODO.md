@@ -1,6 +1,6 @@
 ﻿# TODO — madhackademyWebSite
 
-> Dernière mise à jour : 7 juillet 2026  
+> Dernière mise à jour : 20 juillet 2026  
 > Projet : site vitrine FlashDev + MadHackAdemy
 
 ---
@@ -14,6 +14,7 @@
 | Doc | Sujet |
 |-----|--------|
 | [`scripts/NOTE_PROCHAINE-SESSION.md`](scripts/NOTE_PROCHAINE-SESSION.md) | État projet, architecture, prochaines évolutions |
+| [`scripts/NOTE_SYSTEMEIO-API-FLASHDEV.md`](scripts/NOTE_SYSTEMEIO-API-FLASHDEV.md) | **P1** — API Systeme.io → opt-in FlashDev (tuto étapes 1–7) |
 | [`scripts/NOTE_DEPLOIEMENT-FTP-GAMEDEVREADY.md`](scripts/NOTE_DEPLOIEMENT-FTP-GAMEDEVREADY.md) | FTP GameDevReady |
 | [`scripts/NOTE_OVH-PHP-MYSQL.md`](scripts/NOTE_OVH-PHP-MYSQL.md) | PHP, MySQL, auth OVH (maintenance) |
 | [`scripts/NOTE_AUTH-SETUP.md`](scripts/NOTE_AUTH-SETUP.md) | Rôles, URLs auth |
@@ -23,7 +24,7 @@
 
 ### Checklist rapide prochaine session
 
-**Priorité : contenu centre-formation** — voir § *Tâches prioritaires* ci-dessous.
+**Priorité P1 :** API Systeme.io → formulaire opt-in sur FlashDev (site) — voir ci-dessous + note dédiée.
 
 ---
 
@@ -90,9 +91,21 @@ WebSite/Formations/
 
 ## Tâches prioritaires
 
-> **Priorité actuelle : P1** — contenu centre-formation.
+> **Priorité actuelle : P1** — opt-in FlashDev via API Systeme.io (page site, pas l’éditeur Systeme.io).
 
 Ces tâches débloquent la mise en ligne ou corrigent des problèmes visibles pour les visiteurs.
+
+### Opt-in téléchargement FlashDev + API Systeme.io (**P1** — prioritaire)
+
+> Tuto complet (étapes 1–7 + recommandations) : **[`scripts/NOTE_SYSTEMEIO-API-FLASHDEV.md`](scripts/NOTE_SYSTEMEIO-API-FLASHDEV.md)**  
+> Cible : intégrer le formulaire **directement** sur / près de `flashdev.html` ; Systeme.io = contacts + email auto.
+
+- [ ] **P1** — Clé API Systeme.io + test `curl` (contact visible)
+- [ ] **P1** — Tag `flashdev-download` + automation email (lien téléchargement)
+- [ ] **P1** — Endpoint PHP `api/systeme-optin.php` (clé dans `config.php` FTP uniquement)
+- [ ] **P1** — Formulaire opt-in sur page FlashDev (design site / flex) → POST vers l’endpoint
+- [ ] **P1** — Test prod bout en bout : submit → contact Systeme.io → email → lien
+- [ ] **P2** — Aligner `flashdev.html` (gate login / lien Systeme.io) avec cette stratégie (éviter boucle)
 
 ### Pages vitrine — validation contenu & liens (**P1**)
 

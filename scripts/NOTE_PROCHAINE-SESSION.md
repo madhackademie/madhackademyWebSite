@@ -8,8 +8,10 @@
 
 ## Reprise session suivante — **P1 unique**
 
-> **Première version FlashDev téléchargeable** — installeur **sans deck** : Love2D + VS Code (+ Lua/Love pour le soft). Decks (bootcamp C++, futurs GO/Python…) = **achat + téléchargement sur le site** → install via explore deck.  
-> Détail : `FlashRevisionSoft/TODO.md` § *Première version téléchargeable*
+> **Opt-in FlashDev via API Systeme.io** — formulaire sur le **site** (`flashdev.html`), contacts + email auto dans Systeme.io (plus de bride éditeur pour le design).  
+> Tuto étapes 1–7 : [`NOTE_SYSTEMEIO-API-FLASHDEV.md`](NOTE_SYSTEMEIO-API-FLASHDEV.md) · cases : `TODO.md` § *Opt-in téléchargement FlashDev*
+
+> **En parallèle / ensuite** — Première version FlashDev téléchargeable (installeur sans deck) : `FlashRevisionSoft/TODO.md`.
 
 ---
 
