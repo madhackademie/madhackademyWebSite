@@ -1,6 +1,6 @@
 # Note — API Systeme.io → FlashDev (opt-in téléchargement)
 
-> Dernière mise à jour : 20 juillet 2026  
+> Dernière mise à jour : 21 juillet 2026  
 > **Priorité :** intégrer l’opt-in directement sur `flashdev.html` / site (design libre), contacts dans Systeme.io.  
 > Vocabulaire : on parle surtout d’**API** (créer un contact), pas d’un webhook entrant Systeme.io.
 
@@ -47,8 +47,8 @@ Snippet HTML capture (référence visuelle) : [`WebSite/systeme-io-capture-snipp
 
 Checklist :
 
-- [ ] Clé créée et copiée
-- [ ] Emplacement prévu dans `config.php` (ex. `SYSTEME_IO_API_KEY`)
+- [x] Clé créée et copiée
+- [x] Emplacement dans `config.php` sur FTP (`systeme_io_api_key`) — voir aussi `config.example.php` dans le repo
 
 ### 2) Tag (optionnel mais utile)
 
@@ -58,8 +58,8 @@ Automation typique : **Tag ajouté** → envoyer l’email avec le lien de tél�
 
 Checklist :
 
-- [ ] Tag `flashdev-download` créé
-- [ ] (Plus tard) appel API pour associer le tag au contact
+- [x] Tag `flashdev-download` créé
+- [ ] Appel API pour associer le tag au contact (requis pour déclencher l’automation « Tag ajouté »)
 
 ### 3) Schéma chez toi
 
@@ -73,8 +73,10 @@ Page FlashDev (ton HTML flex)
 
 Checklist :
 
-- [ ] Emplacement page : intégrer sur / près de `flashdev.html` (pas seulement Systeme.io)
-- [ ] Endpoint prévu : `WebSite/api/systeme-optin.php`
+- [x] Emplacement page : formulaire intégré sur `flashdev.html` (gate accès)
+- [x] Endpoint : `WebSite/api/systeme-optin.php`
+- [x] Pages résultat : `merci-flashdev.html`, `optin-email-existe.html`
+- [x] Charte visuelle partagée : `flashdev-optin.css`
 
 ### 4) Appel API (cœur)
 
@@ -102,8 +104,8 @@ Si OK → contact visible dans Systeme.io (souvent **201** Created).
 
 Checklist :
 
-- [ ] `curl` OK
-- [ ] Contact visible dans Systeme.io
+- [x] `curl` / `Invoke-WebRequest` OK (clé valide, API répond)
+- [x] Contact visible dans Systeme.io (test juillet 2026 — email existant → 422 « déjà utilisée »)
 
 ### 5) Côté PHP (esquisse)
 
@@ -145,10 +147,12 @@ header('Location: /merci-flashdev.html'); // page merci chez toi
 
 Checklist :
 
-- [ ] Endpoint PHP créé + déployé FTP
-- [ ] Clé lue depuis `config.php`
-- [ ] Gestion erreur / email déjà existant
-- [ ] Consentement checkbox vérifié côté serveur
+- [x] Endpoint PHP créé (`WebSite/api/systeme-optin.php`)
+- [x] Clé lue depuis `config.php` (`systeme_io_api_key`)
+- [x] Gestion erreur / email déjà existant → `optin-email-existe.html`
+- [x] Consentement checkbox vérifié côté serveur
+- [ ] Déployé sur FTP prod + test formulaire live
+- [ ] Tag `flashdev-download` ajouté via API après création contact
 
 ### 6) Automation Systeme.io
 
@@ -163,7 +167,7 @@ Lien download typique (à trancher selon stratégie accès) :
 
 Checklist :
 
-- [ ] Automation créée et testée
+- [ ] Automation créée et testée (règle **Tag ajouté** → `flashdev-download` → envoyer email)
 - [ ] Email reçu avec le bon lien
 - [ ] Copy email aligné (téléchargement soft, pas vente formation)
 
@@ -184,9 +188,9 @@ Design = HTML flex (snippet / `flashdev.html`). Systeme.io = uniquement boîte m
 
 Checklist :
 
-- [ ] Formulaire intégré à la page FlashDev (site)
-- [ ] Plus de dépendance au builder Systeme.io pour le design
-- [ ] Test bout en bout : submit → contact → email → lien
+- [x] Formulaire intégré à la page FlashDev (site, cadre SNES)
+- [x] Plus de dépendance au builder Systeme.io pour le design (lien externe retiré)
+- [ ] Test bout en bout prod : submit → contact → tag → email → lien
 
 ---
 
@@ -229,11 +233,17 @@ Checklist :
 
 ## Statut
 
-- [ ] Étape 1 — Clé API
-- [ ] Étape 2 — Tag
-- [ ] Étape 3 — Schéma / fichiers
-- [ ] Étape 4 — Test curl
-- [ ] Étape 5 — `systeme-optin.php`
-- [ ] Étape 6 — Automation email
-- [ ] Étape 7 — Formulaire sur page FlashDev
+- [x] Étape 1 — Clé API
+- [x] Étape 2 — Tag (`flashdev-download` créé ; association API **à faire**)
+- [x] Étape 3 — Schéma / fichiers
+- [x] Étape 4 — Test curl
+- [~] Étape 5 — `systeme-optin.php` (code OK · deploy prod + tag API **à faire**)
+- [ ] Étape 6 — Automation email Systeme.io
+- [~] Étape 7 — Formulaire sur `flashdev.html` (intégré · test prod **à faire**)
 - [ ] Test prod bout en bout
+
+### Prochaine action
+
+1. Créer l’automation email dans Systeme.io (Tag ajouté → `flashdev-download`)
+2. Patcher `systeme-optin.php` pour ajouter le tag via API
+3. Upload FTP des fichiers modifiés + test avec un email neuf

@@ -6,6 +6,7 @@
     <title>FlashDev — Télécharger le logiciel</title>
     <meta name="description" content="Téléchargez FlashDev, le logiciel de flashcards learn by doing. Version, changelog et prérequis Windows.">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/flashdev-optin.css">
     <style>
         .nintendo-red { background: #E60012; }
         .nintendo-yellow { background: #FBDD08; }
@@ -87,33 +88,55 @@
         </header>
 
         <section id="flashdev-access-gate" class="py-16 px-4 border-b border-gray-800">
-            <div class="max-w-4xl mx-auto">
-                <div class="bg-gray-900 rounded-xl border-2 border-yellow-500 overflow-hidden">
-                    <div class="h-2 nintendo-yellow"></div>
-                    <div class="p-8 md:p-10 text-center space-y-5">
-                        <p class="text-xs text-gray-500 uppercase tracking-widest">Acces controle</p>
-                        <h2 class="text-3xl md:text-4xl font-bold">Debloque le <span class="gradient-text">telechargement FlashDev</span></h2>
-                        <p class="text-gray-400 max-w-2xl mx-auto">
-                            Pour acceder au soft, il faut etre connecte avec un compte actif. Si ton compte n'est pas encore active,
-                            renseigne ton email dans le tunnel System.io pour recevoir la suite et etre ajoute aux prospects.
+            <div class="max-w-xl mx-auto">
+                <div class="fd-snes-card">
+                    <div class="fd-snes-stripe" aria-hidden="true">
+                        <i class="r"></i><i class="y"></i><i class="g"></i><i class="b"></i>
+                    </div>
+                    <div class="fd-snes-body">
+                        <p class="fd-snes-eyebrow">Accès contrôlé</p>
+                        <h2 class="fd-snes-title">Débloque le téléchargement FlashDev</h2>
+                        <p class="fd-snes-text">
+                            Connecte-toi si tu as déjà un compte actif. Sinon, laisse ton email pour recevoir le lien de téléchargement
+                            et être ajouté aux prospects FlashDev.
                         </p>
-                        <div class="flex flex-col sm:flex-row justify-center gap-4">
+
+                        <div id="gate-optin-error" class="fd-optin-error hidden" role="alert">
+                            Une erreur est survenue lors de l'inscription. Vérifie ton email et la case consentement, puis réessaie.
+                        </div>
+
+                        <div class="fd-snes-actions">
                             <a id="gate-login-link"
                                href="/auth/login.php?redirect=%2Fflashdev.html"
-                               class="inline-flex items-center justify-center px-8 py-4 bg-red-900 hover:bg-red-700 text-red-100 font-bold rounded transition-all">
+                               class="fd-snes-btn login">
                                 Se connecter
                             </a>
-                            <a id="gate-systemio-link"
-                               href="https://REPLACE-ME-SYSTEME-IO"
-                               target="_blank"
-                               rel="noopener"
-                               class="inline-flex items-center justify-center px-8 py-4 border-2 border-green-600 text-nintendo-green font-bold rounded hover:bg-green-900/30 transition-all">
-                                Activer mon acces par email
-                            </a>
                         </div>
-                        <p id="gate-systemio-hint" class="text-xs text-yellow-400">
-                            Pense a remplacer l'URL placeholder du bouton par ton lien System.io avant mise en prod.
-                        </p>
+
+                        <div class="fd-optin-divider">
+                            <p class="fd-optin-divider-title">Ou recevoir le lien par email</p>
+                            <form id="gate-optin-form" method="post" action="/api/systeme-optin.php" class="fd-optin-form">
+                                <label class="fd-optin-label" for="gate-email">Email</label>
+                                <input id="gate-email"
+                                       name="email"
+                                       type="email"
+                                       required
+                                       autocomplete="email"
+                                       placeholder="ton@email.com"
+                                       class="fd-optin-input">
+                                <label class="fd-optin-consent">
+                                    <input type="checkbox" name="consent" required>
+                                    <span>J'accepte de recevoir des emails de FlashDev (lien de téléchargement et infos produit). Désinscription possible à tout moment.</span>
+                                </label>
+                                <button type="submit" class="fd-optin-submit">
+                                    Recevoir le lien de téléchargement
+                                </button>
+                                <p class="fd-optin-footnote">Windows 10/11 · Soft gratuit · Pas de spam.</p>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="fd-snes-stripe" aria-hidden="true">
+                        <i class="r"></i><i class="y"></i><i class="g"></i><i class="b"></i>
                     </div>
                 </div>
             </div>
@@ -296,11 +319,6 @@
             var MANIFEST_URL = '/flashdev/latest-version.json';
             var FALLBACK_INSTALLER = '/flashdev/FlashDev-Setup-0.2.1-win64.exe';
             var LOGIN_URL = '/auth/login.php?redirect=' + encodeURIComponent('/flashdev.html');
-            var SYSTEMIO_URL = 'https://REPLACE-ME-SYSTEME-IO';
-
-            function isPlaceholderSystemioUrl(url) {
-                return !url || url.indexOf('REPLACE-ME-SYSTEME-IO') !== -1;
-            }
 
             function showGateOnly() {
                 document.getElementById('flashdev-access-gate').classList.remove('auth-gate-hidden');
@@ -313,22 +331,11 @@
             }
 
             function configureGate() {
-                var loginLink = document.getElementById('gate-login-link');
-                var systemioLink = document.getElementById('gate-systemio-link');
-                var hint = document.getElementById('gate-systemio-hint');
+                document.getElementById('gate-login-link').href = LOGIN_URL;
 
-                loginLink.href = LOGIN_URL;
-                systemioLink.href = SYSTEMIO_URL;
-
-                if (isPlaceholderSystemioUrl(SYSTEMIO_URL)) {
-                    systemioLink.setAttribute('aria-disabled', 'true');
-                    systemioLink.classList.add('opacity-60', 'cursor-not-allowed');
-                    systemioLink.addEventListener('click', function (event) {
-                        event.preventDefault();
-                    });
-                    hint.classList.remove('hidden');
-                } else {
-                    hint.classList.add('hidden');
+                var params = new URLSearchParams(window.location.search);
+                if (params.get('optin') === 'error') {
+                    document.getElementById('gate-optin-error').classList.remove('hidden');
                 }
             }
 

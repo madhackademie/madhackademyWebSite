@@ -100,12 +100,12 @@ Ces tâches débloquent la mise en ligne ou corrigent des problèmes visibles po
 > Tuto complet (étapes 1–7 + recommandations) : **[`scripts/NOTE_SYSTEMEIO-API-FLASHDEV.md`](scripts/NOTE_SYSTEMEIO-API-FLASHDEV.md)**  
 > Cible : intégrer le formulaire **directement** sur / près de `flashdev.html` ; Systeme.io = contacts + email auto.
 
-- [ ] **P1** — Clé API Systeme.io + test `curl` (contact visible)
-- [ ] **P1** — Tag `flashdev-download` + automation email (lien téléchargement)
-- [ ] **P1** — Endpoint PHP `api/systeme-optin.php` (clé dans `config.php` FTP uniquement)
-- [ ] **P1** — Formulaire opt-in sur page FlashDev (design site / flex) → POST vers l’endpoint
-- [ ] **P1** — Test prod bout en bout : submit → contact Systeme.io → email → lien
-- [ ] **P2** — Aligner `flashdev.html` (gate login / lien Systeme.io) avec cette stratégie (éviter boucle)
+- [x] **P1** — Clé API Systeme.io + test `curl` (contact visible)
+- [ ] **P1** — Tag `flashdev-download` + automation email (tag ✓ · automation ✗ · tag API PHP ✗)
+- [x] **P1** — Endpoint PHP `api/systeme-optin.php` (clé dans `config.php` FTP uniquement)
+- [x] **P1** — Formulaire opt-in sur page FlashDev (design site / cadre SNES) → POST vers l’endpoint
+- [ ] **P1** — Test prod bout en bout : submit → contact Systeme.io → tag → email → lien
+- [x] **P2** — Aligner `flashdev.html` (gate login / formulaire site, plus de lien Systeme.io externe)
 
 ### Pages vitrine — validation contenu & liens (**P1**)
 

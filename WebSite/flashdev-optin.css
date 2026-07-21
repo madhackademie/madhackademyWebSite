@@ -1,0 +1,316 @@
+/* FlashDev opt-in — charte SNES partagée (gate, merci, email existant) */
+
+:root {
+  --fd-red: #E60012;
+  --fd-yellow: #FBDD08;
+  --fd-green: #05C31C;
+  --fd-blue: #1B8CE4;
+}
+
+/* --- Carte cadre (bandes 4 couleurs) --- */
+
+.fd-snes-card {
+  width: 100%;
+  text-align: center;
+  overflow: hidden;
+  border: 2px solid #374151;
+  border-radius: 12px;
+  background: rgba(3, 7, 18, 0.96);
+  box-shadow:
+    0 0 0 2px #222,
+    0 20px 50px rgba(0, 0, 0, 0.55),
+    0 0 36px rgba(5, 195, 28, 0.12);
+}
+
+.fd-snes-card.is-warning {
+  border-color: #854d0e;
+  box-shadow:
+    0 0 0 2px #222,
+    0 20px 50px rgba(0, 0, 0, 0.55),
+    0 0 36px rgba(251, 221, 8, 0.12);
+}
+
+.fd-snes-stripe {
+  display: flex;
+  height: 6px;
+}
+
+.fd-snes-stripe i {
+  flex: 1;
+  display: block;
+}
+
+.fd-snes-stripe .r { background: var(--fd-red); }
+.fd-snes-stripe .y { background: var(--fd-yellow); }
+.fd-snes-stripe .g { background: var(--fd-green); }
+.fd-snes-stripe .b { background: var(--fd-blue); }
+
+.fd-snes-body {
+  padding: 36px 28px 32px;
+}
+
+/* --- Typo charte --- */
+
+.fd-snes-eyebrow {
+  margin: 0 0 12px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #6b7280;
+}
+
+.fd-snes-title {
+  margin: 0 0 12px;
+  font-size: clamp(22px, 5vw, 32px);
+  font-weight: 700;
+  line-height: 1.25;
+  background: linear-gradient(90deg, #E60012, #FBDD08, #05C31C, #1B8CE4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.fd-snes-card.is-warning .fd-snes-title {
+  background: linear-gradient(90deg, #FBDD08, #E60012);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.fd-snes-text {
+  margin: 0 auto 24px;
+  max-width: 28rem;
+  font-size: 15px;
+  line-height: 1.55;
+  color: #9ca3af;
+}
+
+.fd-snes-note {
+  margin: 18px 0 0;
+  font-size: 11px;
+  color: #4b5563;
+}
+
+/* --- Icône résultat (merci / existe) --- */
+
+.fd-snes-icon {
+  margin: 0 auto 16px;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.fd-snes-icon.ok {
+  background: rgba(5, 195, 28, 0.15);
+  color: var(--fd-green);
+  border: 2px solid rgba(5, 195, 28, 0.45);
+}
+
+.fd-snes-icon.warn {
+  background: rgba(251, 221, 8, 0.12);
+  color: var(--fd-yellow);
+  border: 2px solid rgba(251, 221, 8, 0.45);
+}
+
+/* --- Boutons --- */
+
+.fd-snes-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.fd-snes-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 240px;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: inherit;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.fd-snes-btn:hover {
+  transform: translateY(-1px);
+}
+
+.fd-snes-btn.primary {
+  border: 2px solid #15803d;
+  background: var(--fd-green);
+  color: #000;
+}
+
+.fd-snes-btn.primary:hover {
+  filter: brightness(1.08);
+}
+
+.fd-snes-btn.secondary {
+  border: 2px solid #374151;
+  background: transparent;
+  color: #d1d5db;
+}
+
+.fd-snes-btn.secondary:hover {
+  border-color: #6b7280;
+}
+
+.fd-snes-btn.login {
+  border: 2px solid #991b1b;
+  background: #7f1d1d;
+  color: #fecaca;
+}
+
+.fd-snes-btn.login:hover {
+  background: #991b1b;
+}
+
+/* --- Formulaire opt-in (gate flashdev) --- */
+
+.fd-optin-divider {
+  max-width: 28rem;
+  margin: 24px auto 0;
+  padding-top: 20px;
+  border-top: 1px dashed #374151;
+}
+
+.fd-optin-divider-title {
+  margin: 0 0 16px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #6b7280;
+}
+
+.fd-optin-form {
+  max-width: 28rem;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.fd-optin-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6b7280;
+}
+
+.fd-optin-input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid #374151;
+  border-radius: 8px;
+  background: #fff;
+  color: #111;
+  font-size: 16px;
+  font-family: inherit;
+  margin-bottom: 14px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.fd-optin-input:focus {
+  outline: none;
+  border-color: var(--fd-green);
+  box-shadow: 0 0 0 3px rgba(5, 195, 28, 0.2);
+}
+
+.fd-optin-consent {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: #9ca3af;
+  line-height: 1.45;
+  cursor: pointer;
+}
+
+.fd-optin-consent input {
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.fd-optin-submit {
+  width: 100%;
+  padding: 14px 18px;
+  border: 2px solid #15803d;
+  border-radius: 8px;
+  background: var(--fd-green);
+  color: #000;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: filter 0.15s ease, transform 0.15s ease;
+}
+
+.fd-optin-submit:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+.fd-optin-footnote {
+  margin: 12px 0 0;
+  text-align: center;
+  font-size: 11px;
+  color: #4b5563;
+}
+
+.fd-optin-error {
+  max-width: 28rem;
+  margin: 0 auto 16px;
+  padding: 12px 14px;
+  border: 1px solid #991b1b;
+  border-radius: 8px;
+  background: rgba(127, 29, 29, 0.35);
+  color: #fecaca;
+  font-size: 13px;
+  line-height: 1.45;
+  text-align: left;
+}
+
+.fd-optin-error.hidden {
+  display: none;
+}
+
+/* --- Page résultat plein écran (merci / existe) --- */
+
+body.fd-optin-page {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  background-color: #000;
+  background-image: url("Image/flashdev-snes-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: #fff;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+body.fd-optin-page .fd-snes-card {
+  max-width: 520px;
+}
