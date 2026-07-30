@@ -1,30 +1,48 @@
 # Guide — Prochaine session de travail
 
 > **Référence principale** pour reprendre le projet madhackademyWebSite  
-> Dernière mise à jour : 15 juillet 2026 (convention 5 — merge portable ou bureau)  
-> Domaine : [gameopenmoney.com](https://gameopenmoney.com/)
+> Dernière mise à jour : 30 juillet 2026 (soir — pause domaine / email)  
+> Domaine : [gameopenmoney.com](https://gameopenmoney.com/) · cible marque : MadHackAdemy (OVH)
 
 ---
 
 ## Reprise session suivante — **P1 unique**
 
-> **Opt-in FlashDev via API Systeme.io** — formulaire sur le **site** (`flashdev.html`), contacts + email auto dans Systeme.io (plus de bride éditeur pour le design).  
-> Tuto étapes 1–7 : [`NOTE_SYSTEMEIO-API-FLASHDEV.md`](NOTE_SYSTEMEIO-API-FLASHDEV.md) · cases : `TODO.md` § *Opt-in téléchargement FlashDev*
+> **Email pro OVH + authentification domaine dans Systeme.io** (SPF / DKIM / expéditeur) — sans mail fiable, pas d’automation double opt-in ni envoi du lien FlashDev.  
+> Ensuite enchaîner : automation tag `flashdev-download` → email lien · voir [`NOTE_SYSTEMEIO-API-FLASHDEV.md`](NOTE_SYSTEMEIO-API-FLASHDEV.md) § 6.
 
-> **En parallèle / ensuite** — Première version FlashDev téléchargeable (installeur sans deck) : `FlashRevisionSoft/TODO.md`.
+> **Puis** — finir le flux opt-in (double opt-in + test) · formulaire site déjà en cours dans la note API.
 
 ---
 
-## Session en cours (15 juillet 2026)
+## Bilan 30/07/2026 (soir)
 
-**P1 en cours :** polish asset bouton mise à jour (Options) → commit `feat/options-update`
+| Fait / en cours | Détail |
+|-----------------|--------|
+| Feature update soft | ✅ Validée sur `main` (T1–T4) — TODO à jour |
+| Opt-in site / API | En cours — voir cases dans `NOTE_SYSTEMEIO-API-FLASHDEV.md` |
+| Automation Systeme.io | Déclencheur prévu : **Tag ajouté** → `flashdev-download` → **Envoyer un email** |
+| Double opt-in | **Décidé** (GDPR) |
+| Bloqué ce soir | Ajout / auth **nom de domaine** + mail correct (duo **OVH ↔ Systeme.io**) — reprise demain |
 
-**Ordre recommandé :**
+### Checklist reprise demain (email)
 
-1. `.\scripts\sync-both.cmd`
-2. Polish bouton update + asset PNG (`buton_Choix-assets/`)
-3. `.\scripts\commit-both.cmd` (soft + site si manifest modifié)
-4. Merge `feat/options-update` → `main` quand prêt (convention 5)
+- [ ] OVH : boîte mail MadHackAdemy (ou domaine choisi) opérationnelle
+- [ ] Systeme.io : domaine / expéditeur ajouté
+- [ ] DNS OVH : enregistrements demandés par Systeme.io (SPF, DKIM, éventuellement DMARC)
+- [ ] Test d’envoi depuis Systeme.io → réception OK
+- [ ] Puis : activer double opt-in + automation email lien FlashDev
+
+---
+
+## Soft — feature update ✅ (juillet 2026)
+
+| Point | État |
+|--------|------|
+| Feature mise à jour | **Validée** — code sur `main` / `origin/main` |
+| Branche `feat/options-update` | Plus nécessaire (intégrée ; absente du remote) |
+| Tests | **T1–T4 ✅** (prod 0.1.0 → 0.2.1) — voir `NOTE_UPDATE-WORKFLOW.md` § 6 |
+| Restant | T5–T7 = **P2** (non bloquant) |
 
 ### Release FlashDev — rappel rapide
 
@@ -40,56 +58,32 @@
 
 ---
 
-## Session en cours / reprise (14 juillet 2026 — fin de session)
+## Archive — session 14–15 juillet 2026 (update)
 
-### Bilan session du 14/07
+### Bilan (historique)
 
 | Fait | Détail |
 |------|--------|
 | Site | `flashdev.html` + `flashdev/latest-version.json` + `index.html` — **FTP OK** |
-| Soft | Phase A : `updateCheck.lua` (coroutine lancement + `curl.exe`), menu Options, `setOnComplete` |
-| Tests | **T2** ✅ à jour · **T3** ✅ hors ligne · **T1** ✅ v0.2.0 bouton actif · check session OK |
-| Git site | `main` — commit + push `test update json` (`24a3e5c`) |
-| Git soft | `feat/options-update` — commit + push `test update` (`2797162`) |
+| Soft | Phase A + B update sur `main` (T1–T4 ✅) |
+| Merge `feat/options-update` | **Fait** (travail consolidé sur `main` — vérifié 30/07/2026) |
 
-| En attente | Détail |
-|------------|--------|
-| **Merge soft** | `feat/options-update` → `main` après tests (convention 5) — **pas fait** |
-| Tests deck | `data.json` intact + non-régression (webGuide, explore deck, Start, Done) — avant merge |
-| Phase B | Update 1 clic — **validé** (prod 0.1.0 → 0.2.1, T4 ✅) |
-
-### Branche soft
-
-- **`FlashRevisionSoft`** : branche **`feat/options-update`** — poussée sur `origin`
-- **Merge `main`** : après tests validés (portable ou bureau), puis `sync-both` sur l'autre machine
-
-### **P1 session suivante — unique**
-
-> **Merger `feat/options-update` → `main`** après polish bouton update + commit.
-
-### En cours sur `feat/options-update`
+### Checklist update (archive)
 
 - [x] Bouton Options + menu déroulant mise à jour / état « à jour » grisé
-- [x] Phase A — `updateCheck.lua` + HTTPS (garde-fous hors ligne, sans toucher `data.json`)
-- [x] Phase A — tests T1 / T2 / T3 + callback fin coroutine
-- [x] Commit + push site et soft (juillet 2026)
-- [ ] **Merge** `feat/options-update` → `main` (après tests — portable ou bureau)
-- [x] Phase B — `update-flashdev.ps1` + update 1 clic (T4 prod ✅)
+- [x] Phase A — `updateCheck.lua` + HTTPS
+- [x] Phase A — tests T1 / T2 / T3
+- [x] Phase B — update 1 clic (T4 prod ✅)
+- [x] Intégration sur `main`
 
-### **P1 — Tests check mise à jour** (Phase A — validés, avant merge)
+### Tests check mise à jour (réf. workflow)
 
-> Branche `feat/options-update` · doc : `FlashRevisionSoft/scripts/NOTE_UPDATE-WORKFLOW.md` § 6
+> Doc : `FlashRevisionSoft/scripts/NOTE_UPDATE-WORKFLOW.md` § 6 · feature sur **`main`**
 
-- [x] **P1 — T2** — Manifest **v0.1.0** : console `[updateCheck] Soft a jour (0.1.0)` ; Options → mise à jour **grisée**
-- [x] **P1 — T3** — **Hors ligne** : pas de crash ; parcours révision OK ; bouton grisé ; erreur console
-- [x] **P1** — Check pendant session : `setOnComplete` à la fin de la coroutine lancement ; Options OK sans redémarrage
-- [x] **P1 — T1** — `latest-version.json` **v0.2.0** : bouton mise à jour **actif** ; clic → console Phase B — juillet 2026
-- [x] **P1 — T4** — Deck bootcamp : **7 cartes** + `nextRevision` inchangés après update 0.1.0 → 0.2.1 — juillet 2026
-- [ ] **P1** — Non-régression : webGuide, explore deck, Start, Done — inchangés
+- [x] **T1–T4** — Validés (prod 0.1.0 → 0.2.1)
+- [ ] **P2** — T5–T7 + non-régression deck (webGuide, explore, Start, Done) — non bloquant
 
-*(T5–T7 = Phase B download — T4 ✅ juillet 2026)*
-
-### Reporté (après P1 tests)
+### Reporté
 
 - [ ] Refaire les graphiques du bouton **webGuide** (`currentProjectMenu.lua`) — assets + protocole production
 
@@ -112,9 +106,10 @@
 
 ### Prochaine étape
 
-> **P1 prioritaire session suivante :** valider le périmètre MVP avant release (`scripts/NOTE_MVP-FLASHDEV.md`) — pour chaque ligne Must-have, trancher bloquant release oui/non.
+> **P1 prioritaire :** opt-in FlashDev via API Systeme.io — [`NOTE_SYSTEMEIO-API-FLASHDEV.md`](NOTE_SYSTEMEIO-API-FLASHDEV.md).
 
-- [ ] **P1** — Valider le périmètre MVP avant release (`scripts/NOTE_MVP-FLASHDEV.md`) — cocher Must-have / Should-have / Won't-have
+- [ ] **P1** — API Systeme.io + formulaire sur `flashdev.html` (étapes 1–7)
+- [ ] **P1** — Valider le périmètre MVP avant release (`scripts/NOTE_MVP-FLASHDEV.md`)
 - [ ] Contenu centre-formation (voir `TODO.md` § P1 contenu)
 - [ ] Paiement / rôle `student` (webhook → `user_products`)
 - [ ] **P1** — Dashboard élève (`dashboard/index.php`) : install FlashRevisionSoft, utilitaires, contenu acheté

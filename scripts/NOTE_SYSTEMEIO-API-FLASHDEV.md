@@ -1,8 +1,9 @@
 # Note — API Systeme.io → FlashDev (opt-in téléchargement)
 
-> Dernière mise à jour : 21 juillet 2026  
+> Dernière mise à jour : 30 juillet 2026  
 > **Priorité :** intégrer l’opt-in directement sur `flashdev.html` / site (design libre), contacts dans Systeme.io.  
-> Vocabulaire : on parle surtout d’**API** (créer un contact), pas d’un webhook entrant Systeme.io.
+> Vocabulaire : on parle surtout d’**API** (créer un contact), pas d’un webhook entrant Systeme.io.  
+> **Décision GDPR (30/07/2026) :** **double opt-in** — confirmation email avant envoi du lien FlashDev.
 
 ---
 
@@ -13,7 +14,8 @@ Page FlashDev (HTML flex libre sur gameopenmoney.com)
    → formulaire POST vers /api/systeme-optin.php
       → PHP appelle https://api.systeme.io/api/contacts
       → contact créé dans Systeme.io
-      → automation envoie l’email avec le lien de téléchargement
+      → email « Confirme ton adresse » (double opt-in)
+      → après clic → automation : email avec le lien de téléchargement
 ```
 
 - **Design** = ton site (plus de bride éditeur Systeme.io)  
@@ -154,11 +156,14 @@ Checklist :
 - [ ] Déployé sur FTP prod + test formulaire live
 - [ ] Tag `flashdev-download` ajouté via API après création contact
 
-### 6) Automation Systeme.io
+### 6) Automation Systeme.io + **double opt-in** (décidé)
 
-1. Automation : **quand un contact est créé** (ou tag `flashdev-download`)
-2. Action : **envoyer un email** avec le lien download
-3. Option : double opt-in si tu veux être strict GDPR
+**Flux retenu :**
+
+1. Contact créé (API / formulaire) → **pas encore** le lien download  
+2. Systeme.io envoie l’email **« Confirme ton adresse »** (double opt-in)  
+3. Après clic de confirmation → automation : email **« Voici le lien FlashDev »**  
+   (déclencheur typique : contact confirmé / tag `flashdev-download` après confirmation)
 
 Lien download typique (à trancher selon stratégie accès) :
 
@@ -167,9 +172,10 @@ Lien download typique (à trancher selon stratégie accès) :
 
 Checklist :
 
-- [ ] Automation créée et testée (règle **Tag ajouté** → `flashdev-download` → envoyer email)
-- [ ] Email reçu avec le bon lien
-- [ ] Copy email aligné (téléchargement soft, pas vente formation)
+- [ ] Double opt-in activé dans Systeme.io
+- [ ] Email de **confirmation** testé
+- [ ] Automation **après confirmation** : email avec lien download (ex. tag `flashdev-download`)
+- [ ] Copy aligné (téléchargement soft, pas vente formation)
 
 ### 7) Formulaire sur ta page
 
@@ -214,7 +220,7 @@ Checklist :
 | Promesse | Opt-in = **lien téléchargement soft**, pas vente formation |
 | Boucle gate | Pas de lien `flashdev.html` sur une page Systeme.io qui renvoie au gate login → boucle |
 | Secrets | Clé API uniquement serveur ; rotation possible (max 3 clés) |
-| GDPR | Case consentement + désinscription dans les emails Systeme.io |
+| GDPR | **Double opt-in** (décidé) + case consentement + désinscription dans les emails |
 | Suite possible | Tag → automation ; plus tard : créer / activer compte site (lien magique) = autre chantier |
 
 ---
