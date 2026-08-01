@@ -95,10 +95,19 @@ WebSite/Formations/
 
 Ces tâches débloquent la mise en ligne ou corrigent des problèmes visibles pour les visiteurs.
 
-### Opt-in téléchargement FlashDev + API Systeme.io (**P1** — prioritaire)
+### Domaine madhackademy.eu + email (**P1** — avant migration / paiement)
 
-> Tuto complet (étapes 1–7 + recommandations) : **[`scripts/NOTE_SYSTEMEIO-API-FLASHDEV.md`](scripts/NOTE_SYSTEMEIO-API-FLASHDEV.md)**  
-> Cible : intégrer le formulaire **directement** sur / près de `flashdev.html` ; Systeme.io = contacts + email auto.
+> Décision 1/08/2026 — domaine **acheté**. Site reste sur gameopenmoney.com jusqu’à email OK.  
+> Détail : [`scripts/NOTE_PROCHAINE-SESSION.md`](scripts/NOTE_PROCHAINE-SESSION.md)
+
+- [ ] **P1** — Boîte mail OVH sur `madhackademy.eu` (envoi + réception)
+- [ ] **P1** — Auth domaine dans Systeme.io (SPF / DKIM) + test d’envoi
+- [ ] **P1** — Migration site vers `madhackademy.eu` (**ensemble**, après email validé)
+- [ ] **P1** — Automation + double opt-in + paiement (après migration)
+
+### Opt-in téléchargement FlashDev + API Systeme.io (**P1**)
+
+> Tuto : **[`scripts/NOTE_SYSTEMEIO-API-FLASHDEV.md`](scripts/NOTE_SYSTEMEIO-API-FLASHDEV.md)** · enchaîner après email / domaine OK.
 
 - [x] **P1** — Clé API Systeme.io + test `curl` (contact visible)
 - [ ] **P1** — Tag `flashdev-download` + automation email (tag ✓ · automation ✗ · tag API PHP ✗)

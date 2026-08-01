@@ -1,37 +1,84 @@
 # Guide — Prochaine session de travail
 
 > **Référence principale** pour reprendre le projet madhackademyWebSite  
-> Dernière mise à jour : 30 juillet 2026 (soir — pause domaine / email)  
-> Domaine : [gameopenmoney.com](https://gameopenmoney.com/) · cible marque : MadHackAdemy (OVH)
+> Dernière mise à jour : 1 août 2026  
+> Domaine prod actuel : [gameopenmoney.com](https://gameopenmoney.com/)  
+> **Nouveau domaine (acheté) :** **madhackademy.eu** (OVH) — migration site **après** email OK
 
 ---
 
 ## Reprise session suivante — **P1 unique**
 
-> **Email pro OVH + authentification domaine dans Systeme.io** (SPF / DKIM / expéditeur) — sans mail fiable, pas d’automation double opt-in ni envoi du lien FlashDev.  
-> Ensuite enchaîner : automation tag `flashdev-download` → email lien · voir [`NOTE_SYSTEMEIO-API-FLASHDEV.md`](NOTE_SYSTEMEIO-API-FLASHDEV.md) § 6.
+> **Finir auth Systeme.io** (`madhackademy.eu` encore « En attente » — DNS OK, souvent validation support / quelques heures)  
+> + confirmer expéditeur `contact@madhackademy.eu` + test envoi.  
+> **Ensuite** : bascule liens absolus `gameopenmoney.com` → `madhackademy.eu` (inventaire ci-dessous).  
+> `gameopenmoney.com` restera un autre projet ; Multisite déjà en place (même `www`, pas de re-upload massif).
 
-> **Puis** — finir le flux opt-in (double opt-in + test) · formulaire site déjà en cours dans la note API.
+Doc opt-in : [`NOTE_SYSTEMEIO-API-FLASHDEV.md`](NOTE_SYSTEMEIO-API-FLASHDEV.md) § 6.
 
 ---
 
-## Bilan 30/07/2026 (soir)
+## Décision domaine (1 août 2026)
+
+| Point | Choix |
+|--------|--------|
+| Domaine marque | **madhackademy.eu** (acheté) |
+| Email | `contact@madhackademy.eu` (MX Plan 5 OK) + Outlook |
+| Site | Multisite OVH → même racine que gameopenmoney ; HTTPS OK |
+| `gameopenmoney.com` | Autre usage plus tard (pas la marque MadHackAdemy) |
+| Migration liens | **Ensemble** après auth Systeme.io validée |
+| Suite | Automation Systeme.io + double opt-in, puis paiement |
+
+### Checklist (ordre strict)
+
+1. [x] OVH : boîte `contact@madhackademy.eu` — envoi + réception OK  
+2. [~] Systeme.io : domaine ajouté + DNS CNAME/DMARC OK — statut encore **En attente**  
+3. [ ] Systeme.io : statut domaine **authentifié** + expéditeur `contact@` vérifié  
+4. [ ] Test envoi Systeme.io → réception réelle  
+5. [ ] Bascule liens absolus → `madhackademy.eu` (voir inventaire)  
+6. [ ] Double opt-in + automation tag `flashdev-download` → email lien FlashDev  
+7. [ ] Paiement (Stripe / Systeme.io) → accès `student` / `user_products`
+
+---
+
+## Inventaire liens absolus `gameopenmoney.com` (1/08 — pour demain)
+
+> Pages HTML vitrine : **presque tout est relatif** → déjà OK sur `madhackademy.eu`.  
+> À changer = surtout le **soft** + 1 mock + notes (docs).
+
+### Prod / code à modifier (priorité)
+
+| Fichier | Nb | Contenu |
+|---------|----|---------|
+| `FlashRevisionSoft/SquelletteGCS/data.json` | **7** | `URLNet` → `…/auth/guide.php?m=01` … `07` |
+| `FlashRevisionSoft/DeckBootCampCpp/DeckInstaller.json` | **7** | idem `URLNet` |
+| `FlashRevisionSoft/SquelletteGCS/lib/updateCheck.lua` | **1** | `MANIFEST_URL` → `…/flashdev/latest-version.json` |
+| `FlashRevisionSoft/SquelletteGCS/state/currentProjectMenu.lua` | **1** | préfixe `https://gameopenmoney.com` pour download |
+| `madhackademyWebSite/WebSite/systeme-io-capture-mock.html` | **1** | lien download FlashDev (mock, pas prod critique) |
+
+**Total code utile ≈ 17 occurrences** (dans 5 fichiers actifs ; hors backups `update_work/`).
+
+### Docs seulement (P2 — notes / TODO)
+
+`TODO.md`, `NOTE_PROCHAINE-SESSION.md`, `NOTE_DEPLOIEMENT-FTP-GAMEDEVREADY.md`, `NOTE_UPDATE-WORKFLOW.md`, `NOTE_SYSTEMEIO-API-FLASHDEV.md`, `NOTE_SETUP-UTILISATEUR.md`, `NOTE_OVH-PHP-MYSQL.md`, `NOTE_ARCHITECTURE_SOFT-SITE.md` — références URL à mettre à jour au fil de l’eau.
+
+### Pas de re-upload massif
+
+Multisite = même disque. Upload FTP **uniquement** des fichiers modifiés après édition.
+
+---
+
+## Bilan 30/07 → 1/08
 
 | Fait / en cours | Détail |
 |-----------------|--------|
-| Feature update soft | ✅ Validée sur `main` (T1–T4) — TODO à jour |
-| Opt-in site / API | En cours — voir cases dans `NOTE_SYSTEMEIO-API-FLASHDEV.md` |
-| Automation Systeme.io | Déclencheur prévu : **Tag ajouté** → `flashdev-download` → **Envoyer un email** |
-| Double opt-in | **Décidé** (GDPR) |
-| Bloqué ce soir | Ajout / auth **nom de domaine** + mail correct (duo **OVH ↔ Systeme.io**) — reprise demain |
-
-### Checklist reprise demain (email)
-
-- [ ] OVH : boîte mail MadHackAdemy (ou domaine choisi) opérationnelle
-- [ ] Systeme.io : domaine / expéditeur ajouté
-- [ ] DNS OVH : enregistrements demandés par Systeme.io (SPF, DKIM, éventuellement DMARC)
-- [ ] Test d’envoi depuis Systeme.io → réception OK
-- [ ] Puis : activer double opt-in + automation email lien FlashDev
+| Feature update soft | ✅ Validée sur `main` (T1–T4) |
+| Opt-in site / API | En cours — `NOTE_SYSTEMEIO-API-FLASHDEV.md` |
+| Automation | Prévu : Tag `flashdev-download` → Envoyer un email |
+| Double opt-in | **Décidé** |
+| Domaine + HTTPS | ✅ Multisite + Let’s Encrypt OK |
+| Email OVH | ✅ `contact@madhackademy.eu` + Outlook |
+| Systeme.io DNS | ✅ CNAME×3 + DMARC — statut **En attente** (reprise demain) |
 
 ---
 
