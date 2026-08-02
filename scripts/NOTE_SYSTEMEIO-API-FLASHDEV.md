@@ -3,7 +3,12 @@
 > Dernière mise à jour : 30 juillet 2026  
 > **Priorité :** intégrer l’opt-in directement sur `flashdev.html` / site (design libre), contacts dans Systeme.io.  
 > Vocabulaire : on parle surtout d’**API** (créer un contact), pas d’un webhook entrant Systeme.io.  
-> **Décision GDPR (30/07/2026) :** **double opt-in** — confirmation email avant envoi du lien FlashDev.
+> **Décision GDPR (30/07/2026) :** **double opt-in** souhaité.  
+> **Décision UX (2/08/2026) :** **pas de formulaire capture Systeme.io** (design bridé). Opt-in = **formulaire site** + API.  
+> → Le DOI **natif** Systeme.io (email `{double_opt_in_confirmation_link}`) ne s’applique pas à l’API.  
+> → Flux retenu (2/08) : **consentement case sur le site** + automation **Tag `flashdev-download`** → email lien download.  
+> → Pas de DOI natif Systeme.io sur ce tunnel (formulaire site). GDPR = case + désinscription emails.  
+> → Règle automation créée : Tag `flashdev-download` → email download. Reste : tag via API PHP.
 
 ---
 
@@ -154,7 +159,7 @@ Checklist :
 - [x] Gestion erreur / email déjà existant → `optin-email-existe.html`
 - [x] Consentement checkbox vérifié côté serveur
 - [ ] Déployé sur FTP prod + test formulaire live
-- [ ] Tag `flashdev-download` ajouté via API après création contact
+- [x] Tag `flashdev-download` ajouté via API après création contact (résolu par **nom**, 2/08)
 
 ### 6) Automation Systeme.io + **double opt-in** (décidé)
 
@@ -165,10 +170,15 @@ Checklist :
 3. Après clic de confirmation → automation : email **« Voici le lien FlashDev »**  
    (déclencheur typique : contact confirmé / tag `flashdev-download` après confirmation)
 
-Lien download typique (à trancher selon stratégie accès) :
+Lien dans l’email Systeme.io (**obligatoire** — page site, pas le .exe) :
 
-- `https://gameopenmoney.com/flashdev.html`  
-  ou URL directe installeur sous `/flashdev/`
+```
+https://madhackademy.eu/flashdev.html?dl=1
+```
+
+- Ouvre la page FlashDev avec le **bouton** télécharger (pas un download Explorer direct)
+- **Ne pas** mettre `/flashdev/go.php` ni `FlashDev-Setup-….exe` dans l’email
+- Page merci opt-in : **pas** de bouton download (évite faux emails / skip mail)
 
 Checklist :
 
@@ -250,6 +260,7 @@ Checklist :
 
 ### Prochaine action
 
-1. Créer l’automation email dans Systeme.io (Tag ajouté → `flashdev-download`)
-2. Patcher `systeme-optin.php` pour ajouter le tag via API
-3. Upload FTP des fichiers modifiés + test avec un email neuf
+1. [x] Automation Systeme.io (Tag ajouté → `flashdev-download` → email download)
+2. [x] `systeme-optin.php` : tag par nom + assignation API
+3. [x] FTP : `systeme-optin.php` + `systeme_io_tag_flashdev` dans `config.php`
+4. [x] Test bout en bout OK (2/08) — email download reçu via automation

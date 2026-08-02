@@ -1,0 +1,9 @@
+# MadHackAdemy — redirections Apache (OVH mutualisé)
+# Upload à la racine FTP (même dossier que index.html / Multisite www).
+
+RewriteEngine On
+
+# gameopenmoney.com (+ www) → madhackademy.eu (301, HTTPS, path + query)
+# Quand gameopenmoney aura son propre dossier Multisite, retirer ou adapter cette règle.
+RewriteCond %{HTTP_HOST} ^(www\.)?gameopenmoney\.com$ [NC]
+RewriteRule ^(.*)$ https://madhackademy.eu/$1 [R=301,L,QSA]

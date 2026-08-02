@@ -1,7 +1,25 @@
-# Note — Déploiement FTP GameDevReady (gameopenmoney.com)
+# Note — Déploiement FTP GameDevReady / MadHackAdemy
 
-> Dernière mise à jour : 2 juillet 2026  
-> Domaine : [https://gameopenmoney.com/](https://gameopenmoney.com/)
+> Dernière mise à jour : 2 août 2026  
+> Domaine marque : [https://madhackademy.eu/](https://madhackademy.eu/)  
+> Ancien : `gameopenmoney.com` (Multisite, même `www`)
+
+---
+
+## Redirection 301 (2 août 2026)
+
+Fichier local : **`WebSite/.htaccess`** → upload à la **racine FTP** (`www/`, à côté de `index.html`).
+
+Effet : toute requête sur `gameopenmoney.com` / `www.gameopenmoney.com` → `https://madhackademy.eu/` (même chemin + query).
+
+```powershell
+curl.exe -sI "https://gameopenmoney.com/flashdev.html?dl=1"
+# Attendu : HTTP/1.1 301 … Location: https://madhackademy.eu/flashdev.html?dl=1
+```
+
+`https://madhackademy.eu/` ne doit **pas** rediriger (pas de boucle).
+
+Futur site sur gameopenmoney : Multisite → autre dossier + retirer la règle Host de ce `.htaccess`.
 
 ---
 
@@ -20,8 +38,9 @@ Le dépôt local sert le site depuis le dossier **`WebSite/`**.
 Sur le FTP du provider, le **contenu de `WebSite/`** doit se retrouver à la **racine web** du domaine (souvent `public_html/`, `www/` ou `htdocs/` — voir panneau hébergeur).
 
 ```
-Repo local                                    FTP (racine gameopenmoney.com)
+Repo local                                    FTP (racine www / Multisite)
 ───────────────────────────────────────────   ────────────────────────────────
+WebSite/.htaccess                     →       /.htaccess   ← 301 gameopenmoney → madhackademy
 WebSite/index.html                    →       /index.html
 WebSite/gamedevready.html             →       /gamedevready.html
 WebSite/gamedevready-bases-cpp.html   →       /gamedevready-bases-cpp.html

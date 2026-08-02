@@ -1,20 +1,37 @@
 # Guide — Prochaine session de travail
 
 > **Référence principale** pour reprendre le projet madhackademyWebSite  
-> Dernière mise à jour : 1 août 2026  
-> Domaine prod actuel : [gameopenmoney.com](https://gameopenmoney.com/)  
-> **Nouveau domaine (acheté) :** **madhackademy.eu** (OVH) — migration site **après** email OK
+> Dernière mise à jour : 2 août 2026  
+> Domaine marque : [madhackademy.eu](https://madhackademy.eu/)  
+> Ancien domaine : `gameopenmoney.com` → **301** vers madhackademy (voir `.htaccess`)
 
 ---
 
 ## Reprise session suivante — **P1 unique**
 
-> **Finir auth Systeme.io** (`madhackademy.eu` encore « En attente » — DNS OK, souvent validation support / quelques heures)  
-> + confirmer expéditeur `contact@madhackademy.eu` + test envoi.  
-> **Ensuite** : bascule liens absolus `gameopenmoney.com` → `madhackademy.eu` (inventaire ci-dessous).  
-> `gameopenmoney.com` restera un autre projet ; Multisite déjà en place (même `www`, pas de re-upload massif).
+> **Paiement** (Stripe / Systeme.io) → accès compte `student` / `user_products`.  
+> Pipeline leads FlashDev ↔ Systeme.io : **OK** (2/08).
 
-Doc opt-in : [`NOTE_SYSTEMEIO-API-FLASHDEV.md`](NOTE_SYSTEMEIO-API-FLASHDEV.md) § 6.
+### Bilan leads / domaine (2/08) — done
+
+- Domaine `madhackademy.eu` + email `contact@` + auth Systeme.io
+- Soft liens + release **0.2.2** (zip / exe / setup zip)
+- Opt-in site → API → tag `flashdev-download` → email
+- Lien email : `flashdev.html?dl=1` (page puis bouton ; pas de gate / pas de go.php)
+- Page merci : sans bouton download (évite skip mail)
+- **Redirect 301** : `WebSite/.htaccess` — `gameopenmoney.com` (+ www) → `https://madhackademy.eu/$1`  
+  → **FTP** : uploader `.htaccess` à la racine `www/` ; tests ci-dessous
+
+#### Tests redirect (après FTP)
+
+```text
+https://gameopenmoney.com/                    → https://madhackademy.eu/
+https://www.gameopenmoney.com/flashdev.html → https://madhackademy.eu/flashdev.html
+https://gameopenmoney.com/flashdev.html?dl=1 → https://madhackademy.eu/flashdev.html?dl=1
+https://madhackademy.eu/                      → inchangé
+```
+
+Futur site gameopenmoney : Multisite → **autre dossier** + retirer la règle Host du `.htaccess` MadHackAdemy.
 
 ---
 
@@ -32,31 +49,32 @@ Doc opt-in : [`NOTE_SYSTEMEIO-API-FLASHDEV.md`](NOTE_SYSTEMEIO-API-FLASHDEV.md) 
 ### Checklist (ordre strict)
 
 1. [x] OVH : boîte `contact@madhackademy.eu` — envoi + réception OK  
-2. [~] Systeme.io : domaine ajouté + DNS CNAME/DMARC OK — statut encore **En attente**  
-3. [ ] Systeme.io : statut domaine **authentifié** + expéditeur `contact@` vérifié  
+2. [x] Systeme.io : domaine + DNS CNAME/DMARC  
+3. [x] Systeme.io : domaine **authentifié** + expéditeur `contact@` (validé 2/08)  
 4. [ ] Test envoi Systeme.io → réception réelle  
-5. [ ] Bascule liens absolus → `madhackademy.eu` (voir inventaire)  
+5. [x] Bascule liens absolus soft/mock → `madhackademy.eu` (local 2/08 — à tester)  
 6. [ ] Double opt-in + automation tag `flashdev-download` → email lien FlashDev  
 7. [ ] Paiement (Stripe / Systeme.io) → accès `student` / `user_products`
 
 ---
 
-## Inventaire liens absolus `gameopenmoney.com` (1/08 — pour demain)
+## Inventaire liens absolus `gameopenmoney.com` → `madhackademy.eu`
 
-> Pages HTML vitrine : **presque tout est relatif** → déjà OK sur `madhackademy.eu`.  
-> À changer = surtout le **soft** + 1 mock + notes (docs).
+> Pages HTML vitrine : **relatives** → déjà OK. PHP/MySQL : pas d’URL domaine en dur.  
+> **Code soft + mock : basculé 2/08** (local). Backups `update_work/backup_*` laissés tels quels.
 
-### Prod / code à modifier (priorité)
+### Prod / code (fait localement 2/08)
 
-| Fichier | Nb | Contenu |
-|---------|----|---------|
-| `FlashRevisionSoft/SquelletteGCS/data.json` | **7** | `URLNet` → `…/auth/guide.php?m=01` … `07` |
-| `FlashRevisionSoft/DeckBootCampCpp/DeckInstaller.json` | **7** | idem `URLNet` |
-| `FlashRevisionSoft/SquelletteGCS/lib/updateCheck.lua` | **1** | `MANIFEST_URL` → `…/flashdev/latest-version.json` |
-| `FlashRevisionSoft/SquelletteGCS/state/currentProjectMenu.lua` | **1** | préfixe `https://gameopenmoney.com` pour download |
-| `madhackademyWebSite/WebSite/systeme-io-capture-mock.html` | **1** | lien download FlashDev (mock, pas prod critique) |
+| Fichier | Nb | État |
+|---------|----|------|
+| `FlashRevisionSoft/SquelletteGCS/data.json` | 7 `URLNet` | ✅ |
+| `FlashRevisionSoft/DeckBootCampCpp/DeckInstaller.json` | 7 `URLNet` | ✅ |
+| `FlashRevisionSoft/SquelletteGCS/lib/updateCheck.lua` | 1 manifest | ✅ |
+| `FlashRevisionSoft/SquelletteGCS/state/currentProjectMenu.lua` | 1 préfixe download | ✅ |
+| staging `update_work/staging/…` (mêmes 2 fichiers) | 2 | ✅ |
+| `WebSite/systeme-io-capture-mock.html` | 1 | ✅ |
 
-**Total code utile ≈ 17 occurrences** (dans 5 fichiers actifs ; hors backups `update_work/`).
+**Test à faire :** webGuide (carte → guide) + check update FlashDev via `madhackademy.eu/flashdev/…`.
 
 ### Docs seulement (P2 — notes / TODO)
 
@@ -97,7 +115,8 @@ Multisite = même disque. Upload FTP **uniquement** des fichiers modifiés aprè
 |---------|----------------|
 | **Workflow complet** | `FlashRevisionSoft/scripts/NOTE_UPDATE-WORKFLOW.md` |
 | **Build zip** | `.\scripts\build-release-zip.cmd -Version "X.Y.Z" -UpdateManifest` |
-| **FTP** | `WebSite/flashdev/` → `https://gameopenmoney.com/flashdev/` |
+| **FTP** | `WebSite/flashdev/` → `https://madhackademy.eu/flashdev/` |
+| **Release 0.2.2** | ✅ Zip + exe + setup zip ; FTP + test MAJ validés (2/08) |
 | **Manifest** | `latest-version.json` (UTF-8 **sans BOM**) |
 | **Package** | `FlashRevisionSoft-X.Y.Z-win64.zip` (code only) |
 

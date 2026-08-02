@@ -1,20 +1,19 @@
 {
-    "version":  "0.2.1",
-    "build":  "20260715",
-    "minSupportedVersion":  "0.1.0",
-    "releasedAt":  "2026-07-15",
-    "channel":  "stable",
-    "platform":  "win64",
-    "requiresLove":  "11.4",
-    "changelog":  [
-                      "Test mise a jour 1 clic (marqueur UPDATE_TEST dans main.lua)",
-                      "Script update-flashdev.ps1 Phase B",
-                      "Menu Options + detection mise a jour"
-                  ],
-    "downloadUrl":  "/flashdev/FlashRevisionSoft-0.2.1-win64.zip",
-    "installerDownloadUrl":  "/flashdev/FlashDev-Setup-0.2.1-win64.exe",
-    "sha256":  "cea341d1f0853caf8e99333c0c552209351974700dfe533efdf27a5d55638c3a",
-    "sizeBytes":  2949669,
-    "installerSha256":  "52c341320204e11cfcc463f97be16063900fc7f1654e754ea395e58f0b074c29",
-    "installerSizeBytes":  4986015
+    "version": "0.2.2",
+    "build": "20260802",
+    "minSupportedVersion": "0.1.0",
+    "releasedAt": "2026-08-02",
+    "channel": "stable",
+    "platform": "win64",
+    "requiresLove": "11.4",
+    "changelog": [
+        "URLs update/manifest vers madhackademy.eu",
+        "Base domaine MadHackAdemy (plus gameopenmoney)"
+    ],
+    "downloadUrl": "/flashdev/FlashRevisionSoft-0.2.2-win64.zip",
+    "installerDownloadUrl": "/flashdev/FlashDev-Setup-0.2.2-win64.exe",
+    "sha256": "1ba4754aa2ff1c0e136b5d3a54c4286d9bd92f613eb5ea14c97cf632feb9c62e",
+    "sizeBytes": 2965673,
+    "installerSha256": "5ea74fcff99c178e9d7d5639c89c57366a8c2aa0f9a39b019fe49d8582cac6b8",
+    "installerSizeBytes": 4986055
 }

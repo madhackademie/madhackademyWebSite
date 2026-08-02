@@ -100,9 +100,10 @@ Ces tâches débloquent la mise en ligne ou corrigent des problèmes visibles po
 > Décision 1/08/2026 — domaine **acheté**. Site reste sur gameopenmoney.com jusqu’à email OK.  
 > Détail : [`scripts/NOTE_PROCHAINE-SESSION.md`](scripts/NOTE_PROCHAINE-SESSION.md)
 
-- [ ] **P1** — Boîte mail OVH sur `madhackademy.eu` (envoi + réception)
-- [ ] **P1** — Auth domaine dans Systeme.io (SPF / DKIM) + test d’envoi
-- [ ] **P1** — Migration site vers `madhackademy.eu` (**ensemble**, après email validé)
+- [x] **P1** — Boîte mail OVH `contact@madhackademy.eu` (envoi + réception)
+- [x] **P1** — Auth domaine Systeme.io (DNS OK, domaine validé 2/08) — reste test d’envoi
+- [x] **P1** — Liens soft/mock → `madhackademy.eu` (local 2/08) — Multisite déjà en place ; redirect gameopenmoney plus tard
+- [ ] **P1** — Test envoi Systeme.io + webGuide soft sur nouveau domaine
 - [ ] **P1** — Automation + double opt-in + paiement (après migration)
 
 ### Opt-in téléchargement FlashDev + API Systeme.io (**P1**)
@@ -110,10 +111,10 @@ Ces tâches débloquent la mise en ligne ou corrigent des problèmes visibles po
 > Tuto : **[`scripts/NOTE_SYSTEMEIO-API-FLASHDEV.md`](scripts/NOTE_SYSTEMEIO-API-FLASHDEV.md)** · enchaîner après email / domaine OK.
 
 - [x] **P1** — Clé API Systeme.io + test `curl` (contact visible)
-- [ ] **P1** — Tag `flashdev-download` + automation email (tag ✓ · automation ✗ · tag API PHP ✗)
+- [x] **P1** — Tag `flashdev-download` + automation email + tag API PHP (2/08)
 - [x] **P1** — Endpoint PHP `api/systeme-optin.php` (clé dans `config.php` FTP uniquement)
 - [x] **P1** — Formulaire opt-in sur page FlashDev (design site / cadre SNES) → POST vers l’endpoint
-- [ ] **P1** — Test prod bout en bout : submit → contact Systeme.io → tag → email → lien
+- [x] **P1** — Test prod bout en bout : submit → contact → tag → email → lien (2/08)
 - [x] **P2** — Aligner `flashdev.html` (gate login / formulaire site, plus de lien Systeme.io externe)
 
 ### Pages vitrine — validation contenu & liens (**P1**)

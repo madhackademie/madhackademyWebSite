@@ -213,7 +213,7 @@
                 <div id="version-error" class="hidden bg-gray-900 border-2 border-red-600 rounded-xl p-8 text-center">
                     <p class="text-red-400 font-bold mb-2">Impossible de charger le manifest de version.</p>
                     <p class="text-gray-400 text-sm mb-6">Réessayez plus tard ou contactez le support MadHackAdemy.</p>
-                    <a href="/flashdev/FlashDev-Setup-0.2.1-win64.exe"
+                    <a href="/flashdev/FlashDev-Setup-0.2.2-win64.exe"
                        class="inline-block px-8 py-4 bg-green-600 hover:bg-green-700 text-white font-bold rounded download-btn">
                         Télécharger l'installeur FlashDev ↓
                     </a>
@@ -317,7 +317,7 @@
     <script>
         (function () {
             var MANIFEST_URL = '/flashdev/latest-version.json';
-            var FALLBACK_INSTALLER = '/flashdev/FlashDev-Setup-0.2.1-win64.exe';
+            var FALLBACK_INSTALLER = '/flashdev/FlashDev-Setup-0.2.2-win64.exe';
             var LOGIN_URL = '/auth/login.php?redirect=' + encodeURIComponent('/flashdev.html');
 
             function showGateOnly() {
@@ -413,30 +413,40 @@
 
             configureGate();
 
-            fetch('/auth/me.php', { credentials: 'same-origin', cache: 'no-store' })
-                .then(function (response) {
-                    if (!response.ok) throw new Error('AUTH ' + response.status);
-                    return response.json();
-                })
-                .then(function (user) {
-                    if (!user || !user.logged_in) {
-                        showGateOnly();
-                        return null;
-                    }
-                    showProtectedContent();
-                    return fetch(MANIFEST_URL, { cache: 'no-store' });
-                })
-                .then(function (r) {
-                    if (!r) return null;
-                    if (!r.ok) throw new Error('HTTP ' + r.status);
-                    return r.json();
-                })
-                .then(function (manifest) {
-                    if (manifest) {
-                        render(manifest);
-                    }
-                })
-                .catch(onError);
+            function loadManifestAndRender() {
+                return fetch(MANIFEST_URL, { cache: 'no-store' })
+                    .then(function (r) {
+                        if (!r.ok) throw new Error('HTTP ' + r.status);
+                        return r.json();
+                    })
+                    .then(function (manifest) {
+                        if (manifest) {
+                            render(manifest);
+                        }
+                    });
+            }
+
+            // Lien email Systeme.io : /flashdev.html?dl=1 → page download sans login
+            var unlockDownload = new URLSearchParams(window.location.search).get('dl') === '1';
+            if (unlockDownload) {
+                showProtectedContent();
+                loadManifestAndRender().catch(onError);
+            } else {
+                fetch('/auth/me.php', { credentials: 'same-origin', cache: 'no-store' })
+                    .then(function (response) {
+                        if (!response.ok) throw new Error('AUTH ' + response.status);
+                        return response.json();
+                    })
+                    .then(function (user) {
+                        if (!user || !user.logged_in) {
+                            showGateOnly();
+                            return null;
+                        }
+                        showProtectedContent();
+                        return loadManifestAndRender();
+                    })
+                    .catch(onError);
+            }
         })();
     </script>
 </body>

@@ -17,4 +17,6 @@ return [
     'product_slug' => 'gamedevready-bases-cpp',
     /** Clé API Systeme.io — opt-in FlashDev (api/systeme-optin.php) */
     'systeme_io_api_key' => 'COLLEZ_VOTRE_CLE_ICI',
+    /** Nom du tag Systeme.io (résolu en ID via API — déclenche l’automation download) */
+    'systeme_io_tag_flashdev' => 'flashdev-download',
 ];
