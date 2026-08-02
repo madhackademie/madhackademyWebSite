@@ -9,26 +9,35 @@
 
 ## Reprise session suivante — **P1 unique**
 
-> **Paiement** (Stripe / Systeme.io) → accès compte `student` / `user_products`.  
-> Pipeline leads FlashDev ↔ Systeme.io : **OK** (2/08).
+> **Compte site + acquis** : mot de passe / login → déverrouiller les contenus selon les **acquisitions** utilisateur.  
+> Problème actuel : `?dl=1` dans l’email ; sans le mail, l’élève reste bloqué sur le gate FlashDev.
+
+### Cible accès (décision 2/08 — à implémenter)
+
+| Acquisition | Download FlashDev (`flashdev.html`) | Reste du site vitrine | webGuide (guides protégés) |
+|-------------|-------------------------------------|------------------------|----------------------------|
+| Opt-in soft (prospect) | Oui (session login) | Oui | **Non** |
+| Formation / produit payant | Oui | Oui | Oui (`student` / `user_products`) |
+| Anonyme | Gate opt-in / login | Pages publiques | Non |
+
+Enchaînement possible ensuite : **paiement** → acquisition formation → webGuide.
 
 ### Bilan leads / domaine (2/08) — done
 
 - Domaine `madhackademy.eu` + email `contact@` + auth Systeme.io
 - Soft liens + release **0.2.2** (zip / exe / setup zip)
 - Opt-in site → API → tag `flashdev-download` → email
-- Lien email : `flashdev.html?dl=1` (page puis bouton ; pas de gate / pas de go.php)
+- Lien email : `flashdev.html?dl=1` (page puis bouton ; temporaire jusqu’au login-acquis)
 - Page merci : sans bouton download (évite skip mail)
-- **Redirect 301** : `WebSite/.htaccess` — `gameopenmoney.com` (+ www) → `https://madhackademy.eu/$1`  
-  → **FTP** : uploader `.htaccess` à la racine `www/` ; tests ci-dessous
+- **Redirect 301** : `WebSite/.htaccess` — validé prod
 
-#### Tests redirect (après FTP)
+#### Tests redirect (prod OK)
 
 ```text
-https://gameopenmoney.com/                    → https://madhackademy.eu/
-https://www.gameopenmoney.com/flashdev.html → https://madhackademy.eu/flashdev.html
-https://gameopenmoney.com/flashdev.html?dl=1 → https://madhackademy.eu/flashdev.html?dl=1
-https://madhackademy.eu/                      → inchangé
+https://gameopenmoney.com/                    → https://madhackademy.eu/          ✅
+https://www.gameopenmoney.com/flashdev.html → https://madhackademy.eu/flashdev.html ✅
+https://gameopenmoney.com/flashdev.html?dl=1 → https://madhackademy.eu/flashdev.html?dl=1 ✅
+https://madhackademy.eu/                      → 200 inchangé ✅
 ```
 
 Futur site gameopenmoney : Multisite → **autre dossier** + retirer la règle Host du `.htaccess` MadHackAdemy.

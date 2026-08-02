@@ -91,24 +91,33 @@ WebSite/Formations/
 
 ## Tâches prioritaires
 
-> **Priorité actuelle : P1** — opt-in FlashDev via API Systeme.io (page site, pas l’éditeur Systeme.io).
+> **Priorité actuelle : P1** — compte + acquis (login / MDP) ; puis paiement formation.
 
 Ces tâches débloquent la mise en ligne ou corrigent des problèmes visibles pour les visiteurs.
 
-### Domaine madhackademy.eu + email (**P1** — avant migration / paiement)
+### Compte + acquis / droits (**P1** — prochaine session)
 
-> Décision 1/08/2026 — domaine **acheté**. Site reste sur gameopenmoney.com jusqu’à email OK.  
+> Problème : sans l’email `?dl=1`, l’élève ne peut plus rouvrir le download.  
 > Détail : [`scripts/NOTE_PROCHAINE-SESSION.md`](scripts/NOTE_PROCHAINE-SESSION.md)
 
+- [ ] **P1** — Création / login compte site avec **mot de passe** (lier à l’email opt-in si possible)
+- [ ] **P1** — Modèle d’**acquisitions** (ex. `flashdev-soft`, formation bootcamp…) stocké côté site
+- [ ] **P1** — Verrouiller les contenus selon acquis :
+  - soft seul → **download FlashDev + site vitrine** ; **pas** de webGuide
+  - formation payante → + guides (`student` / `user_products`)
+- [ ] **P1** — `flashdev.html` : accès download si session + acquis soft (réduire la dépendance à `?dl=1`)
+- [ ] **P1** — Ensuite : **paiement** → acquisition formation
+
+### Domaine madhackademy.eu + email (**P1**)
+
 - [x] **P1** — Boîte mail OVH `contact@madhackademy.eu` (envoi + réception)
-- [x] **P1** — Auth domaine Systeme.io (DNS OK, domaine validé 2/08) — reste test d’envoi
-- [x] **P1** — Liens soft/mock → `madhackademy.eu` (local 2/08) — Multisite déjà en place ; redirect gameopenmoney plus tard
-- [ ] **P1** — Test envoi Systeme.io + webGuide soft sur nouveau domaine
-- [ ] **P1** — Automation + double opt-in + paiement (après migration)
+- [x] **P1** — Auth domaine Systeme.io (DNS OK, domaine validé 2/08)
+- [x] **P1** — Liens soft + release 0.2.2 → `madhackademy.eu`
+- [x] **P1** — Redirect 301 `gameopenmoney.com` → `madhackademy.eu` (`.htaccess`, validé 2/08)
 
 ### Opt-in téléchargement FlashDev + API Systeme.io (**P1**)
 
-> Tuto : **[`scripts/NOTE_SYSTEMEIO-API-FLASHDEV.md`](scripts/NOTE_SYSTEMEIO-API-FLASHDEV.md)** · enchaîner après email / domaine OK.
+> Tuto : **[`scripts/NOTE_SYSTEMEIO-API-FLASHDEV.md`](scripts/NOTE_SYSTEMEIO-API-FLASHDEV.md)**
 
 - [x] **P1** — Clé API Systeme.io + test `curl` (contact visible)
 - [x] **P1** — Tag `flashdev-download` + automation email + tag API PHP (2/08)
