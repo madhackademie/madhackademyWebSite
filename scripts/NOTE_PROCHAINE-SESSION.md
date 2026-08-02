@@ -9,26 +9,34 @@
 
 ## Reprise session suivante — **P1 unique**
 
-> **Déployer + tester le modèle compte** (code local prêt 2/08) ; puis **paiement** → acquis formation.
+> **Media page download** : images + vidéo Soft sur `flashdev.html` (`/flashdev/media/`).
 
-### Modèle accès (décision 2/08 — implémenté local)
+### Roadmap produit (ordre décidé 2/08)
 
-| Acquisition | Download FlashDev (`flashdev.html`) | Reste du site vitrine | webGuide (guides protégés) |
-|-------------|-------------------------------------|------------------------|----------------------------|
-| Opt-in soft (`flashdev-soft`) | Oui (session + acquis) | Oui | **Non** |
-| Formation / produit payant | Oui | Oui | Oui (`gamedevready-bases-cpp`) |
-| Anonyme | Gate opt-in / login | Pages publiques | Non |
+| # | Chantier | Notes |
+|---|----------|--------|
+| **1** | Media vitrine FlashDev | Captures + vidéo démo sur page download |
+| **2** | Shop / paiement | Dépend entité légale — voir `NOTE_CREATION-ENTREPRISE.md` |
+| **3** | Parcours GameDevReady Bases C++ | Valider **FR → EN → DE → ES** (contenu + webGuides) |
+| **4** | WebGuides « mode programmeur » | Utilisation soft : créer cartes **à la main** une par une, ou créer un deck (mains dans le cambouis) |
+| **5** | Protection decks (plus tard) | Empêcher redistribution / decks hors licence — token (ex. empreinte machine / n° série HDD ou autre). **Coder après** validation parcours multilangue §3 |
 
-**Parcours utilisateur :** form FlashDev → Systeme.io (tag) → user MySQL + `flashdev-soft` → `/auth/set-password.php?token=…` → login auto → download.
+> Soft gratuit + CRM compte = déjà en place. Helper « IA pour générer carte/deck » = tip pédagogique dans les guides §4, pas bloquant.
 
-**Déploiement (ordre) :**
-1. phpMyAdmin : exécuter `WebSite/sql/migrate_flashdev_accounts.sql`
-2. FTP : `api/bootstrap.php`, `api/systeme-optin.php`, `auth/me.php`, `auth/set-password.php`, `flashdev.html`, pages opt-in
-3. Optionnel `config.php` : `'flashdev_product_slug' => 'flashdev-soft'`
-4. Systeme.io : lien email → `https://madhackademy.eu/auth/login.php?redirect=%2Fflashdev.html` (garder `?dl=1` en secours un temps)
-5. Test prod : nouvel email → set-password → download ; 2ᵉ visite → login
+### Bilan tunnel compte + CRM (2/08) — done
 
-Enchaînement ensuite : **paiement** → acquisition formation → webGuide.
+- Compte site immédiat : opt-in → Systeme.io (contact + tag) → MySQL + `flashdev-soft` → set-password → download
+- Feedback « déjà un compte » + déconnexion sur `flashdev.html`
+- Email Bienvenue Systeme.io reçu en test (choix A)
+- Docs : `NOTE_SYSTEMEIO-API-FLASHDEV.md` §6
+
+### Modèle accès (rappel)
+
+| Acquisition | Download FlashDev | webGuide |
+|-------------|-------------------|----------|
+| Opt-in soft (`flashdev-soft`) | Oui | **Non** |
+| Formation payante | Oui | Oui |
+| Anonyme | Gate | Non |
 
 ### Bilan leads / domaine (2/08) — done
 

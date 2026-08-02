@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlashDev — Email déjà enregistré</title>
+    <title>FlashDev — Compte déjà existant</title>
     <meta name="robots" content="noindex, nofollow">
     <link rel="stylesheet" href="/flashdev-optin.css">
 </head>
@@ -13,22 +13,45 @@
             <i class="r"></i><i class="y"></i><i class="g"></i><i class="b"></i>
         </div>
         <div class="fd-snes-body">
-            <p class="fd-snes-eyebrow">Email déjà connu</p>
+            <p class="fd-snes-eyebrow">Compte déjà créé</p>
             <div class="fd-snes-icon warn" aria-hidden="true">!</div>
-            <h1 class="fd-snes-title">Tu as déjà un compte.</h1>
+            <h1 class="fd-snes-title">Tu as déjà un compte avec cette adresse.</h1>
             <p class="fd-snes-text">
-                Cet email est déjà connu. Connecte-toi pour télécharger FlashDev.
-                Si tu n’as pas encore choisi de mot de passe, réinscris-toi : on te renverra vers la page de création.
+                Un compte MadHackAdemy existe déjà pour
+                <strong id="existe-email-label">cet email</strong>.
+                Connecte-toi avec ton mot de passe pour télécharger FlashDev.
             </p>
             <div class="fd-snes-actions">
-                <a class="fd-snes-btn primary" href="/auth/login.php?redirect=%2Fflashdev.html">Se connecter</a>
+                <a id="existe-login-link"
+                   class="fd-snes-btn primary"
+                   href="/auth/login.php?redirect=%2Fflashdev.html&amp;notice=already">
+                    Se connecter
+                </a>
                 <a class="fd-snes-btn secondary" href="/flashdev.html">Retour à la page FlashDev</a>
             </div>
-            <p class="fd-snes-note">L’accès download est lié à ton compte (acquis soft).</p>
+            <p class="fd-snes-note">Mot de passe oublié : bientôt un lien de réinitialisation. En attendant, contacte contact@madhackademy.eu.</p>
         </div>
         <div class="fd-snes-stripe" aria-hidden="true">
             <i class="r"></i><i class="y"></i><i class="g"></i><i class="b"></i>
         </div>
     </main>
+    <script>
+        (function () {
+            var email = new URLSearchParams(window.location.search).get('email') || '';
+            var label = document.getElementById('existe-email-label');
+            var link = document.getElementById('existe-login-link');
+            if (email && label) {
+                label.textContent = email;
+            }
+            if (link) {
+                var href = '/auth/login.php?redirect=' + encodeURIComponent('/flashdev.html')
+                    + '&notice=already';
+                if (email) {
+                    href += '&email=' + encodeURIComponent(email);
+                }
+                link.href = href;
+            }
+        })();
+    </script>
 </body>
 </html>

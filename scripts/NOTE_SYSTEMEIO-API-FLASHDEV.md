@@ -1,30 +1,30 @@
 # Note — API Systeme.io → FlashDev (opt-in téléchargement)
 
-> Dernière mise à jour : 30 juillet 2026  
-> **Priorité :** intégrer l’opt-in directement sur `flashdev.html` / site (design libre), contacts dans Systeme.io.  
+> Dernière mise à jour : 2 août 2026  
+> **Priorité :** CRM Systeme.io + email Bienvenue ; compte site immédiat (choix **A**).  
 > Vocabulaire : on parle surtout d’**API** (créer un contact), pas d’un webhook entrant Systeme.io.  
-> **Décision GDPR (30/07/2026) :** **double opt-in** souhaité.  
 > **Décision UX (2/08/2026) :** **pas de formulaire capture Systeme.io** (design bridé). Opt-in = **formulaire site** + API.  
-> → Le DOI **natif** Systeme.io (email `{double_opt_in_confirmation_link}`) ne s’applique pas à l’API.  
-> → Flux retenu (2/08) : **consentement case sur le site** + automation **Tag `flashdev-download`** → email lien download.  
-> → Pas de DOI natif Systeme.io sur ce tunnel (formulaire site). GDPR = case + désinscription emails.  
-> → Règle automation créée : Tag `flashdev-download` → email download. Reste : tag via API PHP.
+> **Décision produit (2/08 — choix A) :**  
+> → Compte site **immédiat** : opt-in → MySQL + `flashdev-soft` → `set-password` → download (sans attendre le mail).  
+> → Systeme.io = **CRM** (contacts, séquences, vidéos formation) : contact + tag `flashdev-download` **obligatoires** avant compte site.  
+> → Email = automation **Tag ajouté** → **Bienvenue** (lien login), **pas** DOI natif (impossible via API).  
+> → GDPR = case consentement site + désinscription dans les emails Systeme.io.  
+> → Retest : **email neuf** pour voir contact créé + mail ; même email = pas de 2ᵉ mail (tag déjà présent).
 
 ---
 
-## Objectif
+## Objectif (choix A — actuel)
 
 ```
-Page FlashDev (HTML flex libre sur gameopenmoney.com)
+Page FlashDev (madhackademy.eu)
    → formulaire POST vers /api/systeme-optin.php
-      → PHP appelle https://api.systeme.io/api/contacts
-      → contact créé dans Systeme.io
-      → email « Confirme ton adresse » (double opt-in)
-      → après clic → automation : email avec le lien de téléchargement
+      → PHP : POST /contacts (+ tag flashdev-download)
+      → si sync OK → MySQL user + flashdev-soft → set-password → download
+      → automation Systeme.io : Tag ajouté → email Bienvenue (CRM / suite)
 ```
 
-- **Design** = ton site (plus de bride éditeur Systeme.io)  
-- **Liste email + automation** = Systeme.io  
+- **Design** = ton site  
+- **Liste + emails nurture / vidéos** = Systeme.io  
 - Clé API = **uniquement** dans `config.php` (FTP), **jamais** dans Git / HTML
 
 ---
@@ -161,16 +161,15 @@ Checklist :
 - [ ] Déployé sur FTP prod + test formulaire live
 - [x] Tag `flashdev-download` ajouté via API après création contact (résolu par **nom**, 2/08)
 
-### 6) Automation Systeme.io + **double opt-in** (décidé)
+### 6) Automation Systeme.io — email **Bienvenue** (choix A)
 
-**Flux retenu :**
+**Pas de DOI natif** sur ce tunnel (API uniquement). Le download ne dépend pas du mail.
 
-1. Contact créé (API / formulaire) → **pas encore** le lien download  
-2. Systeme.io envoie l’email **« Confirme ton adresse »** (double opt-in)  
-3. Après clic de confirmation → automation : email **« Voici le lien FlashDev »**  
-   (déclencheur typique : contact confirmé / tag `flashdev-download` après confirmation)
+1. Contact créé ou retrouvé (API) + tag `flashdev-download`  
+2. Compte site immédiat (`set-password`)  
+3. Automation : **Tag `flashdev-download` ajouté** → email **Bienvenue** (CRM / rappels / suite vidéos)
 
-Lien dans l’email Systeme.io (**cible compte** — page site, pas le .exe) :
+Lien dans l’email Systeme.io (page site, pas le .exe) :
 
 ```
 https://madhackademy.eu/auth/login.php?redirect=%2Fflashdev.html
@@ -183,16 +182,18 @@ https://madhackademy.eu/flashdev.html?dl=1
 ```
 
 - Parcours principal : opt-in site → `set-password` → session → download (sans dépendre du mail)
-- Email Systeme.io = rappel / nurture ; lien → **login** puis FlashDev
+- Email Systeme.io = Bienvenue / nurture ; lien → **login** puis FlashDev
 - **Ne pas** mettre `/flashdev/go.php` ni `FlashDev-Setup-….exe` dans l’email
-- Page merci opt-in : **pas** de bouton download
+- Même email retesté : contact déjà là → tag souvent déjà présent → **pas de 2ᵉ envoi** (normal)
 
-Checklist :
+#### Checklist Laurent (UI Systeme.io + test prod)
 
-- [ ] Double opt-in activé dans Systeme.io
-- [ ] Email de **confirmation** testé
-- [ ] Automation **après confirmation** : email avec lien download (ex. tag `flashdev-download`)
-- [ ] Copy aligné (téléchargement soft, pas vente formation)
+- [ ] Automation : déclencheur **Tag `flashdev-download` ajouté** (règle existante OK)
+- [ ] Copy email → **Bienvenue** (plus « voici le .exe ») : compte créé sur le site à l’inscription ; lien login ci-dessus
+- [ ] Expéditeur `contact@madhackademy.eu` ; vérifier boîte + spams
+- [ ] FTP : `api/systeme-optin.php` (sync contact + tag **obligatoires** avant compte)
+- [ ] Test **email neuf** (absent Systeme.io + MySQL) → contact + tag + mail Bienvenue + set-password + download
+- [ ] Test 2ᵉ fois même email (logout) → page « déjà un compte », pas de 2ᵉ mail
 
 ### 7) Formulaire sur ta page
 
@@ -238,8 +239,8 @@ Checklist :
 | Promesse | Opt-in = **lien téléchargement soft**, pas vente formation |
 | Boucle gate | Pas de lien `flashdev.html` sur une page Systeme.io qui renvoie au gate login → boucle |
 | Secrets | Clé API uniquement serveur ; rotation possible (max 3 clés) |
-| GDPR | **Double opt-in** (décidé) + case consentement + désinscription dans les emails |
-| Suite possible | Tag → automation ; plus tard : créer / activer compte site (lien magique) = autre chantier |
+| GDPR | Case consentement site + désinscription emails (DOI natif API = non) |
+| Suite possible | Séquences / vidéos formation via tags ; paiement → acquis formation site |
 
 ---
 
@@ -258,17 +259,16 @@ Checklist :
 ## Statut
 
 - [x] Étape 1 — Clé API
-- [x] Étape 2 — Tag (`flashdev-download` créé ; association API **à faire**)
+- [x] Étape 2 — Tag `flashdev-download` + association API
 - [x] Étape 3 — Schéma / fichiers
 - [x] Étape 4 — Test curl
-- [~] Étape 5 — `systeme-optin.php` (code OK · deploy prod + tag API **à faire**)
-- [ ] Étape 6 — Automation email Systeme.io
-- [~] Étape 7 — Formulaire sur `flashdev.html` (intégré · test prod **à faire**)
-- [ ] Test prod bout en bout
+- [x] Étape 5 — `systeme-optin.php` (choix A : contact + tag obligatoires, 422 = exists)
+- [~] Étape 6 — Automation → copy **Bienvenue** (à aligner UI) + retest email neuf
+- [x] Étape 7 — Formulaire sur `flashdev.html` + compte site immédiat
+- [~] Test prod : sync CRM + mail Bienvenue (email neuf)
 
-### Prochaine action
+### Prochaine action (Laurent)
 
-1. [x] Automation Systeme.io (Tag ajouté → `flashdev-download` → email download)
-2. [x] `systeme-optin.php` : tag par nom + assignation API
-3. [x] FTP : `systeme-optin.php` + `systeme_io_tag_flashdev` dans `config.php`
-4. [x] Test bout en bout OK (2/08) — email download reçu via automation
+1. FTP `api/systeme-optin.php`
+2. Aligner copy automation → Bienvenue + lien login
+3. Tester avec un **email neuf**

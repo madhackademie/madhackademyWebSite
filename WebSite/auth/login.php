@@ -4,7 +4,13 @@ declare(strict_types=1);
 require_once __DIR__ . '/../api/bootstrap.php';
 
 $error = '';
+$info = '';
 $redirect = $_GET['redirect'] ?? '/gamedevready-bases-cpp.html';
+$prefillEmail = strtolower(trim((string) ($_GET['email'] ?? '')));
+
+if (($_GET['notice'] ?? '') === 'already') {
+    $info = 'Tu as déjà un compte avec cette adresse. Connecte-toi pour continuer.';
+}
 
 $loggedInUser = mha_current_user();
 
@@ -12,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
     $redirect = $_POST['redirect'] ?? $redirect;
+    $prefillEmail = strtolower(trim($email));
 
     if ($email === '' || $password === '') {
         $error = 'Email et mot de passe requis.';
@@ -22,6 +29,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Identifiants incorrects.';
     }
 }
+
+$continueLabel = (str_contains((string) $redirect, 'flashdev'))
+    ? 'Continuer vers FlashDev'
+    : 'Continuer vers Bases C++';
+$backHref = (str_contains((string) $redirect, 'flashdev'))
+    ? '/flashdev.html'
+    : '/gamedevready-bases-cpp.html';
+$backLabel = (str_contains((string) $redirect, 'flashdev'))
+    ? '← Retour FlashDev'
+    : '← Retour Bases C++';
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -43,13 +60,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="space-y-3 mb-6">
                 <a href="<?= mha_escape($redirect ?: '/gamedevready-bases-cpp.html') ?>"
                     class="block w-full py-3 text-center bg-red-900 hover:bg-red-700 text-red-100 font-bold rounded text-sm transition">
-                    Continuer vers Bases C++
+                    <?= mha_escape($continueLabel) ?>
                 </a>
                 <a href="/auth/logout.php"
                     class="block w-full py-3 text-center border border-gray-700 hover:border-red-500 text-gray-300 rounded text-sm transition">
                     Déconnexion
                 </a>
             </div>
+        <?php endif; ?>
+
+        <?php if ($loggedInUser === null && $info !== ''): ?>
+            <p class="mb-4 text-sm text-amber-300 border border-amber-800 bg-amber-950/40 rounded px-3 py-2"><?= mha_escape($info) ?></p>
         <?php endif; ?>
 
         <?php if ($loggedInUser === null && $error !== ''): ?>
@@ -62,6 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div>
                 <label for="email" class="block text-xs text-gray-500 mb-1">Email</label>
                 <input type="email" id="email" name="email" required autocomplete="username"
+                    value="<?= mha_escape($prefillEmail) ?>"
                     class="w-full bg-black border border-gray-700 rounded px-3 py-2 text-sm focus:border-red-500 outline-none">
             </div>
             <div>
@@ -77,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php endif; ?>
 
         <p class="mt-6 text-center text-xs text-gray-600">
-            <a href="/gamedevready-bases-cpp.html" class="text-gray-400 hover:text-red-400">← Retour Bases C++</a>
+            <a href="<?= mha_escape($backHref) ?>" class="text-gray-400 hover:text-red-400"><?= mha_escape($backLabel) ?></a>
         </p>
     </div>
 </body>

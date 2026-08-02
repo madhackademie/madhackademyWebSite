@@ -29,26 +29,25 @@ if ($apiKey === '') {
 
 $result = systeme_optin_create_contact($apiKey, $email);
 
+$contactId = 0;
 if ($result['status'] === 'created') {
-    systeme_optin_assign_tag_by_name($apiKey, (int) $result['contactId'], $tagName);
-    systeme_optin_finish_site_account($email, false);
+    $contactId = (int) ($result['contactId'] ?? 0);
+} elseif ($result['status'] === 'exists') {
+    $contactId = (int) (systeme_optin_find_contact_id_by_email($apiKey, $email) ?? 0);
 }
 
-if ($result['status'] === 'exists') {
-    $existingId = systeme_optin_find_contact_id_by_email($apiKey, $email);
-    if ($existingId !== null) {
-        systeme_optin_assign_tag_by_name($apiKey, $existingId, $tagName);
-    }
-    systeme_optin_finish_site_account($email, true);
+// CRM Systeme.io obligatoire : contact + tag avant compte site
+if ($contactId <= 0 || !systeme_optin_assign_tag_by_name($apiKey, $contactId, $tagName)) {
+    header('Location: /flashdev.html?optin=error', true, 303);
+    exit;
 }
 
-header('Location: /flashdev.html?optin=error', true, 303);
-exit;
+systeme_optin_finish_site_account($email);
 
 /**
- * Compte MySQL + acquis flashdev-soft, puis set-password ou login.
+ * Compte MySQL + acquis flashdev-soft, puis set-password ou page « déjà un compte ».
  */
-function systeme_optin_finish_site_account(string $email, bool $alreadyOnSysteme): void
+function systeme_optin_finish_site_account(string $email): void
 {
     try {
         $user = mha_ensure_flashdev_user($email);
@@ -60,12 +59,12 @@ function systeme_optin_finish_site_account(string $email, bool $alreadyOnSysteme
             exit;
         }
 
-        if ($alreadyOnSysteme) {
-            header('Location: /optin-email-existe.html', true, 303);
-            exit;
-        }
-
-        header('Location: /auth/login.php?redirect=' . rawurlencode('/flashdev.html'), true, 303);
+        // MDP déjà choisi → feedback clair (pas une page login muette)
+        header(
+            'Location: /optin-email-existe.html?email=' . rawurlencode($email),
+            true,
+            303
+        );
         exit;
     } catch (Throwable $e) {
         header('Location: /flashdev.html?optin=error', true, 303);
@@ -100,7 +99,8 @@ function systeme_optin_create_contact(string $apiKey, string $email): array
         return ['status' => 'created', 'contactId' => $contactId];
     }
 
-    if ($httpCode === 422 && str_contains($body, 'déjà utilisée')) {
+    // Email déjà connu (message FR/EN variable selon locale API)
+    if ($httpCode === 422) {
         return ['status' => 'exists'];
     }
 
@@ -180,39 +180,44 @@ function systeme_optin_resolve_tag_id(string $apiKey, string $tagName): ?int
 
 function systeme_optin_find_contact_id_by_email(string $apiKey, string $email): ?int
 {
-    $url = SYSTEME_IO_API_BASE . '/contacts?' . http_build_query([
-        'email' => $email,
-        'limit' => 10,
-    ]);
-    $response = systeme_optin_request('GET', $url, $apiKey);
-    if ($response === null) {
-        return null;
-    }
+    $wanted = mb_strtolower(trim($email));
+    $queries = [
+        ['email' => $email, 'limit' => 20],
+        ['email' => $wanted, 'limit' => 20],
+        ['query' => $email, 'limit' => 50],
+    ];
 
-    [$httpCode, $body] = $response;
-    if ($httpCode !== 200) {
-        return null;
-    }
-
-    $data = json_decode($body, true);
-    if (!is_array($data)) {
-        return null;
-    }
-
-    $items = $data['items'] ?? [];
-    if (!is_array($items)) {
-        return null;
-    }
-
-    $wanted = mb_strtolower($email);
-    foreach ($items as $item) {
-        if (!is_array($item)) {
+    foreach ($queries as $params) {
+        $url = SYSTEME_IO_API_BASE . '/contacts?' . http_build_query($params);
+        $response = systeme_optin_request('GET', $url, $apiKey);
+        if ($response === null) {
             continue;
         }
-        if (mb_strtolower(trim((string) ($item['email'] ?? ''))) === $wanted) {
-            $id = (int) ($item['id'] ?? 0);
 
-            return $id > 0 ? $id : null;
+        [$httpCode, $body] = $response;
+        if ($httpCode !== 200) {
+            continue;
+        }
+
+        $data = json_decode($body, true);
+        if (!is_array($data)) {
+            continue;
+        }
+
+        $items = $data['items'] ?? [];
+        if (!is_array($items)) {
+            continue;
+        }
+
+        foreach ($items as $item) {
+            if (!is_array($item)) {
+                continue;
+            }
+            if (mb_strtolower(trim((string) ($item['email'] ?? ''))) === $wanted) {
+                $id = (int) ($item['id'] ?? 0);
+
+                return $id > 0 ? $id : null;
+            }
         }
     }
 

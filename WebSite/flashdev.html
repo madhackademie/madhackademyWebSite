@@ -62,6 +62,10 @@
                 <a href="/flashdev.html" class="text-green-400 font-bold" aria-current="page">Télécharger</a>
                 <a href="/gamedevready.html" class="text-gray-300 hover:text-green-500 transition font-bold">GameDevReady</a>
                 <a href="/centre-formation.html" class="text-gray-300 hover:text-yellow-400 transition font-bold">Centre-Formation</a>
+                <span id="nav-session" class="hidden items-center gap-3 text-xs md:text-sm border-l border-gray-700 pl-4 ml-1">
+                    <span id="nav-session-email" class="text-gray-500 truncate max-w-[10rem] md:max-w-xs"></span>
+                    <a href="/auth/logout.php?redirect=%2Fflashdev.html" class="text-red-400 hover:text-red-300 font-bold whitespace-nowrap">Déconnexion</a>
+                </span>
             </div>
         </div>
     </nav>
@@ -330,6 +334,15 @@
                 document.getElementById('flashdev-protected-content').classList.remove('auth-gate-hidden');
             }
 
+            function showSessionNav(email) {
+                var box = document.getElementById('nav-session');
+                var label = document.getElementById('nav-session-email');
+                if (!box || !label) return;
+                label.textContent = email || '';
+                box.classList.remove('hidden');
+                box.classList.add('flex');
+            }
+
             function configureGate() {
                 document.getElementById('gate-login-link').href = LOGIN_URL;
 
@@ -442,6 +455,7 @@
                             showGateOnly();
                             return null;
                         }
+                        showSessionNav(user.email);
                         showProtectedContent();
                         return loadManifestAndRender();
                     })

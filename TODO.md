@@ -95,18 +95,25 @@ WebSite/Formations/
 
 Ces tâches débloquent la mise en ligne ou corrigent des problèmes visibles pour les visiteurs.
 
-### Compte + acquis / droits (**P1** — en cours / à déployer)
+### Compte + acquis / droits (**P1** — done 2/08)
 
-> Opt-in → compte MySQL + acquis `flashdev-soft` → `set-password` → login → download.  
+> Opt-in → Systeme.io + compte MySQL + `flashdev-soft` → `set-password` → download.  
 > Détail : [`scripts/NOTE_PROCHAINE-SESSION.md`](scripts/NOTE_PROCHAINE-SESSION.md)
 
-- [x] **P1** — Création compte dès opt-in + **mot de passe choisi** (`auth/set-password.php`)
-- [x] **P1** — Acquis `flashdev-soft` via `user_products` (slug config `flashdev_product_slug`)
-- [x] **P1** — Verrouiller download selon acquis (`auth/me.php` → `can_download_flashdev`) ; guides restent sur `gamedevready-bases-cpp`
-- [x] **P1** — `flashdev.html` : gate si session + acquis soft (`?dl=1` legacy encore accepté)
-- [ ] **P1** — Déployer : SQL `migrate_flashdev_accounts.sql` + FTP PHP/HTML + test prod
-- [ ] **P1** — Email Systeme.io : lien → login `/auth/login.php?redirect=/flashdev.html` (plus seulement `?dl=1`)
+- [x] **P1** — Création compte + MDP choisi + acquis soft + gate download
+- [x] **P1** — CRM Systeme.io (contact + tag) + email Bienvenue (choix A) testé
 - [ ] **P1** — Ensuite : **paiement** → acquisition formation
+
+### Contenu & shop FlashDev (**ordre 2/08**)
+
+> Voir roadmap dans [`scripts/NOTE_PROCHAINE-SESSION.md`](scripts/NOTE_PROCHAINE-SESSION.md).
+
+- [ ] **P1** — Images + vidéo soft sur `flashdev.html` (`/flashdev/media/`)
+- [ ] **P1** — Shop / paiement (après entité — `NOTE_CREATION-ENTREPRISE.md`)
+- [ ] **P1** — Valider parcours GameDevReady Bases C++ **FR → EN → DE → ES**
+- [ ] **P1** — WebGuides mode programmeur : carte à la main / création de deck
+- [ ] **P2** — Protection decks (token machine / anti-redistribution) — **après** validation multilangue
+- [ ] Tip IA générer carte/deck — dans les guides programmeur (non bloquant)
 
 ### Domaine madhackademy.eu + email (**P1**)
 
