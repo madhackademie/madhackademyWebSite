@@ -170,15 +170,22 @@ Checklist :
 3. Après clic de confirmation → automation : email **« Voici le lien FlashDev »**  
    (déclencheur typique : contact confirmé / tag `flashdev-download` après confirmation)
 
-Lien dans l’email Systeme.io (**obligatoire** — page site, pas le .exe) :
+Lien dans l’email Systeme.io (**cible compte** — page site, pas le .exe) :
+
+```
+https://madhackademy.eu/auth/login.php?redirect=%2Fflashdev.html
+```
+
+Secours legacy (à retirer plus tard) :
 
 ```
 https://madhackademy.eu/flashdev.html?dl=1
 ```
 
-- Ouvre la page FlashDev avec le **bouton** télécharger (pas un download Explorer direct)
+- Parcours principal : opt-in site → `set-password` → session → download (sans dépendre du mail)
+- Email Systeme.io = rappel / nurture ; lien → **login** puis FlashDev
 - **Ne pas** mettre `/flashdev/go.php` ni `FlashDev-Setup-….exe` dans l’email
-- Page merci opt-in : **pas** de bouton download (évite faux emails / skip mail)
+- Page merci opt-in : **pas** de bouton download
 
 Checklist :
 
@@ -196,11 +203,12 @@ Checklist :
     <input type="checkbox" name="consent" required>
     J’accepte de recevoir des emails de FlashDev…
   </label>
-  <button type="submit">Recevoir le lien de téléchargement</button>
+  <button type="submit">Créer mon compte et télécharger</button>
 </form>
 ```
 
-Design = HTML flex (snippet / `flashdev.html`). Systeme.io = uniquement boîte mail + liste.
+Après succès API : compte MySQL + acquis `flashdev-soft` → redirect `/auth/set-password.php?token=…`.  
+Design = HTML site (`flashdev.html`). Systeme.io = liste + nurture email.
 
 Checklist :
 

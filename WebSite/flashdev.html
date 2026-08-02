@@ -97,8 +97,8 @@
                         <p class="fd-snes-eyebrow">Accès contrôlé</p>
                         <h2 class="fd-snes-title">Débloque le téléchargement FlashDev</h2>
                         <p class="fd-snes-text">
-                            Connecte-toi si tu as déjà un compte actif. Sinon, laisse ton email pour recevoir le lien de téléchargement
-                            et être ajouté aux prospects FlashDev.
+                            Connecte-toi si tu as déjà un compte. Sinon, laisse ton email : tu crées ton mot de passe tout de suite,
+                            puis tu télécharges FlashDev (soft gratuit).
                         </p>
 
                         <div id="gate-optin-error" class="fd-optin-error hidden" role="alert">
@@ -114,7 +114,7 @@
                         </div>
 
                         <div class="fd-optin-divider">
-                            <p class="fd-optin-divider-title">Ou recevoir le lien par email</p>
+                            <p class="fd-optin-divider-title">Ou créer mon compte</p>
                             <form id="gate-optin-form" method="post" action="/api/systeme-optin.php" class="fd-optin-form">
                                 <label class="fd-optin-label" for="gate-email">Email</label>
                                 <input id="gate-email"
@@ -126,12 +126,12 @@
                                        class="fd-optin-input">
                                 <label class="fd-optin-consent">
                                     <input type="checkbox" name="consent" required>
-                                    <span>J'accepte de recevoir des emails de FlashDev (lien de téléchargement et infos produit). Désinscription possible à tout moment.</span>
+                                    <span>J'accepte de recevoir des emails de FlashDev (infos produit). Désinscription possible à tout moment.</span>
                                 </label>
                                 <button type="submit" class="fd-optin-submit">
-                                    Recevoir le lien de téléchargement
+                                    Créer mon compte et télécharger
                                 </button>
-                                <p class="fd-optin-footnote">Windows 10/11 · Soft gratuit · Pas de spam.</p>
+                                <p class="fd-optin-footnote">Windows 10/11 · Soft gratuit · Tu choisis ton mot de passe ensuite.</p>
                             </form>
                         </div>
                     </div>
@@ -426,7 +426,7 @@
                     });
             }
 
-            // Lien email Systeme.io : /flashdev.html?dl=1 → page download sans login
+            // Legacy email Systeme.io : ?dl=1 (à retirer quand tous les mails pointent vers login)
             var unlockDownload = new URLSearchParams(window.location.search).get('dl') === '1';
             if (unlockDownload) {
                 showProtectedContent();
@@ -438,7 +438,7 @@
                         return response.json();
                     })
                     .then(function (user) {
-                        if (!user || !user.logged_in) {
+                        if (!user || !user.logged_in || !user.can_download_flashdev) {
                             showGateOnly();
                             return null;
                         }

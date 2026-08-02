@@ -62,7 +62,8 @@ function mha_current_user(): ?array
     static $user = false;
     if ($user === false) {
         $stmt = mha_db()->prepare(
-            'SELECT id, email, display_name, role, is_active FROM users WHERE id = ? LIMIT 1'
+            'SELECT id, email, display_name, role, is_active, password_initialized
+             FROM users WHERE id = ? LIMIT 1'
         );
         $stmt->execute([(int) $_SESSION['user_id']]);
         $row = $stmt->fetch();
@@ -88,6 +89,13 @@ function mha_has_role(string ...$roles): bool
     return in_array($user['role'], $roles, true);
 }
 
+function mha_flashdev_product_slug(): string
+{
+    $slug = trim((string) (mha_config()['flashdev_product_slug'] ?? 'flashdev-soft'));
+
+    return $slug !== '' ? $slug : 'flashdev-soft';
+}
+
 function mha_can_access_product(string $productSlug): bool
 {
     $user = mha_current_user();
@@ -102,6 +110,149 @@ function mha_can_access_product(string $productSlug): bool
     );
     $stmt->execute([(int) $user['id'], $productSlug]);
     return (bool) $stmt->fetchColumn();
+}
+
+function mha_user_product_slugs(int $userId): array
+{
+    $stmt = mha_db()->prepare(
+        'SELECT product_slug FROM user_products WHERE user_id = ? ORDER BY product_slug'
+    );
+    $stmt->execute([$userId]);
+    $rows = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+    return array_values(array_map('strval', $rows ?: []));
+}
+
+function mha_grant_product(int $userId, string $productSlug): void
+{
+    $stmt = mha_db()->prepare(
+        'INSERT IGNORE INTO user_products (user_id, product_slug) VALUES (?, ?)'
+    );
+    $stmt->execute([$userId, $productSlug]);
+}
+
+/**
+ * Crée ou récupère un compte student pour l'opt-in FlashDev.
+ * password_initialized = 0 tant que l'utilisateur n'a pas choisi son MDP.
+ *
+ * @return array{id: int, email: string, password_initialized: int}
+ */
+function mha_ensure_flashdev_user(string $email): array
+{
+    $email = strtolower(trim($email));
+    $stmt = mha_db()->prepare(
+        'SELECT id, email, password_initialized FROM users WHERE email = ? LIMIT 1'
+    );
+    $stmt->execute([$email]);
+    $row = $stmt->fetch();
+    if ($row) {
+        return [
+            'id' => (int) $row['id'],
+            'email' => (string) $row['email'],
+            'password_initialized' => (int) ($row['password_initialized'] ?? 1),
+        ];
+    }
+
+    $placeholder = password_hash(bin2hex(random_bytes(32)), PASSWORD_DEFAULT);
+    $insert = mha_db()->prepare(
+        'INSERT INTO users (email, password_hash, display_name, role, password_initialized)
+         VALUES (?, ?, ?, \'student\', 0)'
+    );
+    $insert->execute([$email, $placeholder, $email]);
+
+    return [
+        'id' => (int) mha_db()->lastInsertId(),
+        'email' => $email,
+        'password_initialized' => 0,
+    ];
+}
+
+/** @return string raw token (à mettre dans l’URL une seule fois) */
+function mha_create_password_setup_token(int $userId, int $ttlSeconds = 86400): string
+{
+    $raw = bin2hex(random_bytes(32));
+    $hash = hash('sha256', $raw);
+    $expires = (new DateTimeImmutable('now'))->modify('+' . max(300, $ttlSeconds) . ' seconds');
+
+    // Invalide les anciens tokens non utilisés
+    $cleanup = mha_db()->prepare(
+        'UPDATE password_setup_tokens SET used_at = NOW()
+         WHERE user_id = ? AND used_at IS NULL'
+    );
+    $cleanup->execute([$userId]);
+
+    $stmt = mha_db()->prepare(
+        'INSERT INTO password_setup_tokens (user_id, token_hash, expires_at) VALUES (?, ?, ?)'
+    );
+    $stmt->execute([$userId, $hash, $expires->format('Y-m-d H:i:s')]);
+
+    return $raw;
+}
+
+/**
+ * @return array{user_id: int, email: string}|null
+ */
+function mha_peek_password_setup_token(string $rawToken): ?array
+{
+    $rawToken = trim($rawToken);
+    if ($rawToken === '' || strlen($rawToken) < 32) {
+        return null;
+    }
+    $hash = hash('sha256', $rawToken);
+    $stmt = mha_db()->prepare(
+        'SELECT t.user_id, u.email
+         FROM password_setup_tokens t
+         INNER JOIN users u ON u.id = t.user_id
+         WHERE t.token_hash = ?
+           AND t.used_at IS NULL
+           AND t.expires_at > NOW()
+           AND u.is_active = 1
+         LIMIT 1'
+    );
+    $stmt->execute([$hash]);
+    $row = $stmt->fetch();
+    if (!$row) {
+        return null;
+    }
+
+    return [
+        'user_id' => (int) $row['user_id'],
+        'email' => (string) $row['email'],
+    ];
+}
+
+function mha_complete_password_setup(string $rawToken, string $password): bool
+{
+    if (strlen($password) < 8) {
+        return false;
+    }
+    $info = mha_peek_password_setup_token($rawToken);
+    if ($info === null) {
+        return false;
+    }
+
+    $hash = password_hash($password, PASSWORD_DEFAULT);
+    $pdo = mha_db();
+    $pdo->beginTransaction();
+    try {
+        $upd = $pdo->prepare(
+            'UPDATE users SET password_hash = ?, password_initialized = 1 WHERE id = ?'
+        );
+        $upd->execute([$hash, $info['user_id']]);
+
+        $tok = $pdo->prepare(
+            'UPDATE password_setup_tokens SET used_at = NOW()
+             WHERE token_hash = ? AND used_at IS NULL'
+        );
+        $tok->execute([hash('sha256', $rawToken)]);
+
+        $pdo->commit();
+    } catch (Throwable $e) {
+        $pdo->rollBack();
+        return false;
+    }
+
+    return mha_login($info['email'], $password);
 }
 
 function mha_require_login(?string $redirectAfter = null): array
@@ -131,11 +282,15 @@ function mha_require_product(string $productSlug, ?string $redirectAfter = null)
 function mha_login(string $email, string $password): bool
 {
     $stmt = mha_db()->prepare(
-        'SELECT id, password_hash, is_active FROM users WHERE email = ? LIMIT 1'
+        'SELECT id, password_hash, is_active, password_initialized FROM users WHERE email = ? LIMIT 1'
     );
     $stmt->execute([strtolower(trim($email))]);
     $row = $stmt->fetch();
     if (!$row || (int) $row['is_active'] !== 1) {
+        return false;
+    }
+    // Compte opt-in sans MDP choisi → refus (passer par set-password)
+    if (array_key_exists('password_initialized', $row) && (int) $row['password_initialized'] !== 1) {
         return false;
     }
     if (!password_verify($password, $row['password_hash'])) {

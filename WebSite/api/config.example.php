@@ -13,8 +13,10 @@ return [
     ],
     /** Clé secrète pour auth/setup.php (première installation uniquement) */
     'setup_key' => 'CHANGEZ-MOI-SETUP-2026',
-    /** Produit formation — utilisé pour les futurs élèves payants */
+    /** Produit formation — reserved pour les futurs élèves payants */
     'product_slug' => 'gamedevready-bases-cpp',
+    /** Acquis soft gratuit — débloque le download FlashDev (pas les guides) */
+    'flashdev_product_slug' => 'flashdev-soft',
     /** Clé API Systeme.io — opt-in FlashDev (api/systeme-optin.php) */
     'systeme_io_api_key' => 'COLLEZ_VOTRE_CLE_ICI',
     /** Nom du tag Systeme.io (résolu en ID via API — déclenche l’automation download) */

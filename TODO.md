@@ -95,17 +95,17 @@ WebSite/Formations/
 
 Ces tâches débloquent la mise en ligne ou corrigent des problèmes visibles pour les visiteurs.
 
-### Compte + acquis / droits (**P1** — prochaine session)
+### Compte + acquis / droits (**P1** — en cours / à déployer)
 
-> Problème : sans l’email `?dl=1`, l’élève ne peut plus rouvrir le download.  
+> Opt-in → compte MySQL + acquis `flashdev-soft` → `set-password` → login → download.  
 > Détail : [`scripts/NOTE_PROCHAINE-SESSION.md`](scripts/NOTE_PROCHAINE-SESSION.md)
 
-- [ ] **P1** — Création / login compte site avec **mot de passe** (lier à l’email opt-in si possible)
-- [ ] **P1** — Modèle d’**acquisitions** (ex. `flashdev-soft`, formation bootcamp…) stocké côté site
-- [ ] **P1** — Verrouiller les contenus selon acquis :
-  - soft seul → **download FlashDev + site vitrine** ; **pas** de webGuide
-  - formation payante → + guides (`student` / `user_products`)
-- [ ] **P1** — `flashdev.html` : accès download si session + acquis soft (réduire la dépendance à `?dl=1`)
+- [x] **P1** — Création compte dès opt-in + **mot de passe choisi** (`auth/set-password.php`)
+- [x] **P1** — Acquis `flashdev-soft` via `user_products` (slug config `flashdev_product_slug`)
+- [x] **P1** — Verrouiller download selon acquis (`auth/me.php` → `can_download_flashdev`) ; guides restent sur `gamedevready-bases-cpp`
+- [x] **P1** — `flashdev.html` : gate si session + acquis soft (`?dl=1` legacy encore accepté)
+- [ ] **P1** — Déployer : SQL `migrate_flashdev_accounts.sql` + FTP PHP/HTML + test prod
+- [ ] **P1** — Email Systeme.io : lien → login `/auth/login.php?redirect=/flashdev.html` (plus seulement `?dl=1`)
 - [ ] **P1** — Ensuite : **paiement** → acquisition formation
 
 ### Domaine madhackademy.eu + email (**P1**)

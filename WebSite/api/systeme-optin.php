@@ -31,8 +31,7 @@ $result = systeme_optin_create_contact($apiKey, $email);
 
 if ($result['status'] === 'created') {
     systeme_optin_assign_tag_by_name($apiKey, (int) $result['contactId'], $tagName);
-    header('Location: /merci-flashdev.html', true, 303);
-    exit;
+    systeme_optin_finish_site_account($email, false);
 }
 
 if ($result['status'] === 'exists') {
@@ -40,12 +39,39 @@ if ($result['status'] === 'exists') {
     if ($existingId !== null) {
         systeme_optin_assign_tag_by_name($apiKey, $existingId, $tagName);
     }
-    header('Location: /optin-email-existe.html', true, 303);
-    exit;
+    systeme_optin_finish_site_account($email, true);
 }
 
 header('Location: /flashdev.html?optin=error', true, 303);
 exit;
+
+/**
+ * Compte MySQL + acquis flashdev-soft, puis set-password ou login.
+ */
+function systeme_optin_finish_site_account(string $email, bool $alreadyOnSysteme): void
+{
+    try {
+        $user = mha_ensure_flashdev_user($email);
+        mha_grant_product((int) $user['id'], mha_flashdev_product_slug());
+
+        if ((int) $user['password_initialized'] !== 1) {
+            $token = mha_create_password_setup_token((int) $user['id']);
+            header('Location: /auth/set-password.php?token=' . rawurlencode($token), true, 303);
+            exit;
+        }
+
+        if ($alreadyOnSysteme) {
+            header('Location: /optin-email-existe.html', true, 303);
+            exit;
+        }
+
+        header('Location: /auth/login.php?redirect=' . rawurlencode('/flashdev.html'), true, 303);
+        exit;
+    } catch (Throwable $e) {
+        header('Location: /flashdev.html?optin=error', true, 303);
+        exit;
+    }
+}
 
 /**
  * @return array{status: 'created'|'exists'|'error', contactId?: int}

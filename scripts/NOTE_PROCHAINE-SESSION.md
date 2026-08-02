@@ -9,18 +9,26 @@
 
 ## Reprise session suivante — **P1 unique**
 
-> **Compte site + acquis** : mot de passe / login → déverrouiller les contenus selon les **acquisitions** utilisateur.  
-> Problème actuel : `?dl=1` dans l’email ; sans le mail, l’élève reste bloqué sur le gate FlashDev.
+> **Déployer + tester le modèle compte** (code local prêt 2/08) ; puis **paiement** → acquis formation.
 
-### Cible accès (décision 2/08 — à implémenter)
+### Modèle accès (décision 2/08 — implémenté local)
 
 | Acquisition | Download FlashDev (`flashdev.html`) | Reste du site vitrine | webGuide (guides protégés) |
 |-------------|-------------------------------------|------------------------|----------------------------|
-| Opt-in soft (prospect) | Oui (session login) | Oui | **Non** |
-| Formation / produit payant | Oui | Oui | Oui (`student` / `user_products`) |
+| Opt-in soft (`flashdev-soft`) | Oui (session + acquis) | Oui | **Non** |
+| Formation / produit payant | Oui | Oui | Oui (`gamedevready-bases-cpp`) |
 | Anonyme | Gate opt-in / login | Pages publiques | Non |
 
-Enchaînement possible ensuite : **paiement** → acquisition formation → webGuide.
+**Parcours utilisateur :** form FlashDev → Systeme.io (tag) → user MySQL + `flashdev-soft` → `/auth/set-password.php?token=…` → login auto → download.
+
+**Déploiement (ordre) :**
+1. phpMyAdmin : exécuter `WebSite/sql/migrate_flashdev_accounts.sql`
+2. FTP : `api/bootstrap.php`, `api/systeme-optin.php`, `auth/me.php`, `auth/set-password.php`, `flashdev.html`, pages opt-in
+3. Optionnel `config.php` : `'flashdev_product_slug' => 'flashdev-soft'`
+4. Systeme.io : lien email → `https://madhackademy.eu/auth/login.php?redirect=%2Fflashdev.html` (garder `?dl=1` en secours un temps)
+5. Test prod : nouvel email → set-password → download ; 2ᵉ visite → login
+
+Enchaînement ensuite : **paiement** → acquisition formation → webGuide.
 
 ### Bilan leads / domaine (2/08) — done
 
