@@ -30,14 +30,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-$continueLabel = (str_contains((string) $redirect, 'flashdev'))
+$continueLabel = (str_contains((string) $redirect, 'telecharger') || str_contains((string) $redirect, 'flashdev'))
     ? 'Continuer vers FlashDev'
     : 'Continuer vers Bases C++';
-$backHref = (str_contains((string) $redirect, 'flashdev'))
-    ? '/flashdev.html'
+$backHref = (str_contains((string) $redirect, 'telecharger') || str_contains((string) $redirect, 'flashdev'))
+    ? '/telecharger.html'
     : '/gamedevready-bases-cpp.html';
-$backLabel = (str_contains((string) $redirect, 'flashdev'))
-    ? '← Retour FlashDev'
+$backLabel = (str_contains((string) $redirect, 'telecharger') || str_contains((string) $redirect, 'flashdev'))
+    ? '← Retour téléchargement'
     : '← Retour Bases C++';
 ?>
 <!DOCTYPE html>

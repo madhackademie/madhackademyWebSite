@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>[MadHackAdemy] - Centre de Formation</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="nav-site.css">
     <style>
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
@@ -48,6 +49,48 @@
         .fade-up     { opacity: 0; transform: translateY(32px); transition: opacity .6s ease, transform .6s ease; }
         .fade-up.visible { opacity: 1; transform: translateY(0); }
 
+        @keyframes wip-stripe {
+            0% { background-position: 0 0; }
+            100% { background-position: 28px 0; }
+        }
+        @keyframes wip-bob {
+            0%, 100% { transform: translateY(0) rotate(-6deg); }
+            50% { transform: translateY(-4px) rotate(-2deg); }
+        }
+        .wip-badge {
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+            min-width: 5.5rem;
+        }
+        .wip-cone {
+            width: 52px;
+            height: 52px;
+            animation: wip-bob 1.8s ease-in-out infinite;
+        }
+        .wip-label {
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #FBDD08;
+            background: repeating-linear-gradient(
+                -45deg,
+                #1a1a1a,
+                #1a1a1a 6px,
+                #3a3200 6px,
+                #3a3200 12px
+            );
+            background-size: 28px 28px;
+            animation: wip-stripe 0.8s linear infinite;
+            border: 1px solid #FBDD08;
+            border-radius: 0.25rem;
+            padding: 0.2rem 0.45rem;
+            white-space: nowrap;
+        }
+
         .nintendo-red    { background: #E60012; }
         .nintendo-yellow { background: #FBDD08; }
         .nintendo-green  { background: #05C31C; }
@@ -86,53 +129,49 @@
 </head>
 <body class="bg-black text-white font-mono">
 
-    <!-- NAV -->
-    <nav class="sticky top-0 z-50 bg-black/95 backdrop-blur-sm border-b-2 border-gray-800">
-        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
-            <a href="/" class="text-base sm:text-lg md:text-xl font-bold gradient-text hover:scale-105 transition-transform shrink min-w-0 truncate max-w-[45vw] sm:max-w-none">
-                [MadHackAdemy / LOGO]
+    <!-- NAV globale MadHackAdemy -->
+    <nav class="fixed top-0 w-full z-50 bg-black/95 backdrop-blur-sm border-b-2 border-gray-800">
+        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between gap-3">
+            <a href="/" class="text-lg md:text-xl font-bold gradient-text hover:scale-105 transition-transform shrink-0">
+                MadHackAdemy
             </a>
 
             <div class="flex items-center gap-3">
-                <!-- Menu desktop -->
-                <div class="hidden md:flex gap-4 lg:gap-6 text-sm font-bold">
-                    <a href="/" class="text-gray-400 hover:text-red-500 transition-colors">← FLASHDEV</a>
-                    <a href="#intro" class="text-gray-400 hover:text-yellow-400 transition-colors">INTRO</a>
-                    <a href="#methode" class="text-gray-400 hover:text-green-500 transition-colors">MÉTHODE</a>
-                    <a href="#roadmap" class="text-gray-400 hover:text-blue-500 transition-colors">ROADMAP</a>
-                    <a href="#boutique" class="text-gray-400 hover:text-red-500 transition-colors">BOUTIQUE</a>
+                <div class="nav-site-links hidden md:flex flex-wrap justify-end gap-4 lg:gap-5 text-sm font-bold items-center">
+                    <a href="/" class="nav-item">Accueil</a>
+                    <a href="/flashdev.html" class="nav-item">FlashDev</a>
+                    <a href="/telecharger.html" class="nav-item">Téléchargement</a>
+                    <a href="/centre-formation.html" class="nav-item" aria-current="page">Formation</a>
+                    <a href="/gamedevready.html" class="nav-item">GameDevReady</a>
+                    <div class="flex items-center gap-1.5 text-xs font-bold border border-gray-700 rounded px-2 py-1" role="navigation" aria-label="Langue">
+                        <span class="text-white" aria-current="page">FR</span>
+                        <span class="text-gray-600" aria-hidden="true">|</span>
+                        <a href="/training-center.html" class="text-gray-400 hover:text-white transition-colors" hreflang="en" lang="en">EN</a>
+                    </div>
                 </div>
 
-                <div class="flex items-center gap-1.5 text-xs font-bold border border-gray-700 rounded px-2 py-1" role="navigation" aria-label="Langue">
-                    <span class="text-white" aria-current="page">FR</span>
-                    <span class="text-gray-600" aria-hidden="true">|</span>
-                    <a href="/training-center.html" class="text-gray-400 hover:text-white transition-colors" hreflang="en" lang="en">EN</a>
-                </div>
+                <button
+                    id="nav-toggle"
+                    type="button"
+                    class="md:hidden flex flex-col justify-center items-center w-10 h-10 gap-1.5 rounded border border-gray-700 hover:border-gray-500 transition-colors"
+                    aria-label="Ouvrir le menu"
+                    aria-expanded="false"
+                    aria-controls="nav-mobile-menu"
+                >
+                    <span class="nav-bar block w-5 h-0.5 bg-white transition-all"></span>
+                    <span class="nav-bar block w-5 h-0.5 bg-white transition-all"></span>
+                    <span class="nav-bar block w-5 h-0.5 bg-white transition-all"></span>
+                </button>
             </div>
-
-            <!-- Bouton hamburger mobile -->
-            <button
-                id="nav-toggle"
-                type="button"
-                class="md:hidden flex flex-col justify-center items-center w-10 h-10 gap-1.5 rounded border border-gray-700 hover:border-gray-500 transition-colors"
-                aria-label="Ouvrir le menu"
-                aria-expanded="false"
-                aria-controls="nav-mobile-menu"
-            >
-                <span class="nav-bar block w-5 h-0.5 bg-white transition-all"></span>
-                <span class="nav-bar block w-5 h-0.5 bg-white transition-all"></span>
-                <span class="nav-bar block w-5 h-0.5 bg-white transition-all"></span>
-            </button>
         </div>
 
-        <!-- Menu mobile -->
         <div id="nav-mobile-menu" class="hidden md:hidden border-t border-gray-800 bg-black">
-            <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-3 text-sm font-bold">
-                <a href="/" class="text-gray-400 hover:text-red-500 transition-colors py-2">← FLASHDEV</a>
-                <a href="#intro" class="text-gray-400 hover:text-yellow-400 transition-colors py-2">INTRO</a>
-                <a href="#methode" class="text-gray-400 hover:text-green-500 transition-colors py-2">MÉTHODE</a>
-                <a href="#roadmap" class="text-gray-400 hover:text-blue-500 transition-colors py-2">ROADMAP</a>
-                <a href="#boutique" class="text-gray-400 hover:text-red-500 transition-colors py-2">BOUTIQUE</a>
+            <div class="nav-site-links max-w-6xl mx-auto px-4 py-4 flex flex-col gap-3 text-sm font-bold">
+                <a href="/" class="nav-item py-2">Accueil</a>
+                <a href="/flashdev.html" class="nav-item py-2">FlashDev</a>
+                <a href="/telecharger.html" class="nav-item py-2">Téléchargement</a>
+                <a href="/centre-formation.html" class="nav-item py-2" aria-current="page">Formation</a>
+                <a href="/gamedevready.html" class="nav-item py-2">GameDevReady</a>
                 <div class="flex items-center gap-1.5 text-xs font-bold border border-gray-700 rounded px-2 py-1 w-fit mt-1" aria-label="Langue">
                     <span class="text-white" aria-current="page">FR</span>
                     <span class="text-gray-600" aria-hidden="true">|</span>
@@ -141,6 +180,9 @@
             </div>
         </div>
     </nav>
+
+    <div class="pt-16">
+
 
     <!-- ══════════════════════════════════════════
          HERO
@@ -177,7 +219,7 @@
                 <a href="#boutique" class="w-full sm:w-auto px-6 sm:px-8 py-4 bg-transparent border-2 border-green-600 nintendo-blue text-nintendo-green font-bold rounded transition-all text-center text-sm sm:text-base">
                     VOIR LES OFFRES
                 </a>
-                <a href="/flashdev.html" class="w-full sm:w-auto px-6 sm:px-8 py-4 bg-transparent border-2 border-red-600 text-nintendo-red font-bold rounded transition-all text-center text-sm sm:text-base hover:bg-red-600/10">
+                <a href="/telecharger.html" class="w-full sm:w-auto px-6 sm:px-8 py-4 bg-transparent border-2 border-red-600 text-nintendo-red font-bold rounded transition-all text-center text-sm sm:text-base hover:bg-red-600/10">
                     TÉLÉCHARGER LE SOFT
                 </a>
             </div>
@@ -208,7 +250,7 @@
                     <!-- voir pour créer le style css et mettre un 125% ou 150 % ou réexporter l'image en plus grand ?
                      chemin D:\Asset\asset2D\Affinity Designer\Creation Asset\Enemie\Shooter -->
                     <img 
-                        src="/Image/MiniPoulpeDicord.png" 
+                        src="Image/MiniPoulpeDicord.png" 
                         class="minipoulpe" 
                         alt="MiniPoulpe"
                     />
@@ -258,7 +300,7 @@
                                 <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                                     <span>💻 PILIER 2 — LE SOFT</span>
                                     <a
-                                        href="/flashdev.html"
+                                        href="/telecharger.html"
                                         class="inline-flex items-center justify-center px-3 py-1.5 rounded border border-green-500 text-xs font-bold text-green-300 hover:bg-green-500/10 transition-colors"
                                     >
                                         Télécharger FlashDev →
@@ -280,7 +322,7 @@
                                 <strong class="text-white">Gestion des révisions automatiques</strong>
                                 <p class="text-gray-400 text-sm mt-1">Révisions pilotées par un algorithme de répétition espacée dans le temps. Decks thématiques prêts à l'emploi pour démarrer sans configuration.</p>
                                 <a
-                                    href="/flashdev.html"
+                                    href="/telecharger.html"
                                     class="inline-flex items-center mt-4 text-sm font-bold text-green-300 hover:text-green-200 transition-colors"
                                 >
                                     Voir le téléchargement du soft →
@@ -322,7 +364,7 @@
                     Le site te montre <strong class="text-white">où aller</strong>, FlashDev te fait <strong class="text-nintendo-green">pratiquer tous les jours</strong>.
                 </p>
                 <a
-                    href="/flashdev.html"
+                    href="/telecharger.html"
                     class="inline-flex items-center justify-center mt-4 px-6 py-3 border-2 border-green-600 text-nintendo-green font-bold rounded hover:bg-green-900/30 transition-all"
                 >
                     Télécharger le soft FlashDev →
@@ -359,51 +401,99 @@
 
                 <!-- Module 2 -->
                 <div class="bg-gray-900 p-6 rounded-lg border-l-4 border-yellow-500 hover:bg-gray-800 transition-all fade-up">
-                    <div class="flex items-start gap-4">
-                        <div class="w-12 h-12 nintendo-yellow rounded flex items-center justify-center flex-shrink-0 font-bold text-xl text-black">2</div>
-                        <div>
-                            <h3 class="text-2xl font-bold mb-2 text-nintendo-yellow">Premier Challenge</h3>
-                            <p class="text-gray-300 mb-3">Application des bases + logique de jeu simple</p>
-                            <span class="text-sm text-gray-500">Projet guidé ~ 1 semaine</span>
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div class="flex items-start gap-4 min-w-0">
+                            <div class="w-12 h-12 nintendo-yellow rounded flex items-center justify-center flex-shrink-0 font-bold text-xl text-black">2</div>
+                            <div>
+                                <h3 class="text-2xl font-bold mb-2 text-nintendo-yellow">Premier Challenge</h3>
+                                <p class="text-gray-300 mb-3">Application des bases + logique de jeu simple</p>
+                                <span class="text-sm text-gray-500">Projet guidé ~ 1 semaine</span>
+                            </div>
+                        </div>
+                        <div class="wip-badge" title="Module en construction">
+                            <svg class="wip-cone" viewBox="0 0 64 64" aria-hidden="true">
+                                <rect x="10" y="52" width="44" height="6" rx="1" fill="#FBDD08"/>
+                                <path d="M32 8 L52 50 H12 Z" fill="#E60012"/>
+                                <path d="M32 8 L44 34 H20 Z" fill="#FBDD08"/>
+                                <path d="M24 34 L40 34 L44 42 H20 Z" fill="#FBDD08"/>
+                                <rect x="28" y="48" width="8" height="6" fill="#888"/>
+                            </svg>
+                            <span class="wip-label">En construction</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Module 3 -->
                 <div class="bg-gray-900 p-6 rounded-lg border-l-4 border-green-500 hover:bg-gray-800 transition-all fade-up">
-                    <div class="flex items-start gap-4">
-                        <div class="w-12 h-12 nintendo-green rounded flex items-center justify-center flex-shrink-0 font-bold text-xl">3</div>
-                        <div>
-                            <h3 class="text-2xl font-bold mb-2 text-nintendo-green">Raylib Framework</h3>
-                            <p class="text-gray-300 mb-3">Graphics, input, audio, collisions avec Raylib</p>
-                            <span class="text-sm text-gray-500">Bootcamp 2-3 semaines</span>
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div class="flex items-start gap-4 min-w-0">
+                            <div class="w-12 h-12 nintendo-green rounded flex items-center justify-center flex-shrink-0 font-bold text-xl">3</div>
+                            <div>
+                                <h3 class="text-2xl font-bold mb-2 text-nintendo-green">Raylib Framework</h3>
+                                <p class="text-gray-300 mb-3">Graphics, input, audio, collisions avec Raylib</p>
+                                <span class="text-sm text-gray-500">Bootcamp 2-3 semaines</span>
+                            </div>
+                        </div>
+                        <div class="wip-badge" title="Module en construction">
+                            <svg class="wip-cone" viewBox="0 0 64 64" aria-hidden="true">
+                                <rect x="10" y="52" width="44" height="6" rx="1" fill="#FBDD08"/>
+                                <path d="M32 8 L52 50 H12 Z" fill="#E60012"/>
+                                <path d="M32 8 L44 34 H20 Z" fill="#FBDD08"/>
+                                <path d="M24 34 L40 34 L44 42 H20 Z" fill="#FBDD08"/>
+                                <rect x="28" y="48" width="8" height="6" fill="#888"/>
+                            </svg>
+                            <span class="wip-label">En construction</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Module 4 -->
                 <div class="bg-gray-900 p-6 rounded-lg border-l-4 border-blue-500 hover:bg-gray-800 transition-all fade-up">
-                    <div class="flex items-start gap-4">
-                        <div class="w-12 h-12 nintendo-blue rounded flex items-center justify-center flex-shrink-0 font-bold text-xl">4</div>
-                        <div>
-                            <h3 class="text-2xl font-bold mb-2 text-nintendo-blue">Projet Frogger Remake</h3>
-                            <p class="text-gray-300 mb-3">Structs avec méthodes, architecture sans POO</p>
-                            <span class="text-sm text-gray-500">Projet complet ~ 2-3 semaines</span>
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div class="flex items-start gap-4 min-w-0">
+                            <div class="w-12 h-12 nintendo-blue rounded flex items-center justify-center flex-shrink-0 font-bold text-xl">4</div>
+                            <div>
+                                <h3 class="text-2xl font-bold mb-2 text-nintendo-blue">Projet Frogger Remake</h3>
+                                <p class="text-gray-300 mb-3">Structs avec méthodes, architecture sans POO</p>
+                                <span class="text-sm text-gray-500">Projet complet ~ 2-3 semaines</span>
+                            </div>
+                        </div>
+                        <div class="wip-badge" title="Module en construction">
+                            <svg class="wip-cone" viewBox="0 0 64 64" aria-hidden="true">
+                                <rect x="10" y="52" width="44" height="6" rx="1" fill="#FBDD08"/>
+                                <path d="M32 8 L52 50 H12 Z" fill="#E60012"/>
+                                <path d="M32 8 L44 34 H20 Z" fill="#FBDD08"/>
+                                <path d="M24 34 L40 34 L44 42 H20 Z" fill="#FBDD08"/>
+                                <rect x="28" y="48" width="8" height="6" fill="#888"/>
+                            </svg>
+                            <span class="wip-label">En construction</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Module 5 -->
                 <div class="bg-gray-900 p-6 rounded-lg border-l-4 border-purple-500 hover:bg-gray-800 transition-all fade-up">
-                    <div class="flex items-start gap-4">
-                        <div class="w-12 h-12 bg-purple-600 rounded flex items-center justify-center flex-shrink-0 font-bold text-xl">5</div>
-                        <div>
-                            <h3 class="text-2xl font-bold mb-2 text-purple-400">POO vs ECS : Choix Paradigme</h3>
-                            <p class="text-gray-300 mb-3">Comprendre les deux approches et choisir sa voie</p>
-                            <div class="flex gap-3 mt-3">
-                                <span class="px-3 py-1 bg-purple-900 text-purple-300 rounded text-sm">Path POO →</span>
-                                <span class="px-3 py-1 bg-indigo-900 text-indigo-300 rounded text-sm">Path ECS →</span>
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div class="flex items-start gap-4 min-w-0">
+                            <div class="w-12 h-12 bg-purple-600 rounded flex items-center justify-center flex-shrink-0 font-bold text-xl">5</div>
+                            <div>
+                                <h3 class="text-2xl font-bold mb-2 text-purple-400">POO vs ECS : Choix Paradigme</h3>
+                                <p class="text-gray-300 mb-3">Comprendre les deux approches et choisir sa voie</p>
+                                <div class="flex gap-3 mt-3">
+                                    <span class="px-3 py-1 bg-purple-900 text-purple-300 rounded text-sm">Path POO →</span>
+                                    <span class="px-3 py-1 bg-indigo-900 text-indigo-300 rounded text-sm">Path ECS →</span>
+                                </div>
                             </div>
+                        </div>
+                        <div class="wip-badge" title="Module en construction">
+                            <svg class="wip-cone" viewBox="0 0 64 64" aria-hidden="true">
+                                <rect x="10" y="52" width="44" height="6" rx="1" fill="#FBDD08"/>
+                                <path d="M32 8 L52 50 H12 Z" fill="#E60012"/>
+                                <path d="M32 8 L44 34 H20 Z" fill="#FBDD08"/>
+                                <path d="M24 34 L40 34 L44 42 H20 Z" fill="#FBDD08"/>
+                                <rect x="28" y="48" width="8" height="6" fill="#888"/>
+                            </svg>
+                            <span class="wip-label">En construction</span>
                         </div>
                     </div>
                 </div>
@@ -498,6 +588,7 @@
             <p>[TON NOM / CENTRE DE FORMATION] © 2026</p>
         </div>
     </footer>
+    </div>
 
     <script>
         const observer = new IntersectionObserver((entries) => {

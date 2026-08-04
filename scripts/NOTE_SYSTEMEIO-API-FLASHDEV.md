@@ -172,15 +172,16 @@ Checklist :
 Lien dans l’email Systeme.io (page site, pas le .exe) :
 
 ```
-https://madhackademy.eu/auth/login.php?redirect=%2Fflashdev.html
+https://madhackademy.eu/auth/login.php?redirect=%2Ftelecharger.html
 ```
 
 Secours legacy (à retirer plus tard) :
 
 ```
-https://madhackademy.eu/flashdev.html?dl=1
+https://madhackademy.eu/telecharger.html?dl=1
 ```
 
+(`flashdev.html?dl=1` redirige aussi vers `telecharger.html?dl=1`.)
 - Parcours principal : opt-in site → `set-password` → session → download (sans dépendre du mail)
 - Email Systeme.io = Bienvenue / nurture ; lien → **login** puis FlashDev
 - **Ne pas** mettre `/flashdev/go.php` ni `FlashDev-Setup-….exe` dans l’email

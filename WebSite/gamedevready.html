@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GameDevReady — Formation Game Developer</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="nav-site.css">
     <style>
         .nintendo-red { background: #E60012; }
         .nintendo-yellow { background: #FBDD08; }
@@ -35,14 +36,21 @@
 <body class="bg-black text-white font-mono">
 
     <nav class="fixed top-0 w-full bg-black bg-opacity-95 backdrop-blur-sm z-50 border-b-2 border-gray-800">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="/" class="text-2xl md:text-3xl font-bold gradient-text hover:scale-105 transition-transform">
-                FLASHDEV
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center gap-3">
+            <a href="/" class="text-xl md:text-2xl font-bold gradient-text hover:scale-105 transition-transform shrink-0">
+                MadHackAdemy
             </a>
-            <div class="flex gap-4 md:gap-6 text-sm md:text-base">
-                <a href="/" class="text-gray-300 hover:text-red-500 transition font-bold">Accueil</a>
-                <a href="/gamedevready.html" class="text-green-400 font-bold">GameDevReady</a>
-                <a href="/centre-formation.html" class="text-gray-300 hover:text-yellow-400 transition font-bold">Centre-Formation</a>
+            <div class="nav-site-links flex flex-wrap justify-end gap-3 md:gap-5 items-center text-sm md:text-base">
+                <a href="/" class="nav-item">Accueil</a>
+                <a href="/flashdev.html" class="nav-item">FlashDev</a>
+                <a href="/telecharger.html" class="nav-item">Téléchargement</a>
+                <a href="/centre-formation.html" class="nav-item">Formation</a>
+                <a href="/gamedevready.html" class="nav-item" aria-current="page">GameDevReady</a>
+                <div class="flex items-center gap-1.5 text-xs font-bold border border-gray-700 rounded px-2 py-1" role="navigation" aria-label="Langue">
+                    <span class="text-white" aria-current="page">FR</span>
+                    <span class="text-gray-600" aria-hidden="true">|</span>
+                    <a href="/index-en.html" class="text-gray-400 hover:text-white transition-colors" hreflang="en" lang="en">EN</a>
+                </div>
             </div>
         </div>
     </nav>

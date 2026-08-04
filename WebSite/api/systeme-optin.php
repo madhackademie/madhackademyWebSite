@@ -6,7 +6,7 @@ require __DIR__ . '/bootstrap.php';
 const SYSTEME_IO_API_BASE = 'https://api.systeme.io/api';
 
 if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
-    header('Location: /flashdev.html', true, 303);
+    header('Location: /telecharger.html', true, 303);
     exit;
 }
 
@@ -14,7 +14,7 @@ $email = trim((string) ($_POST['email'] ?? ''));
 $consent = isset($_POST['consent']) && (string) $_POST['consent'] !== '' && (string) $_POST['consent'] !== '0';
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL) || !$consent) {
-    header('Location: /flashdev.html?optin=error', true, 303);
+    header('Location: /telecharger.html?optin=error', true, 303);
     exit;
 }
 
@@ -38,7 +38,7 @@ if ($result['status'] === 'created') {
 
 // CRM Systeme.io obligatoire : contact + tag avant compte site
 if ($contactId <= 0 || !systeme_optin_assign_tag_by_name($apiKey, $contactId, $tagName)) {
-    header('Location: /flashdev.html?optin=error', true, 303);
+    header('Location: /telecharger.html?optin=error', true, 303);
     exit;
 }
 
@@ -67,7 +67,7 @@ function systeme_optin_finish_site_account(string $email): void
         );
         exit;
     } catch (Throwable $e) {
-        header('Location: /flashdev.html?optin=error', true, 303);
+        header('Location: /telecharger.html?optin=error', true, 303);
         exit;
     }
 }

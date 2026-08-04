@@ -1,7 +1,7 @@
 # Guide — Prochaine session de travail
 
 > **Référence principale** pour reprendre le projet madhackademyWebSite  
-> Dernière mise à jour : 2 août 2026  
+> Dernière mise à jour : 4 août 2026  
 > Domaine marque : [madhackademy.eu](https://madhackademy.eu/)  
 > Ancien domaine : `gameopenmoney.com` → **301** vers madhackademy (voir `.htaccess`)
 
@@ -9,7 +9,63 @@
 
 ## Reprise session suivante — **P1 unique**
 
-> **Media page download** : images + vidéo Soft sur `flashdev.html` (`/flashdev/media/`).
+> **FTP + parcours prod** : uploader les fichiers de la branche `feature/nav-globale`, naviguer, tester liens / login / téléchargement + email Systeme.io.  
+> Ressenti nav : **FlashDev** vs **Téléchargement** — à trancher après tests (laisser pour l’instant).
+
+### Checklist FTP (racine `www` = contenu de `WebSite/`)
+
+**Pages HTML (nav + copy + WIP + page téléchargement dédiée)**
+- [ ] `index.html`
+- [ ] `index-en.html`
+- [ ] `flashdev.html` (vitrine / aperçu)
+- [ ] `telecharger.html` (**nouveau** — gate compte + installeur)
+- [ ] `gamedevready.html`
+- [ ] `gamedevready-bases-cpp.html`
+- [ ] `roadMapCPPBootcamp.html`
+- [ ] `centre-formation.html`
+- [ ] `training-center.html`
+
+- [ ] `nav-site.css` (**nouveau** — couleurs nav)
+
+**Auth / opt-in (redirects → `telecharger.html`)**
+- [ ] `api/systeme-optin.php`
+- [ ] `auth/set-password.php`
+- [ ] `auth/login.php`
+- [ ] `auth/logout.php`
+- [ ] `optin-email-existe.html`
+
+**Optionnel si pas déjà en prod**
+- [ ] `api/bootstrap.php`
+- [ ] `auth/me.php`
+- [ ] `merci-flashdev.html`
+
+> Ne pas écraser `api/config.php` (secrets FTP uniquement).
+
+### Tests après upload
+
+- [ ] Nav globale : Accueil · FlashDev · **Téléchargement** · Formation · GameDevReady · FR|EN
+- [ ] `/telecharger.html` : gate → set-password → download
+- [ ] `/flashdev.html` : vitrine + aperçu (sans gate) ; `?dl=1` redirige vers telecharger
+- [ ] MiniPoulpe visible section « Qui suis-je ? » (centre-formation)
+- [ ] Modules roadmap 2–5 : badge « En construction »
+- [ ] Login / logout → retour téléchargement
+- [ ] Opt-in email neuf → Systeme.io + set-password → `/telecharger.html`
+- [ ] Email Bienvenue ; 2ᵉ fois → « déjà un compte »
+
+### Ensuite (P2 / plus tard)
+
+- Remplacer badge WIP SVG par image générée (ChatGPT) si souhaité
+- Media FlashDev (`/flashdev/media/`) — vidéo + captures
+- Merge `feature/nav-globale` → `main` après validation FTP
+
+### Nav globale (4/08 — branche `feature/nav-globale`)
+
+Barre unifiée :
+
+`MadHackAdemy` · Accueil · FlashDev · **Téléchargement** · Formation · GameDevReady · FR|EN
+
+- `flashdev.html` = présentation / aperçu media  
+- `telecharger.html` = compte + installeur (page dédiée)
 
 ### Roadmap produit (ordre décidé 2/08)
 

@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlashDev — Télécharger le logiciel</title>
-    <meta name="description" content="Téléchargez FlashDev, le logiciel de flashcards learn by doing. Version, changelog et prérequis Windows.">
+    <title>FlashDev — Soft de révision MadHackAdemy</title>
+    <meta name="description" content="FlashDev : flashcards learn by doing. Soft gratuit contre email — présentation, aperçu et lien téléchargement.">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="/flashdev-optin.css">
+    <link rel="stylesheet" href="nav-site.css">
     <style>
         .nintendo-red { background: #E60012; }
         .nintendo-yellow { background: #FBDD08; }
@@ -22,22 +22,6 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        .download-btn {
-            transition: transform 0.15s ease, box-shadow 0.15s ease;
-        }
-        .download-btn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(5, 195, 28, 0.35);
-        }
-        .download-btn:disabled {
-            opacity: 0.55;
-            cursor: not-allowed;
-        }
-        @keyframes pulse-dot {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
-        }
-        .pulse-dot { animation: pulse-dot 1.5s ease-in-out infinite; }
         .media-slot {
             background: linear-gradient(135deg, rgba(30, 58, 138, 0.35), rgba(17, 24, 39, 0.95));
             border: 2px dashed rgba(27, 140, 228, 0.45);
@@ -45,34 +29,40 @@
         .media-slot:hover {
             border-color: rgba(5, 195, 28, 0.55);
         }
-        .auth-gate-hidden {
-            display: none;
-        }
     </style>
+    <script>
+        // Anciens liens email ?dl=1 → page téléchargement dédiée
+        (function () {
+            if (new URLSearchParams(window.location.search).get('dl') === '1') {
+                window.location.replace('/telecharger.html?dl=1');
+            }
+        })();
+    </script>
 </head>
 <body class="bg-black text-white font-mono">
 
     <nav class="fixed top-0 w-full bg-black bg-opacity-95 backdrop-blur-sm z-50 border-b-2 border-gray-800">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="/" class="text-2xl md:text-3xl font-bold gradient-text hover:scale-105 transition-transform">
-                FLASHDEV
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center gap-3">
+            <a href="/" class="text-xl md:text-2xl font-bold gradient-text hover:scale-105 transition-transform shrink-0">
+                MadHackAdemy
             </a>
-            <div class="flex gap-4 md:gap-6 items-center text-sm md:text-base">
-                <a href="/" class="text-gray-300 hover:text-red-500 transition font-bold">Accueil</a>
-                <a href="/flashdev.html" class="text-green-400 font-bold" aria-current="page">Télécharger</a>
-                <a href="/gamedevready.html" class="text-gray-300 hover:text-green-500 transition font-bold">GameDevReady</a>
-                <a href="/centre-formation.html" class="text-gray-300 hover:text-yellow-400 transition font-bold">Centre-Formation</a>
-                <span id="nav-session" class="hidden items-center gap-3 text-xs md:text-sm border-l border-gray-700 pl-4 ml-1">
-                    <span id="nav-session-email" class="text-gray-500 truncate max-w-[10rem] md:max-w-xs"></span>
-                    <a href="/auth/logout.php?redirect=%2Fflashdev.html" class="text-red-400 hover:text-red-300 font-bold whitespace-nowrap">Déconnexion</a>
-                </span>
+            <div class="nav-site-links flex flex-wrap justify-end gap-3 md:gap-5 items-center text-sm md:text-base">
+                <a href="/" class="nav-item">Accueil</a>
+                <a href="/flashdev.html" class="nav-item" aria-current="page">FlashDev</a>
+                <a href="/telecharger.html" class="nav-item">Téléchargement</a>
+                <a href="/centre-formation.html" class="nav-item">Formation</a>
+                <a href="/gamedevready.html" class="nav-item">GameDevReady</a>
+                <div class="flex items-center gap-1.5 text-xs font-bold border border-gray-700 rounded px-2 py-1" role="navigation" aria-label="Langue">
+                    <span class="text-white" aria-current="page">FR</span>
+                    <span class="text-gray-600" aria-hidden="true">|</span>
+                    <a href="/index-en.html" class="text-gray-400 hover:text-white transition-colors" hreflang="en" lang="en">EN</a>
+                </div>
             </div>
         </div>
     </nav>
 
     <div class="pt-24">
 
-        <!-- Hero -->
         <header class="py-16 px-4 text-center border-b border-gray-800 relative overflow-hidden">
             <div class="absolute inset-0 opacity-10 pointer-events-none">
                 <div class="absolute top-10 left-1/4 w-40 h-40 nintendo-green rounded-full blur-3xl"></div>
@@ -83,6 +73,16 @@
             <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto relative z-10">
                 Flashcards by <span class="text-red-500">Doing</span> — révisez en codant, pas en lisant passivement.
             </p>
+            <div class="flex flex-wrap justify-center gap-4 mt-10 relative z-10">
+                <a href="/telecharger.html"
+                   class="px-8 py-4 bg-green-600 hover:bg-green-700 text-white font-bold rounded transition-all">
+                    Télécharger FlashDev →
+                </a>
+                <a href="#apercu"
+                   class="px-8 py-4 border-2 border-blue-600 text-nintendo-blue font-bold rounded hover:bg-blue-900/20 transition-all">
+                    Voir l’aperçu
+                </a>
+            </div>
             <div class="flex justify-center gap-2 mt-8 relative z-10">
                 <span class="w-12 h-2 nintendo-red"></span>
                 <span class="w-12 h-2 nintendo-yellow"></span>
@@ -91,218 +91,82 @@
             </div>
         </header>
 
-        <section id="flashdev-access-gate" class="py-16 px-4 border-b border-gray-800">
-            <div class="max-w-xl mx-auto">
-                <div class="fd-snes-card">
-                    <div class="fd-snes-stripe" aria-hidden="true">
-                        <i class="r"></i><i class="y"></i><i class="g"></i><i class="b"></i>
-                    </div>
-                    <div class="fd-snes-body">
-                        <p class="fd-snes-eyebrow">Accès contrôlé</p>
-                        <h2 class="fd-snes-title">Débloque le téléchargement FlashDev</h2>
-                        <p class="fd-snes-text">
-                            Connecte-toi si tu as déjà un compte. Sinon, laisse ton email : tu crées ton mot de passe tout de suite,
-                            puis tu télécharges FlashDev (soft gratuit).
-                        </p>
-
-                        <div id="gate-optin-error" class="fd-optin-error hidden" role="alert">
-                            Une erreur est survenue lors de l'inscription. Vérifie ton email et la case consentement, puis réessaie.
-                        </div>
-
-                        <div class="fd-snes-actions">
-                            <a id="gate-login-link"
-                               href="/auth/login.php?redirect=%2Fflashdev.html"
-                               class="fd-snes-btn login">
-                                Se connecter
-                            </a>
-                        </div>
-
-                        <div class="fd-optin-divider">
-                            <p class="fd-optin-divider-title">Ou créer mon compte</p>
-                            <form id="gate-optin-form" method="post" action="/api/systeme-optin.php" class="fd-optin-form">
-                                <label class="fd-optin-label" for="gate-email">Email</label>
-                                <input id="gate-email"
-                                       name="email"
-                                       type="email"
-                                       required
-                                       autocomplete="email"
-                                       placeholder="ton@email.com"
-                                       class="fd-optin-input">
-                                <label class="fd-optin-consent">
-                                    <input type="checkbox" name="consent" required>
-                                    <span>J'accepte de recevoir des emails de FlashDev (infos produit). Désinscription possible à tout moment.</span>
-                                </label>
-                                <button type="submit" class="fd-optin-submit">
-                                    Créer mon compte et télécharger
-                                </button>
-                                <p class="fd-optin-footnote">Windows 10/11 · Soft gratuit · Tu choisis ton mot de passe ensuite.</p>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="fd-snes-stripe" aria-hidden="true">
-                        <i class="r"></i><i class="y"></i><i class="g"></i><i class="b"></i>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <div id="flashdev-protected-content" class="auth-gate-hidden">
-        <!-- Aperçu vidéo / captures (à remplir) -->
         <section id="apercu" class="py-16 px-4 bg-gradient-to-b from-black to-gray-950 border-b border-gray-800">
             <div class="max-w-5xl mx-auto space-y-10">
                 <div class="text-center">
                     <p class="text-xs text-gray-500 uppercase tracking-widest mb-3">Découvrir l'outil</p>
                     <h2 class="text-3xl md:text-4xl font-bold mb-3">Aperçu de <span class="gradient-text">FlashDev</span></h2>
                     <p class="text-gray-400 max-w-2xl mx-auto text-sm md:text-base">
-                        Vidéo de démo et captures d'écran à venir — tu peux déposer les fichiers dans
-                        <code class="text-gray-500">/flashdev/media/</code> puis remplacer les emplacements ci-dessous.
+                        Vidéo de démo et captures d'écran à venir — fichiers dans
+                        <code class="text-gray-500">/flashdev/media/</code>.
                     </p>
                 </div>
 
-                <!-- Vidéo : remplacer le bloc placeholder par <video> ou iframe YouTube -->
                 <div class="bg-gray-900 rounded-xl border-2 border-blue-600 overflow-hidden">
                     <div class="h-2 nintendo-blue"></div>
                     <div class="p-4 md:p-6">
                         <div id="demo-video-slot" class="media-slot aspect-video rounded-lg flex flex-col items-center justify-center text-center px-6">
-                            <!-- Décommenter et adapter quand la vidéo est prête :
-                            <video class="w-full h-full rounded-lg object-cover" controls poster="/flashdev/media/demo-poster.jpg">
-                                <source src="/flashdev/media/flashdev-demo.mp4" type="video/mp4">
-                            </video>
-                            -->
                             <span class="text-4xl mb-3" aria-hidden="true">▶</span>
                             <p class="text-nintendo-blue font-bold">Vidéo de démo — bientôt disponible</p>
                             <p class="text-gray-500 text-xs mt-2 max-w-md">
-                                Suggestion : 60–90 s montrant le menu, une carte, VS Code et la validation d'une révision.
+                                Suggestion : 60–90 s — menu, carte, VS Code, validation d'une révision.
                             </p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Captures : remplacer les src="" par tes PNG/JPG -->
                 <div class="grid sm:grid-cols-3 gap-4">
                     <figure class="bg-gray-900 rounded-xl border border-gray-700 overflow-hidden">
                         <div class="media-slot aspect-video flex items-center justify-center text-gray-500 text-xs font-bold p-4 text-center">
-                            <!-- <img src="/flashdev/media/screen-menu.png" alt="Menu principal FlashDev" class="w-full h-full object-cover"> -->
                             Capture 1 — menu / decks
                         </div>
                         <figcaption class="px-4 py-3 text-xs text-gray-400 border-t border-gray-800">Écran d'accueil</figcaption>
                     </figure>
                     <figure class="bg-gray-900 rounded-xl border border-gray-700 overflow-hidden">
                         <div class="media-slot aspect-video flex items-center justify-center text-gray-500 text-xs font-bold p-4 text-center">
-                            <!-- <img src="/flashdev/media/screen-carte.png" alt="Carte flash en cours" class="w-full h-full object-cover"> -->
                             Capture 2 — carte / révision
                         </div>
                         <figcaption class="px-4 py-3 text-xs text-gray-400 border-t border-gray-800">Session de révision</figcaption>
                     </figure>
                     <figure class="bg-gray-900 rounded-xl border border-gray-700 overflow-hidden">
                         <div class="media-slot aspect-video flex items-center justify-center text-gray-500 text-xs font-bold p-4 text-center">
-                            <!-- <img src="/flashdev/media/screen-vscode.png" alt="Édition de code dans VS Code" class="w-full h-full object-cover"> -->
                             Capture 3 — code / VS Code
                         </div>
                         <figcaption class="px-4 py-3 text-xs text-gray-400 border-t border-gray-800">Learn by doing</figcaption>
                     </figure>
                 </div>
-            </div>
-        </section>
 
-        <!-- Version + téléchargement -->
-        <section class="py-16 px-4">
-            <div class="max-w-4xl mx-auto">
-
-                <div id="version-loading" class="text-center text-gray-500 py-8">
-                    <span class="inline-block w-2 h-2 bg-green-500 rounded-full pulse-dot mr-2"></span>
-                    Chargement des informations de version…
-                </div>
-
-                <div id="version-error" class="hidden bg-gray-900 border-2 border-red-600 rounded-xl p-8 text-center">
-                    <p class="text-red-400 font-bold mb-2">Impossible de charger le manifest de version.</p>
-                    <p class="text-gray-400 text-sm mb-6">Réessayez plus tard ou contactez le support MadHackAdemy.</p>
-                    <a href="/flashdev/FlashDev-Setup-0.2.2-win64.exe"
-                       class="inline-block px-8 py-4 bg-green-600 hover:bg-green-700 text-white font-bold rounded download-btn">
-                        Télécharger l'installeur FlashDev ↓
+                <div class="text-center pt-4">
+                    <a href="/telecharger.html"
+                       class="inline-block px-8 py-4 bg-green-600 hover:bg-green-700 text-white font-bold rounded transition-all">
+                        Créer mon compte et télécharger →
                     </a>
                 </div>
+            </div>
+        </section>
 
-                <div id="version-content" class="hidden space-y-8">
-
-                    <!-- Carte version -->
-                    <div class="bg-gray-900 rounded-xl border-2 border-green-500 overflow-hidden">
-                        <div class="h-2 nintendo-green"></div>
-                        <div class="p-8 md:p-10">
-                            <div class="flex flex-wrap items-start justify-between gap-6 mb-8">
-                                <div>
-                                    <p class="text-xs text-gray-500 uppercase tracking-widest mb-2">Dernière version</p>
-                                    <p class="text-4xl md:text-5xl font-bold text-nintendo-green" id="ver-number">—</p>
-                                    <p class="text-gray-500 mt-2 text-sm">
-                                        Build <span id="ver-build" class="text-gray-300">—</span>
-                                        · Canal <span id="ver-channel" class="text-gray-300">—</span>
-                                    </p>
-                                </div>
-                                <div class="text-right text-sm text-gray-400">
-                                    <p>Publiée le <span id="ver-date" class="text-gray-200">—</span></p>
-                                    <p class="mt-1">Plateforme <span id="ver-platform" class="text-gray-200">—</span></p>
-                                    <p class="mt-1">LÖVE requis <span id="ver-love" class="text-gray-200">—</span></p>
-                                    <p class="mt-1 hidden" id="ver-size-wrap">Taille <span id="ver-size" class="text-gray-200">—</span></p>
-                                </div>
-                            </div>
-
-                            <a id="download-btn"
-                               href="#"
-                               class="download-btn block w-full text-center px-8 py-5 bg-green-600 hover:bg-green-700 text-white text-xl font-bold rounded transition-all">
-                                Télécharger l'installeur FlashDev ↓
-                            </a>
-                            <p id="download-hint" class="text-xs text-gray-500 text-center mt-4 leading-relaxed">
-                                Setup Windows (<code class="text-gray-400">.exe</code>) — installe FlashDev.
-                                Si LÖVE ou VS Code sont déjà présents, ils sont réutilisés ; sinon installation via <code class="text-gray-400">winget</code>.
-                                Les mises à jour du logiciel se font ensuite dans le menu Options.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Présentation -->
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div class="bg-gray-900 p-6 rounded-xl border border-gray-700">
-                            <h2 class="text-xl font-bold text-nintendo-yellow mb-4">Ce que fait FlashDev</h2>
-                            <ul class="space-y-2 text-gray-300 text-sm">
-                                <li>→ Cartes flash = défis de code (Lua, C++ via VS Code)</li>
-                                <li>→ Répétition espacée SM2 intégrée</li>
-                                <li>→ Installation de decks premium (GameDevReady)</li>
-                                <li>→ Liens vers guides web depuis chaque carte</li>
-                            </ul>
-                        </div>
-                        <div class="bg-gray-900 p-6 rounded-xl border border-gray-700">
-                            <h2 class="text-xl font-bold text-nintendo-blue mb-4">Prérequis Windows</h2>
-                            <ul class="space-y-2 text-gray-300 text-sm">
-                                <li>→ Windows 10 ou 11 (64 bits)</li>
-                                <li>→ L'installeur configure <strong class="text-gray-200">LÖVE 11.x</strong> et <strong class="text-gray-200">VS Code</strong> (via <code class="text-gray-400">winget</code>)</li>
-                                <li>→ Connexion Internet pour le premier setup</li>
-                                <li>→ Decks C++ : Raylib dans <code class="text-gray-400">C:\raylib\</code> (bootcamp, étape séparée)</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Changelog -->
-                    <div class="bg-gray-900 rounded-xl border border-gray-700 p-8">
-                        <h2 class="text-2xl font-bold mb-6">
-                            Nouveautés <span class="text-gray-500 text-lg font-normal">v<span id="changelog-ver">—</span></span>
-                        </h2>
-                        <ul id="changelog-list" class="space-y-3 text-gray-300">
-                        </ul>
-                    </div>
-
-                    <!-- Liens utiles -->
-                    <div class="flex flex-wrap gap-4 justify-center pt-4">
-                        <a href="/gamedevready.html" class="px-6 py-3 border-2 border-green-600 text-nintendo-green font-bold rounded hover:bg-green-900/30 transition">
-                            Deck GameDevReady →
-                        </a>
-                        <a href="/" class="px-6 py-3 border-2 border-gray-600 text-gray-300 font-bold rounded hover:border-gray-400 transition">
-                            Retour accueil
-                        </a>
-                    </div>
+        <section class="py-16 px-4">
+            <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-6">
+                <div class="bg-gray-900 p-6 rounded-xl border border-gray-700">
+                    <h2 class="text-xl font-bold text-nintendo-yellow mb-4">Ce que fait FlashDev</h2>
+                    <ul class="space-y-2 text-gray-300 text-sm">
+                        <li>→ Cartes flash = défis de code (Lua, C++ via VS Code)</li>
+                        <li>→ Répétition espacée SM2 intégrée</li>
+                        <li>→ Installation de decks premium (GameDevReady)</li>
+                        <li>→ Liens vers guides web depuis chaque carte</li>
+                    </ul>
+                </div>
+                <div class="bg-gray-900 p-6 rounded-xl border border-gray-700">
+                    <h2 class="text-xl font-bold text-nintendo-blue mb-4">Prérequis Windows</h2>
+                    <ul class="space-y-2 text-gray-300 text-sm">
+                        <li>→ Windows 10 ou 11 (64 bits)</li>
+                        <li>→ LÖVE 11.x et VS Code (via l’installeur / winget)</li>
+                        <li>→ Connexion Internet pour le premier setup</li>
+                        <li>→ Decks C++ : Raylib dans <code class="text-gray-400">C:\raylib\</code></li>
+                    </ul>
                 </div>
             </div>
         </section>
-        </div>
 
     </div>
 
@@ -314,154 +178,8 @@
                 <span class="w-8 h-1 nintendo-green"></span>
                 <span class="w-8 h-1 nintendo-blue"></span>
             </div>
-            <p>FlashDev — Learn by Doing © 2026 · Manifest : <code class="text-gray-600">/flashdev/latest-version.json</code></p>
+            <p>FlashDev — Learn by Doing © 2026 · Téléchargement : <a href="/telecharger.html" class="text-gray-400 hover:text-green-400">/telecharger.html</a></p>
         </div>
     </footer>
-
-    <script>
-        (function () {
-            var MANIFEST_URL = '/flashdev/latest-version.json';
-            var FALLBACK_INSTALLER = '/flashdev/FlashDev-Setup-0.2.2-win64.exe';
-            var LOGIN_URL = '/auth/login.php?redirect=' + encodeURIComponent('/flashdev.html');
-
-            function showGateOnly() {
-                document.getElementById('flashdev-access-gate').classList.remove('auth-gate-hidden');
-                document.getElementById('flashdev-protected-content').classList.add('auth-gate-hidden');
-            }
-
-            function showProtectedContent() {
-                document.getElementById('flashdev-access-gate').classList.add('auth-gate-hidden');
-                document.getElementById('flashdev-protected-content').classList.remove('auth-gate-hidden');
-            }
-
-            function showSessionNav(email) {
-                var box = document.getElementById('nav-session');
-                var label = document.getElementById('nav-session-email');
-                if (!box || !label) return;
-                label.textContent = email || '';
-                box.classList.remove('hidden');
-                box.classList.add('flex');
-            }
-
-            function configureGate() {
-                document.getElementById('gate-login-link').href = LOGIN_URL;
-
-                var params = new URLSearchParams(window.location.search);
-                if (params.get('optin') === 'error') {
-                    document.getElementById('gate-optin-error').classList.remove('hidden');
-                }
-            }
-
-            function formatDate(iso) {
-                if (!iso) return '—';
-                try {
-                    return new Date(iso + 'T12:00:00').toLocaleDateString('fr-FR', {
-                        day: 'numeric', month: 'long', year: 'numeric'
-                    });
-                } catch (e) {
-                    return iso;
-                }
-            }
-
-            function formatBytes(n) {
-                if (n == null || isNaN(n)) return null;
-                if (n < 1024) return n + ' o';
-                if (n < 1048576) return (n / 1024).toFixed(1) + ' Ko';
-                return (n / 1048576).toFixed(1) + ' Mo';
-            }
-
-            function resolveDownloadUrl(url) {
-                if (!url) return FALLBACK_INSTALLER;
-                if (url.indexOf('http://') === 0 || url.indexOf('https://') === 0) return url;
-                if (url.charAt(0) === '/') return url;
-                return '/' + url.replace(/^\.\//, '');
-            }
-
-            function show(id) {
-                document.getElementById(id).classList.remove('hidden');
-            }
-            function hide(id) {
-                document.getElementById(id).classList.add('hidden');
-            }
-
-            function render(manifest) {
-                document.getElementById('ver-number').textContent = 'v' + (manifest.version || '?');
-                document.getElementById('ver-build').textContent = manifest.build || '—';
-                document.getElementById('ver-channel').textContent = manifest.channel || 'stable';
-                document.getElementById('ver-date').textContent = formatDate(manifest.releasedAt);
-                document.getElementById('ver-platform').textContent = manifest.platform || 'win64';
-                document.getElementById('ver-love').textContent = manifest.requiresLove ? '≥ ' + manifest.requiresLove : '11.x';
-                document.getElementById('changelog-ver').textContent = manifest.version || '?';
-
-                var size = formatBytes(manifest.installerSizeBytes || manifest.sizeBytes);
-                if (size) {
-                    document.getElementById('ver-size').textContent = size;
-                    show('ver-size-wrap');
-                }
-
-                var list = document.getElementById('changelog-list');
-                list.innerHTML = '';
-                var items = manifest.changelog && manifest.changelog.length ? manifest.changelog : ['Première release.'];
-                items.forEach(function (line) {
-                    var li = document.createElement('li');
-                    li.className = 'flex gap-3';
-                    li.innerHTML = '<span class="text-green-500 flex-shrink-0">✓</span><span>' + line + '</span>';
-                    list.appendChild(li);
-                });
-
-                var dl = document.getElementById('download-btn');
-                var url = resolveDownloadUrl(manifest.installerDownloadUrl || manifest.downloadUrl);
-                dl.href = url;
-                dl.setAttribute('download', '');
-                dl.setAttribute('rel', 'noopener');
-
-                hide('version-loading');
-                show('version-content');
-            }
-
-            function onError() {
-                hide('version-loading');
-                show('version-error');
-            }
-
-            configureGate();
-
-            function loadManifestAndRender() {
-                return fetch(MANIFEST_URL, { cache: 'no-store' })
-                    .then(function (r) {
-                        if (!r.ok) throw new Error('HTTP ' + r.status);
-                        return r.json();
-                    })
-                    .then(function (manifest) {
-                        if (manifest) {
-                            render(manifest);
-                        }
-                    });
-            }
-
-            // Legacy email Systeme.io : ?dl=1 (à retirer quand tous les mails pointent vers login)
-            var unlockDownload = new URLSearchParams(window.location.search).get('dl') === '1';
-            if (unlockDownload) {
-                showProtectedContent();
-                loadManifestAndRender().catch(onError);
-            } else {
-                fetch('/auth/me.php', { credentials: 'same-origin', cache: 'no-store' })
-                    .then(function (response) {
-                        if (!response.ok) throw new Error('AUTH ' + response.status);
-                        return response.json();
-                    })
-                    .then(function (user) {
-                        if (!user || !user.logged_in || !user.can_download_flashdev) {
-                            showGateOnly();
-                            return null;
-                        }
-                        showSessionNav(user.email);
-                        showProtectedContent();
-                        return loadManifestAndRender();
-                    })
-                    .catch(onError);
-            }
-        })();
-    </script>
 </body>
 </html>

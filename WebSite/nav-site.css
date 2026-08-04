@@ -1,0 +1,23 @@
+/* Nav MadHackAdemy — couleurs Nintendo, hover → gris */
+.nav-site-links > a.nav-item {
+    font-weight: 700;
+    transition: color 0.15s ease;
+    text-decoration: none;
+}
+
+/* Cycle rouge → jaune → vert → bleu (compte seulement les <a> directs) */
+.nav-site-links > a.nav-item:nth-of-type(4n + 1) { color: #E60012; }
+.nav-site-links > a.nav-item:nth-of-type(4n + 2) { color: #FBDD08; }
+.nav-site-links > a.nav-item:nth-of-type(4n + 3) { color: #05C31C; }
+.nav-site-links > a.nav-item:nth-of-type(4n + 4) { color: #1B8CE4; }
+
+.nav-site-links > a.nav-item:hover,
+.nav-site-links > a.nav-item:focus-visible {
+    color: #9ca3af;
+}
+
+.nav-site-links > a.nav-item[aria-current="page"] {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 2px;
+}

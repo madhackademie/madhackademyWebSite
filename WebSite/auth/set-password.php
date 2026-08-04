@@ -5,7 +5,7 @@ require_once __DIR__ . '/../api/bootstrap.php';
 
 $error = '';
 $token = trim((string) ($_GET['token'] ?? $_POST['token'] ?? ''));
-$redirect = '/flashdev.html';
+$redirect = '/telecharger.html';
 $tokenInfo = $token !== '' ? mha_peek_password_setup_token($token) : null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $tokenInfo = $token !== '' ? mha_peek_password_setup_token($token) : null;
 
     if ($tokenInfo === null) {
-        $error = 'Lien invalide ou expiré. Réinscris-toi sur la page FlashDev pour en recevoir un nouveau.';
+        $error = 'Lien invalide ou expiré. Réinscris-toi sur la page Téléchargement pour en recevoir un nouveau.';
     } elseif (strlen($password) < 8) {
         $error = 'Le mot de passe doit contenir au moins 8 caractères.';
     } elseif ($password !== $passwordConfirm) {
@@ -44,9 +44,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <?php if ($tokenInfo === null && $error === ''): ?>
             <p class="mb-4 text-sm text-red-400 border border-red-900 bg-red-950/40 rounded px-3 py-2">
-                Lien invalide ou expiré. Réinscris-toi sur la page FlashDev pour en recevoir un nouveau.
+                Lien invalide ou expiré. Réinscris-toi sur la page Téléchargement pour en recevoir un nouveau.
             </p>
-            <a href="/flashdev.html"
+            <a href="/telecharger.html"
                class="block w-full py-3 text-center border border-gray-700 hover:border-red-500 text-gray-300 rounded text-sm transition">
                 Retour à FlashDev
             </a>
@@ -80,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </button>
             </form>
             <?php else: ?>
-            <a href="/flashdev.html"
+            <a href="/telecharger.html"
                class="block w-full py-3 text-center border border-gray-700 hover:border-red-500 text-gray-300 rounded text-sm transition">
                 Retour à FlashDev
             </a>
@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <p class="mt-6 text-center text-xs text-gray-600">
             Déjà un mot de passe ?
-            <a href="/auth/login.php?redirect=%2Fflashdev.html" class="text-gray-400 hover:text-red-400">Se connecter</a>
+            <a href="/auth/login.php?redirect=%2Ftelecharger.html" class="text-gray-400 hover:text-red-400">Se connecter</a>
         </p>
     </div>
 </body>

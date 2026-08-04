@@ -24,10 +24,10 @@
             <div class="fd-snes-actions">
                 <a id="existe-login-link"
                    class="fd-snes-btn primary"
-                   href="/auth/login.php?redirect=%2Fflashdev.html&amp;notice=already">
+                   href="/auth/login.php?redirect=%2Ftelecharger.html&amp;notice=already">
                     Se connecter
                 </a>
-                <a class="fd-snes-btn secondary" href="/flashdev.html">Retour à la page FlashDev</a>
+                <a class="fd-snes-btn secondary" href="/telecharger.html">Retour au téléchargement</a>
             </div>
             <p class="fd-snes-note">Mot de passe oublié : bientôt un lien de réinitialisation. En attendant, contacte contact@madhackademy.eu.</p>
         </div>
@@ -44,7 +44,7 @@
                 label.textContent = email;
             }
             if (link) {
-                var href = '/auth/login.php?redirect=' + encodeURIComponent('/flashdev.html')
+                var href = '/auth/login.php?redirect=' + encodeURIComponent('/telecharger.html')
                     + '&notice=already';
                 if (email) {
                     href += '&email=' + encodeURIComponent(email);
