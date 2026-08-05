@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FlashDev - Flashcards by Doing</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="nav-site.css">
+    <link rel="stylesheet" href="nav-site.css?v=4">
+    <link rel="stylesheet" href="/wip-panel.css?v=4">
     <style>
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
@@ -56,7 +57,7 @@
                 0 4px 0 0 currentColor,
                 -4px 0 0 0 currentColor;
         }
-    </style>
+</style>
 </head>
 <body class="bg-black text-white font-mono">
     <!-- NAV globale MadHackAdemy -->
@@ -65,6 +66,7 @@
             <a href="/" class="text-xl md:text-2xl font-bold gradient-text hover:scale-105 transition-transform shrink-0">
                 MadHackAdemy
             </a>
+            <div class="nav-site-actions flex items-center gap-3">
             <div class="nav-site-links flex flex-wrap justify-end gap-3 md:gap-5 items-center text-sm md:text-base">
                 <a href="/" class="nav-item" aria-current="page">Accueil</a>
                 <a href="/flashdev.html" class="nav-item">FlashDev</a>
@@ -76,6 +78,8 @@
                     <span class="text-gray-600" aria-hidden="true">|</span>
                     <a href="/index-en.html" class="text-gray-400 hover:text-white transition-colors" hreflang="en" lang="en">EN</a>
                 </div>
+            </div>
+                <span data-nav-session-host class="nav-session-host"></span>
             </div>
         </div>
     </nav>
@@ -191,59 +195,75 @@
                 
                 <!-- Module 2 -->
                 <div class="bg-gray-900 p-6 rounded-lg border-l-4 border-yellow-500 hover:bg-gray-800 transition-all">
-                    <div class="flex items-start gap-4">
-                        <div class="w-12 h-12 nintendo-yellow rounded flex items-center justify-center flex-shrink-0 font-bold text-xl text-black">
-                            2
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div class="flex items-start gap-4 min-w-0">
+                            <div class="w-12 h-12 nintendo-yellow rounded flex items-center justify-center flex-shrink-0 font-bold text-xl text-black">2</div>
+                            <div>
+                                <h3 class="text-2xl font-bold mb-2 text-yellow-400">Premier Challenge</h3>
+                                <p class="text-gray-300 mb-3">Application des bases + logique de jeu simple</p>
+                                <span class="text-sm text-gray-500">Projet guidé ~ 1 semaine</span>
+                            </div>
                         </div>
-                        <div>
-                            <h3 class="text-2xl font-bold mb-2 text-yellow-400">Premier Challenge</h3>
-                            <p class="text-gray-300 mb-3">Application des bases + logique de jeu simple</p>
-                            <span class="text-sm text-gray-500">Projet guidé ~ 1 semaine</span>
+                        <div class="wip-badge" title="Module en construction">
+                            <button type="button" class="wip-panel-open" aria-label="Lire le panneau Sciensocrate"><img class="wip-cone" src="/Image/wip-cone.png?v=2" alt="" width="140" height="140" loading="lazy"></button>
+                            <span class="wip-label">En construction</span>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Module 3 -->
                 <div class="bg-gray-900 p-6 rounded-lg border-l-4 border-green-500 hover:bg-gray-800 transition-all">
-                    <div class="flex items-start gap-4">
-                        <div class="w-12 h-12 nintendo-green rounded flex items-center justify-center flex-shrink-0 font-bold text-xl">
-                            3
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div class="flex items-start gap-4 min-w-0">
+                            <div class="w-12 h-12 nintendo-green rounded flex items-center justify-center flex-shrink-0 font-bold text-xl">3</div>
+                            <div>
+                                <h3 class="text-2xl font-bold mb-2 text-green-400">Raylib Framework</h3>
+                                <p class="text-gray-300 mb-3">Graphics, input, audio, collisions avec Raylib</p>
+                                <span class="text-sm text-gray-500">Bootcamp 2-3 semaines</span>
+                            </div>
                         </div>
-                        <div>
-                            <h3 class="text-2xl font-bold mb-2 text-green-400">Raylib Framework</h3>
-                            <p class="text-gray-300 mb-3">Graphics, input, audio, collisions avec Raylib</p>
-                            <span class="text-sm text-gray-500">Bootcamp 2-3 semaines</span>
+                        <div class="wip-badge" title="Module en construction">
+                            <button type="button" class="wip-panel-open" aria-label="Lire le panneau Sciensocrate"><img class="wip-cone" src="/Image/wip-cone.png?v=2" alt="" width="140" height="140" loading="lazy"></button>
+                            <span class="wip-label">En construction</span>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Module 4 -->
                 <div class="bg-gray-900 p-6 rounded-lg border-l-4 border-blue-500 hover:bg-gray-800 transition-all">
-                    <div class="flex items-start gap-4">
-                        <div class="w-12 h-12 nintendo-blue rounded flex items-center justify-center flex-shrink-0 font-bold text-xl">
-                            4
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div class="flex items-start gap-4 min-w-0">
+                            <div class="w-12 h-12 nintendo-blue rounded flex items-center justify-center flex-shrink-0 font-bold text-xl">4</div>
+                            <div>
+                                <h3 class="text-2xl font-bold mb-2 text-blue-400">Projet Frogger Remake</h3>
+                                <p class="text-gray-300 mb-3">Structs avec méthodes, architecture sans POO</p>
+                                <span class="text-sm text-gray-500">Projet complet ~ 2-3 semaines</span>
+                            </div>
                         </div>
-                        <div>
-                            <h3 class="text-2xl font-bold mb-2 text-blue-400">Projet Frogger Remake</h3>
-                            <p class="text-gray-300 mb-3">Structs avec méthodes, architecture sans POO</p>
-                            <span class="text-sm text-gray-500">Projet complet ~ 2-3 semaines</span>
+                        <div class="wip-badge" title="Module en construction">
+                            <button type="button" class="wip-panel-open" aria-label="Lire le panneau Sciensocrate"><img class="wip-cone" src="/Image/wip-cone.png?v=2" alt="" width="140" height="140" loading="lazy"></button>
+                            <span class="wip-label">En construction</span>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Module 5 -->
                 <div class="bg-gray-900 p-6 rounded-lg border-l-4 border-purple-500 hover:bg-gray-800 transition-all">
-                    <div class="flex items-start gap-4">
-                        <div class="w-12 h-12 bg-purple-600 rounded flex items-center justify-center flex-shrink-0 font-bold text-xl">
-                            5
-                        </div>
-                        <div>
-                            <h3 class="text-2xl font-bold mb-2 text-purple-400">POO vs ECS : Choix Paradigme</h3>
-                            <p class="text-gray-300 mb-3">Comprendre les deux approches et choisir sa voie</p>
-                            <div class="flex gap-3 mt-3">
-                                <span class="px-3 py-1 bg-purple-900 text-purple-300 rounded text-sm">Path POO →</span>
-                                <span class="px-3 py-1 bg-indigo-900 text-indigo-300 rounded text-sm">Path ECS →</span>
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div class="flex items-start gap-4 min-w-0">
+                            <div class="w-12 h-12 bg-purple-600 rounded flex items-center justify-center flex-shrink-0 font-bold text-xl">5</div>
+                            <div>
+                                <h3 class="text-2xl font-bold mb-2 text-purple-400">POO vs ECS : Choix Paradigme</h3>
+                                <p class="text-gray-300 mb-3">Comprendre les deux approches et choisir sa voie</p>
+                                <div class="flex gap-3 mt-3">
+                                    <span class="px-3 py-1 bg-purple-900 text-purple-300 rounded text-sm">Path POO →</span>
+                                    <span class="px-3 py-1 bg-indigo-900 text-indigo-300 rounded text-sm">Path ECS →</span>
+                                </div>
                             </div>
+                        </div>
+                        <div class="wip-badge" title="Module en construction">
+                            <button type="button" class="wip-panel-open" aria-label="Lire le panneau Sciensocrate"><img class="wip-cone" src="/Image/wip-cone.png?v=2" alt="" width="140" height="140" loading="lazy"></button>
+                            <span class="wip-label">En construction</span>
                         </div>
                     </div>
                 </div>
@@ -332,5 +352,8 @@
         </div>
     </footer>
 
+<script src="/wip-panel.js?v=3" defer></script>
+<script src="/nav-mobile.js?v=4" defer></script>
+<script src="/nav-session.js?v=4" defer></script>
 </body>
 </html>

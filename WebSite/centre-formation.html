@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>[MadHackAdemy] - Centre de Formation</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="nav-site.css">
+    <link rel="stylesheet" href="nav-site.css?v=4">
+    <link rel="stylesheet" href="/wip-panel.css?v=4">
     <style>
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
@@ -48,50 +49,7 @@
         .pulse-anim  { animation: pulse-slow 2s ease-in-out infinite; }
         .fade-up     { opacity: 0; transform: translateY(32px); transition: opacity .6s ease, transform .6s ease; }
         .fade-up.visible { opacity: 1; transform: translateY(0); }
-
-        @keyframes wip-stripe {
-            0% { background-position: 0 0; }
-            100% { background-position: 28px 0; }
-        }
-        @keyframes wip-bob {
-            0%, 100% { transform: translateY(0) rotate(-6deg); }
-            50% { transform: translateY(-4px) rotate(-2deg); }
-        }
-        .wip-badge {
-            flex-shrink: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.4rem;
-            min-width: 5.5rem;
-        }
-        .wip-cone {
-            width: 52px;
-            height: 52px;
-            animation: wip-bob 1.8s ease-in-out infinite;
-        }
-        .wip-label {
-            font-size: 0.65rem;
-            font-weight: 700;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-            color: #FBDD08;
-            background: repeating-linear-gradient(
-                -45deg,
-                #1a1a1a,
-                #1a1a1a 6px,
-                #3a3200 6px,
-                #3a3200 12px
-            );
-            background-size: 28px 28px;
-            animation: wip-stripe 0.8s linear infinite;
-            border: 1px solid #FBDD08;
-            border-radius: 0.25rem;
-            padding: 0.2rem 0.45rem;
-            white-space: nowrap;
-        }
-
-        .nintendo-red    { background: #E60012; }
+.nintendo-red    { background: #E60012; }
         .nintendo-yellow { background: #FBDD08; }
         .nintendo-green  { background: #05C31C; }
         .nintendo-blue   { background: #1B8CE4; }
@@ -117,13 +75,13 @@
                         0 4px 0 0 currentColor, -4px 0 0 0 currentColor;
         }
 
-        /* Scanlines */
+        /* Scanlines (sous la nav z-50) */
         body::before {
             content: '';
             position: fixed; inset: 0;
             background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,.04) 3px, rgba(0,0,0,.04) 4px);
             pointer-events: none;
-            z-index: 9999;
+            z-index: 40;
         }
     </style>
 </head>
@@ -132,12 +90,12 @@
     <!-- NAV globale MadHackAdemy -->
     <nav class="fixed top-0 w-full z-50 bg-black/95 backdrop-blur-sm border-b-2 border-gray-800">
         <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between gap-3">
-            <a href="/" class="text-lg md:text-xl font-bold gradient-text hover:scale-105 transition-transform shrink-0">
+            <a href="/" class="text-xl md:text-2xl font-bold gradient-text hover:scale-105 transition-transform shrink-0">
                 MadHackAdemy
             </a>
 
-            <div class="flex items-center gap-3">
-                <div class="nav-site-links hidden md:flex flex-wrap justify-end gap-4 lg:gap-5 text-sm font-bold items-center">
+            <div class="nav-site-actions flex items-center gap-3">
+                <div class="nav-site-links hidden md:flex flex-wrap justify-end gap-3 md:gap-5 text-sm md:text-base items-center">
                     <a href="/" class="nav-item">Accueil</a>
                     <a href="/flashdev.html" class="nav-item">FlashDev</a>
                     <a href="/telecharger.html" class="nav-item">Téléchargement</a>
@@ -149,29 +107,29 @@
                         <a href="/training-center.html" class="text-gray-400 hover:text-white transition-colors" hreflang="en" lang="en">EN</a>
                     </div>
                 </div>
-
+                <span data-nav-session-host class="nav-session-host"></span>
                 <button
                     id="nav-toggle"
                     type="button"
-                    class="md:hidden flex flex-col justify-center items-center w-10 h-10 gap-1.5 rounded border border-gray-700 hover:border-gray-500 transition-colors"
+                    class="nav-toggle"
                     aria-label="Ouvrir le menu"
                     aria-expanded="false"
                     aria-controls="nav-mobile-menu"
                 >
-                    <span class="nav-bar block w-5 h-0.5 bg-white transition-all"></span>
-                    <span class="nav-bar block w-5 h-0.5 bg-white transition-all"></span>
-                    <span class="nav-bar block w-5 h-0.5 bg-white transition-all"></span>
+                    <span class="nav-bar"></span>
+                    <span class="nav-bar"></span>
+                    <span class="nav-bar"></span>
                 </button>
             </div>
         </div>
 
-        <div id="nav-mobile-menu" class="hidden md:hidden border-t border-gray-800 bg-black">
-            <div class="nav-site-links max-w-6xl mx-auto px-4 py-4 flex flex-col gap-3 text-sm font-bold">
-                <a href="/" class="nav-item py-2">Accueil</a>
-                <a href="/flashdev.html" class="nav-item py-2">FlashDev</a>
-                <a href="/telecharger.html" class="nav-item py-2">Téléchargement</a>
-                <a href="/centre-formation.html" class="nav-item py-2" aria-current="page">Formation</a>
-                <a href="/gamedevready.html" class="nav-item py-2">GameDevReady</a>
+        <div id="nav-mobile-menu" class="nav-mobile-panel hidden" data-nav-mobile-panel>
+            <div class="nav-site-links nav-site-mobile">
+                <a href="/" class="nav-item">Accueil</a>
+                <a href="/flashdev.html" class="nav-item">FlashDev</a>
+                <a href="/telecharger.html" class="nav-item">Téléchargement</a>
+                <a href="/centre-formation.html" class="nav-item" aria-current="page">Formation</a>
+                <a href="/gamedevready.html" class="nav-item">GameDevReady</a>
                 <div class="flex items-center gap-1.5 text-xs font-bold border border-gray-700 rounded px-2 py-1 w-fit mt-1" aria-label="Langue">
                     <span class="text-white" aria-current="page">FR</span>
                     <span class="text-gray-600" aria-hidden="true">|</span>
@@ -411,13 +369,7 @@
                             </div>
                         </div>
                         <div class="wip-badge" title="Module en construction">
-                            <svg class="wip-cone" viewBox="0 0 64 64" aria-hidden="true">
-                                <rect x="10" y="52" width="44" height="6" rx="1" fill="#FBDD08"/>
-                                <path d="M32 8 L52 50 H12 Z" fill="#E60012"/>
-                                <path d="M32 8 L44 34 H20 Z" fill="#FBDD08"/>
-                                <path d="M24 34 L40 34 L44 42 H20 Z" fill="#FBDD08"/>
-                                <rect x="28" y="48" width="8" height="6" fill="#888"/>
-                            </svg>
+                            <button type="button" class="wip-panel-open" aria-label="Lire le panneau Sciensocrate"><img class="wip-cone" src="/Image/wip-cone.png?v=2" alt="" width="140" height="140" loading="lazy"></button>
                             <span class="wip-label">En construction</span>
                         </div>
                     </div>
@@ -435,13 +387,7 @@
                             </div>
                         </div>
                         <div class="wip-badge" title="Module en construction">
-                            <svg class="wip-cone" viewBox="0 0 64 64" aria-hidden="true">
-                                <rect x="10" y="52" width="44" height="6" rx="1" fill="#FBDD08"/>
-                                <path d="M32 8 L52 50 H12 Z" fill="#E60012"/>
-                                <path d="M32 8 L44 34 H20 Z" fill="#FBDD08"/>
-                                <path d="M24 34 L40 34 L44 42 H20 Z" fill="#FBDD08"/>
-                                <rect x="28" y="48" width="8" height="6" fill="#888"/>
-                            </svg>
+                            <button type="button" class="wip-panel-open" aria-label="Lire le panneau Sciensocrate"><img class="wip-cone" src="/Image/wip-cone.png?v=2" alt="" width="140" height="140" loading="lazy"></button>
                             <span class="wip-label">En construction</span>
                         </div>
                     </div>
@@ -459,13 +405,7 @@
                             </div>
                         </div>
                         <div class="wip-badge" title="Module en construction">
-                            <svg class="wip-cone" viewBox="0 0 64 64" aria-hidden="true">
-                                <rect x="10" y="52" width="44" height="6" rx="1" fill="#FBDD08"/>
-                                <path d="M32 8 L52 50 H12 Z" fill="#E60012"/>
-                                <path d="M32 8 L44 34 H20 Z" fill="#FBDD08"/>
-                                <path d="M24 34 L40 34 L44 42 H20 Z" fill="#FBDD08"/>
-                                <rect x="28" y="48" width="8" height="6" fill="#888"/>
-                            </svg>
+                            <button type="button" class="wip-panel-open" aria-label="Lire le panneau Sciensocrate"><img class="wip-cone" src="/Image/wip-cone.png?v=2" alt="" width="140" height="140" loading="lazy"></button>
                             <span class="wip-label">En construction</span>
                         </div>
                     </div>
@@ -486,13 +426,7 @@
                             </div>
                         </div>
                         <div class="wip-badge" title="Module en construction">
-                            <svg class="wip-cone" viewBox="0 0 64 64" aria-hidden="true">
-                                <rect x="10" y="52" width="44" height="6" rx="1" fill="#FBDD08"/>
-                                <path d="M32 8 L52 50 H12 Z" fill="#E60012"/>
-                                <path d="M32 8 L44 34 H20 Z" fill="#FBDD08"/>
-                                <path d="M24 34 L40 34 L44 42 H20 Z" fill="#FBDD08"/>
-                                <rect x="28" y="48" width="8" height="6" fill="#888"/>
-                            </svg>
+                            <button type="button" class="wip-panel-open" aria-label="Lire le panneau Sciensocrate"><img class="wip-cone" src="/Image/wip-cone.png?v=2" alt="" width="140" height="140" loading="lazy"></button>
                             <span class="wip-label">En construction</span>
                         </div>
                     </div>
@@ -597,31 +531,9 @@
             });
         }, { threshold: 0.1 });
         document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-
-        const navToggle = document.getElementById('nav-toggle');
-        const navMenu = document.getElementById('nav-mobile-menu');
-        if (navToggle && navMenu) {
-            const closeMenu = () => {
-                navMenu.classList.add('hidden');
-                navToggle.setAttribute('aria-expanded', 'false');
-                navToggle.setAttribute('aria-label', 'Ouvrir le menu');
-                document.body.classList.remove('nav-open');
-            };
-
-            navToggle.addEventListener('click', () => {
-                const isOpen = !navMenu.classList.contains('hidden');
-                if (isOpen) {
-                    closeMenu();
-                } else {
-                    navMenu.classList.remove('hidden');
-                    navToggle.setAttribute('aria-expanded', 'true');
-                    navToggle.setAttribute('aria-label', 'Fermer le menu');
-                    document.body.classList.add('nav-open');
-                }
-            });
-
-            navMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
-        }
     </script>
+<script src="/wip-panel.js?v=3" defer></script>
+<script src="/nav-mobile.js?v=4" defer></script>
+<script src="/nav-session.js?v=4" defer></script>
 </body>
 </html>

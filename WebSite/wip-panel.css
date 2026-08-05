@@ -1,0 +1,138 @@
+/* Badge WIP + lightbox panneau Sciensocrate */
+
+@keyframes wip-stripe {
+    0% { background-position: 0 0; }
+    100% { background-position: 28px 0; }
+}
+@keyframes wip-bob {
+    0%, 100% { transform: translateY(0) rotate(-6deg); }
+    50% { transform: translateY(-4px) rotate(-2deg); }
+}
+
+.wip-badge {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    min-width: 9rem;
+}
+
+.wip-panel-open {
+    display: block;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.wip-panel-open:hover,
+.wip-panel-open:focus-visible {
+    transform: scale(1.04);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(251, 221, 8, 0.45);
+}
+.wip-panel-open:active {
+    transform: scale(0.98);
+}
+
+.wip-cone {
+    width: 140px;
+    height: auto;
+    display: block;
+    animation: wip-bob 1.8s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.wip-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #FBDD08;
+    background: repeating-linear-gradient(
+        -45deg,
+        #1a1a1a,
+        #1a1a1a 6px,
+        #3a3200 6px,
+        #3a3200 12px
+    );
+    background-size: 28px 28px;
+    animation: wip-stripe 0.8s linear infinite;
+    border: 1px solid #FBDD08;
+    border-radius: 0.25rem;
+    padding: 0.2rem 0.45rem;
+    white-space: nowrap;
+}
+
+/* Lightbox */
+.wip-panel-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+}
+.wip-panel-modal.is-hidden {
+    display: none;
+}
+.wip-panel-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.88);
+    backdrop-filter: blur(4px);
+}
+.wip-panel-dialog {
+    position: relative;
+    z-index: 1;
+    width: fit-content;
+    max-width: calc(100vw - 2rem);
+    max-height: calc(100vh - 2rem);
+    overflow: auto;
+    background: #0a0a0a;
+    border: 2px solid #374151;
+    border-radius: 0.75rem;
+    padding: 1rem 1rem 1.25rem;
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.65);
+}
+.wip-panel-close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid #4b5563;
+    border-radius: 0.375rem;
+    background: #111;
+    color: #e5e7eb;
+    font-size: 1.25rem;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 2;
+}
+.wip-panel-close:hover,
+.wip-panel-close:focus-visible {
+    border-color: #f87171;
+    color: #f87171;
+    outline: none;
+}
+.wip-panel-dialog img {
+    display: block;
+    /* 70% du plus petit côté écran (40vmin ≈ ancien 420px sur 1080p → peu de diff) */
+    width: 70vmin;
+    height: auto;
+    max-width: calc(100vw - 2rem);
+    max-height: calc(100vh - 5rem);
+    object-fit: contain;
+    margin: 0 auto;
+}
+.wip-panel-hint {
+    margin-top: 0.75rem;
+    text-align: center;
+    font-size: 0.7rem;
+    color: #6b7280;
+    font-family: ui-monospace, monospace;
+}

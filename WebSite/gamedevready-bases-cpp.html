@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bases C++ — GameDevReady Bootcamp</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="nav-site.css">
+    <link rel="stylesheet" href="nav-site.css?v=4">
     <style>
         html { scroll-behavior: smooth; }
         .nintendo-red { background: #E60012; }
@@ -90,21 +90,21 @@
     <nav class="fixed top-0 w-full bg-black bg-opacity-95 backdrop-blur-sm z-50 border-b-2 border-gray-800">
         <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center gap-3">
             <a href="/" class="text-xl md:text-2xl font-bold gradient-text hover:scale-105 transition-transform shrink-0">MadHackAdemy</a>
-            <div class="nav-site-links flex flex-wrap justify-end gap-3 md:gap-5 text-sm md:text-base items-center">
+            <div class="nav-site-actions flex items-center gap-3">
+            <div class="nav-site-links flex flex-wrap justify-end gap-3 md:gap-5 text-sm md:text-base items-center" data-nav-login>
                 <a href="/" class="nav-item">Accueil</a>
                 <a href="/flashdev.html" class="nav-item">FlashDev</a>
                 <a href="/telecharger.html" class="nav-item">Téléchargement</a>
                 <a href="/centre-formation.html" class="nav-item">Formation</a>
                 <a href="/gamedevready.html" class="nav-item" aria-current="page">GameDevReady</a>
                 <a href="/roadMapCPPBootcamp.html" class="nav-item hidden sm:inline">Progression Map</a>
-                <span id="auth-nav" class="inline-flex items-center gap-2">
-                    <a href="/auth/login.php?redirect=/gamedevready-bases-cpp.html" class="text-xs md:text-sm text-gray-400 hover:text-yellow-400 font-bold">Connexion</a>
-                </span>
                 <div class="flex items-center gap-1.5 text-xs font-bold border border-gray-700 rounded px-2 py-1" role="navigation" aria-label="Langue">
                     <span class="text-white" aria-current="page">FR</span>
                     <span class="text-gray-600" aria-hidden="true">|</span>
                     <a href="/index-en.html" class="text-gray-400 hover:text-white transition-colors" hreflang="en" lang="en">EN</a>
                 </div>
+            </div>
+                <span data-nav-session-host class="nav-session-host"></span>
             </div>
         </div>
     </nav>
@@ -278,27 +278,7 @@
         </div>
     </footer>
 
-    <script>
-    (function () {
-        fetch('/auth/me.php', { credentials: 'same-origin' })
-            .then(function (r) { return r.json(); })
-            .then(function (d) {
-                var el = document.getElementById('auth-nav');
-                if (!el || !d.logged_in) return;
-                el.textContent = '';
-                var span = document.createElement('span');
-                span.className = 'text-gray-500 text-xs md:text-sm hidden sm:inline';
-                span.textContent = d.email;
-                var link = document.createElement('a');
-                link.href = '/auth/logout.php';
-                link.className = 'text-gray-400 hover:text-yellow-400 transition text-xs md:text-sm';
-                link.textContent = 'Déconnexion';
-                el.appendChild(span);
-                el.appendChild(link);
-            })
-            .catch(function () {});
-    })();
-    </script>
-
+<script src="/nav-mobile.js?v=4" defer></script>
+<script src="/nav-session.js?v=4" defer></script>
 </body>
 </html>

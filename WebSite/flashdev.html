@@ -6,7 +6,7 @@
     <title>FlashDev — Soft de révision MadHackAdemy</title>
     <meta name="description" content="FlashDev : flashcards learn by doing. Soft gratuit contre email — présentation, aperçu et lien téléchargement.">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="nav-site.css">
+    <link rel="stylesheet" href="nav-site.css?v=4">
     <style>
         .nintendo-red { background: #E60012; }
         .nintendo-yellow { background: #FBDD08; }
@@ -46,6 +46,7 @@
             <a href="/" class="text-xl md:text-2xl font-bold gradient-text hover:scale-105 transition-transform shrink-0">
                 MadHackAdemy
             </a>
+            <div class="nav-site-actions flex items-center gap-3">
             <div class="nav-site-links flex flex-wrap justify-end gap-3 md:gap-5 items-center text-sm md:text-base">
                 <a href="/" class="nav-item">Accueil</a>
                 <a href="/flashdev.html" class="nav-item" aria-current="page">FlashDev</a>
@@ -57,6 +58,8 @@
                     <span class="text-gray-600" aria-hidden="true">|</span>
                     <a href="/index-en.html" class="text-gray-400 hover:text-white transition-colors" hreflang="en" lang="en">EN</a>
                 </div>
+            </div>
+                <span data-nav-session-host class="nav-session-host"></span>
             </div>
         </div>
     </nav>
@@ -181,5 +184,7 @@
             <p>FlashDev — Learn by Doing © 2026 · Téléchargement : <a href="/telecharger.html" class="text-gray-400 hover:text-green-400">/telecharger.html</a></p>
         </div>
     </footer>
+<script src="/nav-mobile.js?v=4" defer></script>
+<script src="/nav-session.js?v=4" defer></script>
 </body>
 </html>

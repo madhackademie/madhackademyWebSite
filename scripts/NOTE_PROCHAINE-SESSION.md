@@ -25,7 +25,9 @@
 - [ ] `centre-formation.html`
 - [ ] `training-center.html`
 
-- [ ] `nav-site.css` (**nouveau** — couleurs nav)
+- [ ] `nav-site.css` (**nouveau** — couleurs nav + session + hamburger)
+- [ ] `nav-session.js` (**nouveau** — email + Déconnexion si connecté)
+- [ ] `nav-mobile.js` (**nouveau** — hamburger mobile toutes pages)
 
 **Auth / opt-in (redirects → `telecharger.html`)**
 - [ ] `api/systeme-optin.php`

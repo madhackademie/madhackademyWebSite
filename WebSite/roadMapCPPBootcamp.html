@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Progression Map — Parcours Mario Techno</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="nav-site.css">
+    <link rel="stylesheet" href="nav-site.css?v=4">
     <style>
         html { scroll-behavior: smooth; }
 
@@ -563,6 +563,7 @@
     <nav class="fixed top-0 w-full bg-black bg-opacity-95 backdrop-blur-sm z-50 border-b-2 border-gray-800">
         <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center gap-3">
             <a href="/" class="text-xl md:text-2xl font-bold gradient-text hover:scale-105 transition-transform shrink-0">MadHackAdemy</a>
+            <div class="nav-site-actions flex items-center gap-3">
             <div class="nav-site-links flex flex-wrap justify-end gap-3 md:gap-5 text-sm md:text-base items-center">
                 <a href="/" class="nav-item">Accueil</a>
                 <a href="/flashdev.html" class="nav-item">FlashDev</a>
@@ -576,6 +577,8 @@
                     <span class="text-gray-600" aria-hidden="true">|</span>
                     <a href="/index-en.html" class="text-gray-400 hover:text-white transition-colors" hreflang="en" lang="en">EN</a>
                 </div>
+            </div>
+                <span data-nav-session-host class="nav-session-host"></span>
             </div>
         </div>
     </nav>
@@ -1086,5 +1089,7 @@
     })();
     </script>
 
+<script src="/nav-mobile.js?v=4" defer></script>
+<script src="/nav-session.js?v=4" defer></script>
 </body>
 </html>

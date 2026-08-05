@@ -1,8 +1,18 @@
-/* Nav MadHackAdemy — couleurs Nintendo, hover → gris */
+/* Nav MadHackAdemy — couleurs Nintendo, hover → gris, mobile hamburger */
+
+/* Typo unifiée (comme Accueil / FlashDev) */
 .nav-site-links > a.nav-item {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     font-weight: 700;
+    font-size: 0.875rem;
+    line-height: 1.25;
     transition: color 0.15s ease;
     text-decoration: none;
+}
+@media (min-width: 768px) {
+    .nav-site-links > a.nav-item {
+        font-size: 1rem;
+    }
 }
 
 /* Cycle rouge → jaune → vert → bleu (compte seulement les <a> directs) */
@@ -20,4 +30,169 @@
     text-decoration: underline;
     text-underline-offset: 4px;
     text-decoration-thickness: 2px;
+}
+
+/* ——— Layout barre + hamburger ——— */
+body.nav-open {
+    overflow: hidden;
+}
+
+.nav-site-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    min-height: 4rem;
+}
+
+.nav-site-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 0;
+}
+
+.nav-toggle {
+    display: none !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    gap: 0.35rem;
+    border: 1px solid #374151;
+    border-radius: 0.25rem;
+    background: #111 !important;
+    cursor: pointer;
+    flex-shrink: 0;
+    padding: 0;
+    color: #fff;
+}
+.nav-toggle:hover,
+.nav-toggle:focus-visible {
+    border-color: #9ca3af;
+    outline: none;
+}
+.nav-toggle .nav-bar {
+    display: block !important;
+    width: 1.25rem;
+    height: 2px;
+    background: #fff !important;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.nav-toggle.is-open .nav-bar:nth-child(1) {
+    transform: translateY(7.5px) rotate(45deg);
+}
+.nav-toggle.is-open .nav-bar:nth-child(2) {
+    opacity: 0;
+}
+.nav-toggle.is-open .nav-bar:nth-child(3) {
+    transform: translateY(-7.5px) rotate(-45deg);
+}
+
+.nav-mobile-panel {
+    display: none;
+    border-top: 1px solid #1f2937;
+    background: #000;
+}
+.nav-mobile-panel.is-open {
+    display: block !important;
+}
+.nav-site-mobile {
+    display: flex !important;
+    flex-direction: column;
+    gap: 0.25rem;
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 1rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 1rem;
+    font-weight: 700;
+}
+.nav-site-mobile > a.nav-item,
+.nav-site-mobile > a.nav-mobile-item {
+    padding: 0.75rem 0;
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+}
+
+@media (max-width: 767px) {
+    nav .nav-site-links:not(.nav-site-mobile) {
+        display: none !important;
+    }
+    .nav-toggle {
+        display: flex !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .nav-toggle {
+        display: none !important;
+    }
+    .nav-mobile-panel,
+    .nav-mobile-panel.is-open,
+    .nav-mobile-panel.hidden {
+        display: none !important;
+    }
+}
+
+/* Session */
+.nav-session-host {
+    display: flex;
+    align-items: center;
+}
+.nav-session {
+    display: none;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+.nav-session.is-visible {
+    display: inline-flex !important;
+}
+.nav-session-host .nav-session {
+    border-left: 1px solid #374151;
+    padding-left: 0.75rem;
+}
+.nav-site-mobile .nav-session {
+    border-left: none;
+    padding-left: 0;
+    margin-top: 0.5rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid #374151;
+    width: 100%;
+    font-size: 0.875rem;
+}
+.nav-session-email {
+    color: #9ca3af;
+    max-width: 7rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+@media (min-width: 768px) {
+    .nav-session { font-size: 0.875rem; }
+    .nav-session-email { max-width: 14rem; }
+}
+.nav-session-logout {
+    color: #f87171 !important;
+    font-weight: 700;
+    white-space: nowrap;
+    text-decoration: none;
+}
+.nav-session-logout:hover,
+.nav-session-logout:focus-visible {
+    color: #fca5a5 !important;
+}
+.nav-session-login {
+    color: #9ca3af !important;
+    font-weight: 700;
+    white-space: nowrap;
+    text-decoration: none;
+}
+.nav-session-login:hover,
+.nav-session-login:focus-visible {
+    color: #facc15 !important;
 }
