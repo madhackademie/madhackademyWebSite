@@ -1,13 +1,60 @@
 # Guide — Prochaine session de travail
 
 > **Référence principale** pour reprendre le projet madhackademyWebSite  
-> Dernière mise à jour : 4 août 2026  
+> Dernière mise à jour : 25 août 2026  
 > Domaine marque : [madhackademy.eu](https://madhackademy.eu/)  
 > Ancien domaine : `gameopenmoney.com` → **301** vers madhackademy (voir `.htaccess`)
 
 ---
 
-## Reprise session suivante — **P1 unique**
+## Reprise session suivante — **P1 unique** (26/08)
+
+> **Test global élève** : installer FlashDev **depuis le site** (release **0.2.2**), soft vide → installer le deck Bootcamp C++ → parcours 7 cartes.  
+> **Ne pas utiliser** la copie OneDrive (`…\OneDrive\RevisionSoft\…`) — ancienne version.
+
+### Bilan 25/08
+
+- Plan de contrôle soft/deck identifié (`FlashRevisionSoft/TODO.md` + `NOTE_REVISION-BOOTCAMP-FR.md`)
+- Décision : test à vide **demain**, install **prod site**, pas OneDrive
+- Cases test deck encore **vides** (à cocher pendant le run)
+
+### Parcours demain
+
+1. Télécharger l’installeur **prod** (pas le repo Cursor, pas OneDrive)
+2. Installer dans un dossier **neuf**
+3. Lancer : **aucune carte** (soft vide)
+4. Explore deck → `DeckBootCampCpp/` (le zip/exe release **n’embarque pas** le deck)
+5. Parcours 7 cartes : start → VS Code → done → webGuide
+6. Cocher `NOTE_REVISION-BOOTCAMP-FR.md` § Soft + `TODO.md` soft (checklist test deck)
+
+### URLs / livrables
+
+| Quoi | Où |
+|------|-----|
+| Page download | [madhackademy.eu/telecharger.html](https://madhackademy.eu/telecharger.html) — si 404, [flashdev.html](https://madhackademy.eu/flashdev.html) ou lien direct |
+| Setup | `https://madhackademy.eu/flashdev/FlashDev-Setup-0.2.2-win64.exe` |
+| Manifest | `https://madhackademy.eu/flashdev/latest-version.json` (doit lire **0.2.2**) |
+| Deck | dossier local `FlashRevisionSoft/DeckBootCampCpp/` (pas dans le zip update) |
+
+### Checklist test (à cocher demain)
+
+- [ ] Manifest prod = **0.2.2**
+- [ ] Setup `.exe` téléchargé depuis le site, install dossier neuf
+- [ ] FlashDev lance, **0 carte**
+- [ ] Explore deck → `DeckBootCampCpp/` → preview + install
+- [ ] 7 cartes dans `data.json` + images `images_current/` (ne **pas** committer `data.json`)
+- [ ] Start / reset / VS Code / done sur les 7 cartes
+- [ ] Pas de crash `newImage` ; ordre `nextRevision` OK
+- [ ] **webGuide** ouvre `URLNet` (aujourd’hui : `/auth/guide.php?m=XX` — login possible)
+
+### Ensuite (P2 — ne pas ouvrir avant fin du test)
+
+- FTP nav-globale (`telecharger.html`, nav, opt-in) si pas encore en prod — checklist ci-dessous
+- Ressenti nav FlashDev vs Téléchargement — à trancher après tests
+
+---
+
+## Archive P1 4/08 — FTP nav-globale (si pas encore uploadé)
 
 > **FTP + parcours prod** : uploader les fichiers de la branche `feature/nav-globale`, naviguer, tester liens / login / téléchargement + email Systeme.io.  
 > Ressenti nav : **FlashDev** vs **Téléchargement** — à trancher après tests (laisser pour l’instant).
