@@ -54,7 +54,7 @@ Un élève peut :
 |---|---------|:------------------:|:------------:|
 | O1 | Entité légale + compte pro (voir `NOTE_CREATION-ENTREPRISE.md`) | [ ] | [ ] |
 | O2 | CGV + mentions légales | [ ] | [ ] |
-| O3 | Offre boutique définie (prix, CTA bootcamp) | [ ] | [ ] |
+| O3 | Offre boutique définie (prix, CTA bootcamp) — **grille oct. 2026** : P1/P2 **1 €**, P3 **10 €**, pack lancement **9 €** (accès progressif) ; détail com' → [`TODO.md`](../TODO.md) § *Grille tarifaire GameDevReady* | [ ] | [ ] |
 
 ---
 

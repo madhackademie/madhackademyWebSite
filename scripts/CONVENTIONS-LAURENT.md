@@ -10,7 +10,12 @@
 
 Avant toute modification :
 
-1. Lancer `.\scripts\sync-both.ps1` (site + soft)
+1. Lancer sync-both (site + soft) — depuis la racine `madhackademyWebSite/` :
+
+   ```powershell
+   .\scripts\sync-both.cmd
+   ```
+
 2. Lire `scripts/NOTE_PROCHAINE-SESSION.md`
 3. Vérifier la branche soft (`scripts/NOTE_SYNC-BOTH.md` — merge après tests, portable ou bureau)
 

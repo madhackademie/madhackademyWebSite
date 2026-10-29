@@ -21,4 +21,8 @@ return [
     'systeme_io_api_key' => 'COLLEZ_VOTRE_CLE_ICI',
     /** Nom du tag Systeme.io (résolu en ID via API — déclenche l’automation download) */
     'systeme_io_tag_flashdev' => 'flashdev-download',
+    /** Lier l'accès aux guides formation au 1er navigateur (élèves student avec produit formation) */
+    'device_bind_formation' => true,
+    /** Secret HMAC cookie appareil — changer en prod (config.php uniquement) */
+    'device_binding_secret' => 'CHANGEZ-MOI-DEVICE-SECRET-2026',
 ];

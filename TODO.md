@@ -1,6 +1,6 @@
 ﻿# TODO — madhackademyWebSite
 
-> Dernière mise à jour : 20 juillet 2026  
+> Dernière mise à jour : 29 octobre 2026  
 > Projet : site vitrine FlashDev + MadHackAdemy
 
 ---
@@ -102,7 +102,20 @@ Ces tâches débloquent la mise en ligne ou corrigent des problèmes visibles po
 
 - [x] **P1** — Création compte + MDP choisi + acquis soft + gate download
 - [x] **P1** — CRM Systeme.io (contact + tag) + email Bienvenue (choix A) testé
-- [ ] **P1** — Ensuite : **paiement** → acquisition formation
+- [ ] **P1** — Ensuite : **paiement** → acquisition formation (`user_products`)
+
+### Catalogue produits & acquis élève (**P1** — espace perso)
+
+> **Déjà en place :** `user_products` enregistre *ce que le client a acquis* (`user_id` + `product_slug` + `granted_at`) — opt-in soft, grant manuel setup, futur webhook paiement.  
+> **À ajouter :** table **`products`** = catalogue officiel (titres, phase, URLs page, chemin re-téléchargement deck). Voir `WebSite/sql/migration_products_catalog.sql`.
+
+- [ ] **P1** — Importer table `products` + seeds (P1 bootcamp, `flashdev-soft`, placeholders P2/P3 pack)
+- [ ] **P1** — Helper PHP `mha_user_catalog(int $userId)` : `JOIN user_products` ↔ `products` (titres, liens, droits deck)
+- [ ] **P1** — Endpoint ou script **re-téléchargement deck** : login + `user_products` + `products.deck_download_path` (zip non public FTP)
+- [ ] **P1** — Webhook / grant manuel : une ligne **`user_products` par produit acheté** (pack = plusieurs slugs ou slug pack + déblocage progressif — à trancher avec grille tarifaire)
+- [ ] **P1** — **`dashboard/index.php`** — bloc **« Mes formations »** : liste acquis, lien hub, guides, **Re-télécharger le deck**, statut appareil formation
+- [ ] **P2** — Accueil connecté ou **`/auth/me.php`** enrichi (JSON catalogue) pour nav « Mon espace »
+- [ ] **P2** — Historique optionnel `user_product_events` (achat, remboursement, grant admin) — si besoin facturation
 
 ### Contenu & shop FlashDev (**ordre 2/08**)
 
@@ -145,7 +158,38 @@ Ces tâches débloquent la mise en ligne ou corrigent des problèmes visibles po
   - [ ] Tous les liens réels — CTA offres, nav, ancres (plus de placeholders `[…]` ni `href="#"`)
 - [ ] **P1** — [`gamedevready.html`](WebSite/gamedevready.html) (hub GameDevReady)
   - [ ] Contenu validé — 3 phases, textes phases 2–3 « à venir »
+  - [ ] Grille tarifaire + com' « une phase = un achat » (voir § Grille tarifaire GameDevReady)
   - [ ] Tous les liens réels — deck Bases C++, roadmap accueil, nav inter-pages
+
+### Grille tarifaire GameDevReady — **P1** (décision oct. 2026)
+
+> **Objectif :** un achat à 1 € ne doit **pas** être lu comme l'accès à **toutes** les phases / modules.  
+> **Principe produit :** **1 phase = 1 deck FlashDev distinct** (+ droits associés à cette phase) ; pas de « formation complète » sans libellé explicite.
+
+#### Prix retenus (à brancher boutique System.io / Stripe)
+
+| Produit | Prix | Ce que l'élève obtient |
+|--------|------|-------------------------|
+| **Phase 1** — Bases C++ | **1 €** | Phase 1 uniquement (bootcamp 7 cartes, deck P1) |
+| **Phase 2** — Raylib & console | **1 €** | Phase 2 **à la sortie** — achat séparé |
+| **Phase 3** — Projets & paradigmes | **10 €** | Phase 3 **à la sortie** — achat séparé |
+| **Total à l'unité** (catalogue, quand tout est publié) | **12 €** | 1 + 1 + 10 |
+| **Pack 3 phases** — offre lancement *(formation encore incomplète)* | **9 €** | **Accès progressif** : P1 maintenant ; P2 et P3 **dès leur mise en ligne** (pas tout immédiatement) |
+
+#### Com' site — checklist
+
+- [ ] Titres produits : « **Phase N — …** » (éviter « Bootcamp GameDevReady » seul sans numéro de phase)
+- [ ] Sous chaque prix / CTA : rappel « **accès phase payée uniquement** » ; pour le pack : « **livraison au fil des sorties** » + mention prix catalogue 12 € vs 9 € lancement
+- [ ] [`gamedevready.html`](WebSite/gamedevready.html) : phases 2–3 « à venir » **+** « non incluses dans l'achat Phase 1 » (pack = incluses **à la sortie**)
+- [ ] Remplacer ou compléter la phrase « synchronisé avec le deck premium » → clarifier **une phase = un deck**, pas accès global
+- [ ] Bloc tarifaire visible **près des boutons d'achat** (hub + [`gamedevready-bases-cpp.html`](WebSite/gamedevready-bases-cpp.html))
+- [ ] Distinction claire : **cartes HTML publiques** sur le site vs **deck FlashDev + guides** selon ce qui est débloqué par l'achat
+
+#### Boutique / technique
+
+- [ ] Produits / tags System.io (ou équivalent) : P1, P2, P3, **pack early bird 9 €**
+- [ ] Parcours post-achat pack : email ou dashboard « P2/P3 quand disponibles » (process avant webhook auto si besoin)
+- [ ] Aligner [`scripts/NOTE_MVP-FLASHDEV.md`](scripts/NOTE_MVP-FLASHDEV.md) O3 + CGV (accès progressif, formation en construction)
 
 ### Contenu (bloquant publication centre-formation)
 
@@ -153,7 +197,7 @@ Ces tâches débloquent la mise en ligne ou corrigent des problèmes visibles po
 - [ ] **P1** — Compléter la section « Qui suis-je ? » (bio, parcours, placeholders restants)
 - [ ] **P1** — Remplir la méthode SITE + SOFT (sous-titre + 3 lignes par pilier)
 - [ ] **P1** — Rédiger la roadmap centre-formation (4 étapes : titres, descriptions, durées)
-- [ ] **P1** — Définir les 3 offres boutique (noms, contenu, prix, CTA)
+- [ ] **P1** — Définir les 3 offres boutique (noms, contenu, prix, CTA) — **grille détaillée : § Grille tarifaire GameDevReady ci-dessous**
 - [ ] **P1** — Remplacer `[MadHackAdemy / LOGO]` et le footer `[TON NOM / CENTRE DE FORMATION]`
 
 ### Liens & mise en ligne
@@ -210,12 +254,15 @@ Ces tâches débloquent la mise en ligne ou corrigent des problèmes visibles po
 
 ### Espace utilisateur — `dashboard/` (avant commercialisation bootcamp)
 
-> Nom prévu : **`WebSite/dashboard/index.php`** — espace élève (`NOTE_ARCHITECTURE_SOFT-SITE.md`).
+> Nom prévu : **`WebSite/dashboard/index.php`** — espace élève (`NOTE_ARCHITECTURE_SOFT-SITE.md`).  
+> Données : **`user_products`** (achats) + **`products`** (catalogue) — voir § *Catalogue produits & acquis élève*.
 
 - [ ] **P1** — Créer `dashboard/index.php` : page connectée post-login avec
   - guides d'installation et d'utilisation de FlashRevisionSoft
   - fichiers utilitaires à télécharger
-  - contenu déjà acheté (decks, accès guides GameDevReady)
+  - **« Mes formations »** — catalogue acheté (requête `user_products` + `products`)
+  - **Re-télécharger** chaque deck acheté (lien protégé, pas URL FTP publique)
+  - contenu déjà acheté (accès guides GameDevReady par phase)
   - **bouton télécharger l'installeur** (lien vers script/exe — à créer après validation MVP, voir `NOTE_INSTALL-MADHACKADEMY.md`)
 - [ ] **P1** — Lien depuis la nav auth (`login.php`, `gamedevready-bases-cpp.html`) vers le dashboard
 
@@ -258,6 +305,18 @@ Tâches utiles mais non bloquantes — à traiter après les priorités.
 > **Déjà en place (bootcamp 01–07)** : auth `/auth/guide.php` + blocage `.htaccess` sur `guides/` (403 en accès direct).  
 > **Réaliste** : empêcher la consultation sans achat / compte. **Impossible à 100 %** : une fois affiché, le HTML reste copiable (DevTools, « Enregistrer sous », capture). Objectif = **friction + récupération commerciale**, pas un DRM inviolable.  
 > **Cartes Frogger** = volontairement **publiques** (vitrine) ; **guides pédagogiques** = **protégés**.
+
+**Dérive connue (deck + guides exportés)** : un élève peut archiver les pages guide et les partager avec le zip deck → un tiers peut suivre hors site. **Ne pas sur-investir** tant que les phases sont à **1 €** ; mesurer le volume, durcir seulement si les stats le justifient (Phase 3 **10 €**, pack, etc.).
+
+**Stratégie « stats d’abord » (P2, pas bloquant P1)** :
+
+- [ ] **P2** — Table légère `guide_access_log` (user_id, module, `created_at`) à chaque `mha_serve_guide_html()` — compter ouvertures / élèves actifs / modules
+- [ ] **P2** — Vue admin ou export CSV : guides / mois, comptes distincts, pic suspect (même compte × N modules en 1 session = normal ; partage = difficile à prouver sans filigrane)
+- [ ] **P2** — Analytics site (Plausible ou GA4) : trafic `/auth/guide.php`, conversion boutique — voir backlog analytics
+- [ ] **P2** — Seuil décision documenté (ex. si > X % ventes vs ouvertures guide anormales) → activer filigrane email + revue appareil / support
+- [ ] **P3** — Durcissement Phase 3 **10 €** uniquement si stats + CA le demandent (filigrane, pas DRM lourd au départ)
+
+**Rappel produit** : ne **pas** mettre les HTML guides dans le zip deck ; deck = cartes + exercices ; **mémoire long terme** = retour sur le site (appareil lié) — c’est le levier business, pas l’impossibilité technique de copie.
 
 **Checklist à appliquer à chaque nouveau guide GameDevReady** (bootcamp + modules Raylib avancés) :
 

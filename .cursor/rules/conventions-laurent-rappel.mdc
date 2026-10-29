@@ -9,12 +9,12 @@ alwaysApply: true
 
 Au **premier message orienté travail** de la session, ou si l'utilisateur dit : reprise, nouvelle session, quoi faire, les tâches, prochaine session.
 
-**Avant** P1 / tests / backlog, afficher un bloc court :
+**Avant** P1 / tests / backlog, afficher un bloc court, puis le bloc **Commande terminal** de `sync-both-demarrage.mdc` (copier-coller PowerShell).
 
 ```markdown
 ## Tes 5 conventions (MadHackAdemy)
 
-1. **Sync avant code** — `sync-both.ps1` + lire `NOTE_PROCHAINE-SESSION.md` + état branche soft
+1. **Sync avant code** — `sync-both.cmd` + lire `NOTE_PROCHAINE-SESSION.md` + état branche soft
 2. **Un P1 par session** — finir ou cocher avant un nouveau chantier
 3. **Documenter les décisions** — `TODO.md`, `NOTE_MVP-FLASHDEV.md`, `NOTE_PROCHAINE-SESSION.md`
 4. **Enchaîner P1 + clôturer session** — dès la P1 finie, nommer la suivante ; en fin de session, organiser la reprise dans `NOTE_PROCHAINE-SESSION.md`

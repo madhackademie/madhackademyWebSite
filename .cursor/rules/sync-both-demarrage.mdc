@@ -1,0 +1,30 @@
+---
+description: Commande sync-both à exécuter au démarrage de chaque session (terminal)
+alwaysApply: true
+---
+
+# Sync-both — démarrage de session
+
+Au **premier message orienté travail** de la session (ou si Laurent ouvre le projet / dit reprise, nouvelle session, quoi faire) :
+
+1. Rappeler d'exécuter **sync-both** avant tout code (convention 1).
+2. Afficher le bloc **Commande terminal** ci-dessous tel quel (copier-coller PowerShell).
+
+Terminal ouvert à la **racine du dépôt site** (`madhackademyWebSite/` — dossier workspace « Site web »).
+
+Ne pas lancer `git pull` / `commit` à la place de Laurent sans demande expresse (`git-github-laurent.mdc`).
+
+## Commande terminal (copier-coller)
+
+```powershell
+.\scripts\sync-both.cmd
+```
+
+Variantes (même dossier) :
+
+- Comparer sans pull : `.\scripts\sync-both.cmd -DryRun`
+- Pull des deux dépôts sans question o/n : `.\scripts\sync-both.cmd -Pull`
+
+Ensuite : lire `scripts/NOTE_PROCHAINE-SESSION.md` et vérifier la branche soft (`scripts/NOTE_SYNC-BOTH.md`).
+
+Référence : `scripts/NOTE_SYNC-BOTH.md`, `scripts/CONVENTIONS-LAURENT.md` §1.

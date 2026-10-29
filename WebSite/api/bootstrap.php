@@ -96,6 +96,166 @@ function mha_flashdev_product_slug(): string
     return $slug !== '' ? $slug : 'flashdev-soft';
 }
 
+function mha_formation_product_slug(): string
+{
+    $slug = trim((string) (mha_config()['product_slug'] ?? 'gamedevready-bases-cpp'));
+
+    return $slug !== '' ? $slug : 'gamedevready-bases-cpp';
+}
+
+function mha_device_binding_enabled(): bool
+{
+    return (bool) (mha_config()['device_bind_formation'] ?? true);
+}
+
+function mha_device_cookie_name(): string
+{
+    return 'mha_device';
+}
+
+function mha_device_table_available(): bool
+{
+    static $available = null;
+    if ($available !== null) {
+        return $available;
+    }
+    try {
+        mha_db()->query('SELECT 1 FROM user_trusted_devices LIMIT 1');
+        $available = true;
+    } catch (PDOException) {
+        $available = false;
+    }
+    return $available;
+}
+
+function mha_device_hash(string $rawToken): string
+{
+    $secret = (string) (mha_config()['device_binding_secret'] ?? 'dev-insecure-change-me');
+
+    return hash_hmac('sha256', $rawToken, $secret);
+}
+
+function mha_generate_device_token(): string
+{
+    return bin2hex(random_bytes(32));
+}
+
+function mha_set_device_cookie(string $rawToken): void
+{
+    setcookie(mha_device_cookie_name(), $rawToken, [
+        'expires' => time() + 60 * 60 * 24 * 400,
+        'path' => '/',
+        'secure' => !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off',
+        'httponly' => true,
+        'samesite' => 'Lax',
+    ]);
+    $_COOKIE[mha_device_cookie_name()] = $rawToken;
+}
+
+function mha_get_device_token_from_request(): ?string
+{
+    $raw = trim((string) ($_COOKIE[mha_device_cookie_name()] ?? ''));
+    if ($raw === '' || strlen($raw) !== 64 || !ctype_xdigit($raw)) {
+        return null;
+    }
+
+    return $raw;
+}
+
+function mha_fetch_bound_device_hash(int $userId): ?string
+{
+    if (!mha_device_table_available()) {
+        return null;
+    }
+    $stmt = mha_db()->prepare(
+        'SELECT device_token_hash FROM user_trusted_devices WHERE user_id = ? LIMIT 1'
+    );
+    $stmt->execute([$userId]);
+    $row = $stmt->fetch();
+
+    return $row ? (string) $row['device_token_hash'] : null;
+}
+
+function mha_touch_trusted_device(int $userId): void
+{
+    if (!mha_device_table_available()) {
+        return;
+    }
+    mha_db()->prepare(
+        'UPDATE user_trusted_devices SET last_seen_at = CURRENT_TIMESTAMP WHERE user_id = ?'
+    )->execute([$userId]);
+}
+
+function mha_clear_device_binding(int $userId): void
+{
+    if (!mha_device_table_available()) {
+        return;
+    }
+    mha_db()->prepare('DELETE FROM user_trusted_devices WHERE user_id = ?')->execute([$userId]);
+}
+
+/**
+ * Élèves avec formation : 1er accès guide = enregistre le navigateur ; autre machine = refus.
+ * Admin / testeur : pas de lien appareil. Compte soft seul : pas de lien appareil.
+ */
+function mha_ensure_formation_device(array $user): bool
+{
+    if (!mha_device_binding_enabled() || !mha_device_table_available()) {
+        return true;
+    }
+    if (in_array($user['role'], ['admin', 'tester'], true)) {
+        return true;
+    }
+    if (!mha_can_access_product(mha_formation_product_slug())) {
+        return true;
+    }
+
+    $userId = (int) $user['id'];
+    $storedHash = mha_fetch_bound_device_hash($userId);
+    $raw = mha_get_device_token_from_request();
+
+    if ($storedHash === null) {
+        $raw = $raw ?? mha_generate_device_token();
+        mha_set_device_cookie($raw);
+        $stmt = mha_db()->prepare(
+            'INSERT INTO user_trusted_devices (user_id, device_token_hash) VALUES (?, ?)'
+        );
+        $stmt->execute([$userId, mha_device_hash($raw)]);
+
+        return true;
+    }
+
+    if ($raw === null) {
+        return false;
+    }
+    if (!hash_equals($storedHash, mha_device_hash($raw))) {
+        return false;
+    }
+    mha_touch_trusted_device($userId);
+
+    return true;
+}
+
+function mha_deny_formation_device(): never
+{
+    http_response_code(403);
+    header('Content-Type: text/html; charset=utf-8');
+    echo '<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8">'
+        . '<meta name="viewport" content="width=device-width,initial-scale=1">'
+        . '<title>Appareil non autorisé — MadHackAdemy</title>'
+        . '<script src="https://cdn.tailwindcss.com"></script></head>'
+        . '<body class="bg-black text-white font-mono min-h-screen flex items-center justify-center px-4">'
+        . '<div class="max-w-md border border-gray-800 rounded-lg p-8 bg-gray-950">'
+        . '<h1 class="text-xl font-bold text-red-500 mb-3">Formation indisponible sur cet appareil</h1>'
+        . '<p class="text-sm text-gray-400 mb-4">Ce compte est lié au navigateur utilisé lors du premier accès aux guides. '
+        . 'Pour réviser, utilise le même ordinateur, ou contacte MadHackAdemy pour changer d’appareil.</p>'
+        . '<p class="text-xs text-gray-500 mb-6">Le logiciel FlashDev reste utilisable localement ; seuls les guides en ligne sont concernés.</p>'
+        . '<a href="/gamedevready-bases-cpp.html" class="block text-center py-2 text-sm text-gray-400 hover:text-red-400">← Retour Bases C++</a>'
+        . '<a href="/auth/logout.php" class="block text-center py-2 text-sm text-gray-500 hover:text-red-400">Déconnexion</a>'
+        . '</div></body></html>';
+    exit;
+}
+
 function mha_can_access_product(string $productSlug): bool
 {
     $user = mha_current_user();
@@ -275,6 +435,9 @@ function mha_require_product(string $productSlug, ?string $redirectAfter = null)
     if (!mha_can_access_product($productSlug)) {
         http_response_code(403);
         exit('Accès refusé — formation non activée pour ce compte.');
+    }
+    if ($productSlug === mha_formation_product_slug() && !mha_ensure_formation_device($user)) {
+        mha_deny_formation_device();
     }
     return $user;
 }

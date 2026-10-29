@@ -25,6 +25,17 @@ $message = '';
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $action = $_POST['action'] ?? 'create';
+
+    if ($action === 'reset_device') {
+        $resetUserId = (int) ($_POST['user_id'] ?? 0);
+        if ($resetUserId > 0) {
+            mha_clear_device_binding($resetUserId);
+            $message = "Appareil formation réinitialisé pour l'utilisateur #{$resetUserId}.";
+        } else {
+            $error = 'Utilisateur invalide.';
+        }
+    } else {
     $email = strtolower(trim($_POST['email'] ?? ''));
     $password = $_POST['password'] ?? '';
     $displayName = trim($_POST['display_name'] ?? '');
@@ -63,6 +74,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
     }
+    }
+}
+
+$deviceBoundUserIds = [];
+if (mha_device_table_available()) {
+    $deviceBoundUserIds = array_map(
+        'intval',
+        array_column(
+            mha_db()->query('SELECT user_id FROM user_trusted_devices')->fetchAll(),
+            'user_id'
+        )
+    );
 }
 
 $users = mha_db()->query(
@@ -91,6 +114,7 @@ $users = mha_db()->query(
 
         <form method="post" class="border border-gray-800 rounded-lg p-6 bg-gray-950 space-y-4 mb-10">
             <input type="hidden" name="key" value="<?= mha_escape($providedKey) ?>">
+            <input type="hidden" name="action" value="create">
             <div>
                 <label class="block text-xs text-gray-500 mb-1">Email</label>
                 <input type="email" name="email" required class="w-full bg-black border border-gray-700 rounded px-3 py-2 text-sm">
@@ -126,18 +150,35 @@ $users = mha_db()->query(
                         <th class="text-left px-3 py-2">Email</th>
                         <th class="text-left px-3 py-2">Nom</th>
                         <th class="text-left px-3 py-2">Rôle</th>
+                        <th class="text-left px-3 py-2">Appareil formation</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($users as $u): ?>
+                    <?php $bound = in_array((int) $u['id'], $deviceBoundUserIds, true); ?>
                     <tr class="border-t border-gray-800">
                         <td class="px-3 py-2"><?= mha_escape($u['email']) ?></td>
                         <td class="px-3 py-2"><?= mha_escape($u['display_name']) ?></td>
                         <td class="px-3 py-2 text-red-400"><?= mha_escape($u['role']) ?></td>
+                        <td class="px-3 py-2 text-xs text-gray-400">
+                            <?php if ($u['role'] === 'student'): ?>
+                                <?= $bound ? 'Lié' : '—' ?>
+                                <?php if ($bound): ?>
+                                <form method="post" class="inline ml-2">
+                                    <input type="hidden" name="key" value="<?= mha_escape($providedKey) ?>">
+                                    <input type="hidden" name="action" value="reset_device">
+                                    <input type="hidden" name="user_id" value="<?= (int) $u['id'] ?>">
+                                    <button type="submit" class="text-amber-500 hover:text-amber-300 underline">Réinitialiser</button>
+                                </form>
+                                <?php endif; ?>
+                            <?php else: ?>
+                                n/a
+                            <?php endif; ?>
+                        </td>
                     </tr>
                     <?php endforeach; ?>
                     <?php if ($users === []): ?>
-                    <tr><td colspan="3" class="px-3 py-4 text-gray-500">Aucun compte — créez le premier ci-dessus.</td></tr>
+                    <tr><td colspan="4" class="px-3 py-4 text-gray-500">Aucun compte — créez le premier ci-dessus.</td></tr>
                     <?php endif; ?>
                 </tbody>
             </table>
