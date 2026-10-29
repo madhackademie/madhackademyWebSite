@@ -39,9 +39,10 @@ Ne pas noyer dans le backlog P2/P3 sauf si l'utilisateur le demande.
 | 5 | `scripts/CONVENTIONS-LAURENT.md` — 5 règles personnelles (rappel début session) |
 | 6 | `scripts/NOTE_SYNC-BOTH.md` — branche soft en attente test |
 
-## P1 session en cours (juillet 2026)
+## P1 session en cours (oct. 2026)
 
-**Valider le périmètre MVP avant release** : cocher dans `NOTE_MVP-FLASHDEV.md` ce qui est **impératif** vs reporté. Mettre à jour la note après chaque décision.
+**Boucle élève prod + prérequis deck** — détail et checklists : `scripts/NOTE_PROCHAINE-SESSION.md` (P1 du **30/10**).  
+Après validation : cocher `NOTE_MVP-FLASHDEV.md` (must-have vs reporté).
 
 ## Règles produit (rappel)
 

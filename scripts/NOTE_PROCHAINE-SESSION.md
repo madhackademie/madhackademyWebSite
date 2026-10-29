@@ -1,13 +1,89 @@
 # Guide — Prochaine session de travail
 
 > **Référence principale** pour reprendre le projet madhackademyWebSite  
-> Dernière mise à jour : 25 août 2026  
+> Dernière mise à jour : **29 octobre 2026**  
 > Domaine marque : [madhackademy.eu](https://madhackademy.eu/)  
 > Ancien domaine : `gameopenmoney.com` → **301** vers madhackademy (voir `.htaccess`)
 
 ---
 
-## Reprise session suivante — **P1 unique** (26/08)
+## Reprise session suivante — **P1 unique** (30/10/2026)
+
+> **Phase A — Boucle élève prod** : valider **inscription → mot de passe → téléchargement → installeur → FlashDev → deck → soft** (checklist ci-dessous).  
+> **Phase B — Prérequis deck** : concevoir et implémenter un **contrôleur de prérequis** à l’install deck (ex. bootcamp C++ → Raylib `C:\raylib\` + extension C/C++), message clair si manquant — **hors** installeur socle actuel (`install-madhackademy.ps1` n’installe pas Raylib).  
+> Ne pas utiliser la copie OneDrive (`…\OneDrive\RevisionSoft\…`).
+
+### Bilan session 29/10/2026
+
+| Fait | Détail |
+|------|--------|
+| Reprise projet | Sync-both OK ; rappel parcours marketing → soft ; règle `sync-both-demarrage.mdc` + `CONVENTIONS-LAURENT.md` §1 (local, à committer) |
+| **FTP prod** | Nav / `telecharger.html` / pages vitrine ; **index.html** + **index-en.html** (liens Twitch / YouTube) |
+| Clarification setup | **FlashDev-Setup** = LÖVE + VS Code + extensions Lua ; **pas** Raylib ni deck embarqué |
+| Doc parcours | Tunnel opt-in : download **sur le site** après MDP ; email Systeme.io = Bienvenue + login (pas le `.exe`) |
+| **Non fait** | Test boucle élève bout en bout ; contrôleur prérequis deck ; cases MVP / deck encore vides |
+
+### Phase A — Parcours demain (site → soft)
+
+1. **Sync** : `.\scripts\sync-both.cmd` (racine `madhackademyWebSite/`)
+2. Smoke prod : accueil FR/EN, nav, [telecharger.html](https://madhackademy.eu/telecharger.html), manifest **0.2.2**
+3. **Inscription** : email neuf + consentement → `set-password` → session → bouton **FlashDev-Setup-0.2.2-win64.exe**
+4. Installer → `%LOCALAPPDATA%\FlashDev` (raccourci prod ; repo dev séparé si test chez Laurent)
+5. FlashDev : **0 carte** au premier lancement
+6. **Explore deck** → dossier `DeckBootCampCpp/` (copie locale / zip — pas dans l’exe)
+7. Parcours cartes (viser **7/7**) : Start → VS Code → Done → **webGuide** (`URLNet` = carte publique site)
+8. Cocher checklists ci-dessous + noter écarts (Raylib, manifest JS, opt-in, etc.)
+
+### Phase B — Contrôleur prérequis deck (après ou pendant Phase A)
+
+- **Constat** : deck bootcamp = exercices Raylib ; toolchain **`C:\raylib\`** requise pour compiler — non installée par le setup `.exe`
+- **Objectif** : avant ou au clic **Install** dans `deckInstaller.lua`, vérifier les prérequis déclarés (JSON deck ou manifest) et afficher feedback (liste manquants + lien doc)
+- **Piste technique** : champ(s) dans `DeckInstaller.json` · checks Lua (fichiers `C:\raylib\…`, `code`, optionnel `cpptools`) · doc `NOTE_SETUP-UTILISATEUR.md` § Raylib
+- **Décision MVP** : trancher dans `NOTE_MVP-FLASHDEV.md` (S8) bloquant release bootcamp ou guide manuel V1
+
+### URLs / livrables
+
+| Quoi | Où |
+|------|-----|
+| Page download | [madhackademy.eu/telecharger.html](https://madhackademy.eu/telecharger.html) |
+| Setup | `https://madhackademy.eu/flashdev/FlashDev-Setup-0.2.2-win64.exe` |
+| Manifest | `https://madhackademy.eu/flashdev/latest-version.json` (**0.2.2**) |
+| Deck (test) | `FlashRevisionSoft/DeckBootCampCpp/` (local, pas dans zip release) |
+| Prérequis Raylib | `scripts/NOTE_SETUP-UTILISATEUR.md` § Raylib · `NOTE_INSTALL-MADHACKADEMY.md` |
+
+### Checklist test boucle (Phase A — à cocher demain)
+
+**Site / compte**
+
+- [ ] Opt-in prod → Systeme.io + tag OK (ou erreur comprise)
+- [ ] `set-password` → retour `telecharger.html` avec download
+- [ ] Manifest page téléchargement OK (navigateur connecté)
+- [ ] `.exe` téléchargé depuis le site (pas repo / OneDrive)
+
+**Soft / deck**
+
+- [ ] Install exe → FlashDev lance, **0 carte**
+- [ ] Explore deck → `DeckBootCampCpp/` → preview + install
+- [ ] 7 cartes + images ; pas de crash `newImage`
+- [ ] Start / reset / VS Code / done (×7 si possible)
+- [ ] **webGuide** → `URLNet` (carte publique madhackademy.eu)
+- [ ] Compile C++ : noter si Raylib absent vs présent (`C:\raylib\`)
+
+**Phase B — prérequis deck**
+
+- [ ] Spec prérequis bootcamp validée (liste + messages UI)
+- [ ] Implémentation minimale dans soft (ou report documenté avec P1 suivante)
+
+### Ensuite (P2 — après P1 du 30/10)
+
+- Cocher / figer `NOTE_MVP-FLASHDEV.md`
+- Merge `feature/nav-globale` → `main` si prod validée
+- Test ami avec protocole écrit
+- FTP restant si écart prod vs branche
+
+---
+
+## Archive — Reprise 26/08 (test deck seul, partiellement dépassé)
 
 > **Test global élève** : installer FlashDev **depuis le site** (release **0.2.2**), soft vide → installer le deck Bootcamp C++ → parcours 7 cartes.  
 > **Ne pas utiliser** la copie OneDrive (`…\OneDrive\RevisionSoft\…`) — ancienne version.
@@ -18,7 +94,7 @@
 - Décision : test à vide **demain**, install **prod site**, pas OneDrive
 - Cases test deck encore **vides** (à cocher pendant le run)
 
-### Parcours demain
+### Parcours (réf. historique)
 
 1. Télécharger l’installeur **prod** (pas le repo Cursor, pas OneDrive)
 2. Installer dans un dossier **neuf**
@@ -27,16 +103,7 @@
 5. Parcours 7 cartes : start → VS Code → done → webGuide
 6. Cocher `NOTE_REVISION-BOOTCAMP-FR.md` § Soft + `TODO.md` soft (checklist test deck)
 
-### URLs / livrables
-
-| Quoi | Où |
-|------|-----|
-| Page download | [madhackademy.eu/telecharger.html](https://madhackademy.eu/telecharger.html) — si 404, [flashdev.html](https://madhackademy.eu/flashdev.html) ou lien direct |
-| Setup | `https://madhackademy.eu/flashdev/FlashDev-Setup-0.2.2-win64.exe` |
-| Manifest | `https://madhackademy.eu/flashdev/latest-version.json` (doit lire **0.2.2**) |
-| Deck | dossier local `FlashRevisionSoft/DeckBootCampCpp/` (pas dans le zip update) |
-
-### Checklist test (à cocher demain)
+### Checklist test archive 26/08
 
 - [ ] Manifest prod = **0.2.2**
 - [ ] Setup `.exe` téléchargé depuis le site, install dossier neuf
@@ -45,11 +112,11 @@
 - [ ] 7 cartes dans `data.json` + images `images_current/` (ne **pas** committer `data.json`)
 - [ ] Start / reset / VS Code / done sur les 7 cartes
 - [ ] Pas de crash `newImage` ; ordre `nextRevision` OK
-- [ ] **webGuide** ouvre `URLNet` (aujourd’hui : `/auth/guide.php?m=XX` — login possible)
+- [ ] **webGuide** ouvre `URLNet` (carte publique site)
 
-### Ensuite (P2 — ne pas ouvrir avant fin du test)
+### Ensuite archive 26/08 (P2)
 
-- FTP nav-globale (`telecharger.html`, nav, opt-in) si pas encore en prod — checklist ci-dessous
+- FTP nav-globale si pas encore en prod — **fait oct. 2026**
 - Ressenti nav FlashDev vs Téléchargement — à trancher après tests
 
 ---

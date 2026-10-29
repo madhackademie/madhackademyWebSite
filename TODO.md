@@ -24,7 +24,7 @@
 
 ### Checklist rapide prochaine session
 
-**Priorité P1 :** API Systeme.io → formulaire opt-in sur FlashDev (site) — voir ci-dessous + note dédiée.
+**P1 (30/10)** — Phase A : boucle prod **inscription → install exe → deck → parcours soft** · Phase B : **contrôleur prérequis** à l’install deck (Raylib bootcamp). Détail : [`scripts/NOTE_PROCHAINE-SESSION.md`](scripts/NOTE_PROCHAINE-SESSION.md).
 
 ---
 

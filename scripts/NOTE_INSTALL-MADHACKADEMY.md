@@ -224,7 +224,8 @@ Les kits MinGW déclenchent parfois des faux positifs. Documenter une procédure
 |-----------|-----------|
 | FlashDev | `git pull` ou nouveau zip + script update |
 | Decks | déjà géré par `deckInstaller.lua` |
-| Raylib / VS Code | hors scope MVP ; winget upgrade plus tard |
+| Raylib / VS Code | hors scope **installeur socle** v1 ; winget upgrade plus tard |
+| **Prérequis deck** | **P1 oct. 2026** — contrôleur à l’install deck (`deckInstaller.lua` + metadata `DeckInstaller.json`) : ex. bootcamp C++ → `C:\raylib\` avant Install ; voir `NOTE_PROCHAINE-SESSION.md` Phase B |
 
 ---
 

@@ -1,8 +1,8 @@
 # Note — MVP FlashDev avant release
 
-> Dernière mise à jour : 8 juillet 2026  
+> Dernière mise à jour : **29 octobre 2026**  
 > **Document de réflexion** — cocher au fil des sessions ce qui est **impératif** avant la première distribution publique.  
-> **Prochaine session P1 :** valider cette liste avec Laurent et figer le périmètre MVP.
+> **Prochaine session P1 :** boucle élève prod + contrôleur prérequis deck (voir `NOTE_PROCHAINE-SESSION.md`).
 
 ---
 
@@ -34,7 +34,8 @@ Un élève peut :
 | S4 | JSON deck harmonisé (`URLNet`, chemins, `nextRevision`) | [ ] | [ ] |
 | S5 | Bouton **webGuide** → ouvre `URLNet` (carte site) | [x] | [ ] |
 | S6 | Message « mise à jour disponible » + mécanisme update (même minimal) | [ ] | [ ] |
-| S7 | Installeur élève (script `.cmd` ou `.exe` — voir `NOTE_INSTALL-MADHACKADEMY.md`) | [ ] | [ ] |
+| S7 | Installeur élève (script `.cmd` ou `.exe` — voir `NOTE_INSTALL-MADHACKADEMY.md`) | [x] | [ ] |
+| S8 | **Contrôleur prérequis** à l’install deck (ex. Raylib pour bootcamp) — message clair si manquant | [ ] | [ ] |
 
 ### Site (madhackademyWebSite)
 
@@ -96,7 +97,7 @@ Cocher quand **tous** les Must-have marqués **Oui** sont testés :
 | Date | Décision | Validé par |
 |------|----------|------------|
 | 08/07/2026 | Création note MVP — périmètre à trancher session suivante | — |
-| | | |
+| 29/10/2026 | **Setup exe** = socle LÖVE + VS Code + Lua seulement ; **Raylib hors installeur** ; prérequis deck = contrôleur à l’install (S8) + test boucle site→soft P1 session 30/10 | Laurent |
 
 ---
 

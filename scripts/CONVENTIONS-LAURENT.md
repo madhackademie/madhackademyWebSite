@@ -2,7 +2,7 @@
 
 > **Pour Laurent** — règles personnelles à respecter sur le projet.  
 > L'assistant les cite en début de session (voir `.cursor/rules/conventions-laurent-rappel.mdc`).  
-> Dernière mise à jour : 15 juillet 2026
+> Dernière mise à jour : **29 octobre 2026**
 
 ---
 
