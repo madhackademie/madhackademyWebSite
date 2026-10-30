@@ -1,4 +1,4 @@
-﻿# TODO — madhackademyWebSite
+# TODO — madhackademyWebSite
 
 > Dernière mise à jour : 30 octobre 2026  
 > Projet : site vitrine FlashDev + MadHackAdemy
@@ -25,7 +25,9 @@
 
 ### Checklist rapide prochaine session
 
-**P1 (30/10)** — Phase A : boucle prod **inscription → install exe → deck → parcours soft** · Phase B : **contrôleur prérequis** à l’install deck (Raylib bootcamp). Détail : [`scripts/NOTE_PROCHAINE-SESSION.md`](scripts/NOTE_PROCHAINE-SESSION.md).
+**P1 (31/10 — Laurent)** — **Machine reset** : supprimer install FlashDev locale → parcours **100 % site** (compte → **Setup 0.2.2** → boutique ou **code promo** → deck zip → 7 cartes). Checklist : [`scripts/NOTE_PROCHAINE-SESSION.md`](scripts/NOTE_PROCHAINE-SESSION.md) § Phase A.
+
+- [ ] **P1** — Test install « machine propre » via [telecharger.html](WebSite/telecharger.html) + Setup exe prod (pas repo / OneDrive) — voir note session **31/10**
 
 ---
 
@@ -125,7 +127,7 @@ Ces tâches débloquent la mise en ligne ou corrigent des problèmes visibles po
 
 - [ ] **P1** — Images + vidéo soft sur `flashdev.html` (`/flashdev/media/`)
 - [ ] **P1** — Shop / paiement (après entité — `NOTE_CREATION-ENTREPRISE.md`)
-- [ ] **P1** — Valider parcours GameDevReady Bases C++ **FR → EN → DE → ES**
+- [ ] **P1** — Valider parcours GameDevReady Bases C++ **FR** (communauté pilote) — **EN / DE / ES** reportés après validation FR (voir `NOTE_MVP-FLASHDEV.md` § i18n)
 - [ ] **P1** — WebGuides mode programmeur : carte à la main / création de deck
 - [ ] **P2** — Protection decks (token machine / anti-redistribution) — **après** validation multilangue
 - [ ] Tip IA générer carte/deck — dans les guides programmeur (non bloquant)
@@ -189,11 +191,10 @@ Ces tâches débloquent la mise en ligne ou corrigent des problèmes visibles po
 
 #### Boutique / technique
 
-- [x] **Pré-lancement (oct. 2026)** — Bypass `formation_free_grant_until_systeme_io` + `activate-formation-prelaunch.php` (0 €, parcours client sans vente Systeme.io)
-- [ ] **P2 — Entreprise en activité** — `formation_free_grant_until_systeme_io` → **false** sur FTP prod
-- [ ] **P2 — Entreprise en activité** — Funnel Systeme.io Phase 1 **1 €** + `shop_checkout_urls` + merci
-- [ ] **P2 — Entreprise en activité** — Webhook **SALE_NEW** + `systeme_io_price_plan_products` → deck `gamedevready-bases-cpp`
-- [ ] **P2 — Entreprise en activité** — Linkage CRM Systeme.io (produit / tag acheteur Phase 1) + test achat 1 € remboursé — [`NOTE_BOUTIQUE-GAMEDEVREADY.md`](scripts/NOTE_BOUTIQUE-GAMEDEVREADY.md)
+> **Passerelle vente** : reportée jusqu’à **statut entreprise créé + validé** — checklist ordonnée : [`NOTE_CREATION-ENTREPRISE.md`](scripts/NOTE_CREATION-ENTREPRISE.md) § « Après statut validé ».
+
+- [x] **Pré-lancement (oct. 2026)** — Parcours `acheter.php` → `merci.php` + bypass 0 € (hors Systeme.io)
+- [ ] **P2 — Gate entreprise** — Statut validé → enchaîner les 8 étapes NOTE_CREATION (Stripe, bypass off, funnel 1 €, webhook, test)
 - [ ] Produits / tags System.io (ou équivalent) : P1, P2, P3, **pack early bird 9 €**
 - [ ] Parcours post-achat pack : email ou dashboard « P2/P3 quand disponibles » (process avant webhook auto si besoin)
 - [ ] Aligner [`scripts/NOTE_MVP-FLASHDEV.md`](scripts/NOTE_MVP-FLASHDEV.md) O3 + CGV (accès progressif, formation en construction)
@@ -235,7 +236,7 @@ Ces tâches débloquent la mise en ligne ou corrigent des problèmes visibles po
 - [ ] **P1** — Installeur plateforme hébergé sur `flashdev/` (distinct zip update + distinct packages decks payants)
 - [ ] **P1** — Bouton **Télécharger FlashDev** sur `dashboard/index.php` (soft gratuit ou inclus compte)
 - [ ] **P1** — Parcours boutique : achat deck → téléchargement → install `deckInstaller` → bootcamp C++ utilisable
-- [ ] **P1** — Test machine vierge : install socle seul → puis deck acheté téléchargé depuis le site
+- [ ] **P1** — Test machine vierge : **désinstaller FlashDev local** → install socle **uniquement via le site** (Setup 0.2.2) → deck (achat / promo) → 7 cartes — **session cible 31/10/2026**
 
 ### Déploiement GameDevReady (provider / FTP)
 
@@ -417,8 +418,13 @@ Maquette d’écran cible (beat’em up arcade type *Golden Axe* / *Cadillacs an
 
 - [ ] Intégrer un système de paiement pour les decks premium (Stripe, Gumroad…)
 - [ ] Page dédiée par offre boutique avec landing optimisée conversion
+- [ ] **P2 — Architecture vitrine + refonte boutique** (après **boucle GameDevReady Phase 1** validée en prod) — aujourd’hui `gamedevready.html`, `#boutique` sur centre-formation et `/boutique/` affichent des grilles/offres **quasi identiques** ; conserver tel quel jusqu’à la loop complète, puis séparer hub pédagogique / tunnel achat / source contenu unique — voir [`NOTE_BOUTIQUE-GAMEDEVREADY.md`](scripts/NOTE_BOUTIQUE-GAMEDEVREADY.md) § *Vitrine temporaire*
 - [ ] Formulaire de contact ou inscription newsletter
-- [ ] Version anglaise du site (i18n)
+- [ ] **P3 — i18n formations** (après validation communauté FR) — détail : [`scripts/NOTE_MVP-FLASHDEV.md`](scripts/NOTE_MVP-FLASHDEV.md) § *Internationalisation formations*
+  - [ ] Hubs deck par langue (ex. `gamedevready-bases-cpp-en.html`) + cartes + guides traduits
+  - [ ] Page choix **langue du deck** (.zip FR / EN / DE) — dashboard ou merci ; **un seul** `product_slug` acheté
+  - [ ] Vitrine `training-center.html` : liens vers hubs EN quand contenu prêt (aujourd’hui → hub FR OK)
+  - [ ] Principe inchangé : login, `user_products`, device formation, webhook grant par slug — pas de vente par locale
 
 ---
 

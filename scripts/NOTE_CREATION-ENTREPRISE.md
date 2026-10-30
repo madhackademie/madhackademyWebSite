@@ -99,10 +99,33 @@ Cible : ouverture **septembre 2026**.
 
 | Tâche technique | Dépendance entreprise |
 |-----------------|----------------------|
-| Webhook paiement → `user_products` | Compte marchand / entité légale |
-| Boutique (3 offres P1) | Prix TTC, factures, CGV |
-| Dashboard élève | Peut attendre ; vente nécessite au minimum encaissement légal |
+| **Passerelle de vente obligatoire** (plus de bypass 0 €) | Statut créé **et** validé (Finanzamt / TVA / compte pro) |
+| Webhook paiement → `user_products` | Stripe connecté à Systeme.io + entité légale |
+| Boutique Phase 1 **1 €** | Price plan Systeme.io + `shop_checkout_urls` dans `config.php` |
+| Dashboard élève | Opérationnel en pré-lancement via bypass ; **vente publique** = passerelle active |
 | CGV / mentions légales (`TODO.md`) | **Bloqué** sans entité identifiée |
+
+---
+
+## Après statut validé — brancher la passerelle de vente
+
+> **Décision oct. 2026 :** tant que l’entreprise n’est pas en place, les élèves passent par le site (`acheter.php` → confirm 0 €).  
+> **Dès que le statut est créé et validé**, tout achat Phase 1 doit **automatiquement** passer par **Systeme.io** (TVA, facturation) — plus de grant gratuit sur le site.
+
+Checklist unique (cocher dans l’ordre) — détail technique : [`NOTE_BOUTIQUE-GAMEDEVREADY.md`](NOTE_BOUTIQUE-GAMEDEVREADY.md) · cases `TODO.md` § Boutique / technique :
+
+| # | Action |
+|---|--------|
+| 1 | Entité + Finanzamt / TVA OK · compte pro (ex. N26) · Stripe raccordé à Systeme.io |
+| 2 | Funnel **Order form** Phase 1 à **1 €** (price plan enregistré, pas l’exemple visuel) |
+| 3 | **`api/config.php` prod** : `formation_free_grant_until_systeme_io` → **`false`** |
+| 4 | Même fichier : `shop_checkout_urls['gamedevready-bases-cpp']` = URL checkout Systeme.io |
+| 5 | Webhook compte **SALE_NEW** → `https://madhackademy.eu/api/systeme-webhook.php` + `systeme_io_webhook_secret` |
+| 6 | Mapping `systeme_io_price_plan_products` (ID price plan → `gamedevready-bases-cpp`) |
+| 7 | Test : boutique → **Payer via Systeme.io** → merci → dashboard deck · remboursement test |
+| 8 | CGV / mentions légales site alignées sur l’entité |
+
+Parcours élève **après linkage** : Formation → Boutique → `acheter.php` → **Systeme.io** → `merci.php` → accès deck via webhook (plus de bouton « Confirmer 0 € »).
 
 ---
 
@@ -110,8 +133,8 @@ Cible : ouverture **septembre 2026**.
 
 | Fichier | Sujet |
 |---------|--------|
-| [`TODO.md`](../TODO.md) | Offres boutique, textes légaux |
-| [`NOTE_ARCHITECTURE_SOFT-SITE.md`](../NOTE_ARCHITECTURE_SOFT-SITE.md) | Paiement, System.io |
+| [`TODO.md`](../TODO.md) | Offres boutique, textes légaux, **P2 passerelle post-entreprise** |
+| [`NOTE_BOUTIQUE-GAMEDEVREADY.md`](NOTE_BOUTIQUE-GAMEDEVREADY.md) | Systeme.io, webhook, bypass pré-lancement |
 | [`scripts/NOTE_PROCHAINE-SESSION.md`](NOTE_PROCHAINE-SESSION.md) | Reprise session dev |
 
 ---
@@ -121,7 +144,7 @@ Cible : ouverture **septembre 2026**.
 | Date | Action | Résultat |
 |------|--------|----------|
 | 08/07/2026 | Création de cette note | Références N26 + piste IA juridique |
-| | | |
+| 30/10/2026 | Décision produit | Vente publique = passerelle Systeme.io après statut validé ; pré-lancement = site 0 € uniquement |
 | | | |
 
 ---

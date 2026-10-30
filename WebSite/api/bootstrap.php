@@ -474,6 +474,7 @@ function mha_user_library(array $user): array
             'deck_download_url' => $canDeckDownload
                 ? '/auth/download-deck.php?slug=' . rawurlencode($slug)
                 : null,
+            'deck_page_url' => mha_deck_download_page_url($slug),
             'flashdev_download_url' => ($kind === 'soft' || $slug === mha_flashdev_product_slug())
                 ? '/telecharger.html'
                 : null,
@@ -506,9 +507,9 @@ function mha_shop_offers(): array
         $formationSlug => [
             'slug' => $formationSlug,
             'sku' => 'bootcamp-cpp-p1',
-            'title' => 'Phase 1 — Bootcamp C++',
-            'short_title' => 'Bootcamp C++',
-            'subtitle' => 'Deck FlashDev · 7 modules · guides HTML',
+            'title' => 'BootCampC++ bases',
+            'short_title' => 'BootCampC++ bases',
+            'subtitle' => '7 cartes C++ · deck FlashDev · guides HTML · Phase 1 GameDevReady',
             'price_cents' => 100,
             'price_label' => '1 €',
             'currency' => 'EUR',
@@ -518,10 +519,20 @@ function mha_shop_offers(): array
             'hub_url' => '/gamedevready-bases-cpp.html',
             'checkout_url' => mha_shop_checkout_url($formationSlug),
             'includes' => [
-                'Deck GameDevReady Phase 1 (7 cartes C++)',
-                'Téléchargement .zip + install dans FlashDev',
-                '7 guides pédagogiques (connexion site)',
-                'Cartes HTML publiques sur le parcours deck',
+                'Fiches de formation — 7 cartes (parcours deck sur le site)',
+                'Deck .zip à installer dans FlashDev',
+                '7 guides pédagogiques (connexion MadHackAdemy)',
+                'Fondamentaux C++ pour débuter en game dev',
+            ],
+            'vitrine' => [
+                'badge' => 'OFFRE 1 · EN VENTE',
+                'tagline' => 'Meilleur point de départ',
+                'emoji' => '🎮',
+                'accent' => 'red',
+                'title_class' => 'text-nintendo-red',
+                'body' => 'Les fondamentaux du C++ pour commencer ton parcours de game developer : fiches de formation (cartes sur le site), guides pédagogiques protégés et deck à installer dans FlashDev, le logiciel de révision MadHackAdemy.',
+                'highlight' => '7 cartes — Printf, variables, conditions, boucles, fonctions, conteneurs, structs.',
+                'hub_link' => true,
             ],
         ],
         'gamedevready-phase-2' => [
@@ -539,6 +550,16 @@ function mha_shop_offers(): array
             'hub_url' => '/gamedevready.html',
             'checkout_url' => null,
             'includes' => [],
+            'vitrine' => [
+                'badge' => 'OFFRE 2 · BIENTÔT',
+                'tagline' => 'Après les bases C++',
+                'emoji' => '⚡',
+                'accent' => 'yellow',
+                'title_class' => 'text-nintendo-yellow',
+                'body' => 'Challenges et graphismes Raylib : premier combat David & Goliath, puis framework Raylib (graphics, input, audio, collisions).',
+                'highlight' => 'Achat séparé à la sortie — non inclus dans la Phase 1.',
+                'hub_link' => false,
+            ],
         ],
         'gamedevready-phase-3' => [
             'slug' => 'gamedevready-phase-3',
@@ -555,6 +576,16 @@ function mha_shop_offers(): array
             'hub_url' => '/gamedevready.html',
             'checkout_url' => null,
             'includes' => [],
+            'vitrine' => [
+                'badge' => 'OFFRE 3 · BIENTÔT',
+                'tagline' => 'Parcours avancé',
+                'emoji' => '💎',
+                'accent' => 'blue',
+                'title_class' => 'text-nintendo-blue',
+                'body' => 'Remake Frogger complet, puis choix de voie : programmation orientée objet ou architecture ECS.',
+                'highlight' => 'Achat séparé à la sortie — non inclus dans les phases précédentes.',
+                'hub_link' => false,
+            ],
         ],
     ];
 }
@@ -596,6 +627,98 @@ function mha_shop_checkout_url(string $productSlug): ?string
 function mha_formation_shop_bypass_active(): bool
 {
     return !empty(mha_config()['formation_free_grant_until_systeme_io']);
+}
+
+/**
+ * Codes promo testeurs / beta — grant deck Phase 1 (+ FlashDev) sans boutique.
+ * Désactiver en prod publique : tester_promo_enabled => false.
+ *
+ * @return array<string, string> code normalisé (MAJUSCULES) => product_slug
+ */
+function mha_tester_promo_codes(): array
+{
+    if (empty(mha_config()['tester_promo_enabled'])) {
+        return [];
+    }
+    $raw = mha_config()['tester_promo_codes'] ?? [];
+    if (!is_array($raw)) {
+        return [];
+    }
+    $out = [];
+    foreach ($raw as $code => $slug) {
+        $codeNorm = strtoupper(preg_replace('/\s+/', '', trim((string) $code)));
+        $slug = trim((string) $slug);
+        if ($codeNorm === '' || $slug === '') {
+            continue;
+        }
+        $out[$codeNorm] = $slug;
+    }
+
+    return $out;
+}
+
+function mha_tester_promo_enabled(): bool
+{
+    return mha_tester_promo_codes() !== [];
+}
+
+/** URL page deck (code promo + téléchargement zip). */
+function mha_deck_download_page_url(string $productSlug): string
+{
+    return '/auth/deck.php?product=' . rawurlencode(trim($productSlug));
+}
+
+/**
+ * @return array{ok: bool, error?: string, product_slug?: string, already_owned?: bool}
+ */
+function mha_redeem_tester_promo_code(string $code, array $user): array
+{
+    $map = mha_tester_promo_codes();
+    if ($map === []) {
+        return ['ok' => false, 'error' => 'disabled'];
+    }
+
+    $codeNorm = strtoupper(preg_replace('/\s+/', '', trim($code)));
+    if ($codeNorm === '' || !isset($map[$codeNorm])) {
+        return ['ok' => false, 'error' => 'invalid'];
+    }
+
+    $productSlug = $map[$codeNorm];
+    $offer = mha_shop_offer($productSlug);
+    if ($offer !== null && ($offer['status'] ?? '') !== 'available') {
+        return ['ok' => false, 'error' => 'product_unavailable'];
+    }
+
+    $userId = (int) ($user['id'] ?? 0);
+    if ($userId <= 0) {
+        return ['ok' => false, 'error' => 'login'];
+    }
+
+    if (mha_can_access_product($productSlug)) {
+        return ['ok' => true, 'product_slug' => $productSlug, 'already_owned' => true];
+    }
+
+    mha_grant_product($userId, $productSlug);
+    mha_grant_product($userId, mha_flashdev_product_slug());
+
+    return ['ok' => true, 'product_slug' => $productSlug, 'already_owned' => false];
+}
+
+/** URL page merci — à coller dans le funnel Systeme.io (étape remerciement / redirection). */
+function mha_shop_merci_url(string $productSlug): string
+{
+    $urls = mha_config()['shop_funnel_merci_urls'] ?? [];
+    if (is_array($urls)) {
+        $custom = trim((string) ($urls[$productSlug] ?? ''));
+        if ($custom !== '' && preg_match('#^https://#i', $custom)) {
+            return $custom;
+        }
+    }
+
+    $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'https';
+    $host = (string) ($_SERVER['HTTP_HOST'] ?? 'madhackademy.eu');
+
+    return $scheme . '://' . $host . '/boutique/merci.php?product=' . rawurlencode($productSlug);
 }
 
 /**

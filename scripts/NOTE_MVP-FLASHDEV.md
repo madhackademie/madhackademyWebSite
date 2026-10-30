@@ -1,6 +1,6 @@
 # Note — MVP FlashDev avant release
 
-> Dernière mise à jour : **29 octobre 2026**  
+> Dernière mise à jour : **30 octobre 2026**  
 > **Document de réflexion** — cocher au fil des sessions ce qui est **impératif** avant la première distribution publique.  
 > **Prochaine session P1 :** boucle élève prod + contrôleur prérequis deck (voir `NOTE_PROCHAINE-SESSION.md`).
 
@@ -77,7 +77,30 @@ Un élève peut :
 - Cartes WebM animées
 - Sync stats / leaderboard temps réel
 - App mobile
-- Version anglaise complète
+- Hub formation multilingue (pages EN/DE, cartes + guides traduits, choix de zip deck) — **après** validation communauté FR
+
+---
+
+## Internationalisation formations (post-MVP — décision 30/10/2026)
+
+**Ordre produit :** valider le parcours avec une **petite communauté française** → puis **anglais** → puis **allemand**. La vitrine EN (`training-center.html`) peut continuer à pointer vers les hubs **FR** (`gamedevready-bases-cpp.html`) tant que le contenu formation n’est pas traduit.
+
+**Cible V2 (à concevoir plus tard, même principe de contrôle) :**
+
+| Couche | FR (actuel) | Plus tard |
+|--------|-------------|-----------|
+| Vitrine hub deck | `gamedevready-bases-cpp.html` | Page(s) dédiée(s) par langue (ex. `…-en.html`) |
+| Cartes + guides site | 7 cartes + 7 guides FR | Traductions ; URLs distinctes par langue, **même login** |
+| Téléchargement deck | un zip (config `deck_download_files`) | **Une page** (dashboard ou merci) : choix **FR / EN / DE** parmi les zips autorisés |
+
+**Contrôle d’accès — invariant quelle que soit la langue :**
+
+- **Un achat = un droit produit** (`user_products.product_slug`, ex. `gamedevready-bases-cpp`) — pas un slug par langue.
+- **Guides protégés** : `mha_require_product(slug)` + session ; la langue ne crée pas un produit séparé.
+- **Formation Phase 1** : liaison **1 compte ↔ 1 machine** (`mha_ensure_formation_device`) — identique pour toutes les langues du même produit.
+- **Téléchargement zip** : login + `mha_can_access_product` ; le serveur ne sert que les fichiers langue autorisés pour ce slug (à étendre dans `deck_download_files` ou catalogue, sans dupliquer la vente).
+
+Webhook Systeme.io / boutique simulée : toujours **grant sur le slug métier**, pas sur la locale.
 
 ---
 
@@ -98,6 +121,8 @@ Cocher quand **tous** les Must-have marqués **Oui** sont testés :
 |------|----------|------------|
 | 08/07/2026 | Création note MVP — périmètre à trancher session suivante | — |
 | 29/10/2026 | **Setup exe** = socle LÖVE + VS Code + Lua seulement ; **Raylib hors installeur** ; prérequis deck = contrôleur à l’install (S8) + test boucle site→soft P1 session 30/10 | Laurent |
+| 30/10/2026 | Formations **FR seules** jusqu’à validation communauté ; i18n **EN puis DE** ensuite (pages dédiées + cartes/guides + choix zip) — **même** contrôle compte / `user_products` / device | Laurent |
+| 30/10/2026 | **Boutique / GameDevReady** : contenu dupliqué accepté jusqu’à loop Phase 1 OK ; **refonte architecture + boutique** reportée P2 post-validation | Laurent |
 
 ---
 

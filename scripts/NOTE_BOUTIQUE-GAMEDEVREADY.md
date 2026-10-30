@@ -3,17 +3,44 @@
 **Principe cible :** tout l’aspect **commercial** passe par **Systeme.io** — checkout, **TVA**, factures, remboursements.  
 Le site grant le deck quand Systeme.io envoie l’événement **`SALE_NEW`**.
 
-## Mode pré-lancement (entreprise pas encore en service)
+## Vitrine temporaire — boutique ≈ GameDevReady (oct. 2026)
+
+**Constat :** le contenu affiché se recoupe entre le hub **`gamedevready.html`**, **`centre-formation.html#boutique`** et **`/boutique/index.php`**.
+
+**Nav (oct. 2026)** : menu FR unifié — Accueil · FlashDev · Téléchargement · Formation · GameDevReady · **Boutique** (+ FR|EN). Partial PHP : `WebSite/partials/nav-fr.php` (pages boutique) ; mêmes liens copiés sur les `.html` vitrine.
+
+**Décision :** on **garde** la duplication de contenu le temps de **valider la boucle élève**. Le bas de `#boutique` sur centre-formation envoie vers le **checkout** (`acheter.php`), pas vers une 3e grille identique sans explication.
+
+**Après boucle GameDevReady Phase 1 validée** (communauté FR) — **P2 à planifier** :
+
+- Repenser **l’architecture vitrine** (rôle distinct : hub pédagogique vs tunnel achat vs centre formation).
+- **Refonte boutique** : une source de vérité contenu, landings par offre, moins de pages redondantes.
+- Trancher si la boutique reste sous `/boutique/` ou fusion partielle avec le hub GameDevReady.
+
+Suivi tâches : [`TODO.md`](../TODO.md) § refonte boutique / architecture.
+
+---
 
 Tant que `formation_free_grant_until_systeme_io` = **true** dans `api/config.php` :
 
 | Élément | Comportement |
 |---------|----------------|
-| Boutique / dashboard | **0 €** — bouton « Activer Phase 1 » |
-| Endpoint | `/auth/activate-formation-prelaunch.php` → même grant que la vente (deck + guides + flashdev-soft) |
-| Systeme.io vente | **Non utilisé** (opt-in FlashDev CRM reste possible via API) |
+| Boutique / dashboard | **0 €** — « Commander » → page acheter |
+| Parcours | `/boutique/acheter.php` (récap) → **Confirmer** → `/boutique/merci.php` (zip + liens) |
+| Systeme.io vente | **Non utilisé** — URL merci déjà utilisable dans un funnel test |
 
-**Désactiver le bypass** dès l’entreprise est en activité : `formation_free_grant_until_systeme_io` → **false**, puis checklist § « Entreprise en activité » dans [`TODO.md`](../TODO.md).
+**Désactiver le bypass** dès l’entreprise est en activité : `formation_free_grant_until_systeme_io` → **false**, puis checklist § « Entreprise en activité » dans [`TODO.md`](../TODO.md) et **§ Après statut validé** dans [`NOTE_CREATION-ENTREPRISE.md`](NOTE_CREATION-ENTREPRISE.md).
+
+---
+
+## Gate commercial — passerelle obligatoire (post-entreprise)
+
+Quand le statut est **créé et validé**, le site **ne doit plus** grant la Phase 1 en 0 € :
+
+1. `formation_free_grant_until_systeme_io` = **false** → `acheter.php` n’affiche plus « Confirmer 0 € » ; seul le bouton **Payer via Systeme.io** (ou message « paiement en configuration » si URL manquante).
+2. L’accès deck = **webhook `SALE_NEW`** uniquement (plus de contournement hors passerelle).
+
+**Avant ce linkage :** pré-lancement sur madhackademy.eu uniquement ; funnel Systeme.io peut rester en brouillon.
 
 ---
 
@@ -22,11 +49,11 @@ Tant que `formation_free_grant_until_systeme_io` = **true** dans `api/config.php
 | Fichier | Rôle |
 |---------|------|
 | `WebSite/boutique/index.php` | Grille 3 phases (1 en vente) |
-| `WebSite/boutique/acheter.php` | Login → redirect URL funnel / boutique Systeme.io |
-| `WebSite/boutique/merci.php` | Retour élève (l’accès = webhook, pas cette page seule) |
+| `WebSite/boutique/acheter.php` | Pseudo checkout (récap + confirm 0 € ou redirect Systeme.io) |
+| `WebSite/boutique/merci.php` | Remerciement + liens téléchargement deck / FlashDev |
 | `WebSite/api/systeme-webhook.php` | **Webhook natif** Systeme.io → `user_products` |
 | `WebSite/api/shop-webhook.php` | Alias (même handler) — préférer `systeme-webhook.php` |
-| `WebSite/auth/activate-formation-prelaunch.php` | Bypass 0 € (pré-lancement uniquement) |
+| `WebSite/auth/activate-formation-prelaunch.php` | Redirige vers `acheter.php` (compat anciens liens) |
 
 ## Côté Systeme.io (Laurent)
 
@@ -56,13 +83,24 @@ Après un achat test, noter `pricePlan.id` dans le payload (ou l’ID admin prod
 
 Sans mapping, le webhook répond `unmapped_sale` (422) et **aucun** accès n’est granté.
 
-### 4. Page merci funnel (optionnel)
+### 4. Page merci funnel (sans ou avec paiement)
 
-Dans le funnel Systeme.io, page de remerciement ou redirection :
+URL à coller dans Systeme.io (redirection fin de tunnel) :
 
-`https://madhackademy.eu/boutique/merci.php?product=gamedevready-bases-cpp`
+```
+https://madhackademy.eu/boutique/merci.php?product=gamedevready-bases-cpp
+```
 
-(`acheter.php` peut aussi ajouter `success_url` si ton funnel le supporte.)
+Parcours site **sans** Systeme.io (pré-lancement) :
+
+```
+https://madhackademy.eu/boutique/acheter.php?product=gamedevready-bases-cpp
+→ Confirmer (0 €) → merci + téléchargement deck
+```
+
+Quand la vente sera active, même URL merci après paiement ; accès deck = webhook **SALE_NEW**.
+
+(`acheter.php` peut aussi ajouter `success_url` vers cette URL si ton funnel le supporte.)
 
 ### 5. Automations CRM (optionnel)
 
@@ -99,7 +137,30 @@ Sur **`SALE_NEW`** signé (`X-Webhook-Signature`) :
 
 ## Test sans payer
 
-Dashboard **admin / testeur** : formulaire « Accorder un produit » (support interne uniquement).
+| Méthode | Usage |
+|---------|--------|
+| Dashboard **admin / testeur** | Formulaire « Accorder un produit » (support interne) |
+| **Code promo testeur** | Page [`/auth/deck.php`](/WebSite/auth/deck.php) ou [`/telecharger-deck.php`](/WebSite/telecharger-deck.php) — grant Phase 1 + FlashDev si code valide |
+
+### Config code promo (`api/config.php`, non commité)
+
+```php
+'tester_promo_enabled' => true,
+'tester_promo_codes' => [
+    'GDR-TEST-BOOTCAMP' => 'gamedevready-bases-cpp', // changer le libellé en prod
+],
+'deck_download_files' => [
+    'gamedevready-bases-cpp' => 'private/decks/GameDevReady-Phase1-BasesCpp.zip',
+],
+```
+
+- Saisie du code : **`/boutique/acheter.php?product=…`** (bloc « Code promo testeur ») ou [`/auth/deck.php`](/WebSite/auth/deck.php) / [`/telecharger-deck.php`](/WebSite/telecharger-deck.php).
+
+- **`tester_promo_enabled` → false** avant ouverture publique (ou supprimer les codes).
+- Le code est **insensible à la casse** ; espaces ignorés.
+- Même effet qu’un achat pré-lancement sur le slug : `user_products` + téléchargement via `download-deck.php` si le zip est publié.
+
+Parcours testeur : compte sur `/telecharger.html` → [`/telecharger-deck.php`](https://madhackademy.eu/telecharger-deck.php) → code → bouton zip.
 
 ## FTP
 

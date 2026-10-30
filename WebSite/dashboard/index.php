@@ -34,7 +34,7 @@ $roleLabel = match ($user['role']) {
     <title>Ma bibliothèque — MadHackAdemy</title>
     <meta name="robots" content="noindex, nofollow">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="/nav-site.css?v=7">
+    <link rel="stylesheet" href="/nav-site.css?v=9">
     <style>
         .nintendo-red { background: #E60012; }
         .nintendo-yellow { background: #FBDD08; }
@@ -149,14 +149,14 @@ $roleLabel = match ($user['role']) {
 
         <?php if ($prelaunchBypass && !$isStaff && !$hasFormationProduct): ?>
             <section class="mb-10 dash-card p-6 md:p-8 border-green-700/50">
-                <h2 class="text-lg font-bold text-nintendo-green mb-2">Phase 1 — accès pré-lancement (0 €)</h2>
+                <h2 class="text-lg font-bold text-nintendo-green mb-2">Phase 1 · BootCampC++ bases · 1&nbsp;€</h2>
                 <p class="text-gray-400 text-sm mb-4">
                     L’entreprise et le funnel Systeme.io ne sont pas encore en service. Tu peux activer le
                     <strong>Bootcamp C++</strong> comme un client (deck .zip + guides) — sans paiement.
                 </p>
-                <a href="/auth/activate-formation-prelaunch.php?product=<?= rawurlencode($formationSlug) ?>"
-                   class="inline-block px-6 py-3 rounded text-sm dash-btn-primary">
-                    Activer la Phase 1 gratuitement
+                <a href="/boutique/acheter.php?product=<?= rawurlencode($formationSlug) ?>"
+                   class="inline-block px-6 py-3 rounded text-sm btn-shop-cta">
+                    Commander · 1&nbsp;€
                 </a>
                 <p class="text-xs text-gray-600 mt-4">
                     Après mise en activité : achat 1 € via Systeme.io (TVA) — ce raccourci sera désactivé.
@@ -221,7 +221,13 @@ $roleLabel = match ($user['role']) {
                     <p class="text-gray-300 mb-4">Aucun produit activé pour ce compte.</p>
                     <div class="flex flex-wrap justify-center gap-3">
                         <a href="/telecharger.html" class="inline-block px-6 py-3 dash-btn-primary rounded">Créer mon accès FlashDev</a>
-                        <a href="/boutique/" class="inline-block px-6 py-3 dash-btn-secondary rounded">Bootcamp C++ — 1 €</a>
+                        <a href="/boutique/index.php" class="inline-block px-6 py-3 btn-shop-cta rounded text-sm">Bootcamp C++ · 1&nbsp;€</a>
+                        <?php if (mha_tester_promo_enabled()): ?>
+                            <a href="<?= mha_escape(mha_deck_download_page_url($formationSlug)) ?>"
+                               class="inline-block px-6 py-3 dash-btn-secondary rounded text-sm">
+                                Code testeur · deck
+                            </a>
+                        <?php endif; ?>
                     </div>
                 </div>
             <?php else: ?>
@@ -272,10 +278,10 @@ $roleLabel = match ($user['role']) {
                                                 Télécharger le deck (.zip)
                                             </a>
                                         <?php else: ?>
-                                            <span class="px-5 py-3 rounded text-sm dash-btn-muted inline-block"
-                                                  title="Zip non publié — config FTP ou deck_download_files">
-                                                Deck zip — bientôt
-                                            </span>
+                                            <a href="<?= mha_escape((string) ($item['deck_page_url'] ?? mha_deck_download_page_url((string) $item['slug']))) ?>"
+                                               class="px-5 py-3 rounded text-sm dash-btn-deck">
+                                                Télécharger le deck (.zip)
+                                            </a>
                                         <?php endif; ?>
                                     <?php endif; ?>
                                 </div>

@@ -15,7 +15,7 @@
     }
 }
 
-/* Cycle rouge → jaune → vert → bleu (compte seulement les <a> directs) */
+/* Cycle rouge → jaune → vert → bleu sur les 6 liens vitrine (répété) */
 .nav-site-links > a.nav-item:nth-of-type(4n + 1) { color: #E60012; }
 .nav-site-links > a.nav-item:nth-of-type(4n + 2) { color: #FBDD08; }
 .nav-site-links > a.nav-item:nth-of-type(4n + 3) { color: #05C31C; }
@@ -30,6 +30,13 @@
     text-decoration: underline;
     text-underline-offset: 4px;
     text-decoration-thickness: 2px;
+}
+
+.gradient-text {
+    background: linear-gradient(90deg, #E60012, #FBDD08, #05C31C, #1B8CE4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 /* ——— Layout barre + hamburger ——— */
@@ -282,4 +289,44 @@ body.nav-open {
 .nav-session-login:hover,
 .nav-session-login:focus-visible {
     color: #facc15 !important;
+}
+
+/* CTA boutique / achat (vert = action positive, pas rouge interdit) */
+.btn-shop-cta {
+    background: #05C31C;
+    color: #0a0a0a;
+    font-weight: 700;
+    transition: filter 0.15s ease, transform 0.12s ease;
+}
+.btn-shop-cta:hover {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+}
+.shop-offer-card--live {
+    border-color: #05C31C !important;
+}
+.shop-offer-card--phase1 {
+    border-color: #E60012 !important;
+}
+.shop-offer-card--phase2 {
+    border-color: #FBDD08 !important;
+}
+.shop-offer-card--phase3 {
+    border-color: #1B8CE4 !important;
+}
+.shop-offer-badge {
+    background: #05C31C;
+    color: #0a0a0a;
+}
+.shop-offer-badge--red {
+    background: #E60012;
+    color: #fff;
+}
+.shop-offer-badge--yellow {
+    background: #FBDD08;
+    color: #111;
+}
+.shop-offer-badge--blue {
+    background: #1B8CE4;
+    color: #fff;
 }

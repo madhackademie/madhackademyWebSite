@@ -22,10 +22,18 @@ return [
     /** Nom du tag Systeme.io (résolu en ID via API — déclenche l’automation download) */
     'systeme_io_tag_flashdev' => 'flashdev-download',
     /**
-     * true = Phase 1 sans Systeme.io (0 €, activate-formation-prelaunch) — tant que l’entreprise n’est pas en activité.
-     * Mettre false + funnel 1 € + webhook SALE_NEW dès que la vente légale est prête.
+     * true = Phase 1 sans passerelle (0 € sur acheter.php). false = vente obligatoire via Systeme.io
+     * une fois statut entreprise validé — voir scripts/NOTE_CREATION-ENTREPRISE.md § Après statut validé.
      */
     'formation_free_grant_until_systeme_io' => true,
+    /**
+     * URL page merci par produit — à configurer comme redirection dans le funnel Systeme.io
+     * (même sans paiement, pour tester le parcours remerciement + liens).
+     * Si vide : https://madhackademy.eu/boutique/merci.php?product=…
+     */
+    'shop_funnel_merci_urls' => [
+        // 'gamedevready-bases-cpp' => 'https://madhackademy.eu/boutique/merci.php?product=gamedevready-bases-cpp',
+    ],
     /**
      * Boutique GameDevReady — paiement Systeme.io (TVA) quand formation_free_grant_until_systeme_io = false.
      * Lien checkout = étape funnel ou produit boutique Systeme.io (1 € Phase 1).
@@ -55,5 +63,13 @@ return [
      */
     'deck_download_files' => [
         // 'gamedevready-bases-cpp' => 'private/decks/GameDevReady-Phase1-BasesCpp.zip',
+    ],
+    /**
+     * Bypass testeurs beta — code promo → grant Phase 1 + FlashDev (sans boutique).
+     * Désactiver (false) avant ouverture publique large.
+     */
+    'tester_promo_enabled' => true,
+    'tester_promo_codes' => [
+        'GDR-TEST-BOOTCAMP' => 'gamedevready-bases-cpp',
     ],
 ];

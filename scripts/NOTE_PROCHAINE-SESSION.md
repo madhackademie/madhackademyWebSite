@@ -1,19 +1,47 @@
 # Guide — Prochaine session de travail
 
 > **Référence principale** pour reprendre le projet madhackademyWebSite  
-> Dernière mise à jour : **29 octobre 2026**  
+> Dernière mise à jour : **30 octobre 2026** (soir — clôture session boutique / nav)  
 > Domaine marque : [madhackademy.eu](https://madhackademy.eu/)  
 > Ancien domaine : `gameopenmoney.com` → **301** vers madhackademy (voir `.htaccess`)
 
 ---
 
-## Reprise session suivante — **P1 unique** (30/10/2026)
+## Reprise session suivante — **P1 unique** (31/10/2026 — Laurent)
 
-> **Phase A — Boucle élève prod** : valider **inscription → mot de passe → téléchargement → installeur → FlashDev → deck → soft** (checklist ci-dessous).  
-> **Phase B — Prérequis deck** : concevoir et implémenter un **contrôleur de prérequis** à l’install deck (ex. bootcamp C++ → Raylib `C:\raylib\` + extension C/C++), message clair si manquant — **hors** installeur socle actuel (`install-madhackademy.ps1` n’installe pas Raylib).  
-> Ne pas utiliser la copie OneDrive (`…\OneDrive\RevisionSoft\…`).
+> **Test machine « propre »** : supprimer l’installation FlashDev locale actuelle, puis **tout refaire via le site** (opt-in / login → **FlashDev-Setup** prod → deck → parcours 7 cartes).  
+> **Phase B (après ou en parallèle si bloqué)** : contrôleur prérequis deck Raylib — voir ci-dessous.
 
-### Bilan session 29/10/2026
+### Bilan session 30/10/2026 (soir)
+
+| Fait | Détail |
+|------|--------|
+| **Boutique** | `index.php` / `acheter.php` / `merci.php` — grille offres, pré-lancement, tunnel commande |
+| **UX achat** | CTA vert `btn-shop-cta`, cadres rouge/jaune/bleu, nav unifiée (`partials/nav-fr.php`) |
+| **Code promo testeurs** | `tester_promo_*` dans `config.php` — saisie sur **`acheter.php`** + **`/auth/deck.php`** / `telecharger-deck.php` |
+| **Compte obligatoire** | `acheter.php` / `merci.php` / deck : **`mha_require_login`** — grant sur le compte connecté |
+| **Docs** | i18n FR→EN→DE, doublon vitrine boutique/GameDevReady (P2 refonte), `NOTE_BOUTIQUE-GAMEDEVREADY.md` |
+| **À faire Laurent demain** | **FTP** si pas à jour : boutique, partials nav, `bootstrap.php`, `acheter.php`, `nav-site.css` v11 + **`config.php` prod** (promo + `deck_download_files`) |
+| **Non fait** | Boucle élève **bout en bout** sur machine reset ; Phase B prérequis deck |
+
+### Phase A — Parcours demain (site → soft) — **P1 Laurent**
+
+**Préparation**
+
+1. Désinstaller / supprimer **`%LOCALAPPDATA%\FlashDev`** (et raccourcis) — **ne pas** utiliser le repo dev ni OneDrive comme « install ».
+2. **`.\scripts\sync-both.cmd`** puis vérifier prod alignée (FTP si besoin).
+
+**Parcours**
+
+1. Smoke : [telecharger.html](https://madhackademy.eu/telecharger.html), manifest **0.2.2**, nav unifiée.
+2. Compte : opt-in (email neuf ou compte test) → **`set-password`** → connexion.
+3. Télécharger **`FlashDev-Setup-0.2.2-win64.exe`** **depuis le site** (session connectée).
+4. Installer → lancer FlashDev : **0 carte**.
+5. **Formation** : pré-lancement **`acheter.php`** et/ou **code promo testeur** → **`/auth/deck.php`** → zip deck → install deck dans FlashDev.
+6. Parcours **7/7** cartes : Start → VS Code → Done → **webGuide** (guides login si payant).
+7. Cocher checklist ci-dessous + noter écarts (Raylib, zip FTP, promo config, device bind, etc.).
+
+### Bilan session 29/10/2026 (archive)
 
 | Fait | Détail |
 |------|--------|
@@ -22,20 +50,21 @@
 | Clarification setup | **FlashDev-Setup** = LÖVE + VS Code + extensions Lua ; **pas** Raylib ni deck embarqué |
 | Doc parcours | Tunnel opt-in : download **sur le site** après MDP ; email Systeme.io = Bienvenue + login (pas le `.exe`) |
 | **Non fait** | Test boucle élève bout en bout ; contrôleur prérequis deck ; cases MVP / deck encore vides |
-| **Boutique pré-lancement** | Bypass 0 € (`formation_free_grant_until_systeme_io`) — funnel Systeme.io **P2** après entreprise en activité ([`TODO.md`](../TODO.md) § Boutique) |
+| **Boutique pré-lancement** | Bypass 0 € sur **`acheter.php`** — **passerelle Systeme.io P2** après statut entreprise validé ([`NOTE_CREATION-ENTREPRISE.md`](NOTE_CREATION-ENTREPRISE.md) § Après statut validé) |
+| **Vitrine doublon** | **`gamedevready.html`** + **`/boutique/`** + **`#boutique`** = contenu proche — **OK jusqu’à loop Phase 1** ; refonte architecture / boutique → **P2** ([`NOTE_BOUTIQUE-GAMEDEVREADY.md`](NOTE_BOUTIQUE-GAMEDEVREADY.md)) |
 
-### Phase A — Parcours demain (site → soft)
+### Phase A — Parcours (réf. checklist détaillée)
 
 1. **Sync** : `.\scripts\sync-both.cmd` (racine `madhackademyWebSite/`)
 2. Smoke prod : accueil FR/EN, nav, [telecharger.html](https://madhackademy.eu/telecharger.html), manifest **0.2.2**
 3. **Inscription** : email neuf + consentement → `set-password` → session → bouton **FlashDev-Setup-0.2.2-win64.exe**
 4. Installer → `%LOCALAPPDATA%\FlashDev` (raccourci prod ; repo dev séparé si test chez Laurent)
 5. FlashDev : **0 carte** au premier lancement
-6. **Explore deck** → dossier `DeckBootCampCpp/` (copie locale / zip — pas dans l’exe)
+6. **Boutique / promo** : `acheter.php` ou code testeur → zip → **Explore deck** → install `DeckBootCampCpp/`
 7. Parcours cartes (viser **7/7**) : Start → VS Code → Done → **webGuide** (`URLNet` = carte publique site)
 8. Cocher checklists ci-dessous + noter écarts (Raylib, manifest JS, opt-in, etc.)
 
-### Phase B — Contrôleur prérequis deck (après ou pendant Phase A)
+### Phase B — Contrôleur prérequis deck (après Phase A ou si compile bloquée)
 
 - **Constat** : deck bootcamp = exercices Raylib ; toolchain **`C:\raylib\`** requise pour compiler — non installée par le setup `.exe`
 - **Objectif** : avant ou au clic **Install** dans `deckInstaller.lua`, vérifier les prérequis déclarés (JSON deck ou manifest) et afficher feedback (liste manquants + lien doc)
@@ -60,6 +89,7 @@
 - [ ] `set-password` → retour `telecharger.html` avec download
 - [ ] Manifest page téléchargement OK (navigateur connecté)
 - [ ] `.exe` téléchargé depuis le site (pas repo / OneDrive)
+- [ ] **`acheter.php`** ou **code promo** → grant formation + **`/auth/deck.php`** → zip (si prod config OK)
 
 **Soft / deck**
 

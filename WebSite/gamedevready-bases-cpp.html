@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bases C++ — GameDevReady Bootcamp</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="nav-site.css?v=7">
+    <link rel="stylesheet" href="nav-site.css?v=9">
     <style>
         html { scroll-behavior: smooth; }
         .nintendo-red { background: #E60012; }
@@ -83,6 +83,17 @@
         .btn-guide:hover {
             background: #b91c1c;
         }
+        .deck-buy-owned {
+            border: 2px dashed #4b5563;
+            color: #9ca3af;
+            cursor: default;
+        }
+        .deck-buy-owned a {
+            color: #05C31C;
+        }
+        .deck-buy-owned a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body class="bg-black text-white font-mono">
@@ -97,6 +108,7 @@
                 <a href="/telecharger.html" class="nav-item">Téléchargement</a>
                 <a href="/centre-formation.html" class="nav-item">Formation</a>
                 <a href="/gamedevready.html" class="nav-item" aria-current="page">GameDevReady</a>
+                <a href="/boutique/index.php" class="nav-item">Boutique</a>
                 <a href="/roadMapCPPBootcamp.html" class="nav-item hidden sm:inline">Progression Map</a>
                 <div class="flex items-center gap-1.5 text-xs font-bold border border-gray-700 rounded px-2 py-1" role="navigation" aria-label="Langue">
                     <span class="text-white" aria-current="page">FR</span>
@@ -114,18 +126,28 @@
             <div class="max-w-6xl mx-auto">
                 <a href="/gamedevready.html" class="text-sm text-gray-500 hover:text-red-400 transition">← GameDevReady</a>
                 <h1 class="text-4xl md:text-6xl font-bold mt-4 mb-3">
-                    <span class="text-nintendo-red">Phase 1</span> — Bases C++
+                    <span class="text-nintendo-yellow">Phase 1</span> · Bases C++
                 </h1>
                 <p class="text-gray-400 max-w-2xl">
                     Bootcamp console : 7 cartes du deck GameDevReady (thème Frogger).
                     Clique une miniature pour descendre vers la carte, puis ouvre le guide pédagogique.
                 </p>
-                <a href="/roadMapCPPBootcamp.html" class="inline-flex items-center gap-2 mt-6 px-5 py-2.5 border-2 border-blue-500 text-blue-400 font-bold rounded hover:bg-blue-500 hover:text-black transition text-sm">
-                    Voir la Progression Map →
-                </a>
-                <a href="/boutique/acheter.php?product=gamedevready-bases-cpp" class="inline-flex items-center gap-2 mt-4 ml-0 md:ml-4 px-6 py-3 nintendo-red text-white font-bold rounded hover:opacity-90 transition text-sm">
-                    Acheter le deck — 1 €
-                </a>
+                <div class="flex flex-wrap items-center gap-3 mt-6">
+                    <a href="/roadMapCPPBootcamp.html" class="inline-flex items-center gap-2 px-5 py-2.5 border-2 border-blue-500 text-blue-400 font-bold rounded hover:bg-blue-500 hover:text-black transition text-sm">
+                        Voir la Progression Map →
+                    </a>
+                    <div data-deck-buy-cta data-product="gamedevready-bases-cpp" class="inline-flex flex-wrap items-center gap-3">
+                        <a href="/boutique/acheter.php?product=gamedevready-bases-cpp"
+                           data-deck-buy-link
+                           class="inline-flex items-center gap-2 px-6 py-3 btn-shop-cta rounded transition text-sm">
+                            Acheter · 1&nbsp;€
+                        </a>
+                        <span data-deck-owned class="hidden deck-buy-owned inline-flex items-center gap-2 px-6 py-3 rounded text-sm font-bold" aria-hidden="true">
+                            Déjà acquis —
+                            <a href="/dashboard/">Ma bibliothèque</a>
+                        </span>
+                    </div>
+                </div>
             </div>
         </header>
 
@@ -133,7 +155,18 @@
         <section class="py-12 px-4 bg-gray-950">
             <div class="max-w-6xl mx-auto">
                 <h2 class="text-sm uppercase tracking-widest text-gray-500 mb-2">Deck bootstrap</h2>
-                <p class="text-gray-400 text-sm mb-8">Cartes HTML Frogger — modules 01 à 07</p>
+                <p class="text-gray-400 text-sm mb-4">Cartes HTML Frogger — modules 01 à 07</p>
+                <div data-deck-buy-cta data-product="gamedevready-bases-cpp" class="flex flex-wrap items-center gap-3 mb-8 pb-6 border-b border-gray-800">
+                    <a href="/boutique/acheter.php?product=gamedevready-bases-cpp"
+                       data-deck-buy-link
+                       class="inline-flex items-center gap-2 px-5 py-2.5 btn-shop-cta rounded transition text-sm">
+                        Acheter · 1&nbsp;€
+                    </a>
+                    <span data-deck-owned class="hidden deck-buy-owned inline-flex items-center gap-2 px-5 py-2.5 rounded text-sm font-bold" aria-hidden="true">
+                        Formation déjà sur ton compte —
+                        <a href="/dashboard/">Télécharger dans Ma bibliothèque</a>
+                    </span>
+                </div>
                 <div class="deck-grid">
 
                     <a href="#carte-print" class="deck-card-link text-center group">
@@ -281,7 +314,8 @@
         </div>
     </footer>
 
-<script src="/nav-mobile.js?v=7" defer></script>
-<script src="/nav-session.js?v=7" defer></script>
+<script src="/nav-mobile.js?v=8" defer></script>
+<script src="/nav-session.js?v=8" defer></script>
+<script src="/deck-buy-cta.js?v=1" defer></script>
 </body>
 </html>

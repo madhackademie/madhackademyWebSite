@@ -24,6 +24,8 @@ if ($user !== null) {
             $canDownloadDecks[(string) $item['slug']] = true;
         }
     }
+    $formationSlug = mha_formation_product_slug();
+    $canAccessFormation = mha_can_access_product($formationSlug);
 }
 
 echo json_encode([
@@ -35,4 +37,9 @@ echo json_encode([
     'dashboard_url' => '/dashboard/',
     'library_count' => isset($library) ? count($library) : 0,
     'can_download_decks' => $canDownloadDecks ?? new stdClass(),
+    'formation_product_slug' => mha_formation_product_slug(),
+    'can_access_formation' => $canAccessFormation ?? false,
+    'boutique_acheter_url' => '/boutique/acheter.php?product=' . rawurlencode(mha_formation_product_slug()),
+    'deck_page_url' => mha_deck_download_page_url(mha_formation_product_slug()),
+    'tester_promo_enabled' => mha_tester_promo_enabled(),
 ], JSON_UNESCAPED_UNICODE);

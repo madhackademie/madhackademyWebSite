@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>[MadHackAdemy] - Training Center</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="nav-site.css?v=7">
+    <link rel="stylesheet" href="nav-site.css?v=9">
     <link rel="stylesheet" href="/wip-panel.css?v=7">
     <style>
+        html { scroll-behavior: smooth; }
+        #boutique { scroll-margin-top: 6rem; }
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-20px); }
@@ -101,6 +103,7 @@
                     <a href="/telecharger.html" class="nav-item">Download</a>
                     <a href="/training-center.html" class="nav-item" aria-current="page">Training</a>
                     <a href="/gamedevready.html" class="nav-item">GameDevReady</a>
+                    <a href="/boutique/index.php" class="nav-item">Shop</a>
                     <div class="flex items-center gap-1.5 text-xs font-bold border border-gray-700 rounded px-2 py-1" role="navigation" aria-label="Language">
                         <a href="/centre-formation.html" class="text-gray-400 hover:text-white transition-colors" hreflang="fr" lang="fr">FR</a>
                         <span class="text-gray-600" aria-hidden="true">|</span>
@@ -130,6 +133,7 @@
                 <a href="/telecharger.html" class="nav-item">Download</a>
                 <a href="/training-center.html" class="nav-item" aria-current="page">Training</a>
                 <a href="/gamedevready.html" class="nav-item">GameDevReady</a>
+                <a href="/boutique/index.php" class="nav-item">Shop</a>
                 <div class="flex items-center gap-1.5 text-xs font-bold border border-gray-700 rounded px-2 py-1 w-fit mt-1" aria-label="Language">
                     <a href="/centre-formation.html" class="text-gray-400 hover:text-white transition-colors" hreflang="fr" lang="fr">FR</a>
                     <span class="text-gray-600" aria-hidden="true">|</span>
@@ -175,7 +179,7 @@
                     DISCOVER THE METHOD
                 </a>
                 <a href="#boutique" class="w-full sm:w-auto px-6 sm:px-8 py-4 bg-transparent border-2 border-green-600 nintendo-blue text-nintendo-green font-bold rounded transition-all text-center text-sm sm:text-base">
-                    VIEW OFFERS
+                    VIEW THE SHOP
                 </a>
                 <a href="/telecharger.html" class="w-full sm:w-auto px-6 sm:px-8 py-4 bg-transparent border-2 border-red-600 text-nintendo-red font-bold rounded transition-all text-center text-sm sm:text-base hover:bg-red-600/10">
                     DOWNLOAD THE SOFTWARE
@@ -441,68 +445,70 @@
             <h2 class="text-4xl md:text-5xl font-bold text-center mb-4 fade-up">
                 <span class="gradient-text">The Shop</span>
             </h2>
-            <p class="text-center text-gray-400 mb-16 fade-up">
-                [Briefly introduce the shop. Who is it for? What types of products or offers?]
+            <p class="text-center text-gray-400 mb-16 fade-up max-w-2xl mx-auto">
+                GameDevReady decks for FlashDev: <strong class="text-gray-200">one phase = one purchase = one zip + guides</strong>.
+                Start with Phase 1 <strong class="text-nintendo-yellow">BootCampC++ bases</strong> at <strong class="text-nintendo-yellow">€1</strong>.
             </p>
 
             <div class="grid md:grid-cols-3 gap-8 fade-up">
-                <!-- Offer 1 -->
-                <div class="bg-gray-800 p-8 rounded-lg border-2 border-red-600 hover:bg-gray-700 transition-all">
-                    <div class="text-red-500 text-4xl mb-4">🎮</div>
-                    <h3 class="text-xl font-bold mb-2 text-nintendo-red">[OFFER NAME 1]</h3>
+                <!-- Offer 1 — available -->
+                <div class="bg-gray-800 p-8 rounded-lg border-2 border-green-500 hover:bg-gray-700 transition-all relative shop-offer-card--live">
+                    <div class="absolute -top-3 left-1/2 -translate-x-1/2">
+                        <span class="px-4 py-1 shop-offer-badge text-xs font-bold rounded">OFFER 1 · AVAILABLE</span>
+                    </div>
+                    <div class="text-green-500 text-4xl mb-4 mt-3">🎮</div>
+                    <h3 class="text-xl font-bold mb-2 text-nintendo-yellow">BootCampC++ bases</h3>
                     <p class="text-gray-300 text-sm leading-relaxed mb-6">
-                        [Describe what this offer includes. Who it's for. What outcome it delivers. Format: video, live, PDF, coaching...]
+                        C++ fundamentals to start your journey as a <strong class="text-gray-200">game developer</strong>:
+                        training sheets (cards on the site), protected lesson guides, and a deck to install in
+                        <strong class="text-gray-200">FlashDev</strong>, MadHackAdemy’s spaced-repetition app.
+                        <strong class="text-nintendo-yellow">7 cards</strong> — Printf, variables, conditions, loops, functions, containers, structs.
+                        <a href="/gamedevready-bases-cpp.html"
+                           class="text-red-400 hover:text-red-300 font-bold underline underline-offset-2">View the deck path →</a>
                     </p>
                     <div class="flex items-center justify-between">
-                        <span class="text-2xl font-bold text-nintendo-yellow">[PRICE] €</span>
-                        <a href="#" class="px-4 py-2 nintendo-red text-white font-bold rounded text-sm transition-all">
-                            BUY →
+                        <span class="text-2xl font-bold text-nintendo-yellow">€1</span>
+                        <a href="/boutique/acheter.php?product=gamedevready-bases-cpp" class="px-4 py-2 btn-shop-cta rounded text-sm transition-all">
+                            BUY · €1
                         </a>
                     </div>
                 </div>
 
-                <!-- Offer 2 — flagship -->
-                <div class="bg-gray-800 p-8 rounded-lg border-2 border-yellow-500 hover:bg-gray-700 transition-all relative">
-                    <div class="absolute -top-3 left-1/2 -translate-x-1/2">
-                        <span class="px-4 py-1 nintendo-yellow text-black text-xs font-bold rounded">⭐ FLAGSHIP OFFER</span>
-                    </div>
-                    <div class="text-yellow-500 text-4xl mb-4 mt-3">🚀</div>
-                    <h3 class="text-xl font-bold mb-2 text-nintendo-yellow">[MAIN OFFER NAME]</h3>
-                    <p class="text-gray-300 text-sm leading-relaxed mb-6">
-                        [Your flagship offer. What truly transforms people. Highlight the value, not just the content. Why this is THE training to take.]
+                <!-- Offer 2 -->
+                <div class="bg-gray-800 p-8 rounded-lg border-2 border-gray-700 opacity-70">
+                    <div class="text-yellow-500 text-4xl mb-4">⚡</div>
+                    <h3 class="text-xl font-bold mb-2 text-gray-400">Phase 2 — Raylib</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                        Raylib challenges and graphics. Separate purchase when released (not included in Phase 1).
                     </p>
                     <div class="flex items-center justify-between">
-                        <span class="text-2xl font-bold text-nintendo-yellow">[PRICE] €</span>
-                        <a href="#" class="px-4 py-2 nintendo-yellow text-black font-bold rounded text-sm transition-all">
-                            BUY →
-                        </a>
+                        <span class="text-2xl font-bold text-gray-600">€1</span>
+                        <span class="text-sm text-gray-600 font-bold">Coming soon</span>
                     </div>
                 </div>
 
                 <!-- Offer 3 -->
-                <div class="bg-gray-800 p-8 rounded-lg border-2 border-blue-500 hover:bg-gray-700 transition-all">
+                <div class="bg-gray-800 p-8 rounded-lg border-2 border-gray-700 opacity-70">
                     <div class="text-blue-400 text-4xl mb-4">💎</div>
-                    <h3 class="text-xl font-bold mb-2 text-nintendo-blue">[PREMIUM OFFER NAME]</h3>
-                    <p class="text-gray-300 text-sm leading-relaxed mb-6">
-                        [Mentoring, coaching, or personalized follow-up option. For those who want to go faster with your direct help.]
+                    <h3 class="text-xl font-bold mb-2 text-gray-400">Phase 3 — Projects</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                        Full Frogger remake, OOP or ECS track. Separate purchase when released.
                     </p>
                     <div class="flex items-center justify-between">
-                        <span class="text-2xl font-bold text-nintendo-yellow">[PRICE] €</span>
-                        <a href="#" class="px-4 py-2 nintendo-blue text-white font-bold rounded text-sm transition-all">
-                            BUY →
-                        </a>
+                        <span class="text-2xl font-bold text-gray-600">€10</span>
+                        <span class="text-sm text-gray-600 font-bold">Coming soon</span>
                     </div>
                 </div>
             </div>
 
             <!-- Global CTA -->
             <div class="mt-16 bg-gray-800 p-8 rounded-lg border-2 border-green-500 text-center fade-up">
-                <h3 class="text-2xl font-bold mb-4 text-nintendo-green">Not sure yet?</h3>
+                <h3 class="text-2xl font-bold mb-4 text-nintendo-green">Full path</h3>
                 <p class="text-gray-300 mb-6">
-                    [Incentive text — a guarantee, a bonus, or a reason to take action now]
+                    The shop lists all GameDevReady offers. After checkout, open <strong>My library</strong> for the zip and guides.
                 </p>
-                <a href="#" class="inline-block px-8 py-4 nintendo-green text-white font-bold rounded transition-all">
-                    VIEW ALL OFFERS →
+                <a href="/boutique/index.php" class="inline-block px-8 py-4 btn-shop-cta rounded transition-all">
+                    Checkout · Phase 1
                 </a>
             </div>
         </div>
