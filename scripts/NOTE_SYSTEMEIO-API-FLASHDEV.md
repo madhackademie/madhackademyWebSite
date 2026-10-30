@@ -241,7 +241,28 @@ Checklist :
 | Boucle gate | Pas de lien `flashdev.html` sur une page Systeme.io qui renvoie au gate login → boucle |
 | Secrets | Clé API uniquement serveur ; rotation possible (max 3 clés) |
 | GDPR | Case consentement site + désinscription emails (DOI natif API = non) |
-| Suite possible | Séquences / vidéos formation via tags ; paiement → acquis formation site |
+| Suite possible | Séquences / vidéos formation via tags ; **paiement formation → webhook SALE_NEW** (voir [`NOTE_BOUTIQUE-GAMEDEVREADY.md`](NOTE_BOUTIQUE-GAMEDEVREADY.md)) |
+
+---
+
+## 8) Boutique GameDevReady — ventes Systeme.io
+
+**TVA, factures, remboursements = Systeme.io.** Le site grant le deck après webhook **`SALE_NEW`**.
+
+| Étape | Action |
+|-------|--------|
+| Checkout | URL funnel / boutique dans `shop_checkout_urls` → `boutique/acheter.php` |
+| Validation achat | Webhook `https://madhackademy.eu/api/systeme-webhook.php` + secret `systeme_io_webhook_secret` |
+| Mapping | `systeme_io_price_plan_products` : ID price plan → `gamedevready-bases-cpp` |
+
+Checklist :
+
+- [ ] Produit Systeme.io Phase 1 à 1 €
+- [ ] Webhook compte abonné à **SALE_NEW**
+- [ ] `pricePlan.id` mappé dans `config.php`
+- [ ] Test achat réel → `user_products` + dashboard zip
+
+Détail : [`NOTE_BOUTIQUE-GAMEDEVREADY.md`](NOTE_BOUTIQUE-GAMEDEVREADY.md)
 
 ---
 

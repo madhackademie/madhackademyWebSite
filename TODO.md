@@ -1,6 +1,6 @@
 ﻿# TODO — madhackademyWebSite
 
-> Dernière mise à jour : 29 octobre 2026  
+> Dernière mise à jour : 30 octobre 2026  
 > Projet : site vitrine FlashDev + MadHackAdemy
 
 ---
@@ -14,7 +14,8 @@
 | Doc | Sujet |
 |-----|--------|
 | [`scripts/NOTE_PROCHAINE-SESSION.md`](scripts/NOTE_PROCHAINE-SESSION.md) | État projet, architecture, prochaines évolutions |
-| [`scripts/NOTE_SYSTEMEIO-API-FLASHDEV.md`](scripts/NOTE_SYSTEMEIO-API-FLASHDEV.md) | **P1** — API Systeme.io → opt-in FlashDev (tuto étapes 1–7) |
+| [`scripts/NOTE_BOUTIQUE-GAMEDEVREADY.md`](scripts/NOTE_BOUTIQUE-GAMEDEVREADY.md) | Boutique — bypass pré-lancement + funnel Systeme.io (post-entreprise) |
+| [`scripts/NOTE_SYSTEMEIO-API-FLASHDEV.md`](scripts/NOTE_SYSTEMEIO-API-FLASHDEV.md) | API Systeme.io → opt-in FlashDev (tuto étapes 1–7) |
 | [`scripts/NOTE_DEPLOIEMENT-FTP-GAMEDEVREADY.md`](scripts/NOTE_DEPLOIEMENT-FTP-GAMEDEVREADY.md) | FTP GameDevReady |
 | [`scripts/NOTE_OVH-PHP-MYSQL.md`](scripts/NOTE_OVH-PHP-MYSQL.md) | PHP, MySQL, auth OVH (maintenance) |
 | [`scripts/NOTE_AUTH-SETUP.md`](scripts/NOTE_AUTH-SETUP.md) | Rôles, URLs auth |
@@ -110,11 +111,12 @@ Ces tâches débloquent la mise en ligne ou corrigent des problèmes visibles po
 > **À ajouter :** table **`products`** = catalogue officiel (titres, phase, URLs page, chemin re-téléchargement deck). Voir `WebSite/sql/migration_products_catalog.sql`.
 
 - [ ] **P1** — Importer table `products` + seeds (P1 bootcamp, `flashdev-soft`, placeholders P2/P3 pack)
-- [ ] **P1** — Helper PHP `mha_user_catalog(int $userId)` : `JOIN user_products` ↔ `products` (titres, liens, droits deck)
-- [ ] **P1** — Endpoint ou script **re-téléchargement deck** : login + `user_products` + `products.deck_download_path` (zip non public FTP)
+- [x] **P1** — Helper PHP `mha_user_library()` : catalogue + acquis (`bootstrap.php` — oct. 2026)
+- [x] **P1** — Endpoint **re-téléchargement deck** : `auth/download-deck.php` (login + `user_products` + zip privé)
 - [ ] **P1** — Webhook / grant manuel : une ligne **`user_products` par produit acheté** (pack = plusieurs slugs ou slug pack + déblocage progressif — à trancher avec grille tarifaire)
-- [ ] **P1** — **`dashboard/index.php`** — bloc **« Mes formations »** : liste acquis, lien hub, guides, **Re-télécharger le deck**, statut appareil formation
-- [ ] **P2** — Accueil connecté ou **`/auth/me.php`** enrichi (JSON catalogue) pour nav « Mon espace »
+- [x] **P1** — **`dashboard/index.php`** — bloc **« Ma bibliothèque »** : liste acquis, hub, guide, deck zip (oct. 2026)
+- [ ] **P1** — Publier zip bootcamp sur FTP + `deck_download_files` dans `config.php` prod
+- [x] **P1** — Lien nav **Ma bibliothèque** (`nav-session.js`) + guide toolbar
 - [ ] **P2** — Historique optionnel `user_product_events` (achat, remboursement, grant admin) — si besoin facturation
 
 ### Contenu & shop FlashDev (**ordre 2/08**)
@@ -187,6 +189,11 @@ Ces tâches débloquent la mise en ligne ou corrigent des problèmes visibles po
 
 #### Boutique / technique
 
+- [x] **Pré-lancement (oct. 2026)** — Bypass `formation_free_grant_until_systeme_io` + `activate-formation-prelaunch.php` (0 €, parcours client sans vente Systeme.io)
+- [ ] **P2 — Entreprise en activité** — `formation_free_grant_until_systeme_io` → **false** sur FTP prod
+- [ ] **P2 — Entreprise en activité** — Funnel Systeme.io Phase 1 **1 €** + `shop_checkout_urls` + merci
+- [ ] **P2 — Entreprise en activité** — Webhook **SALE_NEW** + `systeme_io_price_plan_products` → deck `gamedevready-bases-cpp`
+- [ ] **P2 — Entreprise en activité** — Linkage CRM Systeme.io (produit / tag acheteur Phase 1) + test achat 1 € remboursé — [`NOTE_BOUTIQUE-GAMEDEVREADY.md`](scripts/NOTE_BOUTIQUE-GAMEDEVREADY.md)
 - [ ] Produits / tags System.io (ou équivalent) : P1, P2, P3, **pack early bird 9 €**
 - [ ] Parcours post-achat pack : email ou dashboard « P2/P3 quand disponibles » (process avant webhook auto si besoin)
 - [ ] Aligner [`scripts/NOTE_MVP-FLASHDEV.md`](scripts/NOTE_MVP-FLASHDEV.md) O3 + CGV (accès progressif, formation en construction)
@@ -198,7 +205,7 @@ Ces tâches débloquent la mise en ligne ou corrigent des problèmes visibles po
 - [ ] **P1** — Remplir la méthode SITE + SOFT (sous-titre + 3 lignes par pilier)
 - [ ] **P1** — Rédiger la roadmap centre-formation (4 étapes : titres, descriptions, durées)
 - [ ] **P1** — Définir les 3 offres boutique (noms, contenu, prix, CTA) — **grille détaillée : § Grille tarifaire GameDevReady ci-dessous**
-- [ ] **P1** — Remplacer `[MadHackAdemy / LOGO]` et le footer `[TON NOM / CENTRE DE FORMATION]`
+- [ ] **P1** — Remplacer `[MadHackAdemy / LOGO]` et le footer `[TON NOM / CENTRE DE FORMATION]` (voir aussi § Technique & UX — pied de page site-wide)
 
 ### Liens & mise en ligne
 
@@ -336,6 +343,7 @@ Tâches utiles mais non bloquantes — à traiter après les priorités.
 
 ### Technique & UX
 
+- [ ] **P2** — **Pied de page site-wide** : renseigner le **nom / centre de formation** définitif (remplacer les placeholders `[TON NOM / CENTRE DE FORMATION]` sur [`centre-formation.html`](WebSite/centre-formation.html) et [`training-center.html`](WebSite/training-center.html) ; harmoniser la ligne © sur les autres vitrines — `index.html`, `flashdev.html`, `telecharger.html`, hub GameDevReady — même charte barres Nintendo + libellé unique)
 - [ ] Implémenter un countdown JS dynamique pour le stream du samedi (`index.html`)
 - [ ] Ajouter un favicon et des meta SEO (description, Open Graph, Twitter Card)
 - [ ] Extraire les styles communs (charte Nintendo) dans un fichier CSS partagé

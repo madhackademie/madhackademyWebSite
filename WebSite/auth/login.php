@@ -58,6 +58,10 @@ $backLabel = (str_contains((string) $redirect, 'telecharger') || str_contains((s
                 Connecté en tant que <?= mha_escape($loggedInUser['email']) ?>
             </p>
             <div class="space-y-3 mb-6">
+                <a href="/dashboard/"
+                    class="block w-full py-3 text-center bg-yellow-500 hover:bg-yellow-400 text-black font-bold rounded text-sm transition">
+                    Ma bibliothèque
+                </a>
                 <a href="<?= mha_escape($redirect ?: '/gamedevready-bases-cpp.html') ?>"
                     class="block w-full py-3 text-center bg-red-900 hover:bg-red-700 text-red-100 font-bold rounded text-sm transition">
                     <?= mha_escape($continueLabel) ?>

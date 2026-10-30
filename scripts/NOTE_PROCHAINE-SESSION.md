@@ -22,6 +22,7 @@
 | Clarification setup | **FlashDev-Setup** = LÖVE + VS Code + extensions Lua ; **pas** Raylib ni deck embarqué |
 | Doc parcours | Tunnel opt-in : download **sur le site** après MDP ; email Systeme.io = Bienvenue + login (pas le `.exe`) |
 | **Non fait** | Test boucle élève bout en bout ; contrôleur prérequis deck ; cases MVP / deck encore vides |
+| **Boutique pré-lancement** | Bypass 0 € (`formation_free_grant_until_systeme_io`) — funnel Systeme.io **P2** après entreprise en activité ([`TODO.md`](../TODO.md) § Boutique) |
 
 ### Phase A — Parcours demain (site → soft)
 

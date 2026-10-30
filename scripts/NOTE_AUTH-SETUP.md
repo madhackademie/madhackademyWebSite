@@ -23,6 +23,8 @@
 |------|-----|
 | Connexion | `/auth/login.php` |
 | Déconnexion | `/auth/logout.php` |
+| **Bibliothèque élève** | **`/dashboard/`** — decks / FlashDev acquis, téléchargement zip deck |
+| Download deck (API) | `/auth/download-deck.php?slug=gamedevready-bases-cpp` (session + `user_products`) |
 | Guide module 01 | `/auth/guide.php?m=01` |
 | Guide module 02–07 | `/auth/guide.php?m=02` … `m=07` |
 

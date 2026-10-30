@@ -16,6 +16,14 @@ if ($user !== null) {
     $canDownloadFlashdev = in_array($user['role'], ['admin', 'tester'], true)
         || in_array($flashSlug, $products, true)
         || ($formationSlug !== '' && in_array($formationSlug, $products, true));
+
+    $library = mha_user_library($user);
+    $canDownloadDecks = [];
+    foreach ($library as $item) {
+        if (!empty($item['can_download_deck']) && !empty($item['slug'])) {
+            $canDownloadDecks[(string) $item['slug']] = true;
+        }
+    }
 }
 
 echo json_encode([
@@ -24,4 +32,7 @@ echo json_encode([
     'role' => $user['role'] ?? null,
     'products' => $products,
     'can_download_flashdev' => $canDownloadFlashdev,
+    'dashboard_url' => '/dashboard/',
+    'library_count' => isset($library) ? count($library) : 0,
+    'can_download_decks' => $canDownloadDecks ?? new stdClass(),
 ], JSON_UNESCAPED_UNICODE);

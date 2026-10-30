@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GameDevReady — Formation Game Developer</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="nav-site.css?v=4">
+    <link rel="stylesheet" href="nav-site.css?v=7">
     <style>
         .nintendo-red { background: #E60012; }
         .nintendo-yellow { background: #FBDD08; }
@@ -81,24 +81,32 @@
                 <div class="grid md:grid-cols-3 gap-8">
 
                     <!-- Phase 1 -->
-                    <a href="/gamedevready-bases-cpp.html"
-                       class="phase-card phase-card--active block bg-gray-900 rounded-xl border-2 border-red-600 overflow-hidden">
-                        <div class="h-2 nintendo-red"></div>
-                        <div class="p-8">
-                            <span class="inline-block px-3 py-1 bg-red-900 text-red-300 rounded text-xs font-bold mb-4">PHASE 1 — DISPONIBLE</span>
-                            <div class="w-14 h-14 nintendo-red rounded flex items-center justify-center text-2xl font-bold mb-6">1</div>
-                            <h3 class="text-2xl font-bold text-nintendo-red mb-3">Bases C++</h3>
-                            <p class="text-gray-300 mb-4 text-sm leading-relaxed">
-                                Bootcamp console : Printf, variables, conditions, boucles, fonctions, conteneurs, structs &amp; méthodes.
-                            </p>
-                            <ul class="text-xs text-gray-500 space-y-1 mb-6">
-                                <li>• 7 cartes flash + guides HTML</li>
-                                <li>• Bootcamp 1–2 semaines</li>
-                                <li>• Thème Frogger</li>
-                            </ul>
-                            <span class="text-red-400 font-bold text-sm">Voir le deck →</span>
+                    <div class="phase-card phase-card--active bg-gray-900 rounded-xl border-2 border-red-600 overflow-hidden">
+                        <a href="/gamedevready-bases-cpp.html" class="block">
+                            <div class="h-2 nintendo-red"></div>
+                            <div class="p-8">
+                                <span class="inline-block px-3 py-1 bg-red-900 text-red-300 rounded text-xs font-bold mb-4">PHASE 1 — DISPONIBLE</span>
+                                <div class="w-14 h-14 nintendo-red rounded flex items-center justify-center text-2xl font-bold mb-6">1</div>
+                                <h3 class="text-2xl font-bold text-nintendo-red mb-3">Bases C++</h3>
+                                <p class="text-gray-300 mb-4 text-sm leading-relaxed">
+                                    Bootcamp console : Printf, variables, conditions, boucles, fonctions, conteneurs, structs &amp; méthodes.
+                                </p>
+                                <ul class="text-xs text-gray-500 space-y-1 mb-4">
+                                    <li>• 7 cartes flash + guides HTML</li>
+                                    <li>• Bootcamp 1–2 semaines</li>
+                                    <li>• Thème Frogger</li>
+                                </ul>
+                                <p class="text-nintendo-yellow font-bold text-lg mb-2">1 €</p>
+                                <span class="text-red-400 font-bold text-sm">Voir le deck →</span>
+                            </div>
+                        </a>
+                        <div class="px-8 pb-8 -mt-2">
+                            <a href="/boutique/acheter.php?product=gamedevready-bases-cpp"
+                               class="inline-block w-full text-center px-4 py-3 nintendo-red text-white font-bold rounded text-sm">
+                                Acheter la Phase 1
+                            </a>
                         </div>
-                    </a>
+                    </div>
 
                     <!-- Phase 2 -->
                     <div class="phase-card block bg-gray-900 rounded-xl border-2 border-gray-700 overflow-hidden opacity-75">
@@ -144,7 +152,10 @@
 
         <section class="py-12 px-4 bg-gray-950 border-t border-gray-800">
             <div class="max-w-4xl mx-auto text-center">
-                <p class="text-gray-400 mb-6">Ce parcours est synchronisé avec le deck premium dans FlashDev.</p>
+                <p class="text-gray-400 mb-6">Chaque phase se vend séparément dans la boutique (deck FlashDev + guides). Phase 1 : <strong class="text-nintendo-yellow">1 €</strong>.</p>
+                <a href="/boutique/" class="inline-block px-6 py-3 nintendo-red text-white font-bold rounded transition-all mr-3 mb-3">
+                    Boutique GameDevReady
+                </a>
                 <a href="/#roadmap" class="inline-block px-6 py-3 border-2 border-gray-600 hover:border-green-500 text-gray-300 hover:text-green-400 rounded transition-all font-bold">
                     ← Roadmap sur l'accueil
                 </a>
@@ -158,7 +169,7 @@
         </div>
     </footer>
 
-<script src="/nav-mobile.js?v=4" defer></script>
-<script src="/nav-session.js?v=4" defer></script>
+<script src="/nav-mobile.js?v=7" defer></script>
+<script src="/nav-session.js?v=7" defer></script>
 </body>
 </html>
