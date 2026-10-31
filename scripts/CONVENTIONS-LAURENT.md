@@ -58,7 +58,13 @@ Après une avancée ou un choix de périmètre, mettre à jour **au moins un** d
 2. **Prochaine P1** nommée pour la session suivante
 3. Tâches de test éventuelles si la P1 implique une validation
 4. Mise à jour `TODO.md` si le backlog a changé
-5. Comit.both avant fermeture
+5. Rappeler **`commit-both`** si des fichiers ont changé — commande **copier-coller** sans chemin absolu (depuis la racine `madhackademyWebSite/`) :
+
+```powershell
+.\scripts\commit-both.cmd
+```
+
+(Laurent lance lui-même ; l’agent ne commit pas sans demande expresse.)
 
 **Pourquoi :** la session suivante démarre sans réfléchir « par où commencer ».
 

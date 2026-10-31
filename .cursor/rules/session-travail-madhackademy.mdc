@@ -14,6 +14,20 @@ Si l'utilisateur termine, fait une pause, ou dit « fin de session » / « on s'
    - **prochaine P1** unique pour la session suivante
    - tâches de test associées si pertinent
 2. Rappeler la convention 4 (`CONVENTIONS-LAURENT.md`) si la note n'est pas à jour.
+3. Proposer **`commit-both`** si des changements sont à figer — afficher le bloc **Commande terminal** ci-dessous **tel quel** (copier-coller PowerShell, **sans chemin absolu** ; terminal ouvert à la **racine du dépôt site** `madhackademyWebSite/`).
+
+Ne pas lancer `commit-both` à la place de Laurent sans demande expresse (`git-github-laurent.mdc`).
+
+## Commande terminal — fin de session (copier-coller)
+
+```powershell
+.\scripts\commit-both.cmd
+```
+
+Variantes (même dossier) :
+
+- Aperçu sans commit : `.\scripts\commit-both.cmd -DryRun`
+- Message unique + push : voir `scripts\NOTE_COMMIT-BOTH.md`
 
 Ne pas laisser la session se fermer sans P1 suivante documentée.
 

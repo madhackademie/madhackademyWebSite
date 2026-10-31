@@ -218,6 +218,14 @@ Raylib + w64devkit ≈ **300–500 Mo**. Prévoir :
 
 Les kits MinGW déclenchent parfois des faux positifs. Documenter une procédure « autoriser l'exception » si besoin.
 
+**Décision 31/10/2026 (Laurent)** — pas de **certificat de signature de code** pour l’instant (~200–600 €/an OV ou EV). L’exe prod reste **non signé** jusqu’à ce que les **revenus** justifient l’investissement (voir journal `NOTE_MVP-FLASHDEV.md`).
+
+| En attendant | Action |
+|--------------|--------|
+| Testeurs / toi | Téléchargement « suspect » : **Débloquer** (propriétés) ; au lancement SmartScreen : **Informations complémentaires** → **Exécuter quand même** |
+| Site | Publier **SHA-256** dans `flashdev/latest-version.json` (`installerSha256`) |
+| Plus tard | Certificat + variables `FLASHDEV_SIGN_PFX` / `signtool` (`build-installer-exe.ps1`) ; viser **EV** si volume élèves élevé |
+
 ### 6. Mises à jour
 
 | Composant | Stratégie |

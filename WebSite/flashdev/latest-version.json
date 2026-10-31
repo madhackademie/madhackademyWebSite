@@ -1,19 +1,22 @@
 {
-    "version": "0.2.2",
-    "build": "20260802",
+    "version": "0.2.5",
+    "build": "20261031",
     "minSupportedVersion": "0.1.0",
-    "releasedAt": "2026-08-02",
+    "releasedAt": "2026-10-31",
     "channel": "stable",
     "platform": "win64",
     "requiresLove": "11.4",
     "changelog": [
-        "URLs update/manifest vers madhackademy.eu",
-        "Base domaine MadHackAdemy (plus gameopenmoney)"
+        "Add deck : annuler le selecteur sans message bloquant",
+        "Add deck : fenetre dossier au premier plan (LÖVE minimise)",
+        "Demarrage : check mise a jour repousse (~0,75 s) pour limiter Ne repond pas",
+        "Retour menu projets apres notation carte",
+        "Acces direct au menu projets (sans splash menuStream)"
     ],
-    "downloadUrl": "/flashdev/FlashRevisionSoft-0.2.2-win64.zip",
-    "installerDownloadUrl": "/flashdev/FlashDev-Setup-0.2.2-win64.exe",
-    "sha256": "1ba4754aa2ff1c0e136b5d3a54c4286d9bd92f613eb5ea14c97cf632feb9c62e",
-    "sizeBytes": 2965673,
-    "installerSha256": "5ea74fcff99c178e9d7d5639c89c57366a8c2aa0f9a39b019fe49d8582cac6b8",
-    "installerSizeBytes": 4986055
+    "downloadUrl": "/flashdev/FlashRevisionSoft-0.2.5-win64.zip",
+    "installerDownloadUrl": "/flashdev/FlashDev-Setup-0.2.4-win64.exe",
+    "sha256": "170fff3e110e955ed5568bde05f04f372beaa468cdf24c59fadb6dd6b822d33e",
+    "sizeBytes": 3607746,
+    "installerSha256": "1f7a467ec8100c9a5a374020d6c89f333682f558aef7ea44b5fe6650ebc3841e",
+    "installerSizeBytes": 5616711
 }

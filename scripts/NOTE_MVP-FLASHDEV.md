@@ -68,6 +68,7 @@ Un élève peut :
 | V3 | Installeur `.exe` graphique (vs script PowerShell) | [ ] | Phase 3 `NOTE_INSTALL-MADHACKADEMY.md` |
 | V4 | Update 1 clic dans le soft | [ ] | Peut commencer par message + lien dashboard |
 | V5 | Paiement webhook automatisé | [ ] | Manuel testeurs OK pour beta ? |
+| V6 | **Certificat signature de code** (Authenticode, `FlashDev-Setup-*.exe`) | [x] | **31/10/2026** — reporté tant que revenus insuffisants (~200–600 €/an OV/EV). Voir `NOTE_INSTALL-MADHACKADEMY.md` § SmartScreen. Réévaluer quand bootcamp / ventes régulières. |
 
 ---
 
@@ -123,6 +124,7 @@ Cocher quand **tous** les Must-have marqués **Oui** sont testés :
 | 29/10/2026 | **Setup exe** = socle LÖVE + VS Code + Lua seulement ; **Raylib hors installeur** ; prérequis deck = contrôleur à l’install (S8) + test boucle site→soft P1 session 30/10 | Laurent |
 | 30/10/2026 | Formations **FR seules** jusqu’à validation communauté ; i18n **EN puis DE** ensuite (pages dédiées + cartes/guides + choix zip) — **même** contrôle compte / `user_products` / device | Laurent |
 | 30/10/2026 | **Boutique / GameDevReady** : contenu dupliqué accepté jusqu’à loop Phase 1 OK ; **refonte architecture + boutique** reportée P2 post-validation | Laurent |
+| 31/10/2026 | **Pas de certificat code signing** pour l’instant (coût annuel) ; installeur non signé → SmartScreen / navigateur : procédure testeur + SHA-256 manifest ; **réacheter signature quand revenus le justifient** (build déjà prêt : `FLASHDEV_SIGN_PFX` dans `build-installer-exe.ps1`) | Laurent |
 
 ---
 

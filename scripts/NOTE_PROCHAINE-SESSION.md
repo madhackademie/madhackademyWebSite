@@ -1,13 +1,40 @@
 # Guide — Prochaine session de travail
 
 > **Référence principale** pour reprendre le projet madhackademyWebSite  
-> Dernière mise à jour : **30 octobre 2026** (soir — clôture session boutique / nav)  
+> Dernière mise à jour : **31 octobre 2026** (soir — clôture session FlashDev 0.2.5)  
 > Domaine marque : [madhackademy.eu](https://madhackademy.eu/)  
 > Ancien domaine : `gameopenmoney.com` → **301** vers madhackademy (voir `.htaccess`)
 
 ---
 
-## Reprise session suivante — **P1 unique** (31/10/2026 — Laurent)
+## Reprise session suivante — **P1 unique** (1er nov. 2026 — Laurent)
+
+> **Build installeur 0.2.5 + upload FTP** (zip update + setup.exe + `latest-version.json` alignés).  
+> **Ensuite** : valider mise à jour 1 clic depuis une install **0.2.4** (ex. `D:\FlashDev`), puis boucle élève si le temps le permet.
+
+### Bilan session 31/10/2026 (soir)
+
+| Fait | Détail |
+|------|--------|
+| **Add deck** | Annuler le sélecteur → retour `deckInstaller` sans popup ; picker **TopMost** + minimisation LÖVE (évite soft « bloqué ») |
+| **updateCheck** | Check réseau repoussé ~45 frames au démarrage (moins de faux « Ne répond pas ») |
+| **Release update** | **0.2.5** — `FlashRevisionSoft-0.2.5-win64.zip` + `latest-version.json` (manifest **0.2.5**, installeur manifest encore **0.2.4**) |
+| **Artefacts locaux** | `dist/FlashRevisionSoft-0.2.5-win64.zip`, copie `WebSite/flashdev/` — **FTP prod à faire** (zip + manifest ; setup demain) |
+| **Non fait** | `FlashDev-Setup-0.2.5-win64.exe`, test update 1 clic prod, test setup neuf ; Phase B prérequis deck |
+| **Note technique** | Console « LOVE Console » = `t.console = true` ; reste ouverte si `love.exe` encore actif (ex. `io.popen`) |
+
+### P1 demain — installeur + FTP
+
+1. **`.\scripts\sync-both.cmd`** (racine site).
+2. **`cd FlashRevisionSoft`** → **`.\scripts\build-flashdev-setup.cmd 0.2.5`** (exe + zip + manifest installeur aligné 0.2.5).
+3. **FTP** : `WebSite/flashdev/` → `FlashRevisionSoft-0.2.5-win64.zip`, `FlashDev-Setup-0.2.5-win64.exe`, `latest-version.json`.
+4. **Tests** : install neuf ou update depuis 0.2.4 → Options → update ; Add deck → Annuler / OK ; pas de freeze picker.
+
+**SHA-256 zip 0.2.5 (déjà build)** : `170fff3e110e955ed5568bde05f04f372beaa468cdf24c59fadb6dd6b822d33e`
+
+---
+
+## Archive — Reprise 31/10/2026 (matin / après-midi)
 
 > **Test machine « propre »** : supprimer l’installation FlashDev locale actuelle, puis **tout refaire via le site** (opt-in / login → **FlashDev-Setup** prod → deck → parcours 7 cartes).  
 > **Phase B (après ou en parallèle si bloqué)** : contrôleur prérequis deck Raylib — voir ci-dessous.
