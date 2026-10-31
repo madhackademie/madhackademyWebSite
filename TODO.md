@@ -1,6 +1,6 @@
 # TODO — madhackademyWebSite
 
-> Dernière mise à jour : 30 octobre 2026  
+> Dernière mise à jour : 31 octobre 2026  
 > Projet : site vitrine FlashDev + MadHackAdemy
 
 ---
@@ -126,6 +126,8 @@ Ces tâches débloquent la mise en ligne ou corrigent des problèmes visibles po
 > Voir roadmap dans [`scripts/NOTE_PROCHAINE-SESSION.md`](scripts/NOTE_PROCHAINE-SESSION.md).
 
 - [ ] **P1** — Images + vidéo soft sur `flashdev.html` (`/flashdev/media/`)
+- [ ] **P2** — **Vidéo support exercices** : comment enchaîner Start / reset projet / VS Code / compile / Done dans FlashDev — complète la vitrine ; lien setup + bibliothèque — détail `FlashRevisionSoft/TODO.md`
+- [ ] **P2** — **Énoncés exercice multilingues** (fichiers `.txt` embarqués deck, `URLFolder`) : traductions EN / DE / ES après validation FR — convention fichiers + choix langue à trancher avec le soft — détail `FlashRevisionSoft/TODO.md` · `NOTE_MVP-FLASHDEV.md` § i18n
 - [ ] **P1** — Shop / paiement (après entité — `NOTE_CREATION-ENTREPRISE.md`)
 - [ ] **P1** — Valider parcours GameDevReady Bases C++ **FR** (communauté pilote) — **EN / DE / ES** reportés après validation FR (voir `NOTE_MVP-FLASHDEV.md` § i18n)
 - [ ] **P1** — WebGuides mode programmeur : carte à la main / création de deck
