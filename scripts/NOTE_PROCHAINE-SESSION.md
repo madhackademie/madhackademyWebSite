@@ -1,40 +1,43 @@
 # Guide — Prochaine session de travail
 
 > **Référence principale** pour reprendre le projet madhackademyWebSite  
-> Dernière mise à jour : **31 octobre 2026** (soir — clôture session FlashDev 0.2.5)  
+> Dernière mise à jour : **2 novembre 2026** (après-midi — clôture : welcome 0.2.6 à corriger)  
 > Domaine marque : [madhackademy.eu](https://madhackademy.eu/)  
 > Ancien domaine : `gameopenmoney.com` → **301** vers madhackademy (voir `.htaccess`)
 
 ---
 
-## Reprise session suivante — **P1 unique** (1er nov. 2026 — Laurent)
+## Reprise session suivante — **P1 unique** (2 nov. 2026 — ce soir / prochaine session)
 
-> **Build installeur 0.2.5 + upload FTP** (zip update + setup.exe + `latest-version.json` alignés).  
-> **Ensuite** : valider mise à jour 1 clic depuis une install **0.2.4** (ex. `D:\FlashDev`), puis boucle élève si le temps le permet.
+> **Carte welcome `HelloStudent` sur install neuf** — rebuild **0.2.7** (ou patch **0.2.6** re-FTP) après fix `data.json` tableau JSON.  
+> **Test** : install vierge → **« nombre de cartes à réviser : 1 »** + image courbe + **Start** ouvre `HelloStudent.txt`.
 
-### Bilan session 31/10/2026 (soir)
+### Bilan session 2/11/2026 (après-midi)
 
 | Fait | Détail |
 |------|--------|
-| **Add deck** | Annuler le sélecteur → retour `deckInstaller` sans popup ; picker **TopMost** + minimisation LÖVE (évite soft « bloqué ») |
-| **updateCheck** | Check réseau repoussé ~45 frames au démarrage (moins de faux « Ne répond pas ») |
-| **Release update** | **0.2.5** — `FlashRevisionSoft-0.2.5-win64.zip` + `latest-version.json` (manifest **0.2.5**, installeur manifest encore **0.2.4**) |
-| **Artefacts locaux** | `dist/FlashRevisionSoft-0.2.5-win64.zip`, copie `WebSite/flashdev/` — **FTP prod à faire** (zip + manifest ; setup demain) |
-| **Non fait** | `FlashDev-Setup-0.2.5-win64.exe`, test update 1 clic prod, test setup neuf ; Phase B prérequis deck |
-| **Note technique** | Console « LOVE Console » = `t.console = true` ; reste ouverte si `love.exe` encore actif (ex. `io.popen`) |
+| **Build 0.2.6** | Setup + zip + manifest local ; procédure `.cmd` (PSSecurityException documentée) |
+| **HelloStudent** | Modèle `data-welcome-socle.json`, assets embarqués installeur |
+| **FTP** | Setup 0.2.5 puis 0.2.6 (Laurent) |
+| **Bug 0.2.6** | Install neuf affiche **0 carte** — `data.json` généré en **objet** `{}` au lieu de **tableau** `[{}]` (PowerShell 5.1) → `#liste_cartes == 0` en Lua |
+| **Fix en repo** | `build-installer-exe.ps1` — normalisation tableau avant `ConvertTo-Json` (**pas encore rebuild FTP**) |
+| **Non fait** | Rebuild + FTP 0.2.7, test welcome OK, texte `HelloStudent.txt` MadHackademy |
 
-### P1 demain — installeur + FTP
+### P1 — welcome card (première tâche)
 
 1. **`.\scripts\sync-both.cmd`** (racine site).
-2. **`cd FlashRevisionSoft`** → **`.\scripts\build-flashdev-setup.cmd 0.2.5`** (exe + zip + manifest installeur aligné 0.2.5).
-3. **FTP** : `WebSite/flashdev/` → `FlashRevisionSoft-0.2.5-win64.zip`, `FlashDev-Setup-0.2.5-win64.exe`, `latest-version.json`.
-4. **Tests** : install neuf ou update depuis 0.2.4 → Options → update ; Add deck → Annuler / OK ; pas de freeze picker.
+2. **`cd FlashRevisionSoft`** → **`.\scripts\build-flashdev-setup.cmd 0.2.7`** (ou 0.2.6 si tu préfères même numéro après fix).
+3. **Vérifier** dans le staging / install : `data.json` commence par **`[`** et contient `HelloStudent`.
+4. **FTP** : exe + zip + `latest-version.json`.
+5. **Test** : désinstaller / dossier neuf → install → **1 carte** visible.
 
-**SHA-256 zip 0.2.5 (déjà build)** : `170fff3e110e955ed5568bde05f04f372beaa468cdf24c59fadb6dd6b822d33e`
+**Contournement dev immédiat** : copier le bloc `[{ ... HelloStudent ... }]` depuis `SquelletteGCS/data-welcome-socle.json` dans le `data.json` de l’install (`D:\FlashDev\…` ou `%LOCALAPPDATA%\FlashDev\…`).
 
 ---
 
-## Archive — Reprise 31/10/2026 (matin / après-midi)
+## Archive — Reprise 1er nov. 2026
+
+> **Build installeur 0.2.5 + upload FTP** — fait (0.2.5 / 0.2.6).
 
 > **Test machine « propre »** : supprimer l’installation FlashDev locale actuelle, puis **tout refaire via le site** (opt-in / login → **FlashDev-Setup** prod → deck → parcours 7 cartes).  
 > **Phase B (après ou en parallèle si bloqué)** : contrôleur prérequis deck Raylib — voir ci-dessous.

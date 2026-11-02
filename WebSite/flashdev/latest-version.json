@@ -1,22 +1,21 @@
 {
-    "version": "0.2.5",
-    "build": "20261031",
+    "version": "0.2.6",
+    "build": "20261102",
     "minSupportedVersion": "0.1.0",
-    "releasedAt": "2026-10-31",
+    "releasedAt": "2026-11-02",
     "channel": "stable",
     "platform": "win64",
     "requiresLove": "11.4",
     "changelog": [
-        "Add deck : annuler le selecteur sans message bloquant",
-        "Add deck : fenetre dossier au premier plan (LÖVE minimise)",
-        "Demarrage : check mise a jour repousse (~0,75 s) pour limiter Ne repond pas",
-        "Retour menu projets apres notation carte",
-        "Acces direct au menu projets (sans splash menuStream)"
+        "Carte bienvenue HelloStudent active des la 1re ouverture (install neuf)",
+        "Add deck : annuler sans popup ; picker visible (TopMost)",
+        "Demarrage : check mise a jour differe (~0,75 s)",
+        "Correctifs 0.2.5 : menu projets direct, update 1 clic"
     ],
-    "downloadUrl": "/flashdev/FlashRevisionSoft-0.2.5-win64.zip",
-    "installerDownloadUrl": "/flashdev/FlashDev-Setup-0.2.4-win64.exe",
-    "sha256": "170fff3e110e955ed5568bde05f04f372beaa468cdf24c59fadb6dd6b822d33e",
-    "sizeBytes": 3607746,
-    "installerSha256": "1f7a467ec8100c9a5a374020d6c89f333682f558aef7ea44b5fe6650ebc3841e",
-    "installerSizeBytes": 5616711
+    "downloadUrl": "/flashdev/FlashRevisionSoft-0.2.6-win64.zip",
+    "installerDownloadUrl": "/flashdev/FlashDev-Setup-0.2.6-win64.exe",
+    "sha256": "ac4a4eafeebd790cf33c1374bb6e6311d29db3eedbf4e8d1e0590cd91d707e82",
+    "sizeBytes": 3745209,
+    "installerSha256": "18d500ba28a636e3d4046d06ef7a30ee7b81f171fc314326c92a63b8e4bd4563",
+    "installerSizeBytes": 5719366
 }
