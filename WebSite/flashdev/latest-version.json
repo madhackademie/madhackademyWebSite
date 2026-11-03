@@ -1,21 +1,24 @@
 {
-    "version": "0.2.6",
-    "build": "20261102",
-    "minSupportedVersion": "0.1.0",
-    "releasedAt": "2026-11-02",
-    "channel": "stable",
-    "platform": "win64",
-    "requiresLove": "11.4",
-    "changelog": [
-        "Carte bienvenue HelloStudent active des la 1re ouverture (install neuf)",
-        "Add deck : annuler sans popup ; picker visible (TopMost)",
-        "Demarrage : check mise a jour differe (~0,75 s)",
-        "Correctifs 0.2.5 : menu projets direct, update 1 clic"
-    ],
-    "downloadUrl": "/flashdev/FlashRevisionSoft-0.2.6-win64.zip",
-    "installerDownloadUrl": "/flashdev/FlashDev-Setup-0.2.6-win64.exe",
-    "sha256": "ac4a4eafeebd790cf33c1374bb6e6311d29db3eedbf4e8d1e0590cd91d707e82",
-    "sizeBytes": 3745209,
-    "installerSha256": "18d500ba28a636e3d4046d06ef7a30ee7b81f171fc314326c92a63b8e4bd4563",
-    "installerSizeBytes": 5719366
+    "version":  "0.2.14",
+    "build":  "20261103",
+    "minSupportedVersion":  "0.1.0",
+    "releasedAt":  "2026-11-03",
+    "channel":  "stable",
+    "platform":  "win64",
+    "requiresLove":  "11.4",
+    "changelog":  [
+                      "Icone raccourci HD (512 px index 0) + lnk LOVE post-install",
+                      "VS Code : install silencieuse directe (plus blocage winget)",
+                      "Raccourci FlashDev MadHackademy dans le dossier d installation",
+                      "Fix run-love.ps1 (ASCII, plus d erreur parse PowerShell)",
+                      "LOVE : winget Love2d.Love2d + repli zip portable (sans admin)",
+                      "Choix dossier install + ICO multi-res",
+                      "Welcome HelloStudent (0.2.7+)"
+                  ],
+    "downloadUrl":  "/flashdev/FlashRevisionSoft-0.2.14-win64.zip",
+    "installerDownloadUrl":  "/flashdev/FlashDev-Setup-0.2.14-win64.exe",
+    "sha256":  "1dd4e5102a9ddfb754b6b5b16d84042c26f23ee200c4897c41da0391808a962b",
+    "sizeBytes":  3182696,
+    "installerSha256":  "46452bbc2f9e0ba912330a2b4443bfa67bf90c5fd14374bbe83bb09c5b008958",
+    "installerSizeBytes":  5473906
 }

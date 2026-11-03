@@ -1,37 +1,72 @@
 # Guide — Prochaine session de travail
 
 > **Référence principale** pour reprendre le projet madhackademyWebSite  
-> Dernière mise à jour : **2 novembre 2026** (après-midi — clôture : welcome 0.2.6 à corriger)  
+> Dernière mise à jour : **3 novembre 2026** (clôture : setup **0.2.14** + socle LOVE/VS Code + raccourci MiniPoulpe)  
 > Domaine marque : [madhackademy.eu](https://madhackademy.eu/)  
 > Ancien domaine : `gameopenmoney.com` → **301** vers madhackademy (voir `.htaccess`)
 
 ---
 
-## Reprise session suivante — **P1 unique** (2 nov. 2026 — ce soir / prochaine session)
+## Reprise session suivante — **P1 unique** (prochaine session)
 
-> **Carte welcome `HelloStudent` sur install neuf** — rebuild **0.2.7** (ou patch **0.2.6** re-FTP) après fix `data.json` tableau JSON.  
-> **Test** : install vierge → **« nombre de cartes à réviser : 1 »** + image courbe + **Start** ouvre `HelloStudent.txt`.
+> **FTP + test Ando (ou machine vierge)** : publier **`FlashDev-Setup-0.2.14-win64.exe`** (+ zip + `latest-version.json`) — ou rebuild **0.2.15** si tu veux embarquer **`FlashDev-shortcut.ico`** dans le setup sans copie manuelle.  
+> Puis **boucle élève prod** : site → setup → welcome **Done** → deck → **7/7** (`NOTE_REVISION-BOOTCAMP-FR.md`).
 
-### Bilan session 2/11/2026 (après-midi)
+### Bilan session 3/11/2026
 
 | Fait | Détail |
 |------|--------|
-| **Build 0.2.6** | Setup + zip + manifest local ; procédure `.cmd` (PSSecurityException documentée) |
-| **HelloStudent** | Modèle `data-welcome-socle.json`, assets embarqués installeur |
-| **FTP** | Setup 0.2.5 puis 0.2.6 (Laurent) |
-| **Bug 0.2.6** | Install neuf affiche **0 carte** — `data.json` généré en **objet** `{}` au lieu de **tableau** `[{}]` (PowerShell 5.1) → `#liste_cartes == 0` en Lua |
-| **Fix en repo** | `build-installer-exe.ps1` — normalisation tableau avant `ConvertTo-Json` (**pas encore rebuild FTP**) |
-| **Non fait** | Rebuild + FTP 0.2.7, test welcome OK, texte `HelloStudent.txt` MadHackademy |
+| **LOVE** | `Love2d.Love2d` winget + repli zip portable ; `resolve-love.ps1` ; `run-love.ps1` ASCII |
+| **VS Code** | Install silencieuse **directe** (update.code.visualstudio.com) + winget secours ; évite blocage « Démarrage du package… » (cas Ando) |
+| **Installeur** | Choix dossier ; post-install socle ; builds **0.2.12 → 0.2.14** |
+| **Raccourci** | `FlashDev MadHackademy.lnk` créé **après** install LÖVE → cible `love.exe` + `SquelletteGCS` |
+| **Icône** | ICO multi-res (512 en index 0) + **`FlashDev-shortcut.ico`** (MiniPoulpe legacy) pour les `.lnk` |
+| **Test Laurent** | Setup + socle vierge simulé sur **`D:\FlashDev`** — verify **OK** (LOVE, VS Code, extensions, welcome) |
+| **Ando** | Bloqué VS Code en cours de session — contournement `-SkipVSCode` ; retest avec **0.2.14+** après FTP |
+| **Non fait** | FTP prod **0.2.14** ; **`commit-both`** ; build **0.2.15** (shortcut.ico dans package) ; parcours **7/7** site |
 
-### P1 — welcome card (première tâche)
+**SHA prod 0.2.14 (dossier site)**  
+- Exe : `46452bbc2f9e0ba912330a2b4443bfa67bf90c5fd14374bbe83bb09c5b008958`  
+- Zip : `1dd4e5102a9ddfb754b6b5b16d84042c26f23ee200c4897c41da0391808a962b`
+
+### P1 — prochaine session (première tâche)
+
+1. **`.\scripts\sync-both.cmd`**
+2. **`build-flashdev-setup.cmd 0.2.15`** (recommandé : `FlashDev-shortcut.ico` dans l’installeur) **ou** FTP **0.2.14** tel quel.
+3. **FTP** : `WebSite/flashdev/` — exe + zip + `latest-version.json` (ne pas committer les gros binaires si politique dépôt = FTP seul).
+4. Retest **machine vierge** (raccourci poulpe + socle) ; faire retester **Ando** si dispo.
+5. Enchaîner **boucle élève prod** (deck + 7 cartes) — cocher `NOTE_MVP-FLASHDEV.md` / `NOTE_REVISION-BOOTCAMP-FR.md`.
+
+---
+
+## Archive — Reprise 2/11/2026 (welcome 0.2.7)
+
+> **Boucle élève prod** : install **via le site** (setup **0.2.7** + manifest) → welcome **Done** → deck bootcamp (zip / promo) → parcours **7/7** cartes (Start, VS Code, Done, webGuide).  
+> Checklist : `scripts/NOTE_REVISION-BOOTCAMP-FR.md` · cocher `scripts/NOTE_MVP-FLASHDEV.md` must-have si OK.
+
+### Bilan session 2/11/2026 (soir)
+
+| Fait | Détail |
+|------|--------|
+| **Bug welcome** | `data.json` installeur en `{...}` (PS 5.1) → fix : copie `data-welcome-socle.json` + `Write-JsonFileNoBom` `(,$Object)` |
+| **Release 0.2.7** | Setup + zip + manifest ; SHA installeur prod **`a5d7d510…cade6cbe`** |
+| **HelloStudent.txt** | FR (apprenant / MadHackademy) + EN ; embarqué setup |
+| **FTP / download** | exe + **`latest-version.json`** 0.2.7 — téléchargement aligné |
+| **Test Laurent** | Install + download prod — **OK** |
+
+### Bilan session 2/11/2026 (après-midi — archive)
+
+| Fait | Détail |
+|------|--------|
+| **Build 0.2.6** | Setup + zip ; procédure `.cmd` (PSSecurityException documentée) |
+| **HelloStudent** | Modèle `data-welcome-socle.json`, assets installeur |
+| **Bug 0.2.6** | Install neuf **0 carte** — objet JSON au lieu de tableau |
+
+### P1 — boucle élève (première tâche)
 
 1. **`.\scripts\sync-both.cmd`** (racine site).
-2. **`cd FlashRevisionSoft`** → **`.\scripts\build-flashdev-setup.cmd 0.2.7`** (ou 0.2.6 si tu préfères même numéro après fix).
-3. **Vérifier** dans le staging / install : `data.json` commence par **`[`** et contient `HelloStudent`.
-4. **FTP** : exe + zip + `latest-version.json`.
-5. **Test** : désinstaller / dossier neuf → install → **1 carte** visible.
-
-**Contournement dev immédiat** : copier le bloc `[{ ... HelloStudent ... }]` depuis `SquelletteGCS/data-welcome-socle.json` dans le `data.json` de l’install (`D:\FlashDev\…` ou `%LOCALAPPDATA%\FlashDev\…`).
+2. Parcours **site → setup 0.2.7 → deck → 7 cartes** (machine élève si possible).
+3. Cocher `NOTE_REVISION-BOOTCAMP-FR.md` ; noter écarts (Raylib, promo, webGuide).
 
 ---
 
