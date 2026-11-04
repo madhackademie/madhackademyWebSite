@@ -207,6 +207,16 @@
                                 Si LÖVE ou VS Code sont déjà présents, ils sont réutilisés ; sinon installation via <code class="text-gray-400">winget</code>.
                                 Les mises à jour du logiciel se font ensuite dans le menu Options.
                             </p>
+                            <a id="download-zip-btn"
+                               href="#"
+                               class="hidden mt-4 download-btn block w-full text-center px-6 py-3 border-2 border-yellow-600 text-nintendo-yellow font-bold rounded hover:bg-yellow-900/20 transition-all text-sm">
+                                Plan B — Zip portable (sans installeur .exe) ↓
+                            </a>
+                            <p id="download-zip-hint" class="hidden text-xs text-gray-500 text-center mt-2 leading-relaxed">
+                                Si Norton bloque le <code class="text-gray-400">.exe</code> : extraire le zip (ex. <code class="text-gray-400">C:\FlashDev</code>),
+                                ajouter une <strong class="text-gray-400">exclusion Norton</strong> sur ce dossier, puis double-clic <code class="text-gray-400">Install-Socle.cmd</code>.
+                                Le zip contient les mêmes scripts PowerShell — l’AV peut encore demander une autorisation.
+                            </p>
                         </div>
                     </div>
 
@@ -239,6 +249,40 @@
                         </h2>
                         <ul id="changelog-list" class="space-y-3 text-gray-300">
                         </ul>
+                    </div>
+
+                    <!-- Sécurité / clients -->
+                    <div class="bg-gray-900 rounded-xl border-2 border-blue-600/60 p-8 md:p-10" id="security-trust">
+                        <h2 class="text-2xl font-bold text-nintendo-blue mb-2">Intégrité et antivirus</h2>
+                        <p class="text-gray-400 text-sm mb-6">
+                            Pour les services informatiques et les antivirus (Norton, Defender, etc.) — fichier officiel MadHackademy uniquement.
+                        </p>
+                        <dl class="space-y-4 text-sm">
+                            <div>
+                                <dt class="text-gray-500 uppercase tracking-wide text-xs mb-1">Empreinte SHA-256 (installeur .exe)</dt>
+                                <dd class="text-gray-200 break-all font-mono text-xs leading-relaxed" id="sec-sha256">—</dd>
+                            </div>
+                            <div>
+                                <dt class="text-gray-500 uppercase tracking-wide text-xs mb-1">Manifeste version</dt>
+                                <dd><a id="sec-manifest-link" href="/flashdev/latest-version.json" class="text-green-400 hover:underline break-all">/flashdev/latest-version.json</a></dd>
+                            </div>
+                        </dl>
+                        <div class="mt-6 flex flex-wrap gap-4">
+                            <a id="sec-vt-link" href="#" target="_blank" rel="noopener noreferrer"
+                               class="px-6 py-3 bg-blue-900/50 border-2 border-blue-500 text-nintendo-blue font-bold rounded hover:bg-blue-900 transition">
+                                Rapport VirusTotal →
+                            </a>
+                        </div>
+                        <div class="mt-8 pt-6 border-t border-gray-700 text-gray-400 text-xs leading-relaxed space-y-3">
+                            <p><strong class="text-gray-300">Vérification locale (Windows)</strong> — après téléchargement :</p>
+                            <pre class="bg-black/50 border border-gray-700 rounded p-4 text-green-400/90 overflow-x-auto text-[11px]">Get-FileHash ".\FlashDev-Setup-<span id="sec-ver-cmd">X.Y.Z</span>-win64.exe" -Algorithm SHA256</pre>
+                            <p>Le hash affiché doit être <strong class="text-gray-300">identique</strong> à celui ci-dessus (champ <code class="text-gray-500">installerSha256</code> du manifeste).</p>
+                            <p><strong class="text-gray-300">Exclusions Norton</strong> — avant d’installer : exclure le <strong class="text-gray-300">.exe</strong> (ou Téléchargements) <em>et</em> le dossier <code class="text-gray-500">AppData\Local\FlashDev</code>. Sans ça, Norton bloque <code class="text-gray-500">install-madhackademy.ps1</code> pendant l’install.</p>
+                            <p><strong class="text-gray-300">Alerte Norton « IDP.Generic »</strong> — heuristique fréquente sur installeur non signé. Comparez le SHA-256. Signalement éditeur (optionnel) : <a href="https://support.norton.com/sp/en/us/home/current/solutions/kb20090410134005EN" class="text-blue-400 hover:underline" target="_blank" rel="noopener">procédure Norton (KB)</a> · <a href="https://www.microsoft.com/en-us/wdsi/filesubmission" class="text-blue-400 hover:underline" target="_blank" rel="noopener">Microsoft</a>.</p>
+                            <p><strong class="text-gray-300">Pendant l’installation</strong> — ou utilisez le <strong class="text-gray-300">zip portable</strong> (bouton jaune ci-dessus) + exclusion sur le dossier extrait.</p>
+                            <p><strong class="text-gray-300">Ne pas confondre</strong> — le zip <code class="text-gray-500">FlashRevisionSoft-*.zip</code> (manifeste <code class="text-gray-500">downloadUrl</code>) sert aux <em>mises à jour</em> dans le menu Options, pas à la première installation.</p>
+                            <p>L’installeur installe FlashDev puis configure <strong class="text-gray-300">LÖVE</strong> et <strong class="text-gray-300">Visual Studio Code</strong> depuis des sources officielles (winget / Microsoft / love2d.org). Aucun logiciel masqué.</p>
+                        </div>
                     </div>
 
                     <!-- Liens utiles -->
@@ -356,6 +400,31 @@
                 dl.href = url;
                 dl.setAttribute('download', '');
                 dl.setAttribute('rel', 'noopener');
+
+                var sha = (manifest.installerSha256 || '').toLowerCase();
+                document.getElementById('sec-sha256').textContent = sha || '—';
+                document.getElementById('sec-ver-cmd').textContent = manifest.version || 'X.Y.Z';
+                var vtUrl = manifest.virusTotalUrl;
+                if (!vtUrl && sha) {
+                    vtUrl = 'https://www.virustotal.com/gui/file/' + sha;
+                }
+                var vtLink = document.getElementById('sec-vt-link');
+                if (vtUrl) {
+                    vtLink.href = vtUrl;
+                } else {
+                    vtLink.classList.add('hidden');
+                }
+
+                var zipUrl = resolveDownloadUrl(manifest.installerPortableZipUrl);
+                var zipBtn = document.getElementById('download-zip-btn');
+                var zipHint = document.getElementById('download-zip-hint');
+                if (manifest.installerPortableZipUrl && zipBtn) {
+                    zipBtn.href = zipUrl;
+                    zipBtn.classList.remove('hidden');
+                    if (zipHint) {
+                        zipHint.classList.remove('hidden');
+                    }
+                }
 
                 hide('version-loading');
                 show('version-content');

@@ -20,5 +20,9 @@
     "sha256":  "1dd4e5102a9ddfb754b6b5b16d84042c26f23ee200c4897c41da0391808a962b",
     "sizeBytes":  3182696,
     "installerSha256":  "46452bbc2f9e0ba912330a2b4443bfa67bf90c5fd14374bbe83bb09c5b008958",
-    "installerSizeBytes":  5473906
+    "installerSizeBytes":  5473906,
+    "virusTotalUrl":  "https://www.virustotal.com/gui/file/46452bbc2f9e0ba912330a2b4443bfa67bf90c5fd14374bbe83bb09c5b008958",
+    "installerPortableZipUrl":  "/flashdev/FlashDev-Setup-0.2.14-win64.zip",
+    "installerPortableZipSha256":  "8c7db7050197488fa1d9d3aadb7d23ac9011fae2341e5c33c44ec3e75523d214",
+    "installerPortableZipSizeBytes":  3496329
 }
