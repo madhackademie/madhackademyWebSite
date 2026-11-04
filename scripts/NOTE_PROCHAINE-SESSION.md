@@ -1,16 +1,45 @@
 # Guide — Prochaine session de travail
 
 > **Référence principale** pour reprendre le projet madhackademyWebSite  
-> Dernière mise à jour : **3 novembre 2026** (clôture : setup **0.2.14** + socle LOVE/VS Code + raccourci MiniPoulpe)  
+> Dernière mise à jour : **4 novembre 2026** (clôture : icône en cours — finition + build **0.2.15** ce soir)  
 > Domaine marque : [madhackademy.eu](https://madhackademy.eu/)  
 > Ancien domaine : `gameopenmoney.com` → **301** vers madhackademy (voir `.htaccess`)
 
 ---
 
-## Reprise session suivante — **P1 unique** (prochaine session)
+## Reprise session suivante — **P1 unique** (soir du 4/11, ou session suivante)
 
-> **FTP + test Ando (ou machine vierge)** : publier **`FlashDev-Setup-0.2.14-win64.exe`** (+ zip + `latest-version.json`) — ou rebuild **0.2.15** si tu veux embarquer **`FlashDev-shortcut.ico`** dans le setup sans copie manuelle.  
-> Puis **boucle élève prod** : site → setup → welcome **Done** → deck → **7/7** (`NOTE_REVISION-BOOTCAMP-FR.md`).
+> **Finition icône** puis **build local 0.2.15** (pas de FTP / pas de `latest-version.json` tant que l’icône Bureau n’est pas validée).  
+> Prod téléchargement reste **0.2.14**.
+
+### Bilan session 4/11/2026 (midi)
+
+| Fait | Détail |
+|------|--------|
+| **Gel AV** | Rester sur l’installeur **0.2.14** côté Microsoft / Norton tant qu’on ne publie pas un nouvel exe ; updates jeu = zip seulement |
+| **Backlog** | `FlashRevisionSoft/scripts/NOTE_BUILD-FLASHDEV-SETUP.md` + `TODO.md` : nouvelle icône setup + soft **après** setup commercial |
+| **Icônes testées** | Illustration détaillée (carte + tentacule) : illisible en 16/32 px. `BaseIcone.png` (carte + éclair) : bonne piste, mais fond noir / ICO |
+| **Bug ICO** | PNG-dans-ICO et `GetHicon()` transparent → raccourci « contours seuls ». Correctif : ICO **classique 256 px**, fond opaque (`build-flashdev-icon.ps1`) |
+| **Builds locaux** | Plusieurs `FlashDev-Setup-0.2.15` dans `dist\` et copie `WebSite/flashdev/` — **dernier hash à revalider après l’icône finale** ; manifeste site **toujours 0.2.14** |
+| **Version repo** | `SquelletteGCS/version.json` = **0.2.15** |
+| **En cours** | Icône importée depuis **ChatGPT** : **Paint.NET ne l’ouvre pas** ; objectif = **supprimer le fond blanc** puis régénérer `.ico` / `flashdev-icon.png` |
+
+### P1 — ce soir (première tâche)
+
+1. Ouvrir l’export ChatGPT avec un outil qui lit le format (souvent **WebP / PNG 32 bits**) : Paint.NET échoue souvent sur WebP sans plugin, ou sur un fichier renommé. Renommer en `.png` / `.webp` selon l’en-tête, ou rouvrir dans le navigateur → enregistrer **PNG**.
+2. **Fond blanc → transparent** (ou fond zinc uniforme si l’ICO Windows rebouche le transparent).
+3. Déposer la source en `FlashRevisionSoft/installer/assets/flashdev-source.png`.
+4. `powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\build-flashdev-icon.ps1 -CopyToGame` (terminal **`FlashRevisionSoft\`**).
+5. Contrôle : `installer/assets/flashdev-icon-256.png` **et** aperçus 32/16 px — si illisible, ne pas builder.
+6. Si OK : rebuild **setup 0.2.15** local (zip + exe, **sans** manifest) puis réinstall pour voir le raccourci Bureau.
+
+**Pas ce soir sauf demande :** FTP, `update-flashdev-manifest`, soumission Norton/Microsoft (nouveau hash exe).
+
+---
+
+## Archive — Reprise 3/11/2026
+
+> **FTP + test Ando** : publier **`FlashDev-Setup-0.2.14`** — reporté. P1 du 4/11 = icône + build 0.2.15 local.
 
 ### Bilan session 3/11/2026
 
@@ -29,7 +58,7 @@
 - Exe : `46452bbc2f9e0ba912330a2b4443bfa67bf90c5fd14374bbe83bb09c5b008958`  
 - Zip : `1dd4e5102a9ddfb754b6b5b16d84042c26f23ee200c4897c41da0391808a962b`
 
-### P1 — prochaine session (première tâche)
+### P1 du 3/11 — reportée (FTP 0.2.14 / boucle élève)
 
 1. **`.\scripts\sync-both.cmd`**
 2. **`build-flashdev-setup.cmd 0.2.15`** (recommandé : `FlashDev-shortcut.ico` dans l’installeur) **ou** FTP **0.2.14** tel quel.
