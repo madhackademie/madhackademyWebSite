@@ -1,13 +1,37 @@
 # Guide — Prochaine session de travail
 
 > **Référence principale** pour reprendre le projet madhackademyWebSite  
-> Dernière mise à jour : **4 novembre 2026** (clôture : icône en cours — finition + build **0.2.15** ce soir)  
+> Dernière mise à jour : **7 novembre 2026** (clôture : licence **PolyForm Strict 1.0.0** — emplacement + build à la session suivante)  
 > Domaine marque : [madhackademy.eu](https://madhackademy.eu/)  
 > Ancien domaine : `gameopenmoney.com` → **301** vers madhackademy (voir `.htaccess`)
 
 ---
 
-## Reprise session suivante — **P1 unique** (soir du 4/11, ou session suivante)
+## Reprise session suivante — **P1 unique**
+
+> **PolyForm Strict 1.0.0** : dire à Laurent **où** poser la licence, puis **l’ajouter au build** (installeur + zip). Pas d’autre licence. Pas de FTP.
+
+### Bilan session 7/11/2026
+
+| Fait | Détail |
+|------|--------|
+| **Recherche** | Licence gratuite pour l’usage ; tout usage commercial = accord écrit avec Laurent. MIT, GPL, Apache, CeCILL écartées : elles autorisent le commercial. |
+| **Décision** | **PolyForm Strict 1.0.0**. Usage non commercial seulement. Pas de modification. Pas de redistribution. Texte : https://polyformproject.org/licenses/strict/1.0.0 |
+| **Hors gratuit** | Entreprise, formation payante, SaaS, revente → accord séparé avec Laurent. École, université, association, administration : couvertes par Strict sans accord (limite du texte standard). |
+| **Non fait** | Aucun fichier licence ajouté. Build non touché. Icône + setup **0.2.15** toujours en suspens. |
+
+### P1 — première tâche
+
+1. `.\scripts\sync-both.cmd` (racine site).
+2. Expliquer **où** poser PolyForm Strict (fichier licence du soft + copie embarquée par le build). Ne pas rouvrir le choix de licence.
+3. L’ajouter au **build** FlashDev (setup + zip) pour qu’elle parte avec l’installeur.
+4. Pas de FTP ni de `latest-version.json` tant que Laurent n’a pas validé l’emplacement.
+
+**En attente, pas cette P1 :** finition icône + build local **0.2.15**. Prod téléchargement reste **0.2.14**.
+
+---
+
+## Archive — Reprise 4/11/2026 (icône + build 0.2.15, non close)
 
 > **Finition icône** puis **build local 0.2.15** (pas de FTP / pas de `latest-version.json` tant que l’icône Bureau n’est pas validée).  
 > Prod téléchargement reste **0.2.14**.

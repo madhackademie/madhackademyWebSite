@@ -1,6 +1,6 @@
 # TODO — madhackademyWebSite
 
-> Dernière mise à jour : 31 octobre 2026  
+> Dernière mise à jour : **7 novembre 2026**
 > Projet : site vitrine FlashDev + MadHackAdemy
 
 ---
@@ -25,9 +25,11 @@
 
 ### Checklist rapide prochaine session
 
-**P1 (31/10 — Laurent)** — **Machine reset** : supprimer install FlashDev locale → parcours **100 % site** (compte → **Setup 0.2.2** → boutique ou **code promo** → deck zip → 7 cartes). Checklist : [`scripts/NOTE_PROCHAINE-SESSION.md`](scripts/NOTE_PROCHAINE-SESSION.md) § Phase A.
+**P1 (7/11 — session suivante)** — **PolyForm Strict 1.0.0** : dire où poser la licence, puis l’ajouter au build (setup + zip). Détail : [`scripts/NOTE_PROCHAINE-SESSION.md`](scripts/NOTE_PROCHAINE-SESSION.md).
 
-- [ ] **P1** — Test install « machine propre » via [telecharger.html](WebSite/telecharger.html) + Setup exe prod (pas repo / OneDrive) — voir note session **31/10**
+- [ ] **P1** — Emplacement licence Strict + embarquement dans le build FlashDev
+
+Icône + setup **0.2.15** et boucle élève : en attente, pas la P1 suivante.
 
 ---
 
