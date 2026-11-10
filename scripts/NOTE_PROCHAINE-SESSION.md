@@ -1,13 +1,40 @@
 # Guide — Prochaine session de travail
 
 > **Référence principale** pour reprendre le projet madhackademyWebSite  
-> Dernière mise à jour : **7 novembre 2026** (clôture : licence **PolyForm Strict 1.0.0** — emplacement + build à la session suivante)  
+> Dernière mise à jour : **10 novembre 2026** (clôture : désinstallation cassée + icône corbeille — P1 session suivante)  
 > Domaine marque : [madhackademy.eu](https://madhackademy.eu/)  
 > Ancien domaine : `gameopenmoney.com` → **301** vers madhackademy (voir `.htaccess`)
 
 ---
 
 ## Reprise session suivante — **P1 unique**
+
+> **Désinstallation FlashDev** : `unins000.exe` affiche encore le logo FlashDev, et le lancer échoue (`unins000.msg` manquant). Remettre une désinstallation qui marche, puis l’icône corbeille **sans réécrire** le binaire. Pas de FTP.
+
+### Bilan session 10/11/2026
+
+| Fait | Détail |
+|------|--------|
+| **Licence** | PolyForm Strict 1.0.0 dans `FlashRevisionSoft/LICENSE.txt` (en-tête FR + texte EN). Page d’acceptation Inno (`LicenseFile`). Pas de PDF. |
+| **Carte** | HelloStudent : `URLSoft` = `code`. Start ouvre VS Code, plus le sélecteur Windows des `.txt`. |
+| **Icônes** | Sources dans `installer/icone/`. Logo setup = blob git 372 526 octets (le bon). Corbeille = `FlashDev-uninstall.ico`. |
+| **Builds locaux** | 0.2.16 puis **0.2.17** dans `dist\` et `WebSite/flashdev/`. Manifeste et FTP **inchangés**. Prod téléchargement = **0.2.14**. |
+| **Casse** | `Set-UninstallExeIcon` réécrit les ressources de `unins000.exe`. Inno y range les messages. Résultat sur `D:\FlashDev` : icône toujours le logo, et « Messages file `D:\FlashDev\unins000.msg` is missing ». |
+| **Garde** | L’appel est **coupé** dans `scripts/install-madhackademy.ps1` (fin de session). Le setup **0.2.17 déjà compilé** contient encore l’appel : **ne pas le réinstaller**. |
+
+### P1 — première tâche
+
+1. `.\scripts\sync-both.cmd` (racine site).
+2. Ne pas réécrire `unins000.exe`. Toute mise à jour de ressources (`BeginUpdateResource`) est interdite sur ce fichier.
+3. Icône corbeille seulement par le raccourci (`IconFilename` → `icone\FlashDev-uninstall.ico`) et `UninstallDisplayIcon`. Le fichier `unins000.exe` garde l’icône du setup : limite Inno. Demander à Laurent si le raccourci suffit.
+4. Désinstallation à nouveau utilisable : build local **0.2.18** sans le patch, puis réinstaller par-dessus `D:\FlashDev`. D’ici là, ne pas lancer le `unins000.exe` actuel.
+5. Pas de FTP ni de `latest-version.json`.
+
+**Déjà fait, pas cette P1 :** licence Strict dans le soft et dans le setup.
+
+---
+
+## Archive — Reprise 7/11/2026 (licence Strict, faite le 10/11)
 
 > **PolyForm Strict 1.0.0** : dire à Laurent **où** poser la licence, puis **l’ajouter au build** (installeur + zip). Pas d’autre licence. Pas de FTP.
 

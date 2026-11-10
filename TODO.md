@@ -1,6 +1,6 @@
 # TODO — madhackademyWebSite
 
-> Dernière mise à jour : **7 novembre 2026**
+> Dernière mise à jour : **10 novembre 2026**
 > Projet : site vitrine FlashDev + MadHackAdemy
 
 ---
@@ -25,11 +25,12 @@
 
 ### Checklist rapide prochaine session
 
-**P1 (7/11 — session suivante)** — **PolyForm Strict 1.0.0** : dire où poser la licence, puis l’ajouter au build (setup + zip). Détail : [`scripts/NOTE_PROCHAINE-SESSION.md`](scripts/NOTE_PROCHAINE-SESSION.md).
+**P1 (10/11 — session suivante)** — désinstallation cassée (`unins000.msg` manquant) + icône corbeille toujours le logo FlashDev. Détail : [`scripts/NOTE_PROCHAINE-SESSION.md`](scripts/NOTE_PROCHAINE-SESSION.md).
 
-- [ ] **P1** — Emplacement licence Strict + embarquement dans le build FlashDev
+- [ ] **P1** — Désinstallation FlashDev à nouveau utilisable, sans réécrire `unins000.exe` ; icône corbeille sur le raccourci seulement
+- [x] **P1** — Licence PolyForm Strict dans le soft + page d’acceptation du setup (10/11, pas de FTP)
 
-Icône + setup **0.2.15** et boucle élève : en attente, pas la P1 suivante.
+Prod téléchargement reste **0.2.14**. Ne pas réinstaller le setup **0.2.17** (il contient encore le patch qui casse `unins000.exe`).
 
 ---
 
