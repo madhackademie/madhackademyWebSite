@@ -1,6 +1,6 @@
 # TODO — madhackademyWebSite
 
-> Dernière mise à jour : **10 novembre 2026**
+> Dernière mise à jour : **11 novembre 2026**
 > Projet : site vitrine FlashDev + MadHackAdemy
 
 ---
@@ -25,12 +25,14 @@
 
 ### Checklist rapide prochaine session
 
-**P1 (10/11 — session suivante)** — désinstallation cassée (`unins000.msg` manquant) + icône corbeille toujours le logo FlashDev. Détail : [`scripts/NOTE_PROCHAINE-SESSION.md`](scripts/NOTE_PROCHAINE-SESSION.md).
+**P1 (11/11 — session suivante)** — vidéos d’entrée, avant le bootcamp. Détail : [`scripts/NOTE_PROCHAINE-SESSION.md`](scripts/NOTE_PROCHAINE-SESSION.md).
 
-- [ ] **P1** — Désinstallation FlashDev à nouveau utilisable, sans réécrire `unins000.exe` ; icône corbeille sur le raccourci seulement
+- [ ] **P1** — Enregistrer la vidéo « Cuire les pâtes » et remplir `URLVid` (texte, PDF, script et carte déjà écrits)
+- [ ] **Session d’après** — Une carte vidéo : présentation de Visual Studio Code
+- [x] **P1** — Désinstallation : icône corbeille + `unins000.exe` de nouveau lançable (Laurent, 11/11 au soir)
 - [x] **P1** — Licence PolyForm Strict dans le soft + page d’acceptation du setup (10/11, pas de FTP)
 
-Prod téléchargement reste **0.2.14**. Ne pas réinstaller le setup **0.2.17** (il contient encore le patch qui casse `unins000.exe`).
+Prod téléchargement reste **0.2.14**. Setup local validé : **0.2.18**. Ne pas réinstaller le **0.2.17**.
 
 ---
 

@@ -1,7 +1,7 @@
 # Guide — Prochaine session de travail
 
 > **Référence principale** pour reprendre le projet madhackademyWebSite  
-> Dernière mise à jour : **10 novembre 2026** (clôture : désinstallation cassée + icône corbeille — P1 session suivante)  
+> Dernière mise à jour : **11 novembre 2026** (clôture : support pâtes écrit — prochaine P1 : enregistrer la vidéo)  
 > Domaine marque : [madhackademy.eu](https://madhackademy.eu/)  
 > Ancien domaine : `gameopenmoney.com` → **301** vers madhackademy (voir `.htaccess`)
 
@@ -9,7 +9,56 @@
 
 ## Reprise session suivante — **P1 unique**
 
-> **Désinstallation FlashDev** : `unins000.exe` affiche encore le logo FlashDev, et le lancer échoue (`unins000.msg` manquant). Remettre une désinstallation qui marche, puis l’icône corbeille **sans réécrire** le binaire. Pas de FTP.
+> **Enregistrer la vidéo « Cuire les pâtes »** à partir du script, puis ranger le fichier et remplir `URLVid` de la carte `CuireLesPates`. Pas de FTP.
+
+### Bilan session 11/11/2026
+
+| Fait | Détail |
+|------|--------|
+| **Désinstallation** | `unins000.exe` : icône corbeille + messages Inno recollés. Laurent : clean. |
+| **Setup** | Local **0.2.18** dans `dist\` et `WebSite/flashdev/`. Ne pas réinstaller le **0.2.17**. Prod = **0.2.14**. |
+| **scripts/** installé | Nécessaire (`run-love`, `resolve-love`, `install-madhackademy`). `reset-flashdev-socle-test` = outil de test seulement. |
+| **Support pâtes** | Texte, PDF, script vidéo, carte. Analogie figée. La vidéo n’est pas filmée. |
+
+### P1 — enregistrer la vidéo des piliers
+
+Le texte est déjà écrit. Ne pas rouvrir le choix de l’analogie.
+
+Analogie retenue : **cuire des pâtes**. Une idée à la fois.
+
+1. Condition — si l’eau bout, verser les pâtes.
+2. Variable — `litresEau = 2`, `kiloPate = 0.5`.
+3. Fonction — `mettreEauAChauffer`, `ajouterPate(kiloPate)`.
+4. Boucle maladroite, puis la même recette refactorisée. Expression = l’addition `temperature + 1`. Les pâtes partent à 90 degrés dans l’exemple.
+5. Tableaux et rangements plus riches : annoncés, vus dans la formation, pas dans ce support.
+
+Déjà écrits (11/11) :
+
+- Texte carte : `FlashRevisionSoft/SquelletteGCS/elements_revisions/FirstFlashCard/CuireLesPates.txt`
+- PDF : le même dossier, `CuireLesPates.pdf`
+- Script à enregistrer : `FlashRevisionSoft/supports/cuire-les-pates/script-video.txt`
+- Carte `CuireLesPates` dans `data-welcome-socle.json` (id 2) et `data.json` (id 9). Start ouvre le texte dans VS Code.
+
+### Première tâche
+
+1. `.\scripts\sync-both.cmd` (racine site).
+2. Lire `supports/cuire-les-pates/script-video.txt` et enregistrer (4 à 5 min).
+3. Déposer le fichier vidéo à côté du texte de la carte, et mettre son chemin dans `URLVid` (`data-welcome-socle.json` et `data.json`).
+4. Ouvrir FlashDev depuis le dépôt : la carte `CuireLesPates` s’affiche, Start ouvre le texte dans VS Code. `D:\FlashDev` (setup 0.2.18) ne contient pas encore cette carte.
+
+Pas de cours sur la mémoire. Pas de FTP.
+
+### Session d’après — une carte vidéo
+
+Présentation de Visual Studio Code (l’éditeur ouvert par Start).
+
+**Déjà fait, pas cette P1 :** désinstallation (Laurent : tout est clean, 11/11 au soir). Licence Strict. Setup local **0.2.18**. Prod téléchargement = **0.2.14**.
+
+---
+
+## Archive — Reprise 11/11/2026 (désinstallation, validée)
+
+> **Désinstallation FlashDev** : `unins000.exe` de `D:\FlashDev` a été remplacé (icône corbeille + messages Inno). Laurent a confirmé que tout est clean. Pas de FTP.
 
 ### Bilan session 10/11/2026
 
@@ -20,15 +69,17 @@
 | **Icônes** | Sources dans `installer/icone/`. Logo setup = blob git 372 526 octets (le bon). Corbeille = `FlashDev-uninstall.ico`. |
 | **Builds locaux** | 0.2.16 puis **0.2.17** dans `dist\` et `WebSite/flashdev/`. Manifeste et FTP **inchangés**. Prod téléchargement = **0.2.14**. |
 | **Casse** | `Set-UninstallExeIcon` réécrit les ressources de `unins000.exe`. Inno y range les messages. Résultat sur `D:\FlashDev` : icône toujours le logo, et « Messages file `D:\FlashDev\unins000.msg` is missing ». |
-| **Garde** | L’appel est **coupé** dans `scripts/install-madhackademy.ps1` (fin de session). Le setup **0.2.17 déjà compilé** contient encore l’appel : **ne pas le réinstaller**. |
+| **Garde** | `Set-UninstallExeIcon` recolle la queue des messages. Le setup **0.2.17** reste à ne pas réinstaller. |
 
-### P1 — première tâche
+### P1 — où on en est (11/11)
 
-1. `.\scripts\sync-both.cmd` (racine site).
-2. Ne pas réécrire `unins000.exe`. Toute mise à jour de ressources (`BeginUpdateResource`) est interdite sur ce fichier.
-3. Icône corbeille seulement par le raccourci (`IconFilename` → `icone\FlashDev-uninstall.ico`) et `UninstallDisplayIcon`. Le fichier `unins000.exe` garde l’icône du setup : limite Inno. Demander à Laurent si le raccourci suffit.
-4. Désinstallation à nouveau utilisable : build local **0.2.18** sans le patch, puis réinstaller par-dessus `D:\FlashDev`. D’ici là, ne pas lancer le `unins000.exe` actuel.
-5. Pas de FTP ni de `latest-version.json`.
+1. Cause : réécrire l’icône de `unins000.exe` jetait la queue Inno (messages collés après le PE). Le programme cherchait alors `unins000.msg`.
+2. Correctif : `Set-UninstallExeIcon` change l’icône puis recolle cette queue. Le raccourci (barre des tâches) et le fichier (Explorateur) utilisent la corbeille.
+3. `D:\FlashDev\unins000.exe` a été remplacé. `unins000.dat` et `FlashDev.cmd` sont toujours là.
+4. Setup local **0.2.18** dans `dist\` et `WebSite/flashdev/`. Ne pas réinstaller le **0.2.17**.
+5. Laurent, 11/11 au soir : tout est clean.
+
+Pas de FTP ni de `latest-version.json`. Prod téléchargement = **0.2.14**.
 
 **Déjà fait, pas cette P1 :** licence Strict dans le soft et dans le setup.
 
