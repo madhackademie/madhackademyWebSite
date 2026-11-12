@@ -1,7 +1,7 @@
 # Guide — Prochaine session de travail
 
 > **Référence principale** pour reprendre le projet madhackademyWebSite  
-> Dernière mise à jour : **11 novembre 2026** (clôture : support pâtes écrit — prochaine P1 : enregistrer la vidéo)  
+> Dernière mise à jour : **12 novembre 2026** (clôture : menu Options + releases 0.2.19→0.2.21 — P1 : FTP + validation prod)  
 > Domaine marque : [madhackademy.eu](https://madhackademy.eu/)  
 > Ancien domaine : `gameopenmoney.com` → **301** vers madhackademy (voir `.htaccess`)
 
@@ -9,7 +9,34 @@
 
 ## Reprise session suivante — **P1 unique**
 
-> **Enregistrer la vidéo « Cuire les pâtes »** à partir du script, puis ranger le fichier et remplir `URLVid` de la carte `CuireLesPates`. Pas de FTP.
+> **FTP + validation prod FlashDev 0.2.21** — uploader `WebSite/flashdev/` (setup + zip + `latest-version.json`), puis tester page téléchargement, update 1 clic depuis une install existante, menu Options (roue bas-droite, UPDATE/UNDER DEV à gauche), socle = **1 carte HelloStudent** seulement.
+
+### Bilan session 12/11/2026
+
+| Fait | Détail |
+|------|--------|
+| **Menu Options** | Roue en bas-droite (marge X/Y), dessin au-dessus de la carte ; menu **à gauche** de la roue ; `currentProjectMenu.lua`. |
+| **Socle cartes** | `CuireLesPates` retirée de `data-welcome-socle.json` et `data.json` dev — **HelloStudent seule** (decks/cartes = quand Laurent le demande). |
+| **Releases** | **0.2.19**, **0.2.20**, **0.2.21** buildées ; livrables dans `madhackademyWebSite/WebSite/flashdev/` (+ `FlashRevisionSoft/dist/`). |
+| **FTP** | **Non fait** en session — à faire en P1 suivante. |
+
+### Tests P1 (après FTP)
+
+1. `curl` ou navigateur : `latest-version.json` → version **0.2.21**, SHA zip/exe OK.
+2. Installeur neuf : **1 carte** à réviser, menu Options OK.
+3. Update 1 clic depuis 0.2.19/0.2.20 local si encore installé → `UPDATE_TEST v0.2.21` visible en console.
+4. Install existante avec ancien `data.json` (2 cartes) : retirer manuellement les cartes en trop ou réinstaller — le zip update ne touche pas `data.json`.
+
+### Session d’après (hors P1)
+
+- **Vidéo pâtes** : support toujours dans le dépôt (`supports/cuire-les-pates/`, `CuireLesPates.txt`) mais **plus dans le socle** — réintégrer seulement via deck/carte dédiée quand tu le décides.
+- Carte **présentation VS Code** (vidéo).
+
+---
+
+## Archive — Reprise 11/11/2026 (vidéo pâtes, reportée)
+
+> Ancienne P1 : enregistrer la vidéo « Cuire les pâtes ». **Reportée** : la carte n’est plus dans le socle livré (décision 12/11).
 
 ### Bilan session 11/11/2026
 
